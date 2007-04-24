@@ -36,6 +36,7 @@ int parse_cmd(const char *cmd, char *arg[], int max, int *isback){
 			}
 			if(cmd[i] == '&' && cmd[i+1] == '\0'){
 				*isback = 1;
+				start = -1;
 			}
 		}
 	}
