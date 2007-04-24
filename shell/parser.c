@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "parser.h"
 
@@ -13,7 +14,7 @@ int parse_cmd(const char *cmd, char *arg[], int max, int *isback){
 	int start = -1;
 	int end = -1;
 	int count = 0;
-	isback = 0;
+	*isback = 0;
 	for(i = 0; i< strlen(cmd)+1; i++){
 		if(isspace(cmd[i])||cmd[i] == '\0'){
 			if(start < 0){
@@ -24,7 +25,7 @@ int parse_cmd(const char *cmd, char *arg[], int max, int *isback){
 					perror("malloc failed while parsing command!");
 					return PARSE_FAIL;
 				}
-				strncpy(arg[count],cmd + end-start);
+				strncpy(arg[count],cmd + start, end - start);
 				arg[count][end-start] = '\0';
 				count++;
 				start = -1;
@@ -33,8 +34,8 @@ int parse_cmd(const char *cmd, char *arg[], int max, int *isback){
 			if(start<0){
 				start = i;
 			}
-			if(cmd[i] = '&' && cmd[i+1] == '\0'){
-				isback = 1;
+			if(cmd[i] == '&' && cmd[i+1] == '\0'){
+				*isback = 1;
 			}
 		}
 	}
