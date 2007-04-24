@@ -8,6 +8,7 @@
 
 int shell_start();
 int shell_end();
+int shell_run();
 
 typedef struct user_info {
 	uid_t uid, euid;
