@@ -19,14 +19,14 @@ builtinmap_t * builtinmap_new(){
 		fputs("Out of memory while allocating builtinmap!",stderr);
 		exit(1);
 	}
-	if((entries = (map_entry_t *)malloc(sizeof(map_entry_t) * CMDMAP_CAP)) == NULL){
+	if((entries = (map_entry_t *)malloc(sizeof(map_entry_t) * BUILTINMAP_CAP)) == NULL){
 		fputs("Out of memory while allocating builtinmap!",stderr);
 		exit(1);
 	}
 
 	map->entries = entries;
 	map->len = 0;
-	map->cap = CMDMAP_CAP;
+	map->cap = BUILTINMAP_CAP;
 
 	return map;
 }
