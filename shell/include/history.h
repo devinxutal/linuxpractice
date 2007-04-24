@@ -21,6 +21,8 @@ int  history_close(history_t * his);
 
 int history_flush(history_t * his);
 
+int history_add(history_t * his, char *command);
+
 history_iterator_t * history_iterator_get(history_t * his);
 
 int history_iterator_destroy(history_iterator_t * itr);
