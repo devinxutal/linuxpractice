@@ -5,7 +5,7 @@
 
 #define BUILTINMAP_CAP 64
 
-typedef int(*BUILTIN_HANDLER)(char *, int);
+typedef int(*BUILTIN_HANDLER)(char * args[]);
 
 typedef BUILTIN_HANDLER val_t;
 
