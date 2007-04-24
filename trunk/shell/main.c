@@ -7,10 +7,13 @@
 #include <unistd.h>
 #include <signal.h>
 
-
+#include "shell.h"
 
 
 int main(){
+	shell_start();
+	shell_run();
+	shell_end();
 	exit(0);
 }
 
