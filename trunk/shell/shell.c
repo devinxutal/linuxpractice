@@ -7,14 +7,26 @@
 #include <stdlib.h>
 
 #include "shell.h"
+#include "input.h"
+#include "parser.h"
+
 
 static int shell_init(void);
 
-static int print_promote(void);
+static int print_prompt(void);
 
 static int initialized = 0;
 
+//for test 
 
+static void print_args(char * args[]){
+	int i;
+	printf("====ARGS====\n");
+	for(i =0; args[i]!= NULL ; i++){
+		printf("arg_%d: %s\n", i,args[i]);
+	}
+}
+//end for test
 shell_info_t xsh_info;
 
 int shell_start(){
@@ -45,13 +57,24 @@ int shell_end(){
 }
 
 int shell_run(){
+	char * cmd = NULL;
+	char * args[16];
+	int isback = 0;
 	if(!initialized){
 		return -1;
 	}
 	while(1){
-		print_promote();
-		sleep(1);
+		print_prompt();
+		if((cmd = get_cmd_line()) ==NULL){
+			perror("Error while getting command line!");
+			return -1;
+		}
+		//parse the command
+		parse_cmd(cmd, args, 16, &isback);
+		print_args(args);
+		printf("is back? %d\n", isback);
 	}
+	
 	return 0;
 }
 
@@ -74,13 +97,14 @@ static int shell_init(){
 	ui->shell = shell;
 	ui->home_dir = home_dir;
 	xsh_info.current_user = ui;
+	getcwd(cwd,256);
 	xsh_info.cwd = cwd;
 	return 0;
 } 
 
 
-static int print_promote(void){
+static int print_prompt(void){
 	
-	printf("[%s:%s]$\n", xsh_info.current_user->user_name, xsh_info.cwd);
+	printf("[%s:%s]$", xsh_info.current_user->user_name, xsh_info.cwd);
 	return 0;
 }
