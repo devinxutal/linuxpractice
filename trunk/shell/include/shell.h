@@ -3,6 +3,9 @@
 #ifndef SHELL_H_
 #define SHELL_H_
 
+#include <unistd.h>
+
+
 int shell_start();
 int shell_end();
 
@@ -16,8 +19,8 @@ typedef struct user_info {
 
 typedef struct shell_info{
 	char * cwd;		// current working directory
-	user_info *current_user;// current user information
-}
+	user_info_t *current_user;// current user information
+} shell_info_t;
 
-#endif /* SHELL_H_
+#endif /* SHELL_H_ */
 
