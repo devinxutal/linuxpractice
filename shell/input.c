@@ -34,7 +34,7 @@ char *get_cmd_line(void){
 	return buf;
 }
 
-
+/*
 void init_keyboard()
  {
      tcgetattr(0,&initial_settings);
@@ -83,4 +83,4 @@ Chapter 5
         read(0,&ch,1);
         return ch;
     }
-
+*/
