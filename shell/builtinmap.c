@@ -1,9 +1,10 @@
 /* builtinmap.c */
 
-#include "builtinmap.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
+#include "builtinmap.h"
 
 static void check_full(builtinmap_t * map);
 
