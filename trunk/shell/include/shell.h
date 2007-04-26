@@ -23,5 +23,9 @@ typedef struct shell_info{
 	user_info_t *current_user;// current user information
 } shell_info_t;
 
+
+/* global bash structure */
+
+shell_info_t xsh_info;
 #endif /* SHELL_H_ */
 
