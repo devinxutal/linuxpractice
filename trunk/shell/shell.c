@@ -178,7 +178,7 @@ static int exists(const char * cmd){
 
 static int set_env(void){
 	char *oldenv = getenv("PATH");
-	char *toadd = "./bin";
+	char *toadd = "/home/devin/courses/LinuxPractice/linuxpractice/shell/bin";
 	char *buf = (char *)malloc((strlen(oldenv)+strlen(toadd)+10)*sizeof(char));
 	if(buf == NULL)
 		return -1;
