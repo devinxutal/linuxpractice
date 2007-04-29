@@ -31,6 +31,9 @@ char *get_cmd_line(void){
 		buf[len++] = c;
 	}
 	buf[len] = '\0';
+	if(len!= 0){
+		history_add(his,buf);
+	}
 	return buf;
 }
 
