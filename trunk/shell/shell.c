@@ -15,6 +15,7 @@
 #include "parser.h"
 #include "builtins.h"
 #include "builtinmap.h"
+#include "history.h"
 
 static int shell_init(void);
 
@@ -63,8 +64,9 @@ int shell_end(){
 	free(xsh_info.current_user);
 	//deinit builtins
 	
+	history_close(his);
 	end_builtins();	
-	
+		
 	initialized = 0;
 	return 0;
 }
@@ -134,7 +136,8 @@ static int shell_init(){
 	ui->home_dir = pwd->pw_dir;
 	xsh_info.current_user = ui;
 	xsh_info.cwd = getcwd(NULL, 512);
-	
+
+	his = history_open();	
 	//init builtins	
 	init_builtins();
 	//init env

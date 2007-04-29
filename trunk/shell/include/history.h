@@ -1,5 +1,8 @@
 /* history.h */
 
+#ifndef HISTORY_H_
+#define HISTORY_H_
+
 #define MAX_COMMANDS 50
 
 #define HISTORY_PATH "~/.myshell"
@@ -31,3 +34,4 @@ int history_iterator_has_next(history_iterator_t * itr);
 
 char * history_iterator_next(history_iterator_t * itr);
 
+#endif /* HISTORY_H_ */
