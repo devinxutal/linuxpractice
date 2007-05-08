@@ -48,14 +48,21 @@ int main(int argc, char *argv[]){
 	fent_t * ents;
 	int dircount;
 	int actualcount;
+	
+
+	if(argc != 1){
+		if(chdir(argv[1]) != 0){
+			perror("ls");
+			return -1;
+		}
+	}
 	if((dp = opendir(".")) == NULL){
 		perror("ls");
 		return -1;
 	}
-	printf("hello%10skitty\n", "world");	
 	dircount = get_ent_count(dp);
 	ents = get_ents(dp, dircount, &actualcount);
-	print_ents(ents,actualcount);
+	print_ents(ents,dircount);
 	free(ents);
 	return 0;
 }
@@ -84,7 +91,6 @@ static fent_t * get_ents(DIR *dp, int max, int *count){
 		return NULL;
 	i = 0;
 	while((entry = readdir(dp)) != NULL){
-		printf("read dirent: %s\n", entry->d_name);
 		if(lstat(entry->d_name, &(ents[i].f_stat))!= 0){
 			free(ents);
 			return NULL;
