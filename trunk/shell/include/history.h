@@ -5,7 +5,7 @@
 
 #define MAX_COMMANDS 50
 
-#define HISTORY_PATH "~/.myshell"
+#define HISTORY_PATH ".myshell"
 
 
 typedef struct history{

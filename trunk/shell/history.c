@@ -23,15 +23,22 @@ typedef struct history_iterator{
 	int index;
 } history_iterator_t;
 */
+
+char home_buf[1024];
+
 history_t * history_open(){
 	FILE *fp = NULL;
 	history_t *his;
+	char *home_dir = getenv("HOME");
 	char buffer[MAX_STRING];
 	
-	if((fp = fopen(HISTORY_PATH, "r"))== NULL ){
+	strcpy(home_buf, home_dir);
+	home_buf[strlen(home_dir)]='/';
+	strcpy(home_buf + strlen(home_dir)+1, HISTORY_PATH);
+	if((fp = fopen(home_buf, "w+"))== NULL ){
 		return NULL;
 	}
-	
+	printf("FILE: %s\n", home_dir);	
 	if((his = (history_t *)malloc(sizeof(history_t))) == NULL){
 		fclose(fp);
 		return NULL;
@@ -68,7 +75,7 @@ int  history_close(history_t * his){
 	int i ;
 	FILE *file;
 	if (his == NULL) return -1;
-	file = fopen(HISTORY_PATH, "w");
+	file = fopen(home_buf, "w");
 	if(file == NULL){
 		fprintf(stderr, "Open history file failed.");
 		return -1;
@@ -88,7 +95,7 @@ int history_flush(history_t * his){
 	int i ;
 	FILE *file;
 	if (his == NULL) return -1;
-	file = fopen(HISTORY_PATH, "w");
+	file = fopen(home_buf, "w");
 	if(file == NULL){
 		fprintf(stderr, "Open history file failed.");
 		return -1;

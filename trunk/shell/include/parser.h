@@ -8,6 +8,6 @@
 #define PARSE_FAIL 1
 #define PARSE_INCOMPLETE 2
 
-int parse_cmd(const char *cmd, char *arg[], int max, int *isback);
+int parse_cmd(const char *cmd, char *arg[], int max);
 
 #endif /* PAESER_H_ */

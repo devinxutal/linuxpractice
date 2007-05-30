@@ -187,7 +187,7 @@ static int generate_mode_string(char *buf, struct stat * stats){
 static int print_ents(fent_t * ents, int count){
 	int i;
 	eginfo_t info;
-	char * fmt_buf[512];
+	char fmt_buf[512];
 	get_eg_info(ents, count, &info);
 	qsort(ents, count, sizeof(fent_t), compare);	//sort the entries
 	//generate the format string

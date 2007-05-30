@@ -72,6 +72,7 @@ static int builtin_cd(char *args[]){
 }
 
 static int builtin_quit(char *args[]){
+	printf("byebye\n");
 	shell_end();
 	exit(0);
 }
