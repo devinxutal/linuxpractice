@@ -3,7 +3,7 @@ INCLUDES = -Iinclude
 
 all: xsh
 
-xsh: main.c shell.o history.o parser.o input.o builtins.o builtinmap.o
+xsh: main.c shell.o history.o parser.o input.o builtins.o builtinmap.o redirect.o
 	gcc $(CFLAGS) $(INCLUDES) -o xsh $^
 
 history.o: history.c include/history.h
@@ -24,6 +24,8 @@ builtins.o: builtins.c include/builtins.h
 builtinmap.o: builtinmap.c include/builtinmap.h
 	gcc $(CFLAGS) $(INCLUDES) -c builtinmap.c
 
+redirect.o: redirect.c include/redirect.h
+	gcc $(CFLAGS) $(INCLUDES) -c redirect.c
 clean:
-	rm xsh history.o shell.o parser.o input.o builtins.o builtinmap.o
+	rm xsh history.o shell.o parser.o input.o builtins.o builtinmap.o redirect.o 
 
