@@ -29,18 +29,6 @@ static int set_env(void);
 
 static int initialized = 0;
 
-//for test 
-/*
-static void print_args(char * args[]){
-	int i;
-	printf("====ARGS====\n");
-	for(i =0; args[i]!= NULL ; i++){
-		printf("arg_%d: %s\n", i,args[i]);
-	}
-}
-*/
-//end for test
-
 int shell_start(){
 	if(initialized){
 		return 0;
@@ -53,7 +41,6 @@ int shell_start(){
 	initialized = 1;
 	return 0;
 }
-
 
 int shell_end(){
 	if(!initialized){
