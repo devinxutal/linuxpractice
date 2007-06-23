@@ -11,6 +11,9 @@
 
 
 int main(){
+
+//	setpgid(getpid(), getpid());
+
 	shell_start();
 	shell_run();
 	shell_end();
