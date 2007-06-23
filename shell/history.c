@@ -38,7 +38,6 @@ history_t * history_open(){
 	if((fp = fopen(home_buf, "w+"))== NULL ){
 		return NULL;
 	}
-	printf("FILE: %s\n", home_dir);	
 	if((his = (history_t *)malloc(sizeof(history_t))) == NULL){
 		fclose(fp);
 		return NULL;
