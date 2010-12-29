@@ -8,6 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
+import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.primitives.Color;
 import com.devinxutal.fmc.primitives.Cube;
 import com.devinxutal.fmc.primitives.ESquare;
@@ -15,6 +16,7 @@ import com.devinxutal.fmc.primitives.Group;
 import com.devinxutal.fmc.primitives.Point3F;
 import com.devinxutal.fmc.primitives.Square;
 import com.devinxutal.fmc.ui.CubeView;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class MagicCube {
 	public enum CubeColor {
@@ -164,13 +166,11 @@ public class MagicCube {
 	}
 
 	public boolean turnBySymbol(String symbol) {
-		if (symbol.length() >= 1) {
-			char face = symbol.charAt(0);
-			int direction = 1;
-			if (symbol.length() >= 2 && symbol.charAt(1) == '\'') {
-				direction = -1;
-			}
-			return turn(face, direction);
+		List<Move> moves = SymbolMoveUtil.parseMovesFromSymbolSequence(symbol,
+				order);
+		if(moves.size()>0){
+			Move mv = moves.get(0);
+			return this.turn(mv.dimension, mv.layers, mv.direction);
 		}
 		return false;
 	}

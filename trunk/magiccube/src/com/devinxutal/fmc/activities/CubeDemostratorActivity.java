@@ -13,8 +13,8 @@ public class CubeDemostratorActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		View v = new CubeDemostrator(this, new String[] { "R", "L", "r2", "F'",
-				"R2'" });
+		View v = new CubeDemostrator(this, new String[] { "R", "L", "r", "F'",
+				"R2'", "R", "D","L", "r", "F'", "R2'" });
 		setContentView(v);
 	}
 }

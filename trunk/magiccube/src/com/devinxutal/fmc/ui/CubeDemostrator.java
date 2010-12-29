@@ -15,7 +15,7 @@ public class CubeDemostrator extends TableLayout {
 
 	public CubeDemostrator(Context context, String[] symbols) {
 		super(context);
-		controller = new CubeController(context);
+		controller = new CubeController(context, true);
 		init();
 
 		indicator.setMoveSymbols(symbols);

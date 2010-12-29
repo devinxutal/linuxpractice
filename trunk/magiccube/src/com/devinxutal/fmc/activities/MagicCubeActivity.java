@@ -13,6 +13,7 @@ import android.widget.TableLayout;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.control.CubeController;
+import com.devinxutal.fmc.ui.CubeDemostrator;
 import com.devinxutal.fmc.ui.MoveSequenceIndicator;
 
 public class MagicCubeActivity extends Activity {
@@ -28,40 +29,14 @@ public class MagicCubeActivity extends Activity {
 		 */
 		super.onCreate(savedInstanceState);
 
-		controller = new CubeController(this);
+		controller = new CubeController(this, false);
 
 		setContentView(controller.getCubeView());
+		
+		View v = new CubeDemostrator(this, new String[] { "R", "L", "r", "F'",
+				"R2'", "R", "D","L", "r", "F'", "R2'" });
+setContentView(v);
 
-		/* for test */
-		TableLayout l = new TableLayout(this);
-		l.setBackgroundColor(0x00FF0000);
-		final MoveSequenceIndicator ind = new MoveSequenceIndicator(this);
-		ind.setMoveSymbols(new String[] { "R", "L", "r2", "F'", "R2'" });
-		ind.moveTo(0);
-		l.addView(ind);
-		Button b = new Button(this);
-		b.setText("Move Forward");
-		l.addView(b);
-		b.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View arg0) {
-				ind.moveForward();
-			}
-
-		});
-		 b = new Button(this);
-			b.setText("Move Backward");
-			l.addView(b);
-			b.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View arg0) {
-					ind.moveBackward();
-				}
-
-			});
-
-		setContentView(l);
-		/* end for test */
 	}
 
 	@Override
