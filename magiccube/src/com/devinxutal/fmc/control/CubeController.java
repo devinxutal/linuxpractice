@@ -20,15 +20,22 @@ public class CubeController {
 	private MagicCube magicCube;
 
 	private boolean inAnimation = false;
+	private boolean touchEnabled = false;
+
 	private Timer animationTimer;
 	private Timer presentationTimer;
 
 	public CubeController(Context context) {
+		this(context, true);
+	}
+
+	public CubeController(Context context, boolean touchEnabled) {
 		this.cubeView = new CubeView(context);
 		this.magicCube = new MagicCube(3);
 		this.cubeView.setMagicCube(magicCube);
 		this.magicCube.view = cubeView;
 		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
+		this.touchEnabled = touchEnabled;
 		if (t == null) {
 			t = Toast.makeText(cubeView.getContext(), "", 1000);
 		}
@@ -169,6 +176,9 @@ public class CubeController {
 		int startX, startY;
 
 		public boolean onTouch(View v, MotionEvent evt) {
+			if(!touchEnabled){
+				return true;
+			}
 			switch (evt.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				startX = (int) evt.getX();
