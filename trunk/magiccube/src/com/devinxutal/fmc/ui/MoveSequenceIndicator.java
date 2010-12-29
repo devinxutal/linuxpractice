@@ -2,8 +2,8 @@ package com.devinxutal.fmc.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.View;
 
 public class MoveSequenceIndicator extends View {
@@ -141,13 +141,10 @@ public class MoveSequenceIndicator extends View {
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-		//super.onDraw(canvas);
-
-		Log.v("motiontest", "ondraw " + canvas.getWidth() + ","
-				+ canvas.getHeight());
+		super.onDraw(canvas);
+		mTextPaint.setColor(Color.GREEN);
 		canvas.drawText(mText, getPaddingLeft(), getPaddingTop() - mAscent,
 				mTextPaint);
-		mTextPaint.setColor(0x00FF0000);
-		canvas.drawText(mText, 100, 100, mTextPaint);
 	}
+
 }
