@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_cat_basic">
+		<ListPreference android:title="@string/pref_ent_cubesize"
+			android:summary="@string/perf_ent_cubesize_summary" android:key="cubesize"
+			android:defaultValue="3" android:entries="@array/pref_ent_cubesize_entries"
+			android:entryValues="@array/pref_ent_cubesize_values" />
+		<!-- 
+		<PreferenceScreen android:key="SecondPrefScreen"
+			android:title="Second PreferenceScreen" android:summary="This is a second PreferenceScreen">
+			<EditTextPreference android:name="An other EditText Preference"
+				android:summary="This is a preference in the second PreferenceScreen"
+				android:title="Edit text" android:key="SecondEditTextPref" />
+		</PreferenceScreen>
+		 -->
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_performance">
+		<ListPreference android:title="@string/pref_ent_rendermode"
+			android:summary="@string/perf_ent_rendermode_summary" android:key="rendermode"
+			android:defaultValue="1" android:entries="@array/pref_ent_rendermode_entries"
+			android:entryValues="@array/pref_ent_rendermode_values" />
+	</PreferenceCategory>
+</PreferenceScreen>
