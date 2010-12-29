@@ -2,10 +2,9 @@ package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TableLayout;
+import android.view.View;
 
-import com.devinxutal.fmc.ui.MoveSequenceIndicator;
+import com.devinxutal.fmc.ui.CubeDemostrator;
 
 public class CubeDemostratorActivity extends Activity {
 
@@ -14,12 +13,8 @@ public class CubeDemostratorActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		TableLayout l = new TableLayout(this);
-		l.setBackgroundColor(0x00FF0000);
-		l.addView(new MoveSequenceIndicator(this));
-		Button b = new Button(this);
-		b.setText("Hello World");
-		l.addView(b);
-		setContentView(l);
+		View v = new CubeDemostrator(this, new String[] { "R", "L", "r2", "F'",
+				"R2'" });
+		setContentView(v);
 	}
 }

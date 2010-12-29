@@ -3,7 +3,7 @@ package com.devinxutal.fmc.control;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,16 +17,14 @@ import com.devinxutal.fmc.ui.CubeView;
 
 public class CubeController {
 	private CubeView cubeView;
-	private Activity activity;
 	private MagicCube magicCube;
 
 	private boolean inAnimation = false;
 	private Timer animationTimer;
 	private Timer presentationTimer;
 
-	public CubeController(Activity activity) {
-		this.activity = activity;
-		this.cubeView = new CubeView(activity);
+	public CubeController(Context context) {
+		this.cubeView = new CubeView(context);
 		this.magicCube = new MagicCube(3);
 		this.cubeView.setMagicCube(magicCube);
 		this.magicCube.view = cubeView;

@@ -14,7 +14,7 @@
 			android:label="@string/preferences_title">
 		</activity>
 		<activity android:name=".activities.CubeDemostratorActivity"
-			android:screenOrientation="landscape" android:label="@string/preferences_title">
+			 android:label="@string/preferences_title">
 		</activity>
 	</application>
 	<uses-sdk android:minSdkVersion="7" />
