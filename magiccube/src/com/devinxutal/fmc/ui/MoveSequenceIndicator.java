@@ -1,6 +1,7 @@
 package com.devinxutal.fmc.ui;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import android.app.Activity;
@@ -11,17 +12,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.Paint.Style;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public class MoveSequenceIndicator extends SurfaceView {
-	private static final int LEN_GAP = 10;
-	private static final int LEN_IND = 26;
+
 	public static final String SYMBOL_END = "#";
 
-	private Paint paint;
 	private Canvas bufferCanvas;
 	private Bitmap bufferBitmap;
 
@@ -38,7 +36,8 @@ public class MoveSequenceIndicator extends SurfaceView {
 	private int paintAscent;
 
 	// for drawing
-	int offset = 0;
+	// int offset = 0;
+	private DrawingMetrics dm;
 
 	/**
 	 * Constructor. This version is only needed if you will be instantiating the
@@ -50,6 +49,11 @@ public class MoveSequenceIndicator extends SurfaceView {
 		super(context);
 		symbols = new LinkedList<String>();
 		symbols.addLast(SYMBOL_END);
+
+		dm = new DrawingMetrics();
+		dm.setSymbols(symbols);
+		dm.recalculate();
+
 		init();
 		this.setWillNotDraw(false);
 		this.animationThread = new AnimationThread();
@@ -64,6 +68,8 @@ public class MoveSequenceIndicator extends SurfaceView {
 			}
 			this.symbols.addLast(SYMBOL_END);
 		}
+		dm.setSymbols(this.symbols);
+		dm.recalculate();
 		this.current = 0;
 		this.previous = 0;
 		this.symbolWidth = -1;
@@ -129,41 +135,18 @@ public class MoveSequenceIndicator extends SurfaceView {
 		Log.v("cc", "start animation");
 		Rect rect = new Rect();
 		this.getDrawingRect(rect);
-		int width = rect.width();
-		int symbolWidth = this.measureSymbolsWidth();
-		float symbolX = offset + (width - symbolWidth) / 2;
-
-		float indicatorX = symbolX;
-		for (int i = 0; i <= from; i++) {
-			indicatorX += LEN_GAP;
-			float w = paint.measureText(symbols.get(i));
-			if (i == from) {
-				w = w / 2;
-			}
-			indicatorX += w;
-		}
-		indicatorX -= LEN_IND / 2;
-		float indicatorXnew = symbolX;
-		for (int i = 0; i <= to; i++) {
-			indicatorXnew += LEN_GAP;
-			float w = paint.measureText(symbols.get(i));
-			if (i == to) {
-				w = w / 2;
-			}
-			indicatorXnew += w;
-		}
-
-		indicatorXnew -= LEN_IND / 2;
-		animation.startAnimation(symbolX, symbolX, indicatorX, indicatorXnew,
-				10);
-
+		dm.width = rect.width();
+		dm.height = rect.height();
+		dm.recalculate();
+		float sx = dm.symbolX();
+		float ix = dm.indicatorX();
+		dm.tranformTo(to);
+		float nsx = dm.symbolX();
+		float nix = dm.indicatorX();
+		animation.startAnimation(sx, nsx, ix, nix, 10);
 	}
 
 	private final void init() {
-		paint = new Paint();
-		paint.setAntiAlias(true);
-		paint.setTextSize(18);
-		paint.setTypeface(Typeface.DEFAULT_BOLD);
 		setPadding(3, 3, 3, 3);
 		this.bufferBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 		this.bufferCanvas = new Canvas();
@@ -212,9 +195,9 @@ public class MoveSequenceIndicator extends SurfaceView {
 	private int measureSymbolsWidth() {
 		if (symbolWidth > -0)
 			return symbolWidth;
-		float len = LEN_GAP * (symbols.size() + 1);
+		float len = DrawingMetrics.LEN_GAP * (symbols.size() + 1);
 		for (String s : symbols) {
-			len += paint.measureText(s);
+			len += dm.paint.measureText(s);
 		}
 		symbolWidth = (int) (len + 0.1);
 		return symbolWidth;
@@ -232,14 +215,14 @@ public class MoveSequenceIndicator extends SurfaceView {
 		int specMode = MeasureSpec.getMode(measureSpec);
 		int specSize = MeasureSpec.getSize(measureSpec);
 
-		paintAscent = (int) paint.ascent();
+		paintAscent = (int) dm.paint.ascent();
 		if (specMode == MeasureSpec.EXACTLY) {
 			// We were told how big to be
 			result = specSize;
 		} else {
 			// Measure the text (beware: ascent is a negative number)
-			result = (int) (-paintAscent + paint.descent()) + getPaddingTop()
-					+ getPaddingBottom();
+			result = (int) (-paintAscent + dm.paint.descent())
+					+ getPaddingTop() + getPaddingBottom();
 			if (specMode == MeasureSpec.AT_MOST) {
 				// Respect AT_MOST value if that was what is called for by
 				// measureSpec
@@ -289,7 +272,7 @@ public class MoveSequenceIndicator extends SurfaceView {
 	}
 
 	private void refreshBuffer() {
-		int height = (int) (paint.descent() - paint.ascent() + 0.1);
+		int height = (int) (dm.paint.descent() - dm.paint.ascent() + 0.1);
 		int width = (int) (this.measureSymbolsWidth() + 0.1);
 		if (this.bufferBitmap == null || this.bufferBitmap.getWidth() != width
 				|| this.bufferBitmap.getHeight() != height) {
@@ -299,24 +282,22 @@ public class MoveSequenceIndicator extends SurfaceView {
 		bufferCanvas.setBitmap(bufferBitmap);
 		Canvas canvas = bufferCanvas;
 		canvas.drawRGB(0, 0, 0);
-		paint.setColor(colorLeft);
+		dm.paint.setColor(colorLeft);
 		// prepare metrics
 		int symLen = width;
 		int index = 0;
-		float x;
-		float y = -paint.ascent();
+		float y = -dm.paint.ascent();
 
-		float tmpLen = LEN_GAP;
 		// start draw
 		for (String sym : symbols) {
+
 			if (index == current) {
-				paint.setColor(colorRight);
+				dm.paint.setColor(colorRight);
 			}
-			x = tmpLen;
-			canvas.drawText(sym, x, y, paint);
-			//
+			canvas.drawText(sym, dm.symbolX(index), y, dm.paint);
+
 			index++;
-			tmpLen += (LEN_GAP + paint.measureText(sym));
+
 		}
 	}
 
@@ -327,36 +308,25 @@ public class MoveSequenceIndicator extends SurfaceView {
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-		paint.setAlpha(255);
+		dm.paint.setAlpha(255);
 		canvas.drawRGB(0, 0, 0);
-		int indicatorOffset = 0;
-		int symbolOffset = 0;
+		float indicatorOffset = 0;
+		float symbolOffset = 0;
 		if (animation.isInAnimation()) {
 			symbolOffset = (int) animation.symbolOffset();
 			indicatorOffset = (int) animation.indicatorOffset();
 		} else {
-			int symLen = measureSymbolsWidth();
-			symbolOffset = (getWidth() - symLen) / 2 + offset;
-
-			float indicatorX = symbolOffset;
-			for (int i = 0; i <= current; i++) {
-				indicatorX += LEN_GAP;
-				float w = paint.measureText(symbols.get(i));
-				if (i == current) {
-					w = w / 2;
-				}
-				indicatorX += w;
-			}
-			indicatorX -= LEN_IND / 2;
-			indicatorOffset = (int) indicatorX;
+			symbolOffset = dm.symbolX();
+			indicatorOffset = dm.indicatorX();
 		}
 		int yOffset = (this.getHeight() - bufferBitmap.getHeight()) / 2;
-		canvas.drawBitmap(this.bufferBitmap, symbolOffset, yOffset, paint);
-		paint.setColor(colorIndicator);
-		//paint.setStyle(Style.STROKE);
-		paint.setAlpha(100);
-		canvas.drawRect(indicatorOffset, yOffset, indicatorOffset + LEN_IND,
-				yOffset + bufferBitmap.getHeight(), paint);
+		canvas.drawBitmap(this.bufferBitmap, symbolOffset, yOffset, dm.paint);
+		dm.paint.setColor(colorIndicator);
+		// paint.setStyle(Style.STROKE);
+		dm.paint.setAlpha(100);
+		canvas.drawRect(indicatorOffset, yOffset, indicatorOffset
+				+ DrawingMetrics.LEN_IND, yOffset + bufferBitmap.getHeight(),
+				dm.paint);
 	}
 
 	public class AnimationThread extends Thread {
@@ -443,5 +413,127 @@ public class MoveSequenceIndicator extends SurfaceView {
 					/ totalSteps);
 		}
 
+	}
+
+	class DrawingMetrics {
+		public static final int LEN_GAP = 10;
+		public static final int LEN_IND = 26;
+		// set
+		public float width;
+		public float height;
+		// to calculate every time;
+		private float symbolX;
+		private float indicatorX;
+		// to calculate when needed
+		private float symbolLen;
+		public float offset;
+		// should set by function
+		private float sl[]; // symbols lenth
+		private float asl[]; // accumulated symbol length;
+		private float ss[]; // symbol start position;
+		//
+		private int current = 0;
+		//
+		private Paint paint;
+
+		public DrawingMetrics() {
+			paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setTextSize(18);
+			paint.setTypeface(Typeface.DEFAULT_BOLD);
+		}
+
+		public void recalculate() {
+			symbolX = offset + (width - symbolLen) / 2;
+			indicatorX = symbolX;
+			int f = 0, e = current;
+			for (int i = f; i <= e; i++) {
+				if (i == f || i == e) {
+					indicatorX += sl[i] / 2;
+				} else {
+					indicatorX += sl[i];
+				}
+			}
+			indicatorX = indicatorX - LEN_IND / 2;
+		}
+
+		public void tranformTo(int to) {
+			if (this.current == to) {
+				return;
+			}
+			// calculate delta;
+			float delta = Math.abs(current - to) * LEN_GAP;
+			int f = Math.min(current, to);
+			int e = Math.max(current, to);
+			for (int i = f; i <= e; i++) {
+				if (i == f || i == e) {
+					delta += sl[i] / 2;
+				} else {
+					delta += sl[i];
+				}
+			}
+			if (to < current) {
+				delta = -delta;
+			}
+			// calculate actual offsets;
+			int allowedOffset = Math.max(0, (int) ((symbolLen - width) / 2));
+			if (allowedOffset > 0) {
+				if (delta > 0) { // move forward
+					float indicatorMovable = (width - LEN_IND) / 2 - indicatorX;
+					float symbolMovable = allowedOffset + offset;
+					float symbolMoveBack = Math.min(symbolMovable, delta
+							- indicatorMovable);
+					offset = offset - symbolMoveBack;
+				} else { // move backward
+					delta = -delta;
+					float indicatorMovable = indicatorX - (width - LEN_IND) / 2;
+					float symbolMovable = allowedOffset - offset;
+					float symbolMoveForward = Math.min(symbolMovable, delta
+							- indicatorMovable);
+					offset = offset + symbolMoveForward;
+				}
+			}
+			//
+			current = to;
+			recalculate();
+		}
+
+		public void setSymbols(List<String> symbols) {
+			sl = new float[symbols.size()];
+			asl = new float[symbols.size()];
+			ss = new float[symbols.size()];
+			int index = 0;
+			float sum = 0;
+			for (String sym : symbols) {
+				float w = paint.measureText(sym);
+				sum += w;
+				sl[index] = w;
+				asl[index] = sum;
+				index++;
+			}
+			ss[0] = LEN_GAP;
+			for (int i = 1; i < symbols.size(); i++) {
+				ss[i] = LEN_GAP + (sl[i - 1] + sl[i]) / 2;
+			}
+			symbolLen = sum + (sl.length + 1) * LEN_GAP;
+			offset = 0;
+			current = 0;
+		}
+
+		public float symbolX() {
+			return symbolX;
+		}
+
+		public float indicatorX() {
+			return indicatorX();
+		}
+
+		public float symbolX(int i) {
+			if (i >= 0 && i < ss.length) {
+				return offset + ss[i];
+			} else {
+				return 0;
+			}
+		}
 	}
 }
