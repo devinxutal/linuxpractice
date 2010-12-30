@@ -3,18 +3,16 @@ package com.devinxutal.fmc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TableLayout;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.control.CubeController;
 import com.devinxutal.fmc.ui.CubeDemostrator;
-import com.devinxutal.fmc.ui.MoveSequenceIndicator;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class MagicCubeActivity extends Activity {
 	private CubeController controller;
@@ -32,11 +30,15 @@ public class MagicCubeActivity extends Activity {
 		controller = new CubeController(this, false);
 
 		setContentView(controller.getCubeView());
-		
-		View v = new CubeDemostrator(this, new String[] { "R", "L", "r", "F'",
-				"R2'", "R", "D","L", "r", "F'", "R2'" ,"R", "L", "r", "F'",
-				"R2'", "R", "D","L", "r", "F'", "R2'" });
-setContentView(v);
+
+		/* for test */
+		String sequence = "y' (R' U)(R U')(R' U)(R U2')(R' U R)";
+		Log.v("symbol", "parse symbol: " + sequence);
+		Log.v("symbol", "parse result: "
+				+ SymbolMoveUtil.parseSymbolSequenceAsList(sequence));
+		View v = new CubeDemostrator(this, SymbolMoveUtil
+				.parseSymbolSequenceAsArray(sequence));
+		setContentView(v);
 
 	}
 

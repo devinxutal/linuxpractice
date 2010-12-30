@@ -3,6 +3,7 @@ package com.devinxutal.fmc.ui;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -26,8 +27,8 @@ public class CubeDemostrator extends TableLayout {
 		TableLayout.LayoutParams p = new LayoutParams();
 		p.height = 200;
 		this.addView(indicator);
-		Button b = new Button(getContext());
-		b.setText("Move Forward");
+		ImageButton b = new ImageButton(getContext());
+		b.setImageResource(android.R.drawable.arrow_up_float);
 		this.addView(b);
 		b.setOnClickListener(new OnClickListener() {
 
@@ -41,8 +42,8 @@ public class CubeDemostrator extends TableLayout {
 			}
 
 		});
-		b = new Button(getContext());
-		b.setText("Move Backward");
+		b = new ImageButton(getContext());
+
 		this.addView(b);
 		b.setOnClickListener(new OnClickListener() {
 
@@ -51,6 +52,9 @@ public class CubeDemostrator extends TableLayout {
 			}
 
 		});
+		ImageButton bb = new ImageButton(getContext());
+		bb.setImageResource(com.devinxutal.fmc.R.drawable.play);
+		this.addView(bb);
 
 		this.addView(controller.getCubeView(), LayoutParams.WRAP_CONTENT);
 
