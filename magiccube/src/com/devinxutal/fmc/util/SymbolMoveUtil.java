@@ -3,41 +3,40 @@ package com.devinxutal.fmc.util;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-
 import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.model.MagicCube;
 
 public class SymbolMoveUtil {
-	public static List<Move> parseMovesFromSymbolSequence(String sequence,
-			int cubeOrder) {
-		LinkedList<Move> list = new LinkedList<Move>();
-		if (sequence.length() == 0) {
+	public static List<String> parseSymbolSequenceAsList(String sequence) {
+		LinkedList<String> list = new LinkedList<String>();
+		if (sequence == null || sequence.length() == 0) {
 			return list;
 		}
-		int start = 0;
-		for (int i = 1; i < sequence.length(); i++) {
-			if (isLetter(sequence.charAt(i))) {
-				list.addAll(parseMovesFromSymbol(getSymbol(sequence, start, i),
-						cubeOrder));
-				start = i;
-			}
+		SymbolTokenizer t = new SymbolTokenizer(sequence);
+		String token = null;
+		while ((token = t.nextToken()) != null) {
+			list.add(token);
 		}
-		list.addAll(parseMovesFromSymbol(getSymbol(sequence, start, sequence
-				.length()), cubeOrder));
 		return list;
 	}
 
-	private static String getSymbol(String seq, int start, int end) {
-		Log.v("motiontest", seq.substring(start, end));
-		return seq.substring(start, end);
+	public static String[] parseSymbolSequenceAsArray(String sequence) {
+		List<String> list = parseSymbolSequenceAsList(sequence);
+		return list.toArray(new String[0]);
 	}
 
-	public static boolean isLetter(char c) {
-		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-			return true;
+	public static List<Move> parseMovesFromSymbolSequence(String sequence,
+			int cubeOrder) {
+		LinkedList<Move> list = new LinkedList<Move>();
+		if (sequence == null || sequence.length() == 0) {
+			return list;
 		}
-		return false;
+		SymbolTokenizer t = new SymbolTokenizer(sequence);
+		String token = null;
+		while ((token = t.nextToken()) != null) {
+			list.addAll(parseMovesFromSymbol(token, cubeOrder));
+		}
+		return list;
 	}
 
 	public static List<Move> parseMovesFromSymbol(String symbol, int cubeOrder) {
@@ -109,4 +108,54 @@ public class SymbolMoveUtil {
 		}
 		return list;
 	}
+
+	public static boolean isValidSymbol(String symbol) {
+		if (SymbolTokenizer.isLetter(symbol.charAt(0))) {
+			return true;
+		}
+		return false;
+	}
+}
+
+class SymbolTokenizer {
+	private String string;
+	private int i = 0;
+
+	SymbolTokenizer(String string) {
+		this.string = string.replace(" ", "");
+	}
+
+	public String nextToken() {
+		if (i >= string.length()) {
+			return null;
+		}
+		int start = i;
+		if (isLetter(string.charAt(i))) {
+			while ((++i) != string.length()) {
+				char c = string.charAt(i);
+				if (c == '(' || c == ')' || isLetter(c)) {
+					break;
+				}
+			}
+		} else if (string.charAt(i) == '(' || string.charAt(i) == ')') {
+			while ((++i) != string.length()) {
+				char c = string.charAt(i);
+				if (c != '(' && c != '(') {
+					break;
+				}
+			}
+		} else {
+			i++;
+		}
+
+		return string.substring(start, i);
+	}
+
+	public static boolean isLetter(char c) {
+		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+			return true;
+		}
+		return false;
+	}
+
 }
