@@ -19,7 +19,6 @@ public class CubeDemostrator extends TableLayout {
 		init();
 
 		indicator.setMoveSymbols(symbols);
-		indicator.moveTo(0);
 	}
 
 	private void init() {
