@@ -34,6 +34,7 @@ public class MagicCubeActivity extends Activity {
 		setContentView(controller.getCubeView());
 		
 		View v = new CubeDemostrator(this, new String[] { "R", "L", "r", "F'",
+				"R2'", "R", "D","L", "r", "F'", "R2'" ,"R", "L", "r", "F'",
 				"R2'", "R", "D","L", "r", "F'", "R2'" });
 setContentView(v);
 
