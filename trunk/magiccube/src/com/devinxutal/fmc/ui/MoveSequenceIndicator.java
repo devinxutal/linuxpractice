@@ -30,6 +30,7 @@ public class MoveSequenceIndicator extends SurfaceView {
 
 	private int current;
 	private int previous;
+
 	private Animation animation = new Animation();
 	private AnimationThread animationThread = null;
 
@@ -428,6 +429,7 @@ public class MoveSequenceIndicator extends SurfaceView {
 			int width = getWidth();
 			Log.v("cc", "reset offset, width = " + width);
 			int allowedOffset = Math.max(0, (int) ((symbolsWidth - width) / 2));
+			offset = 0;
 			if (allowedOffset != 0) {
 				float delta = 0;
 				int f = 0, e = current;
@@ -441,13 +443,17 @@ public class MoveSequenceIndicator extends SurfaceView {
 				}
 				delta = delta - LEN_IND / 2;
 
-				offset = (width - LEN_IND) / 2 - (delta - offset);
+				offset = (width - LEN_IND) / 2 - (delta - allowedOffset);
 				if (offset < -allowedOffset) {
 					offset = -allowedOffset;
 				} else if (offset > allowedOffset) {
 					offset = allowedOffset;
 				}
 			}
+			Log.v("cc", "reset completed : screen width: " + width
+					+ ", symbol width: " + symbolsWidth + ", offset: " + offset
+					+ ", current: " + current);
+
 			recalculate();
 		}
 
