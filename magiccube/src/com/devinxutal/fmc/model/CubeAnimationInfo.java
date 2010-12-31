@@ -10,6 +10,7 @@ public class CubeAnimationInfo {
 	public int dimension;
 	public int direction;
 	public List<Integer> layers = new LinkedList<Integer>();
+	public boolean doubleTurn = false;
 	public CubeColor[][][] cube;
 
 	public void reset() {
@@ -19,6 +20,7 @@ public class CubeAnimationInfo {
 		cube = null;
 		totalStep = 0;
 		currentStep = 0;
+		doubleTurn = false;
 	}
 
 	private int totalStep;
@@ -30,7 +32,11 @@ public class CubeAnimationInfo {
 	}
 
 	public int totalStep() {
-		return totalStep;
+		if (doubleTurn) {
+			return totalStep * 2;
+		} else {
+			return totalStep;
+		}
 	}
 
 	public int currentStep() {
@@ -38,7 +44,7 @@ public class CubeAnimationInfo {
 	}
 
 	public int step() {
-		if (currentStep < totalStep) {
+		if (currentStep < totalStep()) {
 			currentStep++;
 		}
 		return currentStep;

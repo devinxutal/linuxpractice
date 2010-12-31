@@ -3,7 +3,6 @@ package com.devinxutal.fmc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,10 +31,7 @@ public class MagicCubeActivity extends Activity {
 		setContentView(controller.getCubeView());
 
 		/* for test */
-		String sequence = "y' (R' U)(R U')(R' U)(R U2')(R' U R)";
-		Log.v("symbol", "parse symbol: " + sequence);
-		Log.v("symbol", "parse result: "
-				+ SymbolMoveUtil.parseSymbolSequenceAsList(sequence));
+		String sequence = " R2 R'2 u' u2 d'2 R L U D F B R' L' U' D' F' B' r l u d f b r' l' u' d' f' b')";
 		View v = new CubeDemostrator(this, SymbolMoveUtil
 				.parseSymbolSequenceAsArray(sequence));
 		setContentView(v);
