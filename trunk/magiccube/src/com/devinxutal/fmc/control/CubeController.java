@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -85,7 +84,7 @@ public class CubeController {
 		}
 		this.inAnimation = true;
 		this.magicCube.getCubie().prepareAnimation();
-		this.magicCube.getAnimationInfo().setAnimation(9);
+		this.magicCube.getAnimationInfo().setAnimation(6);
 		this.animationTimer = new Timer();
 		this.animationTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -99,7 +98,7 @@ public class CubeController {
 				}
 			}
 
-		}, 0, 50);
+		}, 0, 70);
 	}
 
 	public void finishAnimation() {
@@ -176,22 +175,13 @@ public class CubeController {
 		int startX, startY;
 
 		public boolean onTouch(View v, MotionEvent evt) {
-			if(!touchEnabled){
+			if (!touchEnabled) {
 				return true;
 			}
 			switch (evt.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				startX = (int) evt.getX();
 				startY = (int) evt.getY();
-				if (startY < 30) {
-					if (startX < 100) {
-						rotate(MagicCube.DIM_X, 1);
-					} else if (startX > 200) {
-						rotate(MagicCube.DIM_Y, 1);
-					} else {
-						rotate(MagicCube.DIM_Z, 1);
-					}
-				}
 				break;
 			case MotionEvent.ACTION_UP:
 				processAction(startX, startY, (int) evt.getX() - startX,
@@ -201,14 +191,36 @@ public class CubeController {
 			return true;
 		}
 
-		protected void processAction(int x, int y, int deltax, int deltaY) {
-			Point3I p = cubeView.mapToCubePosition(x, y);
-			if (p.x == 0 && p.y == 0 && p.x == 0) {
-				Log.v("motiontest", "all zero, ignore");
+		protected void processAction(int x, int y, int deltaX, int deltaY) {
+			if (Math.abs(deltaX) < 5 && Math.abs(deltaY) < 5) {
 				return;
 			}
-			Log.v("motiontest", "start turn");
-			turnByGesture(p.x, p.y, p.z, deltax, deltaY);
+			Point3I p = cubeView.mapToCubePosition(x, y);
+			if (p.x == 0 && p.y == 0 && p.x == 0) {
+				if (Math.abs(deltaX) > Math.abs(deltaY)) {
+					if (deltaX > 0) {
+						turnBySymbol("y'");
+					} else {
+						turnBySymbol("y");
+					}
+				} else {
+					if (x >= cubeView.getWidth() / 2) {
+						if (deltaY > 0) {
+							turnBySymbol("z");
+						} else {
+							turnBySymbol("z'");
+						}
+					} else {
+						if (deltaY > 0) {
+							turnBySymbol("x'");
+						} else {
+							turnBySymbol("x");
+						}
+					}
+				}
+			} else {
+				turnByGesture(p.x, p.y, p.z, deltaX, deltaY);
+			}
 		}
 
 	}

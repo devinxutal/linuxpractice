@@ -140,7 +140,7 @@ public class MoveSequenceIndicator extends SurfaceView {
 	}
 
 	private final void init() {
-		setPadding(3, 3, 3, 3);
+		setPadding(3, 10, 3, 10);
 		this.bufferBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 		this.bufferCanvas = new Canvas();
 	}

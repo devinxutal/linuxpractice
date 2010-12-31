@@ -33,8 +33,9 @@ public class MagicCube {
 
 	private int order;
 	private Cubie cubie;
-	private CubeColor[][][] cube;
-	private CubeColor[][][] backup;
+	private CubeColor[][][] currCube;
+	private CubeColor[][][] prevCube;
+	private CubeColor[][][] tempCube;
 
 	private CubeAnimationInfo animationInfo;
 
@@ -54,24 +55,26 @@ public class MagicCube {
 	}
 
 	private void initCube() {
-		cube = new CubeColor[order + 2][order + 2][order + 2];
-		backup = new CubeColor[order + 2][order + 2][order + 2];
+		currCube = new CubeColor[order + 2][order + 2][order + 2];
+		tempCube = new CubeColor[order + 2][order + 2][order + 2];
+		prevCube = new CubeColor[order + 2][order + 2][order + 2];
 		for (int i = 0; i < order + 2; i++) {
 			for (int j = 0; j < order + 2; j++) {
 				for (int k = 0; k < order + 2; k++) {
-					cube[i][j][k] = CubeColor.BLACK;
-					backup[i][j][k] = CubeColor.BLACK;
+					currCube[i][j][k] = CubeColor.BLACK;
+					tempCube[i][j][k] = CubeColor.BLACK;
+					prevCube[i][j][k] = CubeColor.BLACK;
 				}
 			}
 		}
 		for (int i = 1; i <= order; i++) {
 			for (int j = 1; j <= order; j++) {
-				cube[i][j][0] = CubeColor.ORANGE; // back
-				cube[i][j][order + 1] = CubeColor.RED; // front
-				cube[i][0][j] = CubeColor.WHITE; // down
-				cube[i][order + 1][j] = CubeColor.YELLOW; // up
-				cube[0][i][j] = CubeColor.BLUE; // left
-				cube[order + 1][i][j] = CubeColor.GREEN; // right
+				currCube[i][j][0] = CubeColor.ORANGE; // back
+				currCube[i][j][order + 1] = CubeColor.RED; // front
+				currCube[i][0][j] = CubeColor.WHITE; // down
+				currCube[i][order + 1][j] = CubeColor.YELLOW; // up
+				currCube[0][i][j] = CubeColor.BLUE; // left
+				currCube[order + 1][i][j] = CubeColor.GREEN; // right
 			}
 		}
 	}
@@ -166,11 +169,14 @@ public class MagicCube {
 	}
 
 	public boolean turnBySymbol(String symbol) {
-		List<Move> moves = SymbolMoveUtil.parseMovesFromSymbolSequence(symbol,
-				order);
-		if(moves.size()>0){
-			Move mv = moves.get(0);
-			return this.turn(mv.dimension, mv.layers, mv.direction);
+		Move move = SymbolMoveUtil.parseMoveFromSymbol(symbol, order);
+		if (move != null) {
+			if (move.doubleTurn) {
+				return turnTwice(move.dimension, move.layers, move.direction);
+			} else {
+
+				return turn(move.dimension, move.layers, move.direction);
+			}
 		}
 		return false;
 	}
@@ -237,12 +243,12 @@ public class MagicCube {
 				return;
 			}
 
-			Color up = CUBE_COLORS[cube[i][j + 1][k].ordinal()];
-			Color down = CUBE_COLORS[cube[i][j - 1][k].ordinal()];
-			Color right = CUBE_COLORS[cube[i + 1][j][k].ordinal()];
-			Color left = CUBE_COLORS[cube[i - 1][j][k].ordinal()];
-			Color front = CUBE_COLORS[cube[i][j][k + 1].ordinal()];
-			Color back = CUBE_COLORS[cube[i][j][k - 1].ordinal()];
+			Color up = CUBE_COLORS[currCube[i][j + 1][k].ordinal()];
+			Color down = CUBE_COLORS[currCube[i][j - 1][k].ordinal()];
+			Color right = CUBE_COLORS[currCube[i + 1][j][k].ordinal()];
+			Color left = CUBE_COLORS[currCube[i - 1][j][k].ordinal()];
+			Color front = CUBE_COLORS[currCube[i][j][k + 1].ordinal()];
+			Color back = CUBE_COLORS[currCube[i][j][k - 1].ordinal()];
 			blocks[i - 1][j - 1][k - 1].setSideColors(up, down, right, left,
 					front, back);
 		}
@@ -281,9 +287,9 @@ public class MagicCube {
 				if (rotationRate >= 90 || rotationRate <= -90) {
 					view.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 					inAnimation = false;
-					CubeColor[][][] tmp = cube;
-					cube = backup;
-					backup = tmp;
+					CubeColor[][][] tmp = currCube;
+					currCube = tempCube;
+					tempCube = tmp;
 				}
 			} else {
 				Log.v("3dtest", "is drawing");
@@ -490,7 +496,7 @@ public class MagicCube {
 		}
 
 		public void setCubeColors() {
-			CubeColor drawCube[][][] = cube;
+			CubeColor drawCube[][][] = currCube;
 			if (inAnimation && animationInfo != null
 					&& animationInfo.cube != null) {
 				drawCube = animationInfo.cube;
@@ -546,7 +552,8 @@ public class MagicCube {
 		public void draw(GL10 gl) {
 			if (inAnimation) {
 				CubeAnimationInfo info = getAnimationInfo();
-				float rt = (90f * info.currentStep()) / info.totalStep();
+				float angle = info.doubleTurn ? 180f : 90f;
+				float rt = (angle * info.currentStep()) / info.totalStep();
 				if (info.direction > 0) {
 					rt = -rt;
 				}
@@ -774,7 +781,7 @@ public class MagicCube {
 		}
 
 		public void setCubeColors() {
-			CubeColor drawCube[][][] = cube;
+			CubeColor drawCube[][][] = currCube;
 			if (inAnimation && animationInfo != null
 					&& animationInfo.cube != null) {
 				drawCube = animationInfo.cube;
@@ -830,7 +837,8 @@ public class MagicCube {
 		public void draw(GL10 gl) {
 			if (inAnimation) {
 				CubeAnimationInfo info = getAnimationInfo();
-				float rt = (90f * info.currentStep()) / info.totalStep();
+				float angle = info.doubleTurn ? 180f : 90f;
+				float rt = (angle * info.currentStep()) / info.totalStep();
 				if (info.direction > 0) {
 					rt = -rt;
 				}
@@ -929,58 +937,89 @@ public class MagicCube {
 		return turn(dim, layers, direction);
 	}
 
-	public boolean turn(int dimension, List<Integer> layers, int direction) {
+	public boolean turnTwice(int dimension, List<Integer> layers, int direction) {
+		return this.turn(dimension, layers, direction, true);
+	}
 
-		Log.v("motiontest", "in actual turn routine: layers:"
-				+ layers.toString() + ", dimension: " + dimension
-				+ ", direction: " + direction);
-		backupModel();
+	public boolean turn(int dimension, List<Integer> layers, int direction,
+			boolean twice) {
 		boolean succeed = true;
-		for (int layer : layers) {
-			if (layer == 1 || layer == order) {
-				int l = layer == 1 ? 0 : order + 1;
-				succeed = turnFace(dimension, l, direction) && succeed;
-			}
-			Log.v("motiontest", "turn side " + layer);
-			succeed = turnSide(dimension, layer, direction) && succeed;
-		}
-		swapModel();
+		copyModel(currCube, tempCube);
+		succeed = turnInternal(currCube, tempCube, dimension, layers, direction)
+				&& succeed;
+		if (twice) {
 
-		if (!this.noAnimationMode) {
+			copyModel(tempCube, prevCube);
+			succeed = turnInternal(tempCube, prevCube, dimension, layers,
+					direction)
+					&& succeed;
+			CubeColor[][][] tmp = tempCube;
+			tempCube = prevCube;
+			prevCube = tmp;
+		}
+		if (succeed) {
+			CubeColor[][][] tmp = currCube;
+			currCube = tempCube;
+			tempCube = prevCube;
+			prevCube = tmp;
+		}
+
+		if (succeed && !this.noAnimationMode) {
 			this.animationInfo.reset();
-			this.animationInfo.cube = backup;
+			this.animationInfo.cube = prevCube;
 			this.animationInfo.layers.clear();
 			this.animationInfo.layers.addAll(layers);
 			this.animationInfo.direction = direction;
 			this.animationInfo.dimension = dimension;
+			this.animationInfo.doubleTurn = twice;
 		}
-		/* end for test */
 		return succeed;
 	}
 
-	private boolean turnSide(int dimension, int layer, int direction) {
+	private boolean turnInternal(CubeColor[][][] from, CubeColor[][][] to,
+			int dimension, List<Integer> layers, int direction) {
+		boolean succeed = true;
+		for (int layer : layers) {
+			if (layer == 1 || layer == order) {
+				int l = layer == 1 ? 0 : order + 1;
+				succeed = turnFace(from, to, dimension, l, direction)
+						&& succeed;
+			}
+			Log.v("motiontest", "turn side " + layer);
+			succeed = turnSide(from, to, dimension, layer, direction)
+					&& succeed;
+		}
+		return succeed;
+	}
+
+	public boolean turn(int dimension, List<Integer> layers, int direction) {
+		return this.turn(dimension, layers, direction, false);
+	}
+
+	private boolean turnSide(CubeColor[][][] from, CubeColor[][][] to,
+			int dimension, int layer, int direction) {
 		Pair pair = new Pair();
 		if (dimension == DIM_X) {
 			for (int i = 1; i <= order; i++) {
 				pair.x = 0;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[layer][pair.x][pair.y] = cube[layer][0][i];
+				to[layer][pair.x][pair.y] = from[layer][0][i];
 
 				pair.x = order + 1;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[layer][pair.x][pair.y] = cube[layer][order + 1][i];
+				to[layer][pair.x][pair.y] = from[layer][order + 1][i];
 
 				pair.x = i;
 				pair.y = 0;
 				applyRotate(pair, direction);
-				backup[layer][pair.x][pair.y] = cube[layer][i][0];
+				to[layer][pair.x][pair.y] = from[layer][i][0];
 
 				pair.x = i;
 				pair.y = order + 1;
 				applyRotate(pair, direction);
-				backup[layer][pair.x][pair.y] = cube[layer][i][order + 1];
+				to[layer][pair.x][pair.y] = from[layer][i][order + 1];
 
 			}
 			return true;
@@ -989,21 +1028,21 @@ public class MagicCube {
 				pair.x = 0;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[pair.y][layer][pair.x] = cube[i][layer][0];
+				to[pair.y][layer][pair.x] = from[i][layer][0];
 				pair.x = order + 1;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[pair.y][layer][pair.x] = cube[i][layer][order + 1];
+				to[pair.y][layer][pair.x] = from[i][layer][order + 1];
 
 				pair.x = i;
 				pair.y = 0;
 				applyRotate(pair, direction);
-				backup[pair.y][layer][pair.x] = cube[0][layer][i];
+				to[pair.y][layer][pair.x] = from[0][layer][i];
 
 				pair.x = i;
 				pair.y = order + 1;
 				applyRotate(pair, direction);
-				backup[pair.y][layer][pair.x] = cube[order + 1][layer][i];
+				to[pair.y][layer][pair.x] = from[order + 1][layer][i];
 
 			}
 			return true;
@@ -1012,22 +1051,22 @@ public class MagicCube {
 				pair.x = 0;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[pair.x][pair.y][layer] = cube[0][i][layer];
+				to[pair.x][pair.y][layer] = from[0][i][layer];
 
 				pair.x = order + 1;
 				pair.y = i;
 				applyRotate(pair, direction);
-				backup[pair.x][pair.y][layer] = cube[order + 1][i][layer];
+				to[pair.x][pair.y][layer] = from[order + 1][i][layer];
 
 				pair.x = i;
 				pair.y = 0;
 				applyRotate(pair, direction);
-				backup[pair.x][pair.y][layer] = cube[i][0][layer];
+				to[pair.x][pair.y][layer] = from[i][0][layer];
 
 				pair.x = i;
 				pair.y = order + 1;
 				applyRotate(pair, direction);
-				backup[pair.x][pair.y][layer] = cube[i][order + 1][layer];
+				to[pair.x][pair.y][layer] = from[i][order + 1][layer];
 
 			}
 			return true;
@@ -1035,7 +1074,8 @@ public class MagicCube {
 		return false;
 	}
 
-	private boolean turnFace(int dimension, int layer, int direction) {
+	private boolean turnFace(CubeColor[][][] from, CubeColor[][][] to,
+			int dimension, int layer, int direction) {
 		Pair pair = new Pair();
 		if (dimension == DIM_X) {
 			for (int i = 1; i <= order; i++) {
@@ -1043,7 +1083,7 @@ public class MagicCube {
 					pair.x = i;
 					pair.y = j;
 					applyRotate(pair, direction);
-					backup[layer][pair.x][pair.y] = cube[layer][i][j];
+					to[layer][pair.x][pair.y] = from[layer][i][j];
 				}
 			}
 			return true;
@@ -1053,7 +1093,7 @@ public class MagicCube {
 					pair.x = i;
 					pair.y = j;
 					applyRotate(pair, direction);
-					backup[pair.y][layer][pair.x] = cube[j][layer][i];
+					to[pair.y][layer][pair.x] = from[j][layer][i];
 				}
 			}
 			return true;
@@ -1063,7 +1103,7 @@ public class MagicCube {
 					pair.x = i;
 					pair.y = j;
 					applyRotate(pair, direction);
-					backup[pair.x][pair.y][layer] = cube[i][j][layer];
+					to[pair.x][pair.y][layer] = from[i][j][layer];
 				}
 			}
 			return true;
@@ -1071,43 +1111,15 @@ public class MagicCube {
 		return false;
 	}
 
-	private boolean turn(char side, int direction) {
-		List<Integer> layers = new LinkedList<Integer>();
-		int dimension = 0;
-		if (side == 'f' || side == 'u' || side == 'r') {
-			layers.add(order);
-		} else if (side == 'b' || side == 'd' || side == 'l') {
-			layers.add(1);
-			direction = -direction;
-		}
-
-		side = ("" + side).toLowerCase().charAt(0);
-		if (side == 'u' || side == 'd') {
-			dimension = DIM_Y;
-		} else if (side == 'r' || side == 'l') {
-			dimension = DIM_X;
-		} else if (side == 'f' || side == 'b') {
-			dimension = DIM_Z;
-		}
-
-		return this.turn(dimension, layers, direction);
-	}
-
-	private void swapModel() {
-		CubeColor[][][] tmp = backup;
-		backup = cube;
-		cube = tmp;
-	}
-
-	private void backupModel() {
+	private void copyModel(CubeColor[][][] from, CubeColor[][][] to) {
 		for (int i = 1; i <= order; i++) {
 			for (int j = 1; j <= order; j++) {
-				backup[i][j][0] = cube[i][j][0]; // back
-				backup[i][j][order + 1] = cube[i][j][order + 1]; // front
-				backup[i][0][j] = cube[i][0][j]; // down
-				backup[i][order + 1][j] = cube[i][order + 1][j]; // up
-				backup[0][i][j] = cube[0][i][j]; // left
-				backup[order + 1][i][j] = cube[order + 1][i][j]; // right
+				to[i][j][0] = from[i][j][0]; // back
+				to[i][j][order + 1] = from[i][j][order + 1]; // front
+				to[i][0][j] = from[i][0][j]; // down
+				to[i][order + 1][j] = from[i][order + 1][j]; // up
+				to[0][i][j] = from[0][i][j]; // left
+				to[order + 1][i][j] = from[order + 1][i][j]; // right
 			}
 		}
 	}

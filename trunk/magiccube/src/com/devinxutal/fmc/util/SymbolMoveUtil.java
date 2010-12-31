@@ -34,30 +34,38 @@ public class SymbolMoveUtil {
 		SymbolTokenizer t = new SymbolTokenizer(sequence);
 		String token = null;
 		while ((token = t.nextToken()) != null) {
-			list.addAll(parseMovesFromSymbol(token, cubeOrder));
+			Move mv = parseMoveFromSymbol(token, cubeOrder);
+			if (mv != null) {
+				list.add(mv);
+			}
 		}
 		return list;
 	}
 
-	public static List<Move> parseMovesFromSymbol(String symbol, int cubeOrder) {
-		LinkedList<Move> list = new LinkedList<Move>();
+	public static Move parseMoveFromSymbol(String symbol, int cubeOrder) {
 		boolean dbl = false;
-		if (symbol.length() == 0) {
-			return list;
+
+		int dir = 1;
+
+		if (symbol.length() == 0 || symbol.length() > 3) {
+			return null;
 		}
+
 		if (symbol.length() == 3) {
-			if (symbol.charAt(1) != '2') {
-				return list;
+			if (symbol.charAt(2) != '2' || symbol.charAt(1) != '\'') {
+				return null;
 			} else {
 				dbl = true;
+				dir = -dir;
+			}
+		} else if (symbol.length() == 2) {
+			if (symbol.charAt(1) == '2') {
+				dbl = true;
+			} else if (symbol.charAt(1) == '\'') {
+				dir = -dir;
 			}
 		}
-		int dir = 1;
-		if (symbol.length() > 1 && symbol.charAt(symbol.length() - 1) != '\'') {
-			return list;
-		} else if (symbol.charAt(symbol.length() - 1) != '\'') {
-			dir = -1;
-		}
+
 		symbol = symbol.substring(0, 1);
 		boolean upper = symbol.charAt(0) >= 'A' && symbol.charAt(0) <= 'Z';
 		int dim = 0;
@@ -83,13 +91,27 @@ public class SymbolMoveUtil {
 			dim = MagicCube.DIM_X;
 			dir = -dir;
 			break;
+		case 'x':
+			dim = MagicCube.DIM_X;
+			break;
+		case 'y':
+			dim = MagicCube.DIM_Y;
+			break;
+		case 'z':
+			dim = MagicCube.DIM_Z;
+			break;
 		default:
-			return list;
+			return null;
 		}
 		Move mv = new Move();
 		mv.dimension = dim;
 		mv.direction = dir;
-		if (symbol.toLowerCase().charAt(0) == 'u'
+		if (symbol.charAt(0) == 'x' || symbol.charAt(0) == 'y'
+				|| symbol.charAt(0) == 'z') {
+			for (int i = 1; i <= cubeOrder; i++) {
+				mv.layers.add(i);
+			}
+		} else if (symbol.toLowerCase().charAt(0) == 'u'
 				|| symbol.toLowerCase().charAt(0) == 'f'
 				|| symbol.toLowerCase().charAt(0) == 'r') {
 			mv.layers.add(cubeOrder);
@@ -102,11 +124,10 @@ public class SymbolMoveUtil {
 				mv.layers.add(2);
 			}
 		}
-		list.addLast(mv);
 		if (dbl) {
-			list.addLast(mv.cloneMove());
+			mv.doubleTurn = true;
 		}
-		return list;
+		return mv;
 	}
 
 	public static boolean isValidSymbol(String symbol) {
