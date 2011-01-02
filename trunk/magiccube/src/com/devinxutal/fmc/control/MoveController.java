@@ -3,6 +3,8 @@ package com.devinxutal.fmc.control;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
 public class MoveController implements AnimationListener {
 	public enum State {
 		RUNING_SINGLE_STEP, RUNNING_MULTPLE_STEP, PAUSED, STOPPED
@@ -74,7 +76,9 @@ public class MoveController implements AnimationListener {
 			notifyStatusChanged(State.RUNING_SINGLE_STEP, State.STOPPED);
 		} else if (this.getState() == State.RUNNING_MULTPLE_STEP) {
 			if (moveThread != null) {
-				moveThread.notify();
+				synchronized (moveThread) {
+					moveThread.notify();
+				}
 			}
 		}
 	}
@@ -117,7 +121,7 @@ public class MoveController implements AnimationListener {
 
 	class MoveThread extends Thread {
 		private MoveSequence sequence;
-		private int interval = 500;
+		private int interval = 200;
 
 		public MoveThread(MoveSequence sequence) {
 			this.sequence = sequence;
@@ -136,11 +140,16 @@ public class MoveController implements AnimationListener {
 				}
 				cubeController.turnByMove(mv);
 				notifyMoveSequenceStepped(sequence.currentMoveIndex());
+				long start = System.currentTimeMillis();
 				try {
-					this.wait();
+					synchronized (this) {
+						this.wait();
+					}
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
+				long end = System.currentTimeMillis();
+				Log.v("cc", "wait time: " + (end - start));
 			}
 			changeState(MoveController.State.STOPPED);
 		}

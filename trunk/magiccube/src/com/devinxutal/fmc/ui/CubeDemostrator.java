@@ -203,7 +203,7 @@ public class CubeDemostrator extends ViewGroup implements
 			((Activity) c).runOnUiThread(new Runnable() {
 				public void run() {
 
-					indicator.moveTo(to);
+					indicator.moveTo(to + 1);
 				}
 
 			});
