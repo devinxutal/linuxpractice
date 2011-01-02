@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,17 +47,18 @@ public class MoveSequenceIndicator extends SurfaceView {
 	 */
 	public MoveSequenceIndicator(Context context) {
 		super(context);
-		symbols = new LinkedList<String>();
-		symbols.addLast(SYMBOL_END);
-
-		dm = new DrawingMetrics();
-		dm.setSymbols(symbols);
-		dm.recalculate();
-
 		init();
-		this.setWillNotDraw(false);
-		this.animationThread = new AnimationThread();
-		this.animationThread.start();
+	}
+
+	public MoveSequenceIndicator(Context context, AttributeSet attrs,
+			int defStyle) {
+		super(context, attrs, defStyle);
+		init();
+	}
+
+	public MoveSequenceIndicator(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
 	}
 
 	public void setMoveSymbols(String[] symbols) {
@@ -141,9 +143,21 @@ public class MoveSequenceIndicator extends SurfaceView {
 	}
 
 	private final void init() {
+
+		symbols = new LinkedList<String>();
+		symbols.addLast(SYMBOL_END);
+
+		dm = new DrawingMetrics();
+		dm.setSymbols(symbols);
+		dm.recalculate();
+
 		setPadding(3, 10, 3, 10);
 		this.bufferBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 		this.bufferCanvas = new Canvas();
+
+		this.setWillNotDraw(false);
+		this.animationThread = new AnimationThread();
+		this.animationThread.start();
 	}
 
 	/**

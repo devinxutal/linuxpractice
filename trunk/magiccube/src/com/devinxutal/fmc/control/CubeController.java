@@ -1,5 +1,7 @@
 package com.devinxutal.fmc.control;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,6 +25,8 @@ public class CubeController {
 
 	private Timer animationTimer;
 	private Timer presentationTimer;
+
+	private List<AnimationListener> listeners = new LinkedList<AnimationListener>();
 
 	public CubeController(Context context) {
 		this(context, true);
@@ -48,7 +52,16 @@ public class CubeController {
 		return this.magicCube;
 	}
 
-	public void turnByGesture(int i, int j, int k, int dx, int dy) {
+	public boolean turnByMove(Move move) {
+		boolean succeed = this.magicCube.turn(move.dimension, move.layers,
+				move.direction, move.doubleTurn);
+		if (succeed) {
+			startAnimation();
+		}
+		return succeed;
+	}
+
+	public boolean turnByGesture(int i, int j, int k, int dx, int dy) {
 		boolean succeed = this.magicCube.turnByGesture(i, j, k, dx, dy);
 		if (succeed) {
 			startAnimation();
@@ -56,9 +69,10 @@ public class CubeController {
 			t.setText("turn not succeeded");
 			t.show();
 		}
+		return succeed;
 	}
 
-	public void turnBySymbol(String symbol) {
+	public boolean turnBySymbol(String symbol) {
 		boolean succeed = this.magicCube.turnBySymbol(symbol);
 		if (succeed) {
 			startAnimation();
@@ -66,6 +80,7 @@ public class CubeController {
 			t.setText("turn not succeeded");
 			t.show();
 		}
+		return succeed;
 	}
 
 	public void rotate(int dimension, int direction) {
@@ -78,7 +93,7 @@ public class CubeController {
 		}
 	}
 
-	public void startAnimation() {
+	private void startAnimation() {
 		if (inAnimation) {
 			return;
 		}
@@ -87,7 +102,6 @@ public class CubeController {
 		this.magicCube.getAnimationInfo().setAnimation(6);
 		this.animationTimer = new Timer();
 		this.animationTimer.scheduleAtFixedRate(new TimerTask() {
-
 			@Override
 			public void run() {
 				CubeAnimationInfo info = magicCube.getAnimationInfo();
@@ -101,7 +115,7 @@ public class CubeController {
 		}, 0, 70);
 	}
 
-	public void finishAnimation() {
+	private void finishAnimation() {
 		if (!inAnimation) {
 			return;
 		}
@@ -111,6 +125,25 @@ public class CubeController {
 			animationTimer.cancel();
 			animationTimer.purge();
 			animationTimer = null;
+		}
+		notifyAnimationFinished();
+	}
+
+	public boolean addAnimationListener(AnimationListener l) {
+		return listeners.add(l);
+	}
+
+	public boolean removeAnimationListener(AnimationListener l) {
+		return listeners.remove(l);
+	}
+
+	public void clearAnimationListeners(AnimationListener l) {
+		listeners.clear();
+	}
+
+	protected void notifyAnimationFinished() {
+		for (AnimationListener l : listeners) {
+			l.animationFinishied();
 		}
 	}
 
@@ -224,4 +257,5 @@ public class CubeController {
 		}
 
 	}
+
 }

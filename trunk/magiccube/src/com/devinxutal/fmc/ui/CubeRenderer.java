@@ -96,10 +96,10 @@ public class CubeRenderer implements Renderer {
 		gl.glRotatef(30, 1, 0, 0);
 		gl.glRotatef(-45, 0, 1, 0);
 		gl.glRotatef(0, 0, 0, 1);
-
-		magicCube.getCubie().setCubeColors();
-		magicCube.getCubie().draw(gl);
-
+		if (magicCube != null) {
+			magicCube.getCubie().setCubeColors();
+			magicCube.getCubie().draw(gl);
+		}
 		// /new ESquare().draw(gl);
 	}
 
