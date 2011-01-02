@@ -11,7 +11,7 @@ public class MoveSequence {
 
 	public MoveSequence() {
 		moves = new LinkedList<Move>();
-		current = 0;
+		current = -1;
 	}
 
 	public MoveSequence(String symbols, int cubeOrder) {
@@ -32,27 +32,52 @@ public class MoveSequence {
 	}
 
 	public int currentMoveIndex() {
-		if (current >= moves.size()) {
+		if (current >= 0 && current < moves.size()) {
+			return current;
+		} else {
 			return -1;
 		}
-		return current;
 	}
 
 	public Move currentMove() {
-		if (current >= moves.size()) {
-			return null;
-		} else {
+		if (current >= 0 && current < moves.size()) {
 			return moves.get(current);
+		} else {
+			return null;
 		}
 	}
 
-	public boolean step() {
-		if (current < moves.size()) {
-			current++;
-			return true;
+	public Move nextMove() {
+		if (current >= -1 && current < moves.size() - 1) {
+			return moves.get(current + 1);
 		} else {
-			return false;
+			return null;
 		}
+	}
+
+	public int nextMoveIndex() {
+		if (current < moves.size()) {
+			return current + 1;
+		} else {
+			return -1;
+		}
+	}
+
+	public Move step() {
+		if (current >= -1 && current < moves.size()) {
+			current++;
+			if (current == moves.size()) {
+				return null;
+			} else {
+				return moves.get(current);
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public void reset() {
+		this.current = -1;
 	}
 
 }

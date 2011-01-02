@@ -35,7 +35,7 @@ public class MagicCubeActivity extends Activity {
 		View v = new CubeDemostrator(this, SymbolMoveUtil
 				.parseSymbolSequenceAsArray(sequence));
 		setContentView(v);
-
+		//setContentView(R.layout.cubedemo);
 	}
 
 	@Override

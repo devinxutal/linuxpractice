@@ -6,15 +6,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.primitives.Color;
 import com.devinxutal.fmc.primitives.Point3I;
 
-public class CubeView extends GLSurfaceView{
+public class CubeView extends GLSurfaceView {
 
 	private MagicCube magicCube;
 
@@ -43,12 +41,19 @@ public class CubeView extends GLSurfaceView{
 		this.setRenderer(cubeRenderer);
 
 		this.cubeRenderer.setCubeView(this);
-		
+
 		this.setFocusable(true);
 		this.setFocusableInTouchMode(true);
 
-
 		this.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		Log.v("cc", "width and height:"+widthMeasureSpec+", "+heightMeasureSpec);
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		Log.v("cc", "measured width and height:"+this.getMeasuredWidth()+", "+this.getMeasuredWidth());
+		//this.setMeasuredDimension(getMeasuredWidth(), heightMeasureSpec);
 	}
 
 	private CubeRenderer cubeRenderer;
