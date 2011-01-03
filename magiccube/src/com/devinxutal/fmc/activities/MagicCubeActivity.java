@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.control.CubeController;
-import com.devinxutal.fmc.ui.CubeDemostrator;
-import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class MagicCubeActivity extends Activity {
 	private CubeController controller;
@@ -26,16 +23,10 @@ public class MagicCubeActivity extends Activity {
 		 */
 		super.onCreate(savedInstanceState);
 
-		controller = new CubeController(this, false);
+		controller = new CubeController(this, true);
 
 		setContentView(controller.getCubeView());
 
-		/* for test */
-		String sequence = " R2 R'2 u' u2 d'2 R L U D F B R' L' U' D' F' B' r l u d f b r' l' u' d' f' b')";
-		View v = new CubeDemostrator(this, SymbolMoveUtil
-				.parseSymbolSequenceAsArray(sequence));
-		setContentView(v);
-		//setContentView(R.layout.cubedemo);
 	}
 
 	@Override
@@ -61,6 +52,10 @@ public class MagicCubeActivity extends Activity {
 			Intent a = new Intent(getBaseContext(),
 					CubeDemostratorActivity.class);
 			startActivity(a);
+			return true;
+		case R.id.infinite:
+			Intent b = new Intent(getBaseContext(), InfiniteCubeActivity.class);
+			startActivity(b);
 			return true;
 		}
 		return false;

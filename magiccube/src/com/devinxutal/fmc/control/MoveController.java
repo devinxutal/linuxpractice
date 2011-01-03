@@ -21,7 +21,7 @@ public class MoveController implements AnimationListener {
 		this.cubeController.addAnimationListener(this);
 	}
 
-	public boolean startMove(MoveSequence sequence) {
+	public boolean startMove(IMoveSequence sequence) {
 		if (this.state != State.STOPPED) {
 			return false;
 		}
@@ -48,7 +48,9 @@ public class MoveController implements AnimationListener {
 		if (this.state != State.RUNNING_MULTPLE_STEP) {
 			return false;
 		}
-		return false;
+		moveThread.paused = true;
+		changeState(State.PAUSED);
+		return true;
 	}
 
 	public boolean stopMove() {
@@ -56,6 +58,11 @@ public class MoveController implements AnimationListener {
 				&& this.state != State.PAUSED) {
 			return false;
 		}
+		this.moveThread.canceled = true;
+		if (this.state == State.PAUSED) {
+			this.moveThread.paused = false;
+		}
+		changeState(State.STOPPED);
 		return false;
 	}
 
@@ -63,6 +70,8 @@ public class MoveController implements AnimationListener {
 		if (this.state != State.PAUSED) {
 			return false;
 		}
+		this.moveThread.paused = false;
+		changeState(State.RUNNING_MULTPLE_STEP);
 		return false;
 	}
 
@@ -120,10 +129,12 @@ public class MoveController implements AnimationListener {
 	}
 
 	class MoveThread extends Thread {
-		private MoveSequence sequence;
+		private IMoveSequence sequence;
 		private int interval = 200;
+		private boolean paused = false;
+		private boolean canceled = false;
 
-		public MoveThread(MoveSequence sequence) {
+		public MoveThread(IMoveSequence sequence) {
 			this.sequence = sequence;
 
 		}
@@ -133,6 +144,18 @@ public class MoveController implements AnimationListener {
 			sequence.reset();
 			Move mv;
 			while ((mv = sequence.step()) != null) {
+				if (canceled) {
+					break;
+				}
+				Log.v("cc", "before paused");
+				while (paused) {
+					try {
+						sleep(100);
+						Log.v("cc", "paused");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				try {
 					sleep(interval);
 				} catch (Exception e) {

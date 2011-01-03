@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.devinxutal.fmc.ui.CubeDemostrator;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class CubeDemostratorActivity extends Activity {
 
@@ -12,9 +13,9 @@ public class CubeDemostratorActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		View v = new CubeDemostrator(this, new String[] { "R", "L", "r", "F'",
-				"R2'", "R", "D","L", "r", "F'", "R2'" });
+		String sequence = " R2 R'2 u' u2 d'2 R L U D F B R' L' U' D' F' B' r l u d f b r' l' u' d' f' b')";
+		View v = new CubeDemostrator(this, SymbolMoveUtil
+				.parseSymbolSequenceAsArray(sequence));
 		setContentView(v);
 	}
 }

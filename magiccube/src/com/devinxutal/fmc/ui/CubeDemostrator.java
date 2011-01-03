@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -34,6 +35,7 @@ public class CubeDemostrator extends ViewGroup implements
 	private ImageButton prevButton;
 	private ImageButton nextButton;
 	private ImageButton playButton;
+	private Button resetButton;
 
 	//
 	private String[] symbols;
@@ -91,6 +93,10 @@ public class CubeDemostrator extends ViewGroup implements
 		playButton.setBackgroundResource(R.drawable.play_button);
 		playButton.setImageResource(R.drawable.icon_play);
 
+		resetButton = new Button(getContext());
+		resetButton.setText("Reset");
+		resetButton.setBackgroundResource(R.drawable.play_button);
+
 		buttonBar = new LinearLayout(getContext());
 		buttonBar.setOrientation(LinearLayout.HORIZONTAL);
 		buttonBar.setGravity(Gravity.CENTER_HORIZONTAL
@@ -101,12 +107,15 @@ public class CubeDemostrator extends ViewGroup implements
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		buttonBar.addView(nextButton, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		buttonBar.addView(resetButton, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		this.addView(buttonBar);
 
 		OnClickListener l = new ButtonsOnClick();
 		nextButton.setOnClickListener(l);
 		prevButton.setOnClickListener(l);
 		playButton.setOnClickListener(l);
+		resetButton.setOnClickListener(l);
 
 	}
 
@@ -186,6 +195,15 @@ public class CubeDemostrator extends ViewGroup implements
 					if (seq.totalMoves() > 0) {
 						moveController.startMove(seq);
 					}
+				} else if (moveController.getState() == MoveController.State.RUNNING_MULTPLE_STEP) {
+					moveController.pauseMove();
+				} else if (moveController.getState() == MoveController.State.PAUSED) {
+					moveController.resumeMove();
+				}
+			} else if (view == resetButton) {
+				if (moveController.getState() == MoveController.State.STOPPED) {
+					current = 0;
+					indicator.moveTo(0);
 				}
 			}
 			// cubeController.turnBySymbol(indicator.getCurrentSymbol());

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
-public class MoveSequence {
+public class MoveSequence implements IMoveSequence {
 	private LinkedList<Move> moves;
 	private int current;
 	private int cubeOrder;
