@@ -132,6 +132,7 @@ public class CubeRenderer implements Renderer {
 		if (colorPickerBytes == null || colorPickerBytes.length != len) {
 			colorPickerBytes = new byte[len];
 		}
+		colorPickerBuffer.rewind();
 		gl.glReadPixels(0, 0, viewWidth, viewHeight, GL10.GL_RGBA,
 				GL10.GL_UNSIGNED_BYTE, colorPickerBuffer);
 		colorPickerBuffer.get(colorPickerBytes, 0, len);

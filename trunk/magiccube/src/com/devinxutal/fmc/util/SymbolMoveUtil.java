@@ -2,6 +2,7 @@ package com.devinxutal.fmc.util;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.model.MagicCube;
@@ -135,6 +136,23 @@ public class SymbolMoveUtil {
 			return true;
 		}
 		return false;
+	}
+
+	public static Move randomMove(int cubeOrder) {
+		Move move = new Move();
+		Random r = new Random();
+		move.direction = r.nextDouble() >= 0.5 ? 1 : -1;
+		int rd = r.nextInt(3);
+		if (rd == 0) {
+			move.dimension = MagicCube.DIM_X;
+		} else if (rd == 1) {
+			move.dimension = MagicCube.DIM_Y;
+		} else {
+			move.dimension = MagicCube.DIM_Z;
+		}
+		move.layers.add(r.nextInt(cubeOrder) + 1);
+
+		return move;
 	}
 }
 
