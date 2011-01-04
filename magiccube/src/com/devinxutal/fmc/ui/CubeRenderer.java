@@ -145,9 +145,6 @@ public class CubeRenderer implements Renderer {
 	private byte[] colorPickerBytes = null;
 
 	public Color getColorAt(int x, int y) {
-		Log.v("colortest", "width and height and size:" + viewWidth + " "
-				+ viewHeight + " " + viewWidth * viewHeight);
-		Log.v("colortest", " buffer size:" + colorPickerBytes.length / 4);
 		if (this.cubeView == null || colorPickerBytes == null) {
 			return null;
 		}
