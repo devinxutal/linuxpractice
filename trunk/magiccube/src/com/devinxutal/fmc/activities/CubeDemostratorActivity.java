@@ -14,7 +14,7 @@ public class CubeDemostratorActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String sequence = " R2 R'2 u' u2 d'2 R L U D F B R' L' U' D' F' B' r l u d f b r' l' u' d' f' b')";
+		String sequence = "( R2 R'2 )( u' u2 d'2) R L U D F B R' L' U' D' F' B' r l u d f b r' l' u' d' f' b')";
 		demostrator = new CubeDemostrator(this, SymbolMoveUtil
 				.parseSymbolSequenceAsArray(sequence));
 		setContentView(demostrator);
