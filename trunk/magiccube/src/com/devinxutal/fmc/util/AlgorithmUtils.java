@@ -12,9 +12,9 @@ import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.model.MagicCube.CubeColor;
 
 public class AlgorithmUtils {
-	public static int[][][] getCubeAsIntArray(MagicCube cube) {
-		int[][][] model = new int[cube.getOrder()][cube.getOrder()][cube
-				.getOrder()];
+	public static Integer[][][] getCubeAsIntArray(MagicCube cube) {
+		Integer[][][] model = new Integer[cube.getOrder() + 2][cube.getOrder() + 2][cube
+				.getOrder() + 2];
 		CubeColor[][][] m = cube.getCube();
 		for (int i = 0; i < cube.getOrder() + 2; i++) {
 			for (int j = 0; j < cube.getOrder() + 2; j++) {

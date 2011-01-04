@@ -28,7 +28,7 @@ public class ColorPattern implements Pattern {
 			return false;
 		}
 		BasicCubeModel basicModel = (BasicCubeModel) model;
-		int[][][] cube = basicModel.get();
+		Integer[][][] cube = basicModel.get();
 		Map<Integer, Integer> colorMap = new HashMap<Integer, Integer>();
 		for (Constraint c : constraints) {
 			try {
@@ -81,8 +81,6 @@ public class ColorPattern implements Pattern {
 		public int getColor() {
 			return color;
 		}
-		
-		
 
 	}
 
