@@ -9,7 +9,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 import com.devinxutal.fmc.model.CubeAnimationInfo;
 import com.devinxutal.fmc.model.MagicCube;
@@ -39,9 +38,6 @@ public class CubeController {
 		this.magicCube.view = cubeView;
 		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
 		this.touchEnabled = touchEnabled;
-		if (t == null) {
-			t = Toast.makeText(cubeView.getContext(), "", 1000);
-		}
 	}
 
 	public CubeView getCubeView() {
@@ -66,8 +62,8 @@ public class CubeController {
 		if (succeed) {
 			startAnimation();
 		} else {
-			t.setText("turn not succeeded");
-			t.show();
+			// t.setText("turn not succeeded");
+			// t.show();
 		}
 		return succeed;
 	}
@@ -77,8 +73,8 @@ public class CubeController {
 		if (succeed) {
 			startAnimation();
 		} else {
-			t.setText("turn not succeeded");
-			t.show();
+			// t.setText("turn not succeeded");
+			// t.show();
 		}
 		return succeed;
 	}
@@ -88,8 +84,8 @@ public class CubeController {
 		if (succeed) {
 			startAnimation();
 		} else {
-			t.setText("rotate not succeeded");
-			t.show();
+			// t.setText("rotate not succeeded");
+			// t.show();
 		}
 	}
 
@@ -201,8 +197,6 @@ public class CubeController {
 			presentationTimer = null;
 		}
 	}
-
-	Toast t;
 
 	protected class OnCubeViewTouched implements OnTouchListener {
 		int startX, startY;

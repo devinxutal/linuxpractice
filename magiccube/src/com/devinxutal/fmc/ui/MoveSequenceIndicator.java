@@ -234,6 +234,8 @@ public class MoveSequenceIndicator extends SurfaceView {
 			if (c != null) {
 				paint(c, false);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			if (c != null) {
 				// Log.v("cc", "painting and posting");

@@ -20,7 +20,10 @@
 		<activity android:name=".activities.InfiniteCubeActivity"
 			android:label="@string/preferences_title">
 		</activity>
+		<activity android:name=".activities.TestActivity"
+			android:label="Test Activity">
+		</activity>
 	</application>
-	<uses-sdk android:minSdkVersion="7" />
+	<uses-sdk android:minSdkVersion="4" />
 
 </manifest> 
