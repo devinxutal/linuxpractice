@@ -22,11 +22,22 @@ public class MagicCubeActivity extends Activity {
 		 * WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
 		 */
 		super.onCreate(savedInstanceState);
-
 		controller = new CubeController(this, true);
-
+		controller.getCubeView().setId(12345676);
 		setContentView(controller.getCubeView());
 
+	}
+
+	@Override
+	protected void onPause() {
+		this.controller.getCubeView().onPause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		this.controller.getCubeView().onResume();
+		super.onResume();
 	}
 
 	@Override
@@ -48,14 +59,18 @@ public class MagicCubeActivity extends Activity {
 					Preferences.class);
 			startActivity(preferencesActivity);
 			return true;
-		case R.id.test:
+		case R.id.demostrator:
 			Intent a = new Intent(getBaseContext(),
 					CubeDemostratorActivity.class);
 			startActivity(a);
 			return true;
 		case R.id.infinite:
-			Intent b = new Intent(getBaseContext(), InfiniteCubeActivity.class);
-			startActivity(b);
+			try {
+				Intent b = new Intent(this, InfiniteCubeActivity.class);
+				startActivity(b);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return true;
 		}
 		return false;

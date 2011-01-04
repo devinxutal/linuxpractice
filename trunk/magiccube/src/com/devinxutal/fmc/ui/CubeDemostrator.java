@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -35,7 +34,7 @@ public class CubeDemostrator extends ViewGroup implements
 	private ImageButton prevButton;
 	private ImageButton nextButton;
 	private ImageButton playButton;
-	private Button resetButton;
+	private ImageButton resetButton;
 
 	//
 	private String[] symbols;
@@ -78,7 +77,7 @@ public class CubeDemostrator extends ViewGroup implements
 		this.indicator = new MoveSequenceIndicator(this.getContext());
 		this.cubeView = cubeController.getCubeView();
 
-		this.addView(cubeView, new LayoutParams(320, 320));
+		this.addView(cubeView);
 		this.addView(indicator);
 
 		prevButton = new ImageButton(getContext());
@@ -93,9 +92,9 @@ public class CubeDemostrator extends ViewGroup implements
 		playButton.setBackgroundResource(R.drawable.play_button);
 		playButton.setImageResource(R.drawable.icon_play);
 
-		resetButton = new Button(getContext());
-		resetButton.setText("Reset");
+		resetButton = new ImageButton(getContext());
 		resetButton.setBackgroundResource(R.drawable.play_button);
+		resetButton.setImageResource(R.drawable.icon_reset);
 
 		buttonBar = new LinearLayout(getContext());
 		buttonBar.setOrientation(LinearLayout.HORIZONTAL);
@@ -228,7 +227,28 @@ public class CubeDemostrator extends ViewGroup implements
 		}
 	}
 
-	public void statusChanged(State from, State to) {
-		Log.v("cc", "move controller changes state from " + from + " to " + to);
+	public void statusChanged(final State from, final State to) {
+		if (this.getContext() instanceof Activity) {
+			((Activity) getContext()).runOnUiThread(new Runnable() {
+				public void run() {
+					statusChangedUIMode(from, to);
+				}
+			});
+		}
+
 	}
+
+	private void statusChangedUIMode(State from, State to) {
+		Log.v("cc", "move controller changes state from " + from + " to " + to);
+		if (to == MoveController.State.RUNNING_MULTPLE_STEP) {
+			playButton.setImageResource(R.drawable.icon_stop);
+		} else if (to == MoveController.State.STOPPED) {
+			playButton.setImageResource(R.drawable.icon_play);
+		}
+	}
+
+	public CubeController getCubeController() {
+		return cubeController;
+	}
+
 }

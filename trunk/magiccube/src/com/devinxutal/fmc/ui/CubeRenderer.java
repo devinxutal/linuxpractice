@@ -81,6 +81,7 @@ public class CubeRenderer implements Renderer {
 	float rz = 0f;
 
 	public void onDrawFrame(GL10 gl) {
+		Log.v("colortest", "onDrawFrame");
 		checkColorPicker(gl);
 		// Clears the screen and depth buffer.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
@@ -108,7 +109,8 @@ public class CubeRenderer implements Renderer {
 			return;
 		}
 		resetColorPicker = false;
-		Log.v("colortest", "checkColorPicker is running");
+		Log.v("colortest", "[checkColorPicker] is running: viewHeight"
+				+ viewHeight + ", viewWidth:" + viewWidth);
 		// Clears the screen and depth buffer.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
 				GL10.GL_DEPTH_BUFFER_BIT);
@@ -143,10 +145,9 @@ public class CubeRenderer implements Renderer {
 	private byte[] colorPickerBytes = null;
 
 	public Color getColorAt(int x, int y) {
-		// Log.v("colortest",
-		// "width and height and size:"+viewWidth+" "+viewHeight+" "+
-		// viewWidth*viewHeight);
-		// Log.v("colortest", " buffer size:"+colorPickerBytes.length/4);
+		Log.v("colortest", "width and height and size:" + viewWidth + " "
+				+ viewHeight + " " + viewWidth * viewHeight);
+		Log.v("colortest", " buffer size:" + colorPickerBytes.length / 4);
 		if (this.cubeView == null || colorPickerBytes == null) {
 			return null;
 		}

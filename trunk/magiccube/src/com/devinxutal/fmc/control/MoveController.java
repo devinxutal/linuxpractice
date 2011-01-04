@@ -159,7 +159,7 @@ public class MoveController implements AnimationListener {
 				try {
 					sleep(interval);
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
 				cubeController.turnByMove(mv);
 				notifyMoveSequenceStepped(sequence.currentMoveIndex());
