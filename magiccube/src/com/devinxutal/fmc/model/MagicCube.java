@@ -83,6 +83,10 @@ public class MagicCube {
 		return order;
 	}
 
+	public CubeColor[][][] getCube() {
+		return currCube;
+	}
+
 	public CubeAnimationInfo getAnimationInfo() {
 		return this.animationInfo;
 	}
