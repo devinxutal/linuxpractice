@@ -9,6 +9,8 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 
 import com.devinxutal.fmc.control.Move;
+import com.devinxutal.fmc.model.basic.CubeTurner;
+import com.devinxutal.fmc.model.basic.Pair;
 import com.devinxutal.fmc.primitives.Color;
 import com.devinxutal.fmc.primitives.Cube;
 import com.devinxutal.fmc.primitives.ESquare;
@@ -37,6 +39,8 @@ public class MagicCube {
 	private CubeColor[][][] prevCube;
 	private CubeColor[][][] tempCube;
 
+	private CubeTurner<CubeColor> turner;
+
 	private CubeAnimationInfo animationInfo;
 
 	private boolean noAnimationMode = false;
@@ -52,6 +56,7 @@ public class MagicCube {
 		initCube();
 		animationInfo = new CubeAnimationInfo();
 		cubie = new CubbyWithESquare();
+		turner = new CubeTurner<CubeColor>(order);
 	}
 
 	private void initCube() {
@@ -949,14 +954,20 @@ public class MagicCube {
 			boolean twice) {
 		boolean succeed = true;
 		copyModel(currCube, tempCube);
-		succeed = turnInternal(currCube, tempCube, dimension, layers, direction)
+		succeed = turner.turn(currCube, tempCube, dimension, layers, direction)
 				&& succeed;
+		// succeed = turnInternal(currCube, tempCube, dimension, layers,
+		// direction)
+		// && succeed;
 		if (twice) {
 
 			copyModel(tempCube, prevCube);
-			succeed = turnInternal(tempCube, prevCube, dimension, layers,
+			succeed = turner.turn(tempCube, prevCube, dimension, layers,
 					direction)
 					&& succeed;
+			// succeed = turnInternal(tempCube, prevCube, dimension, layers,
+			// direction)
+			// && succeed;
 			CubeColor[][][] tmp = tempCube;
 			tempCube = prevCube;
 			prevCube = tmp;
@@ -980,21 +991,15 @@ public class MagicCube {
 		return succeed;
 	}
 
-	private boolean turnInternal(CubeColor[][][] from, CubeColor[][][] to,
-			int dimension, List<Integer> layers, int direction) {
-		boolean succeed = true;
-		for (int layer : layers) {
-			if (layer == 1 || layer == order) {
-				int l = layer == 1 ? 0 : order + 1;
-				succeed = turnFace(from, to, dimension, l, direction)
-						&& succeed;
-			}
-			Log.v("motiontest", "turn side " + layer);
-			succeed = turnSide(from, to, dimension, layer, direction)
-					&& succeed;
-		}
-		return succeed;
-	}
+	/*
+	 * private boolean turnInternal(CubeColor[][][] from, CubeColor[][][] to,
+	 * int dimension, List<Integer> layers, int direction) { boolean succeed =
+	 * true; for (int layer : layers) { if (layer == 1 || layer == order) { int
+	 * l = layer == 1 ? 0 : order + 1; succeed = turnFace(from, to, dimension,
+	 * l, direction) && succeed; } Log.v("motiontest", "turn side " + layer);
+	 * succeed = turnSide(from, to, dimension, layer, direction) && succeed; }
+	 * return succeed; }
+	 */
 
 	public boolean turn(int dimension, List<Integer> layers, int direction) {
 		return this.turn(dimension, layers, direction, false);

@@ -1,4 +1,4 @@
-package com.devinxutal.fmc.model;
+package com.devinxutal.fmc.model.basic;
 
 public class Pair {
 	public int x;
