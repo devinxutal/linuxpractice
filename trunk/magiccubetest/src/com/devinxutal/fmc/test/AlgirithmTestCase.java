@@ -3,8 +3,10 @@ package com.devinxutal.fmc.test;
 import junit.framework.TestCase;
 import android.util.Log;
 
+import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
+import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.util.AlgorithmUtils;
 
 public class AlgirithmTestCase extends TestCase {
@@ -28,14 +30,37 @@ public class AlgirithmTestCase extends TestCase {
 	public void testGenPatternAlgorithm() {
 		Log.v("unitest", "in testGenPatternAlgorithm");
 		PatternAlgorithm a = AlgorithmUtils.parsePatternAlgorithm(desc, 3);
-		this.assertNotNull(a);
-		this.assertEquals(desc.length - 1, ((ColorPattern) a.getPattern())
+		assertNotNull(a);
+		assertEquals(desc.length - 1, ((ColorPattern) a.getPattern())
 				.getConstraints().size());
 		ColorPattern p = (ColorPattern) a.getPattern();
-		this.assertEquals(2, p.getConstraints().get(0).getX());
-		this.assertEquals(2, p.getConstraints().get(0).getY());
-		this.assertEquals(4, p.getConstraints().get(0).getZ());
-		this.assertEquals(1, p.getConstraints().get(0).getColor());
-		this.assertEquals(4, a.getMoves().totalMoves());
+		assertEquals(2, p.getConstraints().get(0).getX());
+		assertEquals(2, p.getConstraints().get(0).getY());
+		assertEquals(4, p.getConstraints().get(0).getZ());
+		assertEquals(1, p.getConstraints().get(0).getColor());
+		assertEquals(4, a.getMoves().totalMoves());
+	}
+
+	public void testPatternMatch() {
+		PatternAlgorithm a = AlgorithmUtils.parsePatternAlgorithm(desc, 3);
+
+		MagicCube cube = new MagicCube(3);
+		cube.turnBySymbol("R");
+		cube.turnBySymbol("U");
+		cube.turnBySymbol("R'");
+		cube.turnBySymbol("U'");
+		BasicCubeModel model = new BasicCubeModel(cube);
+		assertTrue(a.getPattern().match(model));
+
+		cube = new MagicCube(3);
+		cube.turnBySymbol("B");
+		cube.turnBySymbol("U");
+		cube.turnBySymbol("B'");
+		cube.turnBySymbol("U'");
+		model = new BasicCubeModel(cube);
+		assertFalse(a.getPattern().match(model));
+		model.applyRotate(MagicCube.DIM_Y, -1, false);
+		assertTrue(a.getPattern().match(model));
+
 	}
 }
