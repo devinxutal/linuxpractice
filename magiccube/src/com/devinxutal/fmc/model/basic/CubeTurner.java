@@ -29,6 +29,19 @@ public class CubeTurner<T> {
 		return succeed;
 	}
 
+	public void copy(T[][][] from, T[][][] to) {
+		for (int i = 1; i <= order; i++) {
+			for (int j = 1; j <= order; j++) {
+				to[i][j][0] = from[i][j][0]; // back
+				to[i][j][order + 1] = from[i][j][order + 1]; // front
+				to[i][0][j] = from[i][0][j]; // down
+				to[i][order + 1][j] = from[i][order + 1][j]; // up
+				to[0][i][j] = from[0][i][j]; // left
+				to[order + 1][i][j] = from[order + 1][i][j]; // right
+			}
+		}
+	}
+
 	private boolean turnSide(T[][][] from, T[][][] to, int dimension,
 			int layer, int direction) {
 		Pair pair = new Pair();
