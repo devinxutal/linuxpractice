@@ -59,7 +59,8 @@ public class AlgirithmTestCase extends TestCase {
 		cube.turnBySymbol("U'");
 		model = new BasicCubeModel(cube);
 		assertFalse(a.getPattern().match(model));
-		model.applyRotate(MagicCube.DIM_Y, -1, false);
+		Log.v("motiontest", "now apply rotate");
+		model.applyRotate(MagicCube.DIM_Y, 1, false);
 		assertTrue(a.getPattern().match(model));
 
 	}
