@@ -65,12 +65,12 @@ public class MagicCubeActivity extends Activity {
 			startActivity(a);
 			return true;
 		case R.id.infinite:
-			try {
-				Intent b = new Intent(this, InfiniteCubeActivity.class);
-				startActivity(b);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Intent b = new Intent(this, InfiniteCubeActivity.class);
+			startActivity(b);
+			return true;
+		case R.id.solver:
+			Intent c = new Intent(this, CubeSolverActivity.class);
+			startActivity(c);
 			return true;
 		}
 		return false;

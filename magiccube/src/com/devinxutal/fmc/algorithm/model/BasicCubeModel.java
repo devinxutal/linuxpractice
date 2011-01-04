@@ -19,7 +19,7 @@ public class BasicCubeModel implements CubeModel {
 		order = cube.getOrder();
 		layers = new LinkedList<Integer>();
 		for (int i = 1; i <= order; i++) {
-			layers.add(1);
+			layers.add(i);
 		}
 		this.turner = new CubeTurner<Integer>(order);
 		this.original = AlgorithmUtils.getCubeAsIntArray(cube);

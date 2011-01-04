@@ -3,4 +3,5 @@
 	<item android:id="@+id/preferences" android:title="@string/menu_preferences" />
 	<item android:id="@+id/demostrator" android:title="Demostrator" />
 	<item android:id="@+id/infinite" android:title="Infinite Cube" />
+	<item android:id="@+id/solver" android:title="Solver" />
 </menu>
