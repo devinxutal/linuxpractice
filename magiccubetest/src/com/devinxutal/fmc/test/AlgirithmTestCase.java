@@ -93,6 +93,15 @@ public class AlgirithmTestCase extends
 			solver.init(manager.open("algorithm/cfop"));
 			assertEquals(41, solver.F.size());
 			assertEquals("01", solver.F.get(0).getName());
+
+			MagicCube cube = new MagicCube();
+			cube.turnBySymbol("R");
+			cube.turnBySymbol("U");
+			cube.turnBySymbol("R'");
+			cube.turnBySymbol("U'");
+			
+			
+			solver.nextMoves(cube);
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("file not opened");
