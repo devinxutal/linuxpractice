@@ -36,12 +36,17 @@ public class CfopSolver extends AbstractSolver {
 	public MoveSequence nextMoves(MagicCube cube) {
 		BasicCubeModel model = new BasicCubeModel(cube);
 		if (!cPattern.match(model)) { // do C
+			Log.v("CfogSolver", "Cross not formed");
 			return doC(model);
 		} else if (!fPattern.match(model)) { // do F
+			Log.v("CfogSolver", "F2L not formed");
 			return doF(model);
 		} else if (!oPattern.match(model)) { // do O
+
+			Log.v("CfogSolver", "OLL not formed");
 			return doO(model);
 		} else { // do P
+			Log.v("CfogSolver", "PLL not formed");
 			return doP(model);
 		}
 	}
@@ -52,7 +57,7 @@ public class CfopSolver extends AbstractSolver {
 		List<PatternAlgorithm> list = C;
 		try {
 			while ((line = reader.readLine()) != null) {
-				Log.v("CfopSolver", "readline: " + line);
+				//Log.v("CfopSolver", "readline: " + line);
 				line = line.trim();
 				if (line.length() == 0 || line.startsWith("#")) {
 					continue;
@@ -88,6 +93,14 @@ public class CfopSolver extends AbstractSolver {
 		F = new LinkedList<PatternAlgorithm>();
 		O = new LinkedList<PatternAlgorithm>();
 		P = new LinkedList<PatternAlgorithm>();
+
+		cPattern = AlgorithmUtils.parseColorPattern("(2021),"
+				+ "(2202,0223,2244,4225)," + "(2011,1021,2031,3021),"
+				+ "(2102,0123,2144,4125)");
+		fPattern = AlgorithmUtils.parseColorPattern("(2021),"
+				+ "(2202,0223,2244,4225)," + "(1011,1031,3031,3011),"
+				+ "(1102,3102,0113,0133,1144,3144,4115,4135),"
+				+ "(1202,3202,0213,0233,1244,3244,4215,4235)");
 	}
 
 	private MoveSequence doC(BasicCubeModel model) {
@@ -95,6 +108,14 @@ public class CfopSolver extends AbstractSolver {
 	}
 
 	private MoveSequence doF(BasicCubeModel model) {
+		for (PatternAlgorithm pa : F) {
+			if (pa.getPattern().match(model)) {
+				Log.v("CfopSolver", "find matching fomula:" + pa.getName()
+						+ ": " + pa.getFormula());
+				return pa.getMoves();
+			}
+		}
+		Log.v("CfopSolver", "cannot find matching fomula");
 		return null;
 	}
 

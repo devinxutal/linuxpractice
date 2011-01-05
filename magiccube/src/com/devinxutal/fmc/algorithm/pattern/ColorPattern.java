@@ -5,8 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
 import com.devinxutal.fmc.algorithm.model.CubeModel;
+import com.devinxutal.fmc.model.MagicCube;
 
 public class ColorPattern implements Pattern {
 	private List<Constraint> constraints;
@@ -41,6 +44,13 @@ public class ColorPattern implements Pattern {
 					colorMap.put(c.color, colorToBe);
 				}
 				if (colorToBe != color) {
+					// Log.v("ColorPattern", "match failed, ");
+					// Log.v("ColorPattern", "cube[" + c.x + "][" + c.y + "]["
+					// + c.z + "] should be " + colorToBe
+					// + ", but actual is " + color);
+					// Log.v("ColorPattern", "actualCube color: "
+					// + basicModel.get()[c.x][c.y][c.z]);
+
 					return false;
 				}
 			} catch (Exception e) {

@@ -59,4 +59,28 @@ public class AlgorithmUtils {
 			int cubeOrder) {
 		return parsePatternAlgorithm(line.split(","), cubeOrder);
 	}
+
+	public static ColorPattern parseColorPattern(String[] constriants) {
+		ColorPattern pattern = new ColorPattern();
+		for (int i = 0; i < constriants.length; i++) {
+			try {
+				String temp = constriants[i].replace(" ", "");
+				temp = temp.replace("(", "");
+				temp = temp.replace(")", "");
+				Constraint c = pattern.new Constraint(//
+						Integer.valueOf("" + temp.charAt(0)), //
+						Integer.valueOf("" + temp.charAt(1)), //
+						Integer.valueOf("" + temp.charAt(2)), //
+						Integer.valueOf("" + temp.charAt(3)));//
+				pattern.addConstraint(c);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return pattern;
+	}
+
+	public static ColorPattern parseColorPattern(String constraints) {
+		return parseColorPattern(constraints.split(","));
+	}
 }
