@@ -1,15 +1,20 @@
 package com.devinxutal.fmc.test;
 
-import junit.framework.TestCase;
+import java.io.IOException;
+
+import android.content.res.AssetManager;
+import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import com.devinxutal.fmc.activities.CubeSolverActivity;
 import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.util.AlgorithmUtils;
 
-public class AlgirithmTestCase extends TestCase {
+public class AlgirithmTestCase extends
+		ActivityInstrumentationTestCase2<CubeSolverActivity> {
 	String[] desc = new String[] {//
 	"2 2 4 1",// red center
 			"2 0 2 2",// white center
@@ -19,12 +24,8 @@ public class AlgirithmTestCase extends TestCase {
 			"4 3 3 3", //
 			"U R U' R'" };
 
-	@Override
-	protected void setUp() throws Exception {
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
+	public AlgirithmTestCase() {
+		super("com.devinxutal.fmc", CubeSolverActivity.class);
 	}
 
 	public void testGenPatternAlgorithm() {
@@ -63,5 +64,17 @@ public class AlgirithmTestCase extends TestCase {
 		model.applyRotate(MagicCube.DIM_Y, 1, false);
 		assertTrue(a.getPattern().match(model));
 
+	}
+
+	public void testSolver() {
+		assertNotNull(getActivity());
+		AssetManager manager = getActivity().getAssets();
+		try {
+			manager.open("algorithm/cfop");
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("file not opened");
+		}
+		assertNotNull(manager);
 	}
 }
