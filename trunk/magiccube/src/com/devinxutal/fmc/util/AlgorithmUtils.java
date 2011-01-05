@@ -1,7 +1,5 @@
 package com.devinxutal.fmc.util;
 
-import java.util.Arrays;
-
 import android.util.Log;
 
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
@@ -29,18 +27,23 @@ public class AlgorithmUtils {
 	public static PatternAlgorithm parsePatternAlgorithm(String[] desc,
 			int cubeOrder) {
 		ColorPattern pattern = new ColorPattern();
-		for (int i = 0; i < desc.length - 1; i++) {
+		if (desc.length < 3) {
+			return null;
+		}
+		String name = desc[0];
+		for (int i = 1; i < desc.length - 1; i++) {
 			try {
-				String s[] = desc[i].split(" ");
-				Log.v("unitest", "array length: " + s.length);
-				Log.v("unitest", Arrays.toString(s));
-				Log.v("unitest", "get integer of " + s[0] + ": "
-						+ Integer.valueOf(s[0]));
+				String temp = desc[i].replace(" ", "");
+				temp = temp.replace("(", "");
+				temp = temp.replace(")", "");
+
+				Log.v("unitest", "array length: " + temp.length());
+				Log.v("unitest", temp);
 				Constraint c = pattern.new Constraint(//
-						Integer.valueOf(s[0]), //
-						Integer.valueOf(s[1]),//
-						Integer.valueOf(s[2]), //
-						Integer.valueOf(s[3]));//
+						Integer.valueOf("" + temp.charAt(0)), //
+						Integer.valueOf("" + temp.charAt(1)), //
+						Integer.valueOf("" + temp.charAt(2)), //
+						Integer.valueOf("" + temp.charAt(3)));//
 				pattern.addConstraint(c);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -48,6 +51,12 @@ public class AlgorithmUtils {
 		}
 		MoveSequence sequence = new MoveSequence(desc[desc.length - 1],
 				cubeOrder);
-		return new PatternAlgorithm(pattern, sequence);
+		return new PatternAlgorithm(name, pattern, sequence,
+				desc[desc.length - 1]);
+	}
+
+	public static PatternAlgorithm parsePatternAlgorithm(String line,
+			int cubeOrder) {
+		return parsePatternAlgorithm(line.split(","), cubeOrder);
 	}
 }
