@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.devinxutal.fmc.control.CubeController;
+import com.devinxutal.fmc.control.IMoveSequence;
 import com.devinxutal.fmc.control.InfiniteMoveSequence;
+import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.control.MoveController;
+import com.devinxutal.fmc.control.MoveSequence;
 
 public class CubeSolverActivity extends Activity {
 
@@ -19,8 +22,20 @@ public class CubeSolverActivity extends Activity {
 		controller = new CubeController(this);
 		mController = new MoveController(controller);
 		setContentView(controller.getCubeView());
-		mController.startMove(new InfiniteMoveSequence(controller
-				.getMagicCube().getOrder()));
+
+		shuffle();
+	}
+
+	private void shuffle() {
+		IMoveSequence seq = new InfiniteMoveSequence(controller.getMagicCube()
+				.getOrder());
+		Move move = null;
+		MoveSequence seqq = new MoveSequence();
+		while (seq.currentMoveIndex() < 40) {
+			move = seq.step();
+			seqq.addMove(move);
+		}
+		mController.startMove(seqq);
 	}
 
 	@Override
