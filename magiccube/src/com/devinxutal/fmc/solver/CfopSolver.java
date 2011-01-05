@@ -1,23 +1,31 @@
 package com.devinxutal.fmc.solver;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
 import java.util.List;
+
+import android.util.Log;
 
 import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
 import com.devinxutal.fmc.algorithm.pattern.Pattern;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
 import com.devinxutal.fmc.control.MoveSequence;
 import com.devinxutal.fmc.model.MagicCube;
+import com.devinxutal.fmc.util.AlgorithmUtils;
 
 public class CfopSolver extends AbstractSolver {
-	private List<PatternAlgorithm> C;
-	private List<PatternAlgorithm> F;
-	private List<PatternAlgorithm> O;
-	private List<PatternAlgorithm> P;
+	public List<PatternAlgorithm> C;
+	public List<PatternAlgorithm> F;
+	public List<PatternAlgorithm> O;
+	public List<PatternAlgorithm> P;
 
-	private Pattern cPattern;
-	private Pattern fPattern;
-	private Pattern oPattern;
-	private Pattern pPattern;
+	public Pattern cPattern;
+	public Pattern fPattern;
+	public Pattern oPattern;
+	public Pattern pPattern;
 
 	public String msg;
 
@@ -38,6 +46,50 @@ public class CfopSolver extends AbstractSolver {
 		}
 	}
 
+	public void init(InputStream in) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String line = null;
+		List<PatternAlgorithm> list = C;
+		try {
+			while ((line = reader.readLine()) != null) {
+				Log.v("CfopSolver", "readline: " + line);
+				line = line.trim();
+				if (line.length() == 0 || line.startsWith("#")) {
+					continue;
+				} else if (line.length() == 1) {
+					switch (line.charAt(0)) {
+					case 'C':
+						list = C;
+						break;
+					case 'F':
+						list = F;
+						break;
+					case 'O':
+						list = O;
+						break;
+					case 'P':
+						list = P;
+						break;
+					}
+				} else {
+					PatternAlgorithm pa = AlgorithmUtils.parsePatternAlgorithm(
+							line, 3);
+					list.add(pa);
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void init() {
+		C = new LinkedList<PatternAlgorithm>();
+		F = new LinkedList<PatternAlgorithm>();
+		O = new LinkedList<PatternAlgorithm>();
+		P = new LinkedList<PatternAlgorithm>();
+	}
+
 	private MoveSequence doC(BasicCubeModel model) {
 		return null;
 	}
@@ -52,10 +104,6 @@ public class CfopSolver extends AbstractSolver {
 
 	private MoveSequence doP(BasicCubeModel model) {
 		return null;
-	}
-
-	private void init() {
-
 	}
 
 }
