@@ -57,7 +57,7 @@ public class CfopSolver extends AbstractSolver {
 		List<PatternAlgorithm> list = C;
 		try {
 			while ((line = reader.readLine()) != null) {
-				//Log.v("CfopSolver", "readline: " + line);
+				// Log.v("CfopSolver", "readline: " + line);
 				line = line.trim();
 				if (line.length() == 0 || line.startsWith("#")) {
 					continue;
@@ -94,13 +94,29 @@ public class CfopSolver extends AbstractSolver {
 		O = new LinkedList<PatternAlgorithm>();
 		P = new LinkedList<PatternAlgorithm>();
 
-		cPattern = AlgorithmUtils.parseColorPattern("(2021),"
-				+ "(2202,0223,2244,4225)," + "(2011,1021,2031,3021),"
-				+ "(2102,0123,2144,4125)");
-		fPattern = AlgorithmUtils.parseColorPattern("(2021),"
-				+ "(2202,0223,2244,4225)," + "(1011,1031,3031,3011),"
-				+ "(1102,3102,0113,0133,1144,3144,4115,4135),"
+		cPattern = AlgorithmUtils.parseColorPattern(//
+				"(2021),"//
+						+ "(2202,0223,2244,4225)," //
+						+ "(2011,1021,2031,3021),"//
+						+ "(2102,0123,2144,4125)");
+
+		fPattern = AlgorithmUtils.parseColorPattern("(2021),"//
+				+ "(2202,0223,2244,4225)," //
+				+ "(1011,1031,3031,3011)," //
+				+ "(1102,3102,0113,0133,1144,3144,4115,4135)," //
 				+ "(1202,3202,0213,0233,1244,3244,4215,4235)");
+
+		oPattern = AlgorithmUtils.parseColorPattern(
+				"(1411,1421,1431),"//
+				+"(2411,2421,2431),"//
+				+"(3411,3421,3431)"//
+				);
+		pPattern = AlgorithmUtils.parseColorPattern(
+				"(0311,0321,0331),"//
+				+"(4311,4321,4331),"//
+				+"(1301,2301,3301),"//
+				+"(1341,2341,3341)"//
+				);
 	}
 
 	private MoveSequence doC(BasicCubeModel model) {
