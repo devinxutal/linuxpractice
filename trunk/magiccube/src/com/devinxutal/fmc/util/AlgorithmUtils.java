@@ -1,13 +1,13 @@
 package com.devinxutal.fmc.util;
 
-import android.util.Log;
-
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
+import com.devinxutal.fmc.algorithm.pattern.Pattern;
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern.Constraint;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
 import com.devinxutal.fmc.control.MoveSequence;
+import com.devinxutal.fmc.model.CubeColor;
+import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.model.MagicCube;
-import com.devinxutal.fmc.model.MagicCube.CubeColor;
 
 public class AlgorithmUtils {
 	public static Integer[][][] getCubeAsIntArray(MagicCube cube) {
@@ -36,9 +36,6 @@ public class AlgorithmUtils {
 				String temp = desc[i].replace(" ", "");
 				temp = temp.replace("(", "");
 				temp = temp.replace(")", "");
-
-				Log.v("unitest", "array length: " + temp.length());
-				Log.v("unitest", temp);
 				Constraint c = pattern.new Constraint(//
 						Integer.valueOf("" + temp.charAt(0)), //
 						Integer.valueOf("" + temp.charAt(1)), //
@@ -58,6 +55,33 @@ public class AlgorithmUtils {
 	public static PatternAlgorithm parsePatternAlgorithm(String line,
 			int cubeOrder) {
 		return parsePatternAlgorithm(line.split(","), cubeOrder);
+	}
+
+	public static Pattern parsePattern(String[] desc, int cubeOrder) {
+		ColorPattern pattern = new ColorPattern();
+		if (desc.length < 1) {
+			return null;
+		}
+		for (int i = 0; i < desc.length; i++) {
+			try {
+				String temp = desc[i].replace(" ", "");
+				temp = temp.replace("(", "");
+				temp = temp.replace(")", "");
+				Constraint c = pattern.new Constraint(//
+						Integer.valueOf("" + temp.charAt(0)), //
+						Integer.valueOf("" + temp.charAt(1)), //
+						Integer.valueOf("" + temp.charAt(2)), //
+						Integer.valueOf("" + temp.charAt(3)));//
+				pattern.addConstraint(c);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return pattern;
+	}
+
+	public static Pattern parsePattern(String line, int cubeOrder) {
+		return parsePattern(line.split(","), cubeOrder);
 	}
 
 	public static ColorPattern parseColorPattern(String[] constriants) {
@@ -82,5 +106,29 @@ public class AlgorithmUtils {
 
 	public static ColorPattern parseColorPattern(String constraints) {
 		return parseColorPattern(constraints.split(","));
+	}
+
+	static CubeColor[] colors = new CubeColor[] { CubeColor.ANY,
+			CubeColor.WHITE, CubeColor.RED, CubeColor.BLUE, CubeColor.ORANGE,
+			CubeColor.GREEN, CubeColor.YELLOW, CubeColor.BLACK };
+
+	public static CubeState PatternToCubeState(ColorPattern pattern, int order) {
+		CubeState state = new CubeState();
+		state.order = order;
+		CubeColor[][][] cube = new CubeColor[order + 2][order + 2][order + 2];
+		for (ColorPattern.Constraint c : pattern.getConstraints()) {
+			cube[c.getX()][c.getY()][c.getZ()] = colors[c.getColor()];
+		}
+		for (int i = 1; i <= order; i++) {
+			for (int j = 1; j <= order; j++) {
+				state.add(0, i, j, cube[0][i][j]);
+				state.add(order + 1, i, j, cube[order + 1][i][j]);
+				state.add(i, 0, j, cube[i][0][j]);
+				state.add(i, order + 1, j, cube[i][order + 1][j]);
+				state.add(i, j, 0, cube[i][j][0]);
+				state.add(i, j, order + 1, cube[i][j][order + 1]);
+			}
+		}
+		return state;
 	}
 }

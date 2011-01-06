@@ -26,6 +26,9 @@
 		<activity android:name=".activities.CubeSolverActivity"
 			android:label="Cube Solver">
 		</activity>
+		<activity android:name=".activities.CfopViewerActivity"
+			android:label="Cube Solver">
+		</activity>
 	</application>
 	<uses-sdk android:minSdkVersion="4" />
 

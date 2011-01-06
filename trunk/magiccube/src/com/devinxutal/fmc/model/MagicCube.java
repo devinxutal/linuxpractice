@@ -9,6 +9,7 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 
 import com.devinxutal.fmc.control.Move;
+import com.devinxutal.fmc.model.CubeState.StateEntry;
 import com.devinxutal.fmc.model.basic.CubeTurner;
 import com.devinxutal.fmc.primitives.Color;
 import com.devinxutal.fmc.primitives.Cube;
@@ -20,9 +21,6 @@ import com.devinxutal.fmc.ui.CubeView;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class MagicCube {
-	public enum CubeColor {
-		BLACK, WHITE, YELLOW, RED, ORANGE, BLUE, GREEN
-	}
 
 	public static final int DIM_X = 0x01; // ..0001
 	public static final int DIM_Y = 0x02; // ..0010
@@ -30,7 +28,7 @@ public class MagicCube {
 
 	private static final Color CUBE_COLORS[] = new Color[] { Color.BLACK,
 			Color.WHITE, Color.YELLOW, Color.RED, Color.ORANGE, Color.BLUE,
-			Color.GREEN };
+			Color.GREEN, Color.ANY };
 
 	private int order;
 	private Cubie cubie;
@@ -89,6 +87,31 @@ public class MagicCube {
 
 	public CubeColor[][][] getCube() {
 		return currCube;
+	}
+
+	public CubeState getCubeState() {
+		CubeState state = new CubeState();
+		state.order = order;
+		for (int i = 1; i <= order; i++) {
+			for (int j = 1; j <= order; j++) {
+				state.add(0, i, j, currCube[0][i][j]);
+				state.add(order + 1, i, j, currCube[order + 1][i][j]);
+				state.add(i, 0, j, currCube[i][0][j]);
+				state.add(i, order + 1, j, currCube[i][order + 1][j]);
+				state.add(i, j, 0, currCube[i][j][0]);
+				state.add(i, j, order + 1, currCube[i][j][order + 1]);
+			}
+		}
+		return state;
+	}
+
+	public void setCubeState(CubeState state) {
+		if (state.order != this.order) {
+			return;
+		}
+		for (StateEntry ent : state.entries) {
+			this.currCube[ent.x][ent.y][ent.z] = ent.color;
+		}
 	}
 
 	public CubeAnimationInfo getAnimationInfo() {

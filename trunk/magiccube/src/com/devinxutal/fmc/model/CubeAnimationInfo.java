@@ -3,8 +3,6 @@ package com.devinxutal.fmc.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.devinxutal.fmc.model.MagicCube.CubeColor;
-
 public class CubeAnimationInfo {
 
 	public int dimension;
