@@ -72,6 +72,10 @@ public class MagicCubeActivity extends Activity {
 			Intent c = new Intent(this, CubeSolverActivity.class);
 			startActivity(c);
 			return true;
+		case R.id.cfopviewer:
+			Intent d = new Intent(this, TestActivity.class);
+			startActivity(d);
+			return true;
 		}
 		return false;
 	}
