@@ -1,7 +1,7 @@
 
 F
 
-01	(RU'U'R'U)2y'(R'U'R)
+01	(RU'U'R'U)(RU'U'R'U)y'(R'U'R)
 02	(URU'R'U')y'(R'UR)
 03	yU'(L'ULU)y'(RU'R')
 04	(RUR'U')(RU'U'R'U')(RUR')
@@ -12,7 +12,7 @@ F
 09	R2y(RUR'U')y'(R'UR')
 10	y'(R'U)(RU')(R'UR)
 11	(RUR'U')(RUR')
-12	(RUR'U')2(RUR')
+12	(RUR'U')(RUR'U')(RUR')
 13	(RU'R')y'(R'U2R)
 14	y'(R'U2)(RUR'U')R
 15	d'zU'(R2U)(R'U'RU)
@@ -70,7 +70,7 @@ O
 21	(RU'U')(R'U'RUR'U')(RU'R')
 22	RU'U'(R'2U')(R2U')R'2U'U'R
 23	(R2D)(R'U2)(RD')(R'U2R')
-24	x'RUR'(DR)U'R'D'
+24	x'RUR'(DR)U'R'D'x
 25	F'(rUR'U')(r'FR)
 26	RU'U'R'U'RU'R'
 27	R'U2RUR'UR
@@ -82,7 +82,7 @@ O
 33	(RUR'U')(R'FRF')
 34	(R'U'RU)x'z'(RU)(L'U')rR'
 35	RU'U'R2'FRF'(RU'U'R')
-36	R'U'RU'R'URUlU'R'U
+36	R'U'RU'R'URUlU'R'Ux
 37	F(RU'R'U'RU)(R'F')
 38	(RUR'U)(RU'R'U')(R'FRF')
 39	(LF'L'U'LU)(FU'L')
@@ -93,12 +93,12 @@ O
 44	f(RUR'U')f'
 45	F(RUR'U')F'
 46	(R'U')R'FRF'(UR)
-47	B'(R'U'RU)2B
-48	F(RUR'U')2F'
+47	B'(R'U'RU)(R'U'RU)B
+48	F(RUR'U')(RUR'U')F'
 49	RB'(R2F)(R2B)R2F'R
 50	L'B(L2F')(L2B')L2FL'
-51	f(RUR'U')2f'
-52	R'U'RU'R'dR'UlU
+51	f(RUR'U')(RUR'U')f'
+52	R'U'RU'R'dR'UlUx
 53	(r'U2)(RUR'U')(RUR'U)r
 54	(rU'U')(R'U'RUR'U')(RU'r')
 55	(RU'U')(R'2U')RU'R'U2(FRF')
