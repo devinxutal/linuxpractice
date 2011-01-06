@@ -73,7 +73,7 @@ public class MagicCubeActivity extends Activity {
 			startActivity(c);
 			return true;
 		case R.id.cfopviewer:
-			Intent d = new Intent(this, TestActivity.class);
+			Intent d = new Intent(this, CfopViewerActivity.class);
 			startActivity(d);
 			return true;
 		}

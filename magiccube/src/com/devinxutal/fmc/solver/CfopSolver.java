@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import android.util.Log;
 
@@ -33,6 +35,36 @@ public class CfopSolver extends AbstractSolver {
 		init();
 	}
 
+	public PatternAlgorithm getAlgorithm(String name) {
+		Log.v("CfopSolver", "get algorithm by name " + name);
+		if (name == null || name.length() != 3) {
+			return null;
+		}
+		List<PatternAlgorithm> list = C;
+		char c = name.charAt(0);
+		String n = name.substring(1);
+		switch (c) {
+		case 'C':
+			list = C;
+			break;
+		case 'F':
+			list = F;
+			break;
+		case 'O':
+			list = O;
+			break;
+		case 'P':
+			list = P;
+			break;
+		}
+		for (PatternAlgorithm pa : list) {
+			if (pa.getName().equals(n)) {
+				return pa;
+			}
+		}
+		return null;
+	}
+
 	public MoveSequence nextMoves(MagicCube cube) {
 		BasicCubeModel model = new BasicCubeModel(cube);
 		if (!cPattern.match(model)) { // do C
@@ -50,13 +82,93 @@ public class CfopSolver extends AbstractSolver {
 		}
 	}
 
+	public void init(InputStream patternIn, InputStream algorithmIn) {
+		Map<String, Pattern> patternMap = initPatternMap(patternIn);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				algorithmIn));
+		String line = null;
+		List<PatternAlgorithm> list = C;
+		String prefix = "C";
+		try {
+			while ((line = reader.readLine()) != null) {
+				line = line.trim();
+				if (line.length() == 0 || line.startsWith("#")) {
+					continue;
+				} else if (line.length() == 1) {
+					prefix = line;
+					switch (line.charAt(0)) {
+					case 'C':
+						list = C;
+						break;
+					case 'F':
+						list = F;
+						break;
+					case 'O':
+						list = O;
+						break;
+					case 'P':
+						list = P;
+						break;
+					}
+				} else {
+					String parts[] = line.split("\t");
+					if (parts.length != 2) {
+						continue;
+					}
+					String name = parts[0];
+					String formula = parts[1];
+					MoveSequence seq = new MoveSequence(formula, 3);
+					Pattern p = patternMap.get(prefix + name);
+					if (p != null) {
+						Log.v("CfopSolver", "find a formula: " + name + ": "
+								+ formula);
+						PatternAlgorithm pa = new PatternAlgorithm(parts[0], p,
+								seq, formula);
+
+						list.add(pa);
+					}
+
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private Map<String, Pattern> initPatternMap(InputStream in) {
+		Map<String, Pattern> patternMap = new HashMap<String, Pattern>();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String line = null;
+		String prefix = "C";
+		try {
+			while ((line = reader.readLine()) != null) {
+				line = line.trim();
+				if (line.length() == 0 || line.startsWith("#")) {
+					continue;
+				} else if (line.length() == 1) {
+					prefix = line.substring(0, 1);
+				} else {
+					String parts[] = line.split("\t");
+					PatternAlgorithm pa = AlgorithmUtils.parsePatternAlgorithm(
+							line, 3);
+					Log.v("CfopSolver", "find a pattern: " + parts[0]);
+					patternMap.put(prefix + parts[0], AlgorithmUtils
+							.parsePattern(parts[1], 3));
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return patternMap;
+	}
+
 	public void init(InputStream in) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String line = null;
 		List<PatternAlgorithm> list = C;
 		try {
 			while ((line = reader.readLine()) != null) {
-				// Log.v("CfopSolver", "readline: " + line);
+
 				line = line.trim();
 				if (line.length() == 0 || line.startsWith("#")) {
 					continue;
@@ -80,7 +192,6 @@ public class CfopSolver extends AbstractSolver {
 							line, 3);
 					list.add(pa);
 				}
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -123,8 +234,8 @@ public class CfopSolver extends AbstractSolver {
 	private MoveSequence doF(BasicCubeModel model) {
 		for (PatternAlgorithm pa : F) {
 			if (pa.getPattern().match(model)) {
-				setMessage("find matching F2L fomula:\n" + pa.getName() + ": \n"
-						+ pa.getFormula());
+				setMessage("find matching F2L fomula:\n" + pa.getName()
+						+ ": \n" + pa.getFormula());
 				Log.v("CfopSolver", "find matching F2L fomula:" + pa.getName()
 						+ ": " + pa.getFormula());
 				return pa.getMoves();
@@ -149,7 +260,7 @@ public class CfopSolver extends AbstractSolver {
 	private MoveSequence doP(BasicCubeModel model) {
 		for (PatternAlgorithm pa : P) {
 			if (pa.getPattern().match(model)) {
-				setMessage( "find matching PLL fomula:\n" + pa.getName()
+				setMessage("find matching PLL fomula:\n" + pa.getName()
 						+ ": \n" + pa.getFormula());
 				Log.v("CfopSolver", "find matching PLL fomula:" + pa.getName()
 						+ ": " + pa.getFormula());

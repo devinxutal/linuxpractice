@@ -1,7 +1,7 @@
 package com.devinxutal.fmc.solver;
 
+import com.devinxutal.fmc.model.CubeColor;
 import com.devinxutal.fmc.model.MagicCube;
-import com.devinxutal.fmc.model.MagicCube.CubeColor;
 
 public abstract class AbstractSolver implements ISolver {
 	private String msg;
