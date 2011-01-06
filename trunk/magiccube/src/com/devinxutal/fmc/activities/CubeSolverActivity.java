@@ -2,6 +2,7 @@ package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,8 +36,8 @@ public class CubeSolverActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// shuffle();
-		t = Toast.makeText(this, "", 500);
+		shuffle();
+		t = Toast.makeText(this, "", 10000);
 	}
 
 	private void shuffle() {
@@ -44,7 +45,7 @@ public class CubeSolverActivity extends Activity {
 				.getOrder());
 		Move move = null;
 		MoveSequence seqq = new MoveSequence();
-		while (seq.currentMoveIndex() < 40) {
+		while (seq.currentMoveIndex() < 20) {
 			move = seq.step();
 			seqq.addMove(move);
 		}
@@ -88,7 +89,9 @@ public class CubeSolverActivity extends Activity {
 	private void solveCube() {
 		MoveSequence seq = solver.nextMoves(controller.getMagicCube());
 		if (seq != null) {
-			t.setText("find moves, length: " + seq.totalMoves());
+			t.setText(solver.getMessage());
+			t.setDuration(10000);
+			t.setGravity(Gravity.TOP, 0, 0);
 			t.show();
 			mController.startMove(seq);
 		}

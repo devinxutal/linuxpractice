@@ -4,6 +4,7 @@ import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.model.MagicCube.CubeColor;
 
 public abstract class AbstractSolver implements ISolver {
+	private String msg;
 
 	public boolean solved(MagicCube mcube) {
 		CubeColor[][][] cube = mcube.getCube();
@@ -24,5 +25,13 @@ public abstract class AbstractSolver implements ISolver {
 			}
 		}
 		return true;
+	}
+
+	public String getMessage() {
+		return msg;
+	}
+
+	protected void setMessage(String msg) {
+		this.msg = msg;
 	}
 }

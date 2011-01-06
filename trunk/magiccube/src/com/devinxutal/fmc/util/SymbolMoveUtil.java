@@ -53,6 +53,9 @@ public class SymbolMoveUtil {
 		}
 
 		if (symbol.length() == 3) {
+			if (symbol.charAt(2) == '\'' && symbol.charAt(1) == '2') {
+				symbol.replace("2'", "'2");
+			}
 			if (symbol.charAt(2) != '2' || symbol.charAt(1) != '\'') {
 				return null;
 			} else {
