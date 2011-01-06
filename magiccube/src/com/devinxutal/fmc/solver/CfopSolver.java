@@ -42,7 +42,6 @@ public class CfopSolver extends AbstractSolver {
 			Log.v("CfogSolver", "F2L not formed");
 			return doF(model);
 		} else if (!oPattern.match(model)) { // do O
-
 			Log.v("CfogSolver", "OLL not formed");
 			return doO(model);
 		} else { // do P
@@ -106,17 +105,15 @@ public class CfopSolver extends AbstractSolver {
 				+ "(1102,3102,0113,0133,1144,3144,4115,4135)," //
 				+ "(1202,3202,0213,0233,1244,3244,4215,4235)");
 
-		oPattern = AlgorithmUtils.parseColorPattern(
-				"(1411,1421,1431),"//
-				+"(2411,2421,2431),"//
-				+"(3411,3421,3431)"//
-				);
-		pPattern = AlgorithmUtils.parseColorPattern(
-				"(0311,0321,0331),"//
-				+"(4311,4321,4331),"//
-				+"(1301,2301,3301),"//
-				+"(1341,2341,3341)"//
-				);
+		oPattern = AlgorithmUtils.parseColorPattern("(1411,1421,1431),"//
+				+ "(2411,2421,2431),"//
+				+ "(3411,3421,3431)"//
+		);
+		pPattern = AlgorithmUtils.parseColorPattern("(0311,0321,0331),"//
+				+ "(4311,4321,4331),"//
+				+ "(1301,2301,3301),"//
+				+ "(1341,2341,3341)"//
+		);
 	}
 
 	private MoveSequence doC(BasicCubeModel model) {
@@ -126,7 +123,9 @@ public class CfopSolver extends AbstractSolver {
 	private MoveSequence doF(BasicCubeModel model) {
 		for (PatternAlgorithm pa : F) {
 			if (pa.getPattern().match(model)) {
-				Log.v("CfopSolver", "find matching fomula:" + pa.getName()
+				setMessage("find matching F2L fomula:\n" + pa.getName() + ": \n"
+						+ pa.getFormula());
+				Log.v("CfopSolver", "find matching F2L fomula:" + pa.getName()
 						+ ": " + pa.getFormula());
 				return pa.getMoves();
 			}
@@ -136,10 +135,28 @@ public class CfopSolver extends AbstractSolver {
 	}
 
 	private MoveSequence doO(BasicCubeModel model) {
+		for (PatternAlgorithm pa : O) {
+			if (pa.getPattern().match(model)) {
+				setMessage("find matching OLL fomula:\n" + pa.getName()
+						+ ":\n " + pa.getFormula());
+				return pa.getMoves();
+			}
+		}
+		Log.v("CfopSolver", "cannot find matching fomula");
 		return null;
 	}
 
 	private MoveSequence doP(BasicCubeModel model) {
+		for (PatternAlgorithm pa : P) {
+			if (pa.getPattern().match(model)) {
+				setMessage( "find matching PLL fomula:\n" + pa.getName()
+						+ ": \n" + pa.getFormula());
+				Log.v("CfopSolver", "find matching PLL fomula:" + pa.getName()
+						+ ": " + pa.getFormula());
+				return pa.getMoves();
+			}
+		}
+		Log.v("CfopSolver", "cannot find matching fomula");
 		return null;
 	}
 

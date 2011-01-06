@@ -49,4 +49,9 @@ public class BasicCubeModel implements CubeModel {
 			turner.turn(temp, current, dim, layers, direction);
 		}
 	}
+
+	public void reset() {
+		turner.copy(original, current);
+		turner.copy(original, temp);
+	}
 }

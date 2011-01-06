@@ -5,6 +5,8 @@ import com.devinxutal.fmc.model.MagicCube;
 
 public interface ISolver {
 	public MoveSequence nextMoves(MagicCube cube);
-	
+
 	public boolean solved(MagicCube cube);
+
+	public String getMessage();
 }
