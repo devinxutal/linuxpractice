@@ -1,6 +1,8 @@
 package com.devinxutal.fmc.activities;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -19,29 +21,35 @@ import com.devinxutal.fmc.solver.CfopSolver;
 import com.devinxutal.fmc.util.AlgorithmUtils;
 
 public class CfopViewerActivity extends ListActivity {
-	static String[] COUNTRIES;
+	static List<String> formulas = new LinkedList<String>();
 	static {
-		COUNTRIES = new String[21 + 57 + 41];
+		for (int i = 0; i < 17; i++) {
+			String num = (i + 1) + "";
+			if (i < 9) {
+				num = "0" + num;
+			}
+			formulas.add("C" + num);
+		}
 		for (int i = 0; i < 41; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			COUNTRIES[i] = "F" + num;
+			formulas.add("F" + num);
 		}
 		for (int i = 0; i < 57; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			COUNTRIES[41 + i] = "O" + num;
+			formulas.add("O" + num);
 		}
 		for (int i = 0; i < 21; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			COUNTRIES[57 + 41 + i] = "P" + num;
+			formulas.add("P" + num);
 		}
 	}
 
@@ -65,7 +73,7 @@ public class CfopViewerActivity extends ListActivity {
 		ListView lv = getListView();
 
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item,
-				COUNTRIES));
+				formulas));
 
 		lv.setTextFilterEnabled(true);
 

@@ -1,3 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/start_solve" android:title="StartSolve" />
+	<item android:id="@+id/solver_solve" android:title="Solve It" />
+	<item android:id="@+id/solver_solve_cont" android:title="Solve Continuesly" />
+	<item android:id="@+id/solver_shuffle" android:title="Shuffle" />
 </menu>

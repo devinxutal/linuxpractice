@@ -37,16 +37,16 @@ public class CubeSolverActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		shuffle();
+		// shuffle();
 		t = Toast.makeText(this, "", 10000);
 	}
 
-	private void shuffle() {
+	private void shuffle(int step) {
 		IMoveSequence seq = new InfiniteMoveSequence(controller.getMagicCube()
 				.getOrder());
 		Move move = null;
 		MoveSequence seqq = new MoveSequence();
-		while (seq.currentMoveIndex() < 20) {
+		while (seq.currentMoveIndex() < step) {
 			move = seq.step();
 			seqq.addMove(move);
 		}
@@ -77,8 +77,14 @@ public class CubeSolverActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.start_solve:
+		case R.id.solver_solve_cont:
 			solveCube();
+			return true;
+		case R.id.solver_solve:
+			solveCube();
+			return true;
+		case R.id.solver_shuffle:
+			shuffle(40);
 			return true;
 
 		}

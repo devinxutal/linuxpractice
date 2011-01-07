@@ -31,7 +31,8 @@ public class CfopSolver extends AbstractSolver {
 	public Pattern oPattern;
 	public Pattern pPattern;
 
-	public String msg;
+	public Pattern cPartPattern;
+	public Pattern fPartPattern;
 
 	public static Move[] rotates;
 	public static Move[] upturns;
@@ -250,13 +251,55 @@ public class CfopSolver extends AbstractSolver {
 				+ "(1303,2303,3303),"//
 				+ "(1344,2344,3344)"//
 		);
+
+		cPartPattern = AlgorithmUtils.parseColorPattern(//
+				"(2021,2242),"//
+						+ "(2031,2142)" //
+				);
+		fPartPattern = AlgorithmUtils.parseColorPattern(//
+				"(2021,2243,4222),(3031,3143,4132),(4232,3243)");
 	}
 
 	private MoveSequence doC(BasicCubeModel model) {
+		for (int i = -1; i < 3; i++) {
+			for (int j = -1; j < 3; j++) {
+				model.reset();
+				MoveSequence seq = new MoveSequence();
+				if (i >= 0) {
+					model.applyTurn(rotates[i]);
+					seq.addMove(rotates[i]);
+				}
+				if (j >= 0) {
+					model.applyTurn(upturns[j]);
+					seq.addMove(upturns[j]);
+				}
+				if (cPartPattern.match(model)) {
+					break;
+				}
+				for (PatternAlgorithm pa : C) {
+					if (pa.getPattern().match(model)) {
+						setMessage("find matching F2L fomula:\n" + pa.getName()
+								+ ": \n" + pa.getFormula());
+						Log.v("CfopSolver", "find matching F2L fomula:"
+								+ pa.getName() + ": " + pa.getFormula());
+						MoveSequence moves = pa.getMoves();
+						moves.reset();
+						Move move;
+						while ((move = moves.step()) != null) {
+							seq.addMove(move);
+						}
+						return seq;
+					}
+				}
+			}
+		}
+
+		Log.v("CfopSolver", "cannot find matching F2L fomula");
 		return null;
 	}
 
 	private MoveSequence doF(BasicCubeModel model) {
+
 		for (int i = -1; i < 3; i++) {
 			for (int j = -1; j < 3; j++) {
 				model.reset();
@@ -287,8 +330,8 @@ public class CfopSolver extends AbstractSolver {
 			}
 		}
 
-		Log.v("CfopSolver", "cannot find matching F2L fomula");
-		return null;
+		Log.v("CfopSolver", "cannot find matching F2L fomula, solve DeadLock");
+		return solveF2lDeadLock(model);
 	}
 
 	private MoveSequence doO(BasicCubeModel model) {
@@ -355,16 +398,35 @@ public class CfopSolver extends AbstractSolver {
 		for (int i = 0; i < 3; i++) {
 			model.reset();
 			if (i >= 0) {
-				model.applyTurn(rotates[i]);
-				if (this.solved(model
-						)) {
-
-					seq.addMove(rotates[i]);
+				model.applyTurn(upturns[i]);
+				if (this.solved(model)) {
+					seq.addMove(upturns[i]);
+					setMessage("Ajust Up side");
 					return seq;
 				}
 			}
 
 		}
+		return null;
+	}
+
+	private MoveSequence solveF2lDeadLock(BasicCubeModel model) {
+
+		for (int i = -1; i < 3; i++) {
+			model.reset();
+			MoveSequence seq = new MoveSequence();
+			if (i >= 0) {
+				model.applyTurn(rotates[i]);
+				seq.addMove(rotates[i]);
+			}
+			if (!fPartPattern.match(model)) {
+				seq.addMove(SymbolMoveUtil.parseMoveFromSymbol("R", order));
+				seq.addMove(SymbolMoveUtil.parseMoveFromSymbol("U", order));
+				seq.addMove(SymbolMoveUtil.parseMoveFromSymbol("R'", order));
+				return seq;
+			}
+		}
+		setMessage("No F2L available, solve deadlock");
 		return null;
 	}
 
