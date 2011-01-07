@@ -412,13 +412,11 @@ public class CfopSolver extends AbstractSolver {
 
 	private MoveSequence solveF2lDeadLock(BasicCubeModel model) {
 
-		for (int i = -1; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			model.reset();
 			MoveSequence seq = new MoveSequence();
-			if (i >= 0) {
-				model.applyTurn(rotates[i]);
-				seq.addMove(rotates[i]);
-			}
+			model.applyTurn(rotates[i]);
+			seq.addMove(rotates[i]);
 			if (!fPartPattern.match(model)) {
 				seq.addMove(SymbolMoveUtil.parseMoveFromSymbol("R", order));
 				seq.addMove(SymbolMoveUtil.parseMoveFromSymbol("U", order));
