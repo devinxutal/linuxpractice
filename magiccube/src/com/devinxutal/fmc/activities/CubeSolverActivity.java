@@ -120,11 +120,18 @@ public class CubeSolverActivity extends Activity implements
 	}
 
 	public void statusChanged(State from, State to) {
-		if (continuesly) {
-			if (controller.getMagicCube().solved()) {
-				continuesly = false;
-			} else {
-				solveCube();
+		if (from == State.RUNNING_MULTPLE_STEP && to == State.STOPPED) {
+			if (continuesly) {
+				this.runOnUiThread(new Runnable() {
+					public void run() {
+						if (controller.getMagicCube().solved()) {
+							continuesly = false;
+						} else {
+							solveCube();
+						}
+					}
+				});
+
 			}
 		}
 	}
