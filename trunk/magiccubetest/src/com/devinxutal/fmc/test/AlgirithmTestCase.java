@@ -13,6 +13,7 @@ import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.solver.CfopSolver;
 import com.devinxutal.fmc.util.AlgorithmUtils;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class AlgirithmTestCase extends
 		ActivityInstrumentationTestCase2<CubeSolverActivity> {
@@ -80,7 +81,8 @@ public class AlgirithmTestCase extends
 		model = new BasicCubeModel(cube);
 		assertFalse(a.getPattern().match(model));
 		Log.v("motiontest", "now apply rotate");
-		model.applyRotate(MagicCube.DIM_Y, 1, false);
+		model.applyTurn(SymbolMoveUtil.parseMoveFromSymbol("y", cube.getOrder()));
+		//model.applyRotate(MagicCube.DIM_Y, 1, false);
 		assertTrue(a.getPattern().match(model));
 
 	}
@@ -99,8 +101,7 @@ public class AlgirithmTestCase extends
 			cube.turnBySymbol("U");
 			cube.turnBySymbol("R'");
 			cube.turnBySymbol("U'");
-			
-			
+
 			solver.nextMoves(cube);
 		} catch (IOException e) {
 			e.printStackTrace();
