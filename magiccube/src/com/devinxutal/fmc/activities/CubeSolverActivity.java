@@ -14,14 +14,19 @@ import com.devinxutal.fmc.control.IMoveSequence;
 import com.devinxutal.fmc.control.InfiniteMoveSequence;
 import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.control.MoveController;
+import com.devinxutal.fmc.control.MoveControllerListener;
 import com.devinxutal.fmc.control.MoveSequence;
+import com.devinxutal.fmc.control.MoveController.State;
 import com.devinxutal.fmc.solver.CfopSolver;
 
-public class CubeSolverActivity extends Activity {
+public class CubeSolverActivity extends Activity implements
+		MoveControllerListener {
 
 	CubeController controller;
 	MoveController mController;
 	CfopSolver solver;
+
+	private boolean continuesly = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -39,6 +44,7 @@ public class CubeSolverActivity extends Activity {
 		}
 		// shuffle();
 		t = Toast.makeText(this, "", 10000);
+		mController.addMoveControllerListener(this);
 	}
 
 	private void shuffle(int step) {
@@ -78,9 +84,13 @@ public class CubeSolverActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.solver_solve_cont:
-			solveCube();
+			if (!controller.getMagicCube().solved()) {
+				continuesly = true;
+				solveCube();
+			}
 			return true;
 		case R.id.solver_solve:
+			continuesly = false;
 			solveCube();
 			return true;
 		case R.id.solver_shuffle:
@@ -103,4 +113,20 @@ public class CubeSolverActivity extends Activity {
 			mController.startMove(seq);
 		}
 	}
+
+	public void moveSequenceStepped(int index) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void statusChanged(State from, State to) {
+		if (continuesly) {
+			if (controller.getMagicCube().solved()) {
+				continuesly = false;
+			} else {
+				solveCube();
+			}
+		}
+	}
+
 }
