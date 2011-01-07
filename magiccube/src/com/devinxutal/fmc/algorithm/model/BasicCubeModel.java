@@ -3,6 +3,7 @@ package com.devinxutal.fmc.algorithm.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.model.basic.CubeTurner;
 import com.devinxutal.fmc.util.AlgorithmUtils;
@@ -37,16 +38,13 @@ public class BasicCubeModel implements CubeModel {
 		return original;
 	}
 
-	public void applyRotate(int dim, int direction, boolean half) {
-		if (direction == 0) {
-			turner.copy(original, current);
-			return;
-		}
-		turner.copy(original, current);
-		turner.turn(original, current, dim, layers, direction);
-		if (half) {
+	public void applyTurn(Move move) {
+		turner.copy(current, temp);
+		turner.turn(temp, current, move.dimension, move.layers, move.direction);
+		if (move.doubleTurn) {
 			turner.copy(current, temp);
-			turner.turn(temp, current, dim, layers, direction);
+			turner.turn(temp, current, move.dimension, move.layers,
+					move.direction);
 		}
 	}
 

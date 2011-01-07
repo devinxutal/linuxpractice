@@ -32,7 +32,8 @@ public class CubeSolverActivity extends Activity {
 		setContentView(controller.getCubeView());
 		solver = new CfopSolver();
 		try {
-			solver.init(getAssets().open("algorithm/cfop"));
+			solver.init(getAssets().open("algorithm/cfop_pattern"), getAssets()
+					.open("algorithm/cfop_algorithm"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
