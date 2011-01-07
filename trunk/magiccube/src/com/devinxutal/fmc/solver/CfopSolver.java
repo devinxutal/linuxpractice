@@ -14,9 +14,11 @@ import android.util.Log;
 import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
 import com.devinxutal.fmc.algorithm.pattern.Pattern;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
+import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.control.MoveSequence;
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.util.AlgorithmUtils;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class CfopSolver extends AbstractSolver {
 	public List<PatternAlgorithm> C;
@@ -30,6 +32,24 @@ public class CfopSolver extends AbstractSolver {
 	public Pattern pPattern;
 
 	public String msg;
+
+	public static Move[] rotates;
+	public static Move[] upturns;
+
+	public static int order = 3;
+
+	static {
+		String[] array_rotates = new String[] { "y", "y'", "y2" };
+		String[] array_upturns = new String[] { "U", "U'", "U2" };
+		rotates = new Move[3];
+		upturns = new Move[3];
+		for (int i = 0; i < 3; i++) {
+			rotates[i] = SymbolMoveUtil.parseMoveFromSymbol(array_rotates[i],
+					order);
+			upturns[i] = SymbolMoveUtil.parseMoveFromSymbol(array_upturns[i],
+					order);
+		}
+	}
 
 	public CfopSolver() {
 		init();
@@ -76,9 +96,14 @@ public class CfopSolver extends AbstractSolver {
 		} else if (!oPattern.match(model)) { // do O
 			Log.v("CfogSolver", "OLL not formed");
 			return doO(model);
-		} else { // do P
+		} else if (!pPattern.match(model)) { // do P
 			Log.v("CfogSolver", "PLL not formed");
 			return doP(model);
+		} else if (pPattern.match(model)) {
+			Log.v("CfogSolver", "PLL formed, ajust upside");
+			return ajustUp(model);
+		} else {
+			return null;
 		}
 	}
 
@@ -221,9 +246,9 @@ public class CfopSolver extends AbstractSolver {
 				+ "(3411,3421,3431)"//
 		);
 		pPattern = AlgorithmUtils.parseColorPattern("(0311,0321,0331),"//
-				+ "(4311,4321,4331),"//
-				+ "(1301,2301,3301),"//
-				+ "(1341,2341,3341)"//
+				+ "(4312,4322,4332),"//
+				+ "(1303,2303,3303),"//
+				+ "(1344,2344,3344)"//
 		);
 	}
 
@@ -232,43 +257,134 @@ public class CfopSolver extends AbstractSolver {
 	}
 
 	private MoveSequence doF(BasicCubeModel model) {
-		for (PatternAlgorithm pa : F) {
-			if (pa.getPattern().match(model)) {
-				setMessage("find matching F2L fomula:\n" + pa.getName()
-						+ ": \n" + pa.getFormula());
-				Log.v("CfopSolver", "find matching F2L fomula:" + pa.getName()
-						+ ": " + pa.getFormula());
-				return pa.getMoves();
+		for (int i = -1; i < 3; i++) {
+			for (int j = -1; j < 3; j++) {
+				model.reset();
+				MoveSequence seq = new MoveSequence();
+				if (i >= 0) {
+					model.applyTurn(rotates[i]);
+					seq.addMove(rotates[i]);
+				}
+				if (j >= 0) {
+					model.applyTurn(upturns[j]);
+					seq.addMove(upturns[j]);
+				}
+				for (PatternAlgorithm pa : F) {
+					if (pa.getPattern().match(model)) {
+						setMessage("find matching F2L fomula:\n" + pa.getName()
+								+ ": \n" + pa.getFormula());
+						Log.v("CfopSolver", "find matching F2L fomula:"
+								+ pa.getName() + ": " + pa.getFormula());
+						MoveSequence moves = pa.getMoves();
+						moves.reset();
+						Move move;
+						while ((move = moves.step()) != null) {
+							seq.addMove(move);
+						}
+						return seq;
+					}
+				}
 			}
 		}
-		Log.v("CfopSolver", "cannot find matching fomula");
+
+		Log.v("CfopSolver", "cannot find matching F2L fomula");
 		return null;
 	}
 
 	private MoveSequence doO(BasicCubeModel model) {
-		for (PatternAlgorithm pa : O) {
-			if (pa.getPattern().match(model)) {
-				setMessage("find matching OLL fomula:\n" + pa.getName()
-						+ ":\n " + pa.getFormula());
-				return pa.getMoves();
+		for (int i = -1; i < 3; i++) {
+			model.reset();
+			MoveSequence seq = new MoveSequence();
+			if (i >= 0) {
+				model.applyTurn(rotates[i]);
+				seq.addMove(rotates[i]);
+			}
+			for (PatternAlgorithm pa : O) {
+				if (pa.getPattern().match(model)) {
+					setMessage("find matching OLL fomula:\n" + pa.getName()
+							+ ": \n" + pa.getFormula());
+					Log.v("CfopSolver", "find matching OLL fomula:"
+							+ pa.getName() + ": " + pa.getFormula());
+					MoveSequence moves = pa.getMoves();
+					moves.reset();
+					Move move;
+					while ((move = moves.step()) != null) {
+						seq.addMove(move);
+					}
+					return seq;
+				}
 			}
 		}
-		Log.v("CfopSolver", "cannot find matching fomula");
+
+		Log.v("CfopSolver", "cannot find matching OLL fomula");
 		return null;
 	}
 
 	private MoveSequence doP(BasicCubeModel model) {
-		for (PatternAlgorithm pa : P) {
-			if (pa.getPattern().match(model)) {
-				setMessage("find matching PLL fomula:\n" + pa.getName()
-						+ ": \n" + pa.getFormula());
-				Log.v("CfopSolver", "find matching PLL fomula:" + pa.getName()
-						+ ": " + pa.getFormula());
-				return pa.getMoves();
+		for (int i = -1; i < 3; i++) {
+			model.reset();
+			MoveSequence seq = new MoveSequence();
+			if (i >= 0) {
+				model.applyTurn(rotates[i]);
+				seq.addMove(rotates[i]);
+			}
+			for (PatternAlgorithm pa : P) {
+				if (pa.getPattern().match(model)) {
+					setMessage("find matching PLL fomula:\n" + pa.getName()
+							+ ": \n" + pa.getFormula());
+					Log.v("CfopSolver", "find matching PLL fomula:"
+							+ pa.getName() + ": " + pa.getFormula());
+					MoveSequence moves = pa.getMoves();
+					moves.reset();
+					Move move;
+					while ((move = moves.step()) != null) {
+						seq.addMove(move);
+					}
+					return seq;
+				}
 			}
 		}
-		Log.v("CfopSolver", "cannot find matching fomula");
+
+		Log.v("CfopSolver", "cannot find matching PLL fomula");
 		return null;
 	}
 
+	private MoveSequence ajustUp(BasicCubeModel model) {
+
+		MoveSequence seq = new MoveSequence();
+		for (int i = 0; i < 3; i++) {
+			model.reset();
+			if (i >= 0) {
+				model.applyTurn(rotates[i]);
+				if (this.solved(model
+						)) {
+
+					seq.addMove(rotates[i]);
+					return seq;
+				}
+			}
+
+		}
+		return null;
+	}
+
+	public boolean solved(BasicCubeModel model) {
+		Integer[][][] cube = model.get();
+		Integer u = cube[order / 2 + 1][order + 1][order / 2 + 1];
+		Integer d = cube[order / 2 + 1][0][order / 2 + 1];
+		Integer r = cube[order + 1][order / 2 + 1][order / 2 + 1];
+		Integer l = cube[0][order / 2 + 1][order / 2 + 1];
+		Integer f = cube[order / 2 + 1][order / 2 + 1][order + 1];
+		Integer b = cube[order / 2 + 1][order / 2 + 1][0];
+		for (int i = 1; i <= order; i++) {
+			for (int j = 1; j <= order; j++) {
+				if (cube[i][order + 1][j] != u || cube[i][0][j] != d
+						|| cube[order + 1][i][j] != r || cube[0][i][j] != l
+						|| cube[i][j][order + 1] != f || cube[i][j][0] != b) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }
