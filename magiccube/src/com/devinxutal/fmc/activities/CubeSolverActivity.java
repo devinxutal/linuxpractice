@@ -116,7 +116,6 @@ public class CubeSolverActivity extends Activity implements
 
 	public void moveSequenceStepped(int index) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void statusChanged(State from, State to) {
