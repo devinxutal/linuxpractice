@@ -2,16 +2,16 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 ﻿    <item 
 		android:state_enabled="false"
-        android:drawable="@drawable/btn_black" />
+        android:drawable="@drawable/transparent_button_normal" />
     <item 
     	android:state_pressed="true" 
     	android:state_enabled="true"
-        android:drawable="@drawable/btn_red" />
+        android:drawable="@drawable/transparent_button_focused" />
     <item 
     	android:state_focused="true" 
     	android:state_enabled="true"
-        android:drawable="@drawable/btn_red" />
+        android:drawable="@drawable/transparent_button_focused" />
     <item 
     	android:state_enabled="true"
-        android:drawable="@drawable/btn_orange" />
+        android:drawable="@drawable/transparent_button_normal" />
 </selector>

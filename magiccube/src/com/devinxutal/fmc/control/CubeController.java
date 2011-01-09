@@ -40,6 +40,10 @@ public class CubeController {
 		this.touchEnabled = touchEnabled;
 	}
 
+	public boolean isInAnimation() {
+		return inAnimation;
+	}
+
 	public CubeView getCubeView() {
 		return this.cubeView;
 	}
