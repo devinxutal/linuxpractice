@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.control.CubeController;
+import com.devinxutal.fmc.ui.CubeControlView;
 
 public class MagicCubeActivity extends Activity {
 	private CubeController controller;
@@ -24,7 +26,12 @@ public class MagicCubeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		controller = new CubeController(this, true);
 		controller.getCubeView().setId(12345676);
-		setContentView(controller.getCubeView());
+		FrameLayout layout = new FrameLayout(this);
+		layout.addView(controller.getCubeView());
+		CubeControlView controlView = new CubeControlView(this);
+		layout.addView(controlView);
+		controlView.setCubeController(controller);
+		setContentView(layout);
 
 	}
 
@@ -75,6 +82,11 @@ public class MagicCubeActivity extends Activity {
 		case R.id.cfopviewer:
 			Intent d = new Intent(this, CfopViewerActivity.class);
 			startActivity(d);
+			return true;
+
+		case R.id.test:
+			Intent e = new Intent(this, TestActivity.class);
+			startActivity(e);
 			return true;
 		}
 		return false;

@@ -235,7 +235,6 @@ public class CubeDemostrator extends ViewGroup implements
 				}
 			});
 		}
-
 	}
 
 	private void statusChangedUIMode(State from, State to) {

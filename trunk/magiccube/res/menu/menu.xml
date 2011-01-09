@@ -5,4 +5,5 @@
 	<item android:id="@+id/infinite" android:title="Infinite Cube" />
 	<item android:id="@+id/solver" android:title="Solver" />
 	<item android:id="@+id/cfopviewer" android:title="CFOP Viewer" />
+	<item android:id="@+id/test" android:title="Tester" />
 </menu>
