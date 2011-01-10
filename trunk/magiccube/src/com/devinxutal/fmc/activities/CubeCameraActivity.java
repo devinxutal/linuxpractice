@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
@@ -11,13 +12,14 @@ import android.hardware.Camera.ShutterCallback;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.ui.CubeCameraPreview;
-import com.devinxutal.fmc.util.ImageUtil;
 
 public class CubeCameraActivity extends Activity {
 	private static final String TAG = "CameraDemo";
@@ -28,6 +30,11 @@ public class CubeCameraActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+
 		setContentView(R.layout.cubecamara);
 
 		preview = new CubeCameraPreview(this); // <3>
@@ -40,7 +47,6 @@ public class CubeCameraActivity extends Activity {
 						jpegCallback);
 			}
 		});
-
 		Log.d(TAG, "onCreate'd");
 	}
 
@@ -71,10 +77,16 @@ public class CubeCameraActivity extends Activity {
 				Log.v(TAG, "picture format: " + p.getPictureFormat());
 				int w = p.getPictureSize().width;
 				int h = p.getPictureSize().height;
-				int[] rgb = new int[w * h];
-				ImageUtil.decodeYUV420SP(rgb, data, w, h);
-				Bitmap bitmap = Bitmap.createBitmap(rgb, w, h,
-						Bitmap.Config.ARGB_8888);
+				// int[] rgb = new int[w * h];
+				// ImageUtil.decodeYUV420SP(rgb, data, w, h);
+				// Bitmap bitmap = Bitmap.createBitmap(rgb, w, h,
+				// Bitmap.Config.ARGB_8888);
+				Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
+				Log.v("CubeCameraActivity", "bitmap null? " + (bm == null));
+				if (bm != null) {
+					Log.v("CubeCameraActivity", "width:" + bm.getWidth() + ", "
+							+ "height:" + bm.getHeight());
+				}
 				// Bitmap bitmap = Bitmap.createBitmap(p.getPictureSize().width,
 				// p
 				// .getPictureSize().height, Bitmap.Config.ARGB_8888);
