@@ -1,11 +1,11 @@
 package com.devinxutal.fmc.activities;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.os.Bundle;
@@ -16,11 +16,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.devinxutal.fmc.R;
-import com.devinxutal.fmc.ui.Preview;
+import com.devinxutal.fmc.ui.CubeCameraPreview;
+import com.devinxutal.fmc.util.ImageUtil;
 
 public class CubeCameraActivity extends Activity {
 	private static final String TAG = "CameraDemo";
-	Preview preview; // <1>
+	CubeCameraPreview preview; // <1>
 	Button buttonClick; // <2>
 
 	/** Called when the activity is first created. */
@@ -29,7 +30,7 @@ public class CubeCameraActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.cubecamara);
 
-		preview = new Preview(this); // <3>
+		preview = new CubeCameraPreview(this); // <3>
 		((FrameLayout) findViewById(R.id.preview)).addView(preview); // <4>
 
 		buttonClick = (Button) findViewById(R.id.buttonClick);
@@ -63,14 +64,27 @@ public class CubeCameraActivity extends Activity {
 			FileOutputStream outStream = null;
 			try {
 				// Write to SD Card
-				outStream = new FileOutputStream(String.format(
-						"/sdcard/%d.jpg", System.currentTimeMillis())); // <9>
-				outStream.write(data);
-				outStream.close();
+				Parameters p = camera.getParameters();
+				Log.v(TAG, "picture taken, size: " + p.getPictureSize().width
+						+ "," + p.getPictureSize().height + "   bytes: "
+						+ data.length);
+				Log.v(TAG, "picture format: " + p.getPictureFormat());
+				int w = p.getPictureSize().width;
+				int h = p.getPictureSize().height;
+				int[] rgb = new int[w * h];
+				ImageUtil.decodeYUV420SP(rgb, data, w, h);
+				Bitmap bitmap = Bitmap.createBitmap(rgb, w, h,
+						Bitmap.Config.ARGB_8888);
+				// Bitmap bitmap = Bitmap.createBitmap(p.getPictureSize().width,
+				// p
+				// .getPictureSize().height, Bitmap.Config.ARGB_8888);
+				// outStream = new FileOutputStream(String.format(
+				// "/sdcard/%d.jpg", System.currentTimeMillis())); // <9>
+				// outStream.write(data);
+				// outStream.close();
 				Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
-			} catch (FileNotFoundException e) { // <10>
-				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (Exception e) { // <10>
+
 				e.printStackTrace();
 			} finally {
 			}
