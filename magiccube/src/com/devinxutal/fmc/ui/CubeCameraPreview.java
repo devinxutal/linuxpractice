@@ -138,11 +138,11 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 			float lensr3 = len * sr3 / 2;
 			float lenhalf = len / 2;
 			points[0] = new PointF(cx, cy);
-			points[1] = new PointF(cx, cy - len);
+			points[1] = new PointF(cx, cy - len * 4 / 5);
 			points[2] = new PointF(cx + lensr3, cy - lenhalf);
-			points[3] = new PointF(cx + lensr3, cy + lenhalf);
-			points[4] = new PointF(cx, cy + len);
-			points[5] = new PointF(cx - lensr3, cy + lenhalf);
+			points[3] = new PointF(cx + lensr3 * 5/6, cy + lenhalf*7/6);
+			points[4] = new PointF(cx, cy + len * 6 / 5);
+			points[5] = new PointF(cx - lensr3 * 5/6, cy + lenhalf*7/6);
 			points[6] = new PointF(cx - lensr3, cy - lenhalf);
 
 		}
