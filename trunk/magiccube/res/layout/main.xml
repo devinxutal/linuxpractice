@@ -20,4 +20,7 @@
 	<Button android:id="@+id/main_btn_cube_solver"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:text="@string/main_btn_cube_solver" />
+
+	<Button android:id="@+id/main_btn_tester" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/main_btn_tester" />
 </LinearLayout>

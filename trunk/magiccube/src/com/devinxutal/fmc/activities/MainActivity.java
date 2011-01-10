@@ -16,7 +16,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		this.setContentView(R.layout.main);
 		int ids[] = new int[] { R.id.main_btn_free_play,
 				R.id.main_btn_time_play, R.id.main_btn_demonstrator,
-				R.id.main_btn_cfop_viewer, R.id.main_btn_cube_solver };
+				R.id.main_btn_cfop_viewer, R.id.main_btn_cube_solver,
+				R.id.main_btn_tester };
 		for (int id : ids) {
 			try {
 				this.findViewById(id).setOnClickListener(this);
@@ -44,6 +45,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.main_btn_cube_solver:
 			i = new Intent(this, CubeSolverActivity.class);
+			break;
+
+		case R.id.main_btn_tester:
+			i = new Intent(this, CubeCameraActivity.class);
 			break;
 		}
 		startActivity(i);

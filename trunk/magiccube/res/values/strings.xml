@@ -5,7 +5,8 @@
 	<string name="main_btn_demonstrator">Demonstrator</string>
 	<string name="main_btn_cfop_viewer">CFOP Viewer</string>
 	<string name="main_btn_cube_solver">Cube Solver</string>
-	
+	<string name="main_btn_tester">Test Camera</string>
+
 	<string name="hello">Hello World, MagicCube!</string>
 	<string name="app_name">Fancy Magic Cube</string>
 	<string name="menu_presentation">Presentation</string>
