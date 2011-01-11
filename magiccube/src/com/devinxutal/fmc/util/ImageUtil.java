@@ -1,42 +1,41 @@
 package com.devinxutal.fmc.util;
 
+import android.graphics.Color;
+
+import com.devinxutal.fmc.model.CubeColor;
+
 public class ImageUtil {
-	static public void decodeYUV420SP(int[] rgb, byte[] yuv420sp, int width,
-			int height) {
-		final int frameSize = width * height;
-
-		for (int j = 0, yp = 0; j < height; j++) {
-			int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
-			for (int i = 0; i < width; i++, yp++) {
-				int y = (0xff & ((int) yuv420sp[yp])) - 16;
-				if (y < 0)
-					y = 0;
-				if ((i & 1) == 0) {
-					v = (0xff & yuv420sp[uvp++]) - 128;
-					u = (0xff & yuv420sp[uvp++]) - 128;
-				}
-
-				int y1192 = 1192 * y;
-				int r = (y1192 + 1634 * v);
-				int g = (y1192 - 833 * v - 400 * u);
-				int b = (y1192 + 2066 * u);
-
-				if (r < 0)
-					r = 0;
-				else if (r > 262143)
-					r = 262143;
-				if (g < 0)
-					g = 0;
-				else if (g > 262143)
-					g = 262143;
-				if (b < 0)
-					b = 0;
-				else if (b > 262143)
-					b = 262143;
-
-				rgb[yp] = 0xff000000 | ((r << 6) & 0xff0000)
-						| ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
+	public static CubeColor getCubeColor(int color, CubeColor[] colors) {
+		int distance = Integer.MAX_VALUE;
+		CubeColor best = CubeColor.ANY;
+		for (CubeColor c : colors) {
+			int d = distance(color, c.getColor());
+			if (d < distance) {
+				best = c;
+				distance = d;
 			}
 		}
+		return best;
+	}
+
+	public static int distance(int c1, int c2) {
+		int r1 = Color.red(c1);
+		int g1 = Color.green(c1);
+		int b1 = Color.blue(c1);
+		int r2 = Color.red(c2);
+		int g2 = Color.green(c2);
+		int b2 = Color.blue(c2);
+
+		float p = Math.min(255f / r1, Math.min(255f / g1, 255f / b1));
+		r1 = (int) (p * r1);
+		g1 = (int) (p * g1);
+		b1 = (int) (p * b1);
+
+		p = Math.min(255f / r2, Math.min(255f / g2, 255f / b2));
+		r2 = (int) (p * r2);
+		g2 = (int) (p * g2);
+		b2 = (int) (p * b2);
+		return (r1 - r2) * (r1 - r2) + (g1 - g2) * (g1 - g2) + (b1 - b2)
+				* (b1 - b2);
 	}
 }

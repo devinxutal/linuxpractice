@@ -1,6 +1,7 @@
 package com.devinxutal.fmc.activities;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -27,10 +28,9 @@ import com.devinxutal.fmc.ui.CubeCameraPreview.CubeLocator;
 
 public class CubeCameraActivity extends Activity {
 	private static final String TAG = "CameraDemo";
-	CubeCameraPreview preview; // <1>
-	ImageButton buttonClick; // <2>
+	CubeCameraPreview preview;
+	ImageButton buttonClick;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +60,16 @@ public class CubeCameraActivity extends Activity {
 			}
 		});
 		Log.d(TAG, "onCreate'd");
+		//
+		try {
+			preview.getCubeLocator().setBitmap(
+					BitmapFactory
+							.decodeStream(getAssets().open("cubedemo.jpg")));
+			preview.getCubeLocator().setMode(CubeLocator.MOVE_MODE);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Called when shutter is opened
