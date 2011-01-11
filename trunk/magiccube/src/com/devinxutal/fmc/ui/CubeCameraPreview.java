@@ -20,6 +20,9 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.devinxutal.fmc.model.CubeColor;
+import com.devinxutal.fmc.util.ImageUtil;
+
 public class CubeCameraPreview extends FrameLayout { // <1>
 	private static final String TAG = "Preview";
 
@@ -30,7 +33,7 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 	public CubeCameraPreview(Context context) {
 		super(context);
 		area = new PreviewArea(context);
-		this.addView(area);
+		// this.addView(area);
 		locator = new CubeLocator(context);
 		this.addView(locator);
 	}
@@ -163,17 +166,20 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 
 		public void setBitmap(Bitmap bm) {
 			this.original = bm;
-			bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
-					Bitmap.Config.ARGB_8888);
-			Canvas c = new Canvas(bitmap);
-			c.drawBitmap(original, new Rect(0, 0, original.getWidth(), original
-					.getHeight()), new Rect(0, 0, bitmap.getWidth(), bitmap
-					.getHeight()), paint);
+			if (this.getWidth() > 0) {
+				bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
+						Bitmap.Config.ARGB_8888);
+				Canvas c = new Canvas(bitmap);
+				c.drawBitmap(original, new Rect(0, 0, original.getWidth(),
+						original.getHeight()), new Rect(0, 0,
+						bitmap.getWidth(), bitmap.getHeight()), paint);
+			}
 		}
 
 		@Override
 		protected void onDraw(Canvas canvas) {
 			Log.v("CubeCameraPreview", "OnDraw: " + mode);
+			paint.setAlpha(255);
 			super.onDraw(canvas);
 			if (mode == MOVE_MODE) {
 				canvas.drawBitmap(bitmap, 0, 0, paint);
@@ -218,7 +224,7 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 					canvas.drawCircle(points[i].x, points[i].y, 5, paint);
 				}
 				recalcPickerPoints();
-				paint.setColor(Color.argb(150, 255, 255,255));
+				paint.setColor(Color.argb(150, 255, 255, 255));
 				for (int i = 0; i < 3; i++) {
 					for (int j = 0; j < 3; j++) {
 						canvas.drawCircle(face1[i][j].x, face1[i][j].y, 5,
@@ -272,7 +278,7 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 				for (int j = 0; j < 3; j++) {
 					setPointF(face1[i][j], i, j, props2, props2, points[1],
 							points[6], points[0], points[2]);
-					setPointF(face2[i][j], i, j, props2, props1, points[6],
+					setPointF(face2[i][j], i, j, props1, props2, points[6],
 							points[5], points[4], points[0]);
 					setPointF(face3[i][j], i, j, props1, props1, points[0],
 							points[4], points[3], points[2]);
@@ -281,9 +287,7 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 		}
 
 		// a d
-		//
 		// n
-		//
 		// b c
 		// m
 
@@ -298,14 +302,15 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 			for (int i = 0; i <= n; i++) {
 				acumN += propsN[i];
 			}
-			acumN -= propsN[m] / 2;
-			float x1 = a.x + (b.x - a.x) * acumN;
+			acumN -= propsN[n] / 2;
 
-			float x2 = d.x + (c.x - d.x) * acumN;
-			point.x = x1 + (x2 - x1) * acumM;
-			float y1 = a.y + (d.y - a.y) * acumM;
-			float y2 = b.y + (c.y - b.y) * acumM;
-			point.y = y1 + (y2 - y1) * acumN;
+			float x1 = a.x + (b.x - a.x) * acumM;
+			float x2 = d.x + (c.x - d.x) * acumM;
+			point.x = x1 + (x2 - x1) * acumN;
+
+			float y1 = a.y + (d.y - a.y) * acumN;
+			float y2 = b.y + (c.y - b.y) * acumN;
+			point.y = y1 + (y2 - y1) * acumM;
 		}
 
 		public boolean onTouch(View view, MotionEvent event) {
@@ -346,7 +351,87 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 				break;
 			}
 			this.invalidate();
+
+			// for test
+			if (event.getX() < 20) {
+				getColors();
+			}
 			return true;
+		}
+
+		public int[] getColors() {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					discoverColor(face1[i][j]);
+				}
+			}
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					discoverColor(face2[i][j]);
+				}
+			}
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					discoverColor(face3[i][j]);
+				}
+			}
+			return null;
+		}
+
+		private void discoverColor(PointF p) {
+			int step = 5;
+			int gap = 2;
+			int tolerance = 30;
+
+			int avgR = 0;
+			int avgG = 0;
+			int avgB = 0;
+			for (int i = 0; i < step; i++) {
+				for (int j = 0; j < step; j++) {
+					float x = (i - step / 2f) * gap + p.x;
+					float y = (j - step / 2f) * gap + p.y;
+					int pixel = bitmap.getPixel((int) x, (int) y);
+					avgR += Color.red(pixel);
+					avgG += Color.green(pixel);
+					avgB += Color.blue(pixel);
+				}
+			}
+			avgR = avgR / step / step;
+			avgG = avgG / step / step;
+			avgB = avgB / step / step;
+			Log.v("CubeCameraPreview", "first round: r:g:b   " + avgR + ":"
+					+ avgG + ":" + avgB);
+			int aR = 0, aG = 0, aB = 0;
+			int totalPoints = 0;
+			for (int i = 0; i < step; i++) {
+				for (int j = 0; j < step; j++) {
+					float x = (i - step / 2f) * gap + p.x;
+					float y = (j - step / 2f) * gap + p.y;
+					int pixel = bitmap.getPixel((int) x, (int) y);
+					if (Math.abs(avgR - Color.red(pixel)) > tolerance
+							|| Math.abs(avgG - Color.green(pixel)) > tolerance
+							|| Math.abs(avgB - Color.blue(pixel)) > tolerance) {
+						Log.v("CubeCameraPreview", "omit color at [" + i + ","
+								+ j + "] r:g:b   " + Color.red(pixel) + ":"
+								+ Color.green(pixel) + ":" + Color.blue(pixel));
+					} else {
+						totalPoints++;
+						aR += Color.red(pixel);
+						aG += Color.green(pixel);
+						aB += Color.blue(pixel);
+					}
+				}
+			}
+			aR = aR / step / step;
+			aG = aG / step / step;
+			aB = aB / step / step;
+			Log.v("CubeCameraPreview", "second round: r:g:b   " + aR + ":" + aG
+					+ ":" + aB);
+			CubeColor colors[] = new CubeColor[] { CubeColor.RED,
+					CubeColor.ORANGE, CubeColor.WHITE, CubeColor.YELLOW,
+					CubeColor.BLUE, CubeColor.GREEN };
+			Log.v("CubeCameraPreview", "best fit color:"
+					+ ImageUtil.getCubeColor(Color.rgb(aR, aG, aB), colors));
 		}
 	}
 
