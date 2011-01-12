@@ -1,20 +1,33 @@
 package com.devinxutal.fmc.ui;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.devinxutal.fmc.model.CubeColor;
 
 public class PlaneCubeView extends View {
+	String TAG = "PlaneCubeView";
+
+	private List<PlaneCubeListener> listeners = new LinkedList<PlaneCubeListener>();
 	private CubeColor[][][] currCube;
 	private int order;
 	PointF points[];
 	Paint paint = new Paint();
+
+	Bitmap colorPicker;
+	Canvas colorPickerCanvas;
+	boolean needResetPicker = false;
 
 	public PlaneCubeView(Context context) {
 		super(context);
@@ -23,6 +36,7 @@ public class PlaneCubeView extends View {
 	}
 
 	private void init() {
+		colorPickerCanvas = new Canvas();
 		points = new PointF[7];
 		currCube = new CubeColor[order + 2][order + 2][order + 2];
 		for (int i = 0; i < order + 2; i++) {
@@ -58,17 +72,41 @@ public class PlaneCubeView extends View {
 		}
 	}
 
+	public void setColor(int x, int y, int z, CubeColor color) {
+		try {
+			this.currCube[x][y][z] = color;
+			Log.v(TAG, "set color succeed: " + color);
+		} catch (Exception e) {
+		}
+		this.invalidate();
+	}
+
+	public CubeColor getColor(int x, int y, int z) {
+		try {
+			return this.currCube[x][y][z];
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		this.drawCube(canvas, true);
+		if (needResetPicker) {
+			Log.v(TAG, "redraw color picker");
+			this.drawCube(colorPickerCanvas, true);
+		}
+		this.drawCube(canvas, false);
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		super.onSizeChanged(w, h, oldw, oldh);
+		if (w != oldw || h != oldh) {
+			colorPicker = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			colorPickerCanvas.setBitmap(colorPicker);
+		}
+		needResetPicker = true;
 		// ajust locator points;
 		if (points == null) {
 			points = new PointF[7];
@@ -246,6 +284,40 @@ public class PlaneCubeView extends View {
 			paint.setColor(CubeColor.BLACK.getColor());
 			canvas.drawLines(contour, paint);
 		}
+	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+		if (colorPicker != null) {
+			int pixel = colorPicker.getPixel(x, y);
+			int i = Color.red(pixel) / 20;
+			int j = Color.green(pixel) / 20;
+			int k = Color.blue(pixel) / 20;
+			if ((i | j | k) != 0) {
+				notifyCubeClicked(i, j, k);
+			}
+		}
+		return super.onTouchEvent(event);
+	}
+
+	public boolean addPlaneCubeListener(PlaneCubeListener l) {
+		return this.listeners.add(l);
+	}
+
+	public boolean removePlaneCubeListener(PlaneCubeListener l) {
+		return this.listeners.remove(l);
+	}
+
+	public void clearPlaneCubeListener() {
+		this.listeners.clear();
+	}
+
+	protected void notifyCubeClicked(int x, int y, int z) {
+		Log.v(TAG, "cube clicked: " + x + " " + y + " " + z);
+		for (PlaneCubeListener l : listeners) {
+			l.cubeClicked(x, y, z);
+		}
 	}
 }

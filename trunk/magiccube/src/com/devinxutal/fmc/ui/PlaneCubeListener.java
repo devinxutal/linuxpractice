@@ -1,5 +1,5 @@
 package com.devinxutal.fmc.ui;
 
-public interface PlaneCubeClickListener {
+public interface PlaneCubeListener {
 	void cubeClicked(int x, int y, int z);
 }

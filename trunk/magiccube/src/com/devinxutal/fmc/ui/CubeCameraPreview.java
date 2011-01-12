@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,9 +30,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.devinxutal.fmc.model.CubeColor;
+import com.devinxutal.fmc.ui.CubeColorPickerDialog.OnColorChangedListener;
 import com.devinxutal.fmc.util.ImageUtil;
 
-public class CubeCameraPreview extends FrameLayout implements OnClickListener { // <1>
+public class CubeCameraPreview extends FrameLayout implements OnClickListener,
+		PlaneCubeListener { // <1>
 
 	public enum Stage {
 		PHOTO, LOCATE, COMFIRM
@@ -62,6 +65,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 
 		this.control.nextButton.setOnClickListener(this);
 		this.control.backButton.setOnClickListener(this);
+		this.validator.cubeView.addPlaneCubeListener(this);
 		switchStage(Stage.PHOTO);
 	}
 
@@ -415,6 +419,10 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			}
 		}
 
+		private void setCubeColors() {
+
+		}
+
 		// a d
 		// n
 		// b c
@@ -486,6 +494,26 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			return true;
 		}
 
+		public CubeColor[][][] getCubeColor() {
+			CubeColor[][][] colors = new CubeColor[5][5][5];
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					colors[i + 1][4][j + 1] = discoverColor(face1[i][j]);
+				}
+			}
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					colors[i + 1][3 - j][4] = discoverColor(face2[i][j]);
+				}
+			}
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					colors[4][3 - i][3 - j] = discoverColor(face3[i][j]);
+				}
+			}
+			return colors;
+		}
+
 		public int[] getColors() {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
@@ -505,7 +533,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			return null;
 		}
 
-		private void discoverColor(PointF p) {
+		private CubeColor discoverColor(PointF p) {
 			int step = 5;
 			int gap = 2;
 			int tolerance = 30;
@@ -559,12 +587,14 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 					CubeColor.BLUE, CubeColor.GREEN };
 			Log.v("CubeCameraPreview", "best fit color:"
 					+ ImageUtil.getCubeColor(Color.rgb(aR, aG, aB), colors));
+			return ImageUtil.getCubeColor(Color.rgb(aR, aG, aB), colors);
 		}
 	}
 
 	public class ControlLayer extends ViewGroup {
 		private Button backButton;
 		private Button nextButton;
+		private Button helpButton;
 
 		private boolean canBack = false;
 		private boolean canNext = false;
@@ -593,10 +623,15 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			super(context);
 			backButton = new Button(context);
 			nextButton = new Button(context);
+			helpButton = new Button(context);
 			backButton.setText("Back");
 			nextButton.setText("Next");
+			helpButton.setText("?");
+			helpButton
+					.setBackgroundResource(com.devinxutal.fmc.R.drawable.play_button);
 			this.addView(backButton);
 			this.addView(nextButton);
+			this.addView(helpButton);
 		}
 
 		@Override
@@ -621,6 +656,11 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 						- nextButton.getMeasuredHeight(), r - l - padding, b
 						- t - padding);
 			}
+			helpButton.measure(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			helpButton.layout(padding, padding, padding
+					+ helpButton.getMeasuredWidth(), padding
+					+ helpButton.getMeasuredHeight());
 		}
 	}
 
@@ -663,6 +703,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			case LOCATE:
 				this.validator.imageView.setImageBitmap(locator
 						.getCubeAsBitmap());
+				this.validator.cubeView.setColors(locator.getCubeColor());
 				switchStage(Stage.COMFIRM);
 				break;
 			case COMFIRM:
@@ -706,6 +747,12 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 				if (bm != null) {
 					locator.setBitmap(bm);
 					locator.setMode(CubeLocator.MOVE_MODE);
+					// for test
+					// TODO delete this
+					locator.setBitmap(BitmapFactory
+							.decodeStream(((Activity) getContext()).getAssets()
+									.open("cubedemo.jpg")));
+					// end for test
 					Log.v("CubeCameraPreview", "width:" + bm.getWidth() + ", "
 							+ "height:" + bm.getHeight());
 					switchStage(Stage.LOCATE);
@@ -720,4 +767,16 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener { 
 			Log.d(TAG, "onPictureTaken - jpeg");
 		}
 	};
+
+	public void cubeClicked(final int x, final int y, final int z) {
+		CubeColorPickerDialog dialog = new CubeColorPickerDialog(getContext(),
+				new OnColorChangedListener() {
+					public void colorChanged(CubeColor color) {
+						CubeCameraPreview.this.validator.cubeView.setColor(x,
+								y, z, color);
+					}
+
+				}, CubeCameraPreview.this.validator.cubeView.getColor(x, y, z));
+		dialog.show();
+	}
 }
