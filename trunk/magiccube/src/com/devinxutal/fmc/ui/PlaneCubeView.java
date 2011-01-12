@@ -113,16 +113,16 @@ public class PlaneCubeView extends View {
 		}
 		float len = Math.min(w, h) * 5f / 10f;
 		float cx = w / 2f;
-		float cy = h / 2f - h / 5;
+		float cy = h / 2f - h / 12f;
 		float sr3 = (float) Math.sqrt(3);
 		float lensr3 = len * sr3 / 2;
 		float lenhalf = len / 2;
 		points[0] = new PointF(cx, cy);
 		points[1] = new PointF(cx, cy - len * 4 / 5);
 		points[2] = new PointF(cx + lensr3, cy - lenhalf);
-		points[3] = new PointF(cx + lensr3 * 5 / 6, cy + lenhalf * 7 / 6);
-		points[4] = new PointF(cx, cy + len * 6 / 5);
-		points[5] = new PointF(cx - lensr3 * 5 / 6, cy + lenhalf * 7 / 6);
+		points[3] = new PointF(cx + lensr3 * 5 / 6, cy + lenhalf * 11 / 10f);
+		points[4] = new PointF(cx, cy + len * 11 / 10f);
+		points[5] = new PointF(cx - lensr3 * 5 / 6, cy + lenhalf * 11 / 10f);
 		points[6] = new PointF(cx - lensr3, cy - lenhalf);
 
 	}

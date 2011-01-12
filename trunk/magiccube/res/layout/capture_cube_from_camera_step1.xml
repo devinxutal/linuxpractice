@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="center_horizontal"
+	android:id="@+id/capture_cube_from_camera_step1" android:background="#FF222222"
+	android:paddingTop="20dip">
+
+	<TextView android:layout_height="wrap_content" android:id="@+id/title"
+		android:textColor="#FF9999FF" android:text="@string/cube_capture"
+		android:gravity="center_horizontal" android:layout_width="wrap_content"
+		android:textStyle="bold" android:textSize="28px" android:shadowColor="#FF999999"
+		android:shadowDx="1" android:shadowDy="1" android:shadowRadius="0.2"
+		android:typeface="normal" android:padding="10dip"></TextView>
+	<TextView android:layout_height="wrap_content" android:id="@+id/step"
+		android:textColor="#FF99EE99" android:text="STEP 1" android:gravity="center_horizontal"
+		android:layout_width="wrap_content" android:textStyle="bold"
+		android:textSize="20px" android:shadowColor="#FF999999"
+		android:shadowDx="1" android:shadowDy="1" android:shadowRadius="0.2"
+		android:padding="10dip" android:typeface="monospace"></TextView>
+	<TextView android:layout_height="wrap_content" android:id="@+id/description"
+		android:textColor="#FFFFFF99" android:text="" android:layout_width="wrap_content"
+		android:textSize="18dip" android:typeface="normal" android:padding="10dip"
+		android:gravity="center_horizontal"></TextView>
+	<ImageView android:id="@+id/imageView" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:src="@drawable/cube"
+		android:padding="10dip"></ImageView>
+	<Button android:text="@string/common_go_go" android:id="@+id/goButton"
+		android:layout_width="150dip" android:layout_height="wrap_content"
+		android:background="@drawable/btn_custom" android:textColor="#FFFFFFFF"
+		android:textAppearance="@style/Button"></Button>
+
+</LinearLayout>

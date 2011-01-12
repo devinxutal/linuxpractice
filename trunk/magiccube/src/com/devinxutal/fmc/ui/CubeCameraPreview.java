@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.model.CubeColor;
 import com.devinxutal.fmc.ui.CubeColorPickerDialog.OnColorChangedListener;
 import com.devinxutal.fmc.util.ImageUtil;
@@ -65,6 +68,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 
 		this.control.nextButton.setOnClickListener(this);
 		this.control.backButton.setOnClickListener(this);
+		this.control.helpButton.setOnClickListener(this);
 		this.validator.cubeView.addPlaneCubeListener(this);
 		switchStage(Stage.PHOTO);
 	}
@@ -87,7 +91,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			this.locator.setMode(CubeLocator.INDICATE_MODE);
 			this.control.setCanBack(false);
 			this.control.setCanNext(true);
-			this.control.nextButton.setText("OK");
+			this.control.nextButton.setText(R.string.common_ok);
 			if (camera != null) {
 				this.camera.startPreview();
 			}
@@ -98,7 +102,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			this.locator.setMode(CubeLocator.MOVE_MODE);
 			this.control.setCanBack(true);
 			this.control.setCanNext(true);
-			this.control.nextButton.setText("Next");
+			this.control.nextButton.setText(R.string.common_next);
 			if (camera != null) {
 				this.camera.stopPreview();
 			}
@@ -108,7 +112,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			this.addView(control);
 			this.control.setCanBack(true);
 			this.control.setCanNext(true);
-			this.control.nextButton.setText("Finish");
+			this.control.nextButton.setText(R.string.common_finish);
 			if (camera != null) {
 				this.camera.stopPreview();
 			}
@@ -380,16 +384,16 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			}
 			float len = Math.min(w, h) * 5f / 10f;
 			float cx = w / 2f;
-			float cy = h / 2f;
+			float cy = h / 2f - h / 12f;
 			float sr3 = (float) Math.sqrt(3);
 			float lensr3 = len * sr3 / 2;
 			float lenhalf = len / 2;
 			points[0] = new PointF(cx, cy);
 			points[1] = new PointF(cx, cy - len * 4 / 5);
 			points[2] = new PointF(cx + lensr3, cy - lenhalf);
-			points[3] = new PointF(cx + lensr3 * 5 / 6, cy + lenhalf * 7 / 6);
-			points[4] = new PointF(cx, cy + len * 6 / 5);
-			points[5] = new PointF(cx - lensr3 * 5 / 6, cy + lenhalf * 7 / 6);
+			points[3] = new PointF(cx + lensr3 * 5 / 6, cy + lenhalf * 11 / 10f);
+			points[4] = new PointF(cx, cy + len * 11 / 10f);
+			points[5] = new PointF(cx - lensr3 * 5 / 6, cy + lenhalf * 11 / 10f);
 			points[6] = new PointF(cx - lensr3, cy - lenhalf);
 
 			//
@@ -624,8 +628,8 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			backButton = new Button(context);
 			nextButton = new Button(context);
 			helpButton = new Button(context);
-			backButton.setText("Back");
-			nextButton.setText("Next");
+			backButton.setText(R.string.common_back);
+			nextButton.setText(R.string.common_next);
 			helpButton.setText("?");
 			helpButton
 					.setBackgroundResource(com.devinxutal.fmc.R.drawable.play_button);
@@ -707,7 +711,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				switchStage(Stage.COMFIRM);
 				break;
 			case COMFIRM:
-				// TODO
+				((Activity) getContext()).finish();
 				break;
 			}
 		} else if (view == control.backButton) {
@@ -719,6 +723,31 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				switchStage(Stage.LOCATE);
 				break;
 			}
+		} else if (view == control.helpButton) {
+			int contentId = 0;
+			switch (stage) {
+			case PHOTO:
+				contentId = R.string.help_take_photo;
+				break;
+			case LOCATE:
+				contentId = R.string.help_locate_cube;
+				break;
+			case COMFIRM:
+				contentId = R.string.help_comfirm_color;
+				break;
+			}
+			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+			builder.setTitle(R.string.help).setMessage(contentId)
+					.setPositiveButton(R.string.common_ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+
+								}
+							});
+			AlertDialog alert = builder.create();
+			alert.show();
+
 		}
 
 	}
@@ -749,9 +778,9 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 					locator.setMode(CubeLocator.MOVE_MODE);
 					// for test
 					// TODO delete this
-					locator.setBitmap(BitmapFactory
-							.decodeStream(((Activity) getContext()).getAssets()
-									.open("cubedemo.jpg")));
+					// locator.setBitmap(BitmapFactory
+					// .decodeStream(((Activity) getContext()).getAssets()
+					// .open("cubedemo.jpg")));
 					// end for test
 					Log.v("CubeCameraPreview", "width:" + bm.getWidth() + ", "
 							+ "height:" + bm.getHeight());

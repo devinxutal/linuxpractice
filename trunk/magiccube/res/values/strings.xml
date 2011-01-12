@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="common_ok">OK</string>
+	<string name="common_cancel">Cancel</string>
+	<string name="common_yes">Yes</string>
+	<string name="common_no">No</string>
+	<string name="common_next">Next</string>
+	<string name="common_back">Back</string>
+	<string name="common_finish">Finish</string>
+	<string name="common_go">Go</string>
+	<string name="common_go_go">Go!</string>
+
 	<string name="main_btn_free_play">Free Play</string>
 	<string name="main_btn_time_play">Timed Play</string>
 	<string name="main_btn_demonstrator">Demonstrator</string>
@@ -13,6 +23,7 @@
 	<string name="menu_preferences">Preferences</string>
 	<string name="pref_cat_basic">Basic Settings</string>
 	<string name="pref_cat_performance">Performance</string>
+
 
 
 	<string name="preferences_title">Preferences</string>
@@ -49,4 +60,22 @@
 		<item>3</item>
 	</string-array>
 
+	<string name="help">Help</string>
+	<string name="help_take_photo">Take a photo of your cube.</string>
+
+	<string name="help_locate_cube">Move the joysticks to perfectly fit the cube.
+	</string>
+	<string name="help_comfirm_color">Confirm the recognized cube, if any piece get a
+		wrong color, just tap it and re-assign a correct color
+	</string>
+
+	<string name="cube_capture">Cube Capturing</string>
+	<string name="cube_capture_step1_sign">STEP 1</string>
+	<string name="cube_capture_step2_sign">STEP 2</string>
+	<string name="cube_capture_step1_desc">Take a photo of your cube, and identify the colors
+		of the UP, FRONT, RIGHT side. Just like the cube showed below</string>
+	<string name="cube_capture_step2_desc">Take a photo of the other three sides: make the
+		three other faces visible by turning your cube upside down, then press
+		"Go!" button.
+	</string>
 </resources>

@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.main_btn_tester:
-			i = new Intent(this, CubeCameraActivity.class);
+			i = new Intent(this, CubeCapturingActivity.class);
 			break;
 		}
 		startActivity(i);
