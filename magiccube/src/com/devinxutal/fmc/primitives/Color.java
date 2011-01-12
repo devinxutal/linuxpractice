@@ -10,6 +10,7 @@ public class Color {
 	public Color(int r, int g, int b) {
 		this(r, g, b, 255);
 	}
+	
 
 	public Color(int r, int g, int b, int a) {
 		if (r < 0 && r >= -128) {

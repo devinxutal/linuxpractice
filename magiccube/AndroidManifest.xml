@@ -35,6 +35,9 @@
 		<activity android:name=".activities.CubeCameraActivity"
 			android:screenOrientation="landscape" android:label="Cube Camera">
 		</activity>
+		<activity android:name=".activities.CubeCapturingActivity"
+			android:screenOrientation="portrait" android:label="Cube Camera">
+		</activity>
 	</application>
 	<uses-sdk android:minSdkVersion="4" />
 	<uses-permission android:name="android.permission.CAMERA" />
