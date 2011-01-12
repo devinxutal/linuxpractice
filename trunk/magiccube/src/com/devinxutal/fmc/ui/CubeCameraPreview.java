@@ -1,10 +1,12 @@
 package com.devinxutal.fmc.ui;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,30 +14,102 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.ShutterCallback;
 import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.devinxutal.fmc.model.CubeColor;
 import com.devinxutal.fmc.util.ImageUtil;
 
-public class CubeCameraPreview extends FrameLayout { // <1>
-	private static final String TAG = "Preview";
+public class CubeCameraPreview extends FrameLayout implements OnClickListener { // <1>
+
+	public enum Stage {
+		PHOTO, LOCATE, COMFIRM
+	}
+
+	private static final String TAG = "CubeCameraPreview";
 
 	public Camera camera;
-	private PreviewArea area;
+	private PreviewArea preview;
 	private CubeLocator locator;
+	private ControlLayer control;
+	private CubeValidator validator;
+
+	private Stage stage;
 
 	public CubeCameraPreview(Context context) {
 		super(context);
-		area = new PreviewArea(context);
-		// this.addView(area);
+		preview = new PreviewArea(context);
+
 		locator = new CubeLocator(context);
-		this.addView(locator);
+
+		control = new ControlLayer(context);
+
+		control.setCanBack(true);
+		control.setCanNext(true);
+
+		validator = new CubeValidator(context);
+
+		this.control.nextButton.setOnClickListener(this);
+		this.control.backButton.setOnClickListener(this);
+		switchStage(Stage.PHOTO);
+	}
+
+	public Stage getStage() {
+		return this.stage;
+	}
+
+	public void switchStage(Stage to) {
+		if (stage == to) {
+			return;
+		}
+		Log.v("CubeCameraPreview", "switch stage:" + stage + "->" + to);
+		stage = to;
+		if (to == Stage.PHOTO) {
+			this.removeAllViews();
+			this.addView(preview);
+			this.addView(locator);
+			this.addView(control);
+			this.locator.setMode(CubeLocator.INDICATE_MODE);
+			this.control.setCanBack(false);
+			this.control.setCanNext(true);
+			this.control.nextButton.setText("OK");
+			if (camera != null) {
+				this.camera.startPreview();
+			}
+		} else if (to == Stage.LOCATE) {
+			this.removeAllViews();
+			this.addView(locator);
+			this.addView(control);
+			this.locator.setMode(CubeLocator.MOVE_MODE);
+			this.control.setCanBack(true);
+			this.control.setCanNext(true);
+			this.control.nextButton.setText("Next");
+			if (camera != null) {
+				this.camera.stopPreview();
+			}
+		} else if (to == Stage.COMFIRM) {
+			this.removeAllViews();
+			this.addView(validator);
+			this.addView(control);
+			this.control.setCanBack(true);
+			this.control.setCanNext(true);
+			this.control.nextButton.setText("Finish");
+			if (camera != null) {
+				this.camera.stopPreview();
+			}
+		}
+		invalidate();
 	}
 
 	public CubeLocator getCubeLocator() {
@@ -44,9 +118,7 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		if (!changed) {
-			return;
-		}
+		Log.v(TAG, "on main layout");
 		final int H = 3;
 		final int W = 4;
 		int w = r - l;
@@ -54,10 +126,12 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 		float d = Math.min(w / (float) W, h / (float) H);
 		int aw = (int) d * W;
 		int ah = (int) d * H;
-		area.layout((w - aw) / 2, (h - ah) / 2, (w - aw) / 2 + aw, (h - ah) / 2
-				+ ah);
+		preview.layout((w - aw) / 2, (h - ah) / 2, (w - aw) / 2 + aw, (h - ah)
+				/ 2 + ah);
 		locator.layout((w - aw) / 2, (h - ah) / 2, (w - aw) / 2 + aw, (h - ah)
 				/ 2 + ah);
+		control.layout(0, 0, r - l, b - t);
+		validator.layout(0, 0, r - l, b - t);
 	}
 
 	class PreviewArea extends SurfaceView implements SurfaceHolder.Callback {
@@ -90,6 +164,12 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 					}
 				}
 				params.setPictureSize(min.width, min.height);
+			}
+			Log.v(TAG, "Getting focuse mode");
+			if (params.getSupportedFocusModes() != null) {
+				for (String mode : params.getSupportedFocusModes()) {
+					Log.v(TAG, "FOCUSE MODE :: " + mode);
+				}
 			}
 			try {
 				camera.setParameters(params);
@@ -176,9 +256,58 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 			}
 		}
 
+		public Bitmap getCubeAsBitmap() {
+			if (bitmap == null) {
+				return null;
+			}
+			int minY = bitmap.getHeight();
+			int maxY = 0;
+			int minX = bitmap.getWidth();
+			int maxX = 0;
+			for (int i = 0; i < points.length; i++) {
+				int x = (int) points[i].x;
+				int y = (int) points[i].y;
+				minY = Math.max(Math.min(minY, y - 10), 0);
+				maxY = Math.min(Math.max(maxY, y + 10), bitmap.getHeight());
+				minX = Math.max(Math.min(minX, x - 10), 0);
+				maxX = Math.min(Math.max(maxX, x + 10), bitmap.getWidth());
+			}
+			int len = Math.max(maxY - minY, maxX - minX);
+			Log.v(TAG, "step 1 : " + len);
+			len = Math
+					.min(len, Math.min(bitmap.getHeight(), bitmap.getWidth()));
+
+			Log.v(TAG, "step 2" + " : " + len);
+			int l = minX - (len - (maxX - minX)) / 2;
+			int r = maxX + (len - (maxX - minX)) / 2;
+			int t = minY - (len - (maxY - minY)) / 2;
+			int b = maxY + (len - (maxY - minY)) / 2;
+			if (l < 0) {
+				r = r - l;
+				l = 0;
+			} else if (r > bitmap.getWidth()) {
+				l = l - (r - bitmap.getWidth());
+				r = bitmap.getWidth();
+			}
+			if (t < 0) {
+				b = b - t;
+				t = 0;
+			} else if (b > bitmap.getHeight()) {
+				t = l - (r - bitmap.getHeight());
+				b = bitmap.getHeight();
+			}
+			Log.v(TAG, "create bitmap : " + len);
+			Bitmap figure = Bitmap.createBitmap(len, len,
+					Bitmap.Config.ARGB_8888);
+			Canvas c = new Canvas(figure);
+			c.drawBitmap(bitmap, new Rect(l, t, r, b), new Rect(0, 0, figure
+					.getWidth(), figure.getHeight()), new Paint());
+			return figure;
+		}
+
 		@Override
 		protected void onDraw(Canvas canvas) {
-			Log.v("CubeCameraPreview", "OnDraw: " + mode);
+			Log.v(TAG, "Locator is redrawing");
 			paint.setAlpha(255);
 			super.onDraw(canvas);
 			if (mode == MOVE_MODE) {
@@ -317,7 +446,6 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 			if (mode != MOVE_MODE) {
 				return true;
 			}
-			Log.v("TestActivity", "touched");
 			float x = event.getX();
 			float y = event.getY();
 			switch (event.getAction()) {
@@ -340,7 +468,6 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 				}
 				break;
 			case MotionEvent.ACTION_MOVE:
-				Log.v("TestActivity", "moved: " + movingIndex);
 				if (movingIndex >= 0) {
 					points[movingIndex].x = x + movingDeltaX;
 					points[movingIndex].y = y + movingDeltaY;
@@ -435,4 +562,162 @@ public class CubeCameraPreview extends FrameLayout { // <1>
 		}
 	}
 
+	public class ControlLayer extends ViewGroup {
+		private Button backButton;
+		private Button nextButton;
+
+		private boolean canBack = false;
+		private boolean canNext = false;
+
+		public boolean canBack() {
+			return canBack;
+		}
+
+		public void setCanBack(boolean canBack) {
+			this.canBack = canBack;
+
+			backButton.setVisibility(canBack ? VISIBLE : INVISIBLE);
+		}
+
+		public boolean canNext() {
+			return canNext;
+		}
+
+		public void setCanNext(boolean canNext) {
+			this.canNext = canNext;
+
+			nextButton.setVisibility(canNext ? VISIBLE : INVISIBLE);
+		}
+
+		public ControlLayer(Context context) {
+			super(context);
+			backButton = new Button(context);
+			nextButton = new Button(context);
+			backButton.setText("Back");
+			nextButton.setText("Next");
+			this.addView(backButton);
+			this.addView(nextButton);
+		}
+
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			int padding = 10;
+			Log.v("CubeCameraPreview", "control view layout ing...");
+			if (canBack()) {
+				backButton.measure(LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT);
+
+				Log.v("CubeCameraPreview", "layout back button ..."
+						+ backButton.getMeasuredHeight());
+				backButton.layout(padding, b - t - padding
+						- backButton.getMeasuredHeight(), padding
+						+ backButton.getMeasuredWidth(), b - t - padding);
+			}
+			if (canNext()) {
+				nextButton.measure(LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT);
+				nextButton.layout(r - l - padding
+						- nextButton.getMeasuredWidth(), b - t - padding
+						- nextButton.getMeasuredHeight(), r - l - padding, b
+						- t - padding);
+			}
+		}
+	}
+
+	public class CubeValidator extends ViewGroup {
+		private ImageView imageView;
+		private PlaneCubeView cubeView;
+
+		public CubeValidator(Context context) {
+			super(context);
+			imageView = new ImageView(context);
+
+			this.cubeView = new PlaneCubeView(context);
+			this.addView(imageView);
+			this.addView(cubeView);
+			// test
+			this.imageView.setImageResource(com.devinxutal.fmc.R.drawable.cube);
+		}
+
+		@Override
+		protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+			super.onSizeChanged(w, h, oldw, oldh);
+
+		}
+
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			Log.v("CubeCameraPreview", "validator is layouting");
+			imageView.layout(0, 0, (r - l) / 2, b - t);
+			cubeView.layout((r - l) / 2, 0, r - l, b - t);
+		}
+	}
+
+	public void onClick(View view) {
+		Log.v("CubeCameraPreview", "clicked");
+		if (view == control.nextButton) {
+			switch (stage) {
+			case PHOTO:
+				camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+				break;
+			case LOCATE:
+				this.validator.imageView.setImageBitmap(locator
+						.getCubeAsBitmap());
+				switchStage(Stage.COMFIRM);
+				break;
+			case COMFIRM:
+				// TODO
+				break;
+			}
+		} else if (view == control.backButton) {
+			switch (stage) {
+			case LOCATE:
+				switchStage(Stage.PHOTO);
+				break;
+			case COMFIRM:
+				switchStage(Stage.LOCATE);
+				break;
+			}
+		}
+
+	}
+
+	ShutterCallback shutterCallback = new ShutterCallback() {
+		public void onShutter() {
+			Log.d(TAG, "onShutter'd");
+		}
+	};
+	PictureCallback rawCallback = new PictureCallback() {
+		public void onPictureTaken(byte[] data, Camera camera) {
+			Log.d(TAG, "onPictureTaken - raw");
+		}
+	};
+
+	PictureCallback jpegCallback = new PictureCallback() { // <8>
+		public void onPictureTaken(byte[] data, Camera camera) {
+			FileOutputStream outStream = null;
+			try {
+				Parameters p = camera.getParameters();
+				Log.v(TAG, "picture taken, size: " + p.getPictureSize().width
+						+ "," + p.getPictureSize().height + "   bytes: "
+						+ data.length);
+				Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
+				Log.v(TAG, "bitmap null? " + (bm == null));
+				if (bm != null) {
+					locator.setBitmap(bm);
+					locator.setMode(CubeLocator.MOVE_MODE);
+					Log.v("CubeCameraPreview", "width:" + bm.getWidth() + ", "
+							+ "height:" + bm.getHeight());
+					switchStage(Stage.LOCATE);
+				}
+
+				Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
+			} catch (Exception e) { // <10>
+
+				e.printStackTrace();
+			} finally {
+			}
+			Log.d(TAG, "onPictureTaken - jpeg");
+		}
+	};
 }
