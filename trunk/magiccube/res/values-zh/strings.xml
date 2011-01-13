@@ -18,9 +18,47 @@
 	<string name="main_btn_tester">Test Camera</string>
 
 	<string name="hello">Hello World, MagicCube!</string>
-	<string name="app_name">Fancy Cube Lite</string>
+	<string name="app_name">Fancy Magic Cube</string>
 	<string name="menu_presentation">Presentation</string>
 	<string name="menu_preferences">Preferences</string>
+	<string name="pref_cat_basic">Basic Settings</string>
+	<string name="pref_cat_performance">Performance</string>
+
+
+
+	<string name="preferences_title">Preferences</string>
+
+	<string name="pref_ent_cubesize">Cube Size</string>
+	<string name="perf_ent_cubesize_summary">Select cube size, from 2 to 7</string>
+	<string-array name="pref_ent_cubesize_entries">
+		<item>2x2</item>
+		<item>3x3</item>
+		<item>4x4</item>
+		<item>5x5</item>
+		<item>6x6</item>
+		<item>7x7</item>
+	</string-array>
+	<string-array name="pref_ent_cubesize_values">
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+	</string-array>
+
+	<string name="pref_ent_rendermode">Render Mode</string>
+	<string name="perf_ent_rendermode_summary">Select render mode</string>
+	<string-array name="pref_ent_rendermode_entries">
+		<item>Enhanced Piece</item>
+		<item>Piece</item>
+		<item>Cube</item>
+	</string-array>
+	<string-array name="pref_ent_rendermode_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
 
 	<string name="help">Help</string>
 	<string name="help_take_photo">Take a photo of your cube.</string>

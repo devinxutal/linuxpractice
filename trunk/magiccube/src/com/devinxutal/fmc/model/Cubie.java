@@ -10,7 +10,7 @@ public interface Cubie {
 
 	public void drawPickingArea(GL10 gl);
 
-	public void finalizeAnimation();
+	public void finishAnimation();
 
 	public void prepareAnimation();
 }

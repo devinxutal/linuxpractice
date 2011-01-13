@@ -21,6 +21,7 @@ import com.devinxutal.fmc.ui.CubeView;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class MagicCube {
+	private static final String TAG = "MagicCube";
 
 	public static final int DIM_X = 0x01; // ..0001
 	public static final int DIM_Y = 0x02; // ..0010
@@ -295,7 +296,7 @@ public class MagicCube {
 
 		}
 
-		public void finalizeAnimation() {
+		public void finishAnimation() {
 			// TODO Auto-generated method stub
 		}
 
@@ -621,7 +622,7 @@ public class MagicCube {
 		private Group moveGroup = new Group();
 		private Group staticGroup = new Group();
 
-		public void finalizeAnimation() {
+		public void finishAnimation() {
 			inAnimation = false;
 		}
 
@@ -873,6 +874,7 @@ public class MagicCube {
 
 		public void draw(GL10 gl) {
 			if (inAnimation) {
+				Log.v(TAG, "draw cube , in animation");
 				CubeAnimationInfo info = getAnimationInfo();
 				float angle = info.doubleTurn ? 180f : 90f;
 				float rt = (angle * info.currentStep()) / info.totalStep();
@@ -888,7 +890,6 @@ public class MagicCube {
 				}
 				moveGroup.draw(gl);
 				staticGroup.draw(gl);
-
 			} else {
 				for (ESquare s : draw_pieces) {
 					s.draw(gl);
@@ -906,11 +907,15 @@ public class MagicCube {
 		private Group moveGroup = new Group();
 		private Group staticGroup = new Group();
 
-		public void finalizeAnimation() {
+		public void finishAnimation() {
+			Log.v(TAG, "finish Animation");
+			animationInfo.reset();
 			inAnimation = false;
 		}
 
 		public void prepareAnimation() {
+
+			Log.v(TAG, "prepare Animation");
 			CubeAnimationInfo info = getAnimationInfo();
 			inAnimation = true;
 

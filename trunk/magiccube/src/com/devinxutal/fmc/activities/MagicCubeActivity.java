@@ -3,13 +3,19 @@ package com.devinxutal.fmc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.cfg.Configuration;
+import com.devinxutal.fmc.cfg.Constants;
 import com.devinxutal.fmc.control.CubeController;
+import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeControlView;
 
 public class MagicCubeActivity extends Activity {
@@ -18,11 +24,14 @@ public class MagicCubeActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		/*
-		 * this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
-		 * getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		 * WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
-		 */
+		Configuration.config()
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+
 		super.onCreate(savedInstanceState);
 		controller = new CubeController(this, true);
 		controller.getCubeView().setId(12345676);
@@ -33,6 +42,21 @@ public class MagicCubeActivity extends Activity {
 		controlView.setCubeController(controller);
 		setContentView(layout);
 
+	}
+
+	private void restoreInstanceState(Bundle inState) {
+		CubeState state = (CubeState) inState
+				.getSerializable(Constants.CUBE_STATE);
+		if (state != null) {
+			this.controller.getMagicCube().setCubeState(state);
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(Constants.CUBE_STATE, controller
+				.getMagicCube().getCubeState());
 	}
 
 	@Override
@@ -58,9 +82,6 @@ public class MagicCubeActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.presentation:
-			controller.startPresentation("URFDLBU'R'F'D'L'B'");
-			return true;
 		case R.id.preferences:
 			Intent preferencesActivity = new Intent(getBaseContext(),
 					Preferences.class);

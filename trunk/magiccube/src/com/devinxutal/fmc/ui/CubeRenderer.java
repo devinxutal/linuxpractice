@@ -23,6 +23,29 @@ public class CubeRenderer implements Renderer {
 	private int viewWidth = 0;
 	private int viewHeight = 0;
 
+	private float rx = 30f;
+	private float ry = -45f;
+	private float rz = 0f;
+
+	private float translate = -8;
+
+	private float scale = 1;
+
+	public void zoomIn() {
+		scale = scale * 1.1f;
+		this.resetColorPicker = true;
+	}
+
+	public void zoomOut() {
+		scale = scale * 0.9f;
+		this.resetColorPicker = true;
+	}
+
+	public void zoomReset() {
+		scale = 1f;
+		this.resetColorPicker = true;
+	}
+
 	public CubeRenderer() {
 	}
 
@@ -76,32 +99,23 @@ public class CubeRenderer implements Renderer {
 	 * @see android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.
 	 * microedition.khronos.opengles.GL10)
 	 */
-	float rx = 0f;
-	float ry = 0f;
-	float rz = 0f;
 
 	public void onDrawFrame(GL10 gl) {
-		Log.v("colortest", "onDrawFrame");
 		checkColorPicker(gl);
 		// Clears the screen and depth buffer.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
 				GL10.GL_DEPTH_BUFFER_BIT);
 
 		gl.glLoadIdentity();
-		gl.glTranslatef(0, 0, -10);
-		/* for test */
-		// gl.glRotatef(rx += 0.8, 1, 0, 0);
-		// gl.glRotatef(ry += 0.8, 0, 1, 0);
-		// gl.glRotatef(rz += 0.8, 0, 0, 1);
-		/* end for test */
-		gl.glRotatef(30, 1, 0, 0);
-		gl.glRotatef(-45, 0, 1, 0);
-		gl.glRotatef(0, 0, 0, 1);
+		gl.glTranslatef(0, 0, translate / scale);
+		gl.glRotatef(rx, 1, 0, 0);
+		gl.glRotatef(ry, 0, 1, 0);
+		gl.glRotatef(rz, 0, 0, 1);
 		if (magicCube != null) {
 			magicCube.getCubie().setCubeColors();
 			magicCube.getCubie().draw(gl);
 		}
-		// /new ESquare().draw(gl);
+
 	}
 
 	public void checkColorPicker(GL10 gl) {
@@ -116,10 +130,10 @@ public class CubeRenderer implements Renderer {
 				GL10.GL_DEPTH_BUFFER_BIT);
 
 		gl.glLoadIdentity();
-		gl.glTranslatef(0, 0, -10);
-		gl.glRotatef(30, 1, 0, 0);
-		gl.glRotatef(-45, 0, 1, 0);
-		gl.glRotatef(0, 0, 0, 1);
+		gl.glTranslatef(0, 0, translate / scale);
+		gl.glRotatef(rx, 1, 0, 0);
+		gl.glRotatef(ry, 0, 1, 0);
+		gl.glRotatef(rz, 0, 0, 1);
 
 		magicCube.getCubie().drawPickingArea(gl);// TODO should be
 		// drawPickingArea
@@ -167,18 +181,27 @@ public class CubeRenderer implements Renderer {
 	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		// Sets the current view port to the new size.
-		gl.glViewport(0, 0, width, height);// OpenGL docs.
+		gl.glViewport(0, 0, width, height);// OpenGL
+		// docs.
 		// Select the projection matrix
 		gl.glMatrixMode(GL10.GL_PROJECTION);// OpenGL docs.
 		// Reset the projection matrix
 		gl.glLoadIdentity();// OpenGL docs.
 		// Calculate the aspect ratio of the window
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
-				100.0f);
+		float fovy = 0;
+
+		// GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
+		// 100.0f);
+		GLU.gluPerspective(gl, 45.0f, width / (float) height, 0.1f, 100.0f);
 		// Select the modelview matrix
 		gl.glMatrixMode(GL10.GL_MODELVIEW);// OpenGL docs.
 		// Reset the modelview matrix
 		gl.glLoadIdentity();// OpenGL docs.
+
+		// set translate;
+		translate = -8;
+		int len = Math.min(width, height);
+		translate = translate * height / (float) len;
 	}
 
 	public MagicCube getMagicCube() {
