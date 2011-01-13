@@ -6,10 +6,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.model.CubeAnimationInfo;
 import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.primitives.Point3I;
@@ -99,8 +101,12 @@ public class CubeController {
 		}
 		this.inAnimation = true;
 		this.magicCube.getCubie().prepareAnimation();
-		this.magicCube.getAnimationInfo().setAnimation(6);
+		int step = Configuration.config().getAnimationQuality() * 3;
+		this.magicCube.getAnimationInfo().setAnimation(step);
 		this.animationTimer = new Timer();
+		int animationDuration = Configuration.config().getAnimationSpeed();
+		Log.v("CubeController", "animationDuration" + animationDuration);
+		Log.v("CubeController", "step " + step);
 		this.animationTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -112,14 +118,14 @@ public class CubeController {
 				}
 			}
 
-		}, 0, 70);
+		}, 0, animationDuration / step);
 	}
 
 	private void finishAnimation() {
 		if (!inAnimation) {
 			return;
 		}
-		this.magicCube.getCubie().finalizeAnimation();
+		this.magicCube.getCubie().finishAnimation();
 		inAnimation = false;
 		if (animationTimer != null) {
 			animationTimer.cancel();
@@ -144,61 +150,6 @@ public class CubeController {
 	protected void notifyAnimationFinished() {
 		for (AnimationListener l : listeners) {
 			l.animationFinishied();
-		}
-	}
-
-	private MoveSequence sequence;
-
-	public void startPresentation(String symbols) {
-		if (inAnimation || sequence != null) {
-			return;
-		}
-		sequence = new MoveSequence(symbols, magicCube.getOrder());
-		this.presentationTimer = new Timer();
-		this.presentationTimer.scheduleAtFixedRate(new TimerTask() {
-			private int waitCount = 0;
-			private int waitTotal = 10;
-
-			@Override
-			public void run() {
-				if (inAnimation || sequence == null
-						|| sequence.currentMoveIndex() < 0) {
-					return;
-				}
-				if (waitCount == 0) {
-
-					cubeView.requestRender();
-				}
-				if (waitCount != waitTotal) {
-					waitCount++;
-				} else {
-					waitCount = 0;
-					Move mv = sequence.currentMove();
-					boolean suc = magicCube.turn(mv.dimension, mv.layers,
-							mv.direction);
-					if (suc) {
-						startAnimation();
-					}
-					sequence.step();
-					if (sequence.currentMoveIndex() < 0) {
-						finishAnimation();
-					}
-				}
-
-			}
-
-		}, 0, 50);
-	}
-
-	public void finishPresentation() {
-		if (inAnimation || sequence == null) {
-			return;
-		}
-		sequence = null;
-		if (presentationTimer != null) {
-			presentationTimer.cancel();
-			presentationTimer.purge();
-			presentationTimer = null;
 		}
 	}
 
@@ -256,4 +207,28 @@ public class CubeController {
 
 	}
 
+	public void zoomIn() {
+		if (this.getCubeView() != null) {
+			this.getCubeView().getCubeRenderer().zoomIn();
+			this.getCubeView().requestRender();
+		}
+	}
+
+	public void zoomReset() {
+		if (this.getCubeView() != null) {
+			this.getCubeView().getCubeRenderer().zoomReset();
+			this.getCubeView().requestRender();
+		}
+
+	}
+
+	public void zoomOut() {
+		Log.v("CubeController", "zoom out");
+		if (this.getCubeView() != null) {
+			Log.v("CubeController", "zoom out haha ");
+			this.getCubeView().getCubeRenderer().zoomOut();
+			this.getCubeView().requestRender();
+		}
+
+	}
 }

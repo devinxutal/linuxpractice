@@ -130,8 +130,10 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			resetButtons();
 			break;
 		case BTN_ZOOM_IN:
+			zoomIn();
 			break;
 		case BTN_ZOOM_OUT:
+			zoomOut();
 			break;
 		case BTN_ROTATE_X:
 			rotate("x'");
@@ -150,5 +152,18 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			return;
 		}
 		controller.turnBySymbol(symbol);
+	}
+
+	private void zoomIn() {
+		this.controller.zoomIn();
+	}
+
+	private void zoomOut() {
+		this.controller.zoomOut();
+
+	}
+
+	private void zoomReset() {
+		this.controller.zoomReset();
 	}
 }
