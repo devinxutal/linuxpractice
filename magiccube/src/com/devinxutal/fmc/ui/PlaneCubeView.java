@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.devinxutal.fmc.model.CubeColor;
+import com.devinxutal.fmc.model.CubeState;
 
 public class PlaneCubeView extends View {
 	String TAG = "PlaneCubeView";
@@ -87,6 +88,22 @@ public class PlaneCubeView extends View {
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	public CubeState getCubeState() {
+		CubeState state = new CubeState();
+		state.order = order;
+		for (int i = 1; i <= order; i++) {
+			for (int j = 1; j <= order; j++) {
+				state.add(0, i, j, currCube[0][i][j]);
+				state.add(order + 1, i, j, currCube[order + 1][i][j]);
+				state.add(i, 0, j, currCube[i][0][j]);
+				state.add(i, order + 1, j, currCube[i][order + 1][j]);
+				state.add(i, j, 0, currCube[i][j][0]);
+				state.add(i, j, order + 1, currCube[i][j][order + 1]);
+			}
+		}
+		return state;
 	}
 
 	@Override

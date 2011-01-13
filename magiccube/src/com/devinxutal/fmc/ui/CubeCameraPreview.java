@@ -711,6 +711,10 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				switchStage(Stage.COMFIRM);
 				break;
 			case COMFIRM:
+				((Activity) getContext()).getIntent().putExtra("model",
+						validator.cubeView.getCubeState());
+				((Activity) getContext()).setResult(Activity.RESULT_OK,
+						((Activity) getContext()).getIntent());
 				((Activity) getContext()).finish();
 				break;
 			}
