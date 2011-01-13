@@ -3,6 +3,7 @@ package com.devinxutal.fmc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeCameraPreview;
 
 public class CubeCapturingActivity extends Activity {
@@ -40,7 +42,7 @@ public class CubeCapturingActivity extends Activity {
 		goButton.setOnClickListener(new GoButtonListener());
 
 		//
-		description.setText(R.string.cube_capture_step2_desc);
+		switchStep(1);
 	}
 
 	class GoButtonListener implements OnClickListener {
@@ -48,13 +50,44 @@ public class CubeCapturingActivity extends Activity {
 			if (step == 1) {
 				Intent i = new Intent(CubeCapturingActivity.this,
 						CubeCameraActivity.class);
-				startActivity(i);
+				startActivityForResult(i, 1);
 			} else if (step == 2) {
 				Intent i = new Intent(CubeCapturingActivity.this,
 						CubeCameraActivity.class);
-				startActivity(i);
+
+				startActivityForResult(i, 2);
 			}
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			if (requestCode == 1 && step == 1) {
+				Log.v(TAG, "step 1 finished with ");
+				Log
+						.v(TAG, "model null? "
+								+ ((CubeState) data
+										.getSerializableExtra("model") == null));
+				switchStep(2);
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private void switchStep(int step) {
+		if (step == this.step) {
+			return;
+		} else {
+			this.step = step;
+			if (step == 1) {
+				stepView.setText(R.string.cube_capture_step1_sign);
+				description.setText(R.string.cube_capture_step1_desc);
+			} else if (step == 2) {
+				stepView.setText(R.string.cube_capture_step2_sign);
+				description.setText(R.string.cube_capture_step2_desc);
+			}
+		}
 	}
 }

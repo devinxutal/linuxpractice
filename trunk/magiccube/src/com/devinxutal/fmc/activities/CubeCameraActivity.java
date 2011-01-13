@@ -28,7 +28,6 @@ public class CubeCameraActivity extends Activity {
 		FrameLayout frameLayout = ((FrameLayout) findViewById(R.id.preview));
 		preview = new CubeCameraPreview(this);
 		frameLayout.addView(preview);
-
 	}
 
 }
