@@ -135,7 +135,7 @@ public class CubeRenderer implements Renderer {
 		gl.glRotatef(ry, 0, 1, 0);
 		gl.glRotatef(rz, 0, 0, 1);
 
-		magicCube.getCubie().drawPickingArea(gl);// TODO should be
+		magicCube.getCubie().drawPickingArea(gl);
 		// drawPickingArea
 		if (this.cubeView == null) {
 			return;
