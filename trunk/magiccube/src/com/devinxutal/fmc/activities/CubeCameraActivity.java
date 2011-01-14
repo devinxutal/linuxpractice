@@ -2,12 +2,14 @@ package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.ui.CubeCameraPreview;
 
 public class CubeCameraActivity extends Activity {
@@ -18,6 +20,10 @@ public class CubeCameraActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Configuration.config()
+		.setSharedPreferences(
+				PreferenceManager
+						.getDefaultSharedPreferences(getBaseContext()));
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
