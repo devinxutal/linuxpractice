@@ -2,6 +2,7 @@ package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.control.CubeController;
 import com.devinxutal.fmc.control.IMoveSequence;
 import com.devinxutal.fmc.control.InfiniteMoveSequence;
@@ -32,6 +34,10 @@ public class CubeSolverActivity extends Activity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Configuration.config()
+		.setSharedPreferences(
+				PreferenceManager
+						.getDefaultSharedPreferences(getBaseContext()));
 		controller = new CubeController(this);
 		mController = new MoveController(controller);
 		setContentView(controller.getCubeView());

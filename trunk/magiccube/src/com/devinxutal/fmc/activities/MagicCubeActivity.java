@@ -24,6 +24,8 @@ public class MagicCubeActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
 		Configuration.config()
 				.setSharedPreferences(
 						PreferenceManager
@@ -31,9 +33,7 @@ public class MagicCubeActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
-
-		super.onCreate(savedInstanceState);
-		controller = new CubeController(this, true);
+		controller = new CubeController(this, true, true);
 		controller.getCubeView().setId(12345676);
 		FrameLayout layout = new FrameLayout(this);
 		layout.addView(controller.getCubeView());
