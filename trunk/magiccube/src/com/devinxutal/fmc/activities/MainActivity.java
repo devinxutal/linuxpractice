@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		int ids[] = new int[] { R.id.main_btn_free_play,
 				R.id.main_btn_time_play, R.id.main_btn_demonstrator,
 				R.id.main_btn_cfop_viewer, R.id.main_btn_cube_solver,
-				R.id.main_btn_tester };
+				R.id.main_btn_about };
 		for (int id : ids) {
 			try {
 				this.findViewById(id).setOnClickListener(this);
@@ -43,9 +43,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.main_btn_free_play:
 			i = new Intent(this, MagicCubeActivity.class);
+			i.putExtra("timedMode", false);
 			break;
 		case R.id.main_btn_time_play:
 			i = new Intent(this, MagicCubeActivity.class);
+			i.putExtra("timedMode", true);
 			break;
 		case R.id.main_btn_demonstrator:
 			i = new Intent(this, CubeDemostratorActivity.class);
@@ -58,7 +60,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			i = new Intent(this, CubeSolverActivity.class);
 			break;
 
-		case R.id.main_btn_tester:
+		case R.id.main_btn_about:
 			i = new Intent(this, CubeCapturingActivity.class);
 			break;
 		}

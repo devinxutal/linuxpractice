@@ -12,9 +12,10 @@
 
 	<string name="main_btn_free_play">Free Play</string>
 	<string name="main_btn_time_play">Timed Play</string>
+	<string name="main_btn_about">About</string>
 	<string name="main_btn_demonstrator">Demonstrator</string>
 	<string name="main_btn_cfop_viewer">CFOP Viewer</string>
-	<string name="main_btn_cube_solver">Cube Solver</string>
+	<string name="main_btn_cube_solver">Solve a Cube</string>
 	<string name="main_btn_tester">Test Camera</string>
 
 	<string name="hello">Hello World, MagicCube!</string>
