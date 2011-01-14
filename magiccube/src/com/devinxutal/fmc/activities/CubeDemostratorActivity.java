@@ -2,7 +2,11 @@ package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeDemonstrator;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
@@ -15,6 +19,15 @@ public class CubeDemostratorActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		Configuration.config()
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
+
 		String sequence = getIntent().getStringExtra("formula");
 		CubeState state = (CubeState) getIntent().getSerializableExtra("model");
 

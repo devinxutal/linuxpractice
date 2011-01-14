@@ -14,25 +14,29 @@ import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.control.CubeController;
 
 public class CubeControlView extends ViewGroup implements OnClickListener {
-	CubeController controller;
+	private CubeController controller;
+	private List<CubeControlListener> listeners = new LinkedList<CubeControlListener>();
 
-	private static final int BTN_COLLAPSE = 3301;
-	private static final int BTN_ZOOM_IN = 3302;
-	private static final int BTN_ZOOM_OUT = 3303;
-	private static final int BTN_ROTATE_X = 3304;
-	private static final int BTN_ROTATE_Y = 3305;
-	private static final int BTN_ROTATE_Z = 3306;
-	private static final int BTN_HELP = 3307;
-	private static final int BTN_SETTING = 3308;
-	private static final int BTN_MENU = 3309;
+	public static final int BTN_COLLAPSE = 3301;
+	public static final int BTN_ZOOM_IN = 3302;
+	public static final int BTN_ZOOM_OUT = 3303;
+	public static final int BTN_ROTATE_X = 3304;
+	public static final int BTN_ROTATE_Y = 3305;
+	public static final int BTN_ROTATE_Z = 3306;
+	public static final int BTN_HELP = 3307;
+	public static final int BTN_SETTING = 3308;
+	public static final int BTN_MENU = 3309;
 
 	private List<ImageButton> buttons1;
 	private List<ImageButton> buttons2;
+	private CubeTimer cubeTimer;
 	private boolean collapsed = true;
 	private boolean collapseChanged = false;
+	private boolean useTimer = false;
 
-	public CubeControlView(Context context) {
+	public CubeControlView(Context context, boolean useTimer) {
 		super(context);
+		this.useTimer = useTimer;
 		init();
 	}
 
@@ -40,7 +44,17 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		this.controller = controller;
 	}
 
+	public CubeTimer getCubeTimer() {
+		return cubeTimer;
+	}
+
 	private void init() {
+
+		if (useTimer) {
+			cubeTimer = new CubeTimer(getContext());
+			this.addView(cubeTimer);
+		}
+
 		buttons1 = new LinkedList<ImageButton>();
 
 		int[] ids = new int[] { BTN_COLLAPSE, //
@@ -143,10 +157,31 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 				}
 			}
 		}
+
+		if (this.useTimer) {
+			cubeTimer.measure(-1, -1);
+			int h = cubeTimer.getMeasuredHeight();
+			int w = cubeTimer.getMeasuredWidth();
+			int left = width - w - margin;
+			int top = 0 + margin;
+			if (!collapsed) {
+				if (width < height) {
+					top += margin + btn_h;
+				} else {
+					left -= margin + btn_w;
+				}
+			}
+
+			Log.v("CubeControlView", "layout  timer: " + left + ", " + top);
+			cubeTimer.layout(left, top, left + w, top + h);
+		}
 	}
 
 	private void resetButtons() {
 		this.removeAllViews();
+		if (useTimer) {
+			this.addView(cubeTimer);
+		}
 		this.addView(buttons1.get(0));
 		if (!collapsed) {
 			for (int i = 1; i < buttons1.size(); i++) {
@@ -181,6 +216,8 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		case BTN_ROTATE_Z:
 			rotate("z");
 			break;
+		default:
+			notifyButtonClicked(view.getId());
 		}
 	}
 
@@ -202,5 +239,27 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 
 	private void zoomReset() {
 		this.controller.zoomReset();
+	}
+
+	public interface CubeControlListener {
+		void buttonClickced(int id);
+	}
+
+	public boolean addCubeControlListener(CubeControlListener l) {
+		return listeners.add(l);
+	}
+
+	public boolean removeCubeControlListener(CubeControlListener l) {
+		return listeners.remove(l);
+	}
+
+	public void clearCubeControlListener() {
+		listeners.clear();
+	}
+
+	public void notifyButtonClicked(int id) {
+		for (CubeControlListener l : listeners) {
+			l.buttonClickced(id);
+		}
 	}
 }

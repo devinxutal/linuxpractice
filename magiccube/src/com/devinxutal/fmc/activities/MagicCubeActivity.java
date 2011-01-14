@@ -17,9 +17,13 @@ import com.devinxutal.fmc.cfg.Constants;
 import com.devinxutal.fmc.control.CubeController;
 import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeControlView;
+import com.devinxutal.fmc.ui.CubeControlView.CubeControlListener;
 
 public class MagicCubeActivity extends Activity {
 	private CubeController controller;
+
+	private CubeControlView controlView;
+	private boolean timedMode = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -33,15 +37,25 @@ public class MagicCubeActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		this.timedMode = getIntent().getBooleanExtra("timedMode", false);
 		controller = new CubeController(this, true, true);
 		controller.getCubeView().setId(12345676);
 		FrameLayout layout = new FrameLayout(this);
 		layout.addView(controller.getCubeView());
-		CubeControlView controlView = new CubeControlView(this);
+		controlView = new CubeControlView(this, timedMode);
+		this.controlView.addCubeControlListener(new ControlButtonClicked());
 		layout.addView(controlView);
 		controlView.setCubeController(controller);
 		setContentView(layout);
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (timedMode) {
+			controlView.getCubeTimer().stop();
+		}
+		super.onDestroy();
 	}
 
 	private void restoreInstanceState(Bundle inState) {
@@ -113,4 +127,24 @@ public class MagicCubeActivity extends Activity {
 		return false;
 	}
 
+	class ControlButtonClicked implements CubeControlListener {
+		public void buttonClickced(int id) {
+
+			if (timedMode) {
+				controlView.getCubeTimer().start();
+			}
+			switch (id) {
+			case CubeControlView.BTN_HELP:
+				break;
+			case CubeControlView.BTN_MENU:
+				break;
+			case CubeControlView.BTN_SETTING:
+				Intent preferencesActivity = new Intent(getBaseContext(),
+						Preferences.class);
+				startActivity(preferencesActivity);
+				break;
+			}
+		}
+
+	}
 }

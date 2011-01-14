@@ -238,7 +238,6 @@ public class MoveSequenceIndicator extends SurfaceView {
 			e.printStackTrace();
 		} finally {
 			if (c != null) {
-				// Log.v("cc", "painting and posting");
 				surfaceHolder.unlockCanvasAndPost(c);
 			}
 		}
@@ -339,7 +338,6 @@ public class MoveSequenceIndicator extends SurfaceView {
 				try {
 					animation.getSemaphore().acquire();
 
-					// setWillNotDraw(true);
 					autoRedraw(false);
 					// Log.v("cc", "thread running, semaphore aqquired");
 					while (animation.step()) {
