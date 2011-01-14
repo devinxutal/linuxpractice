@@ -22,24 +22,41 @@ public class CubeController {
 	private MagicCube magicCube;
 
 	private boolean inAnimation = false;
-	private boolean touchEnabled = false;
-
+	private boolean turnable = true;
+	private boolean rotatable = true;
 	private Timer animationTimer;
 	private Timer presentationTimer;
 
 	private List<AnimationListener> listeners = new LinkedList<AnimationListener>();
 
 	public CubeController(Context context) {
-		this(context, true);
+		this(context, true, true);
 	}
 
-	public CubeController(Context context, boolean touchEnabled) {
+	public boolean isTurnable() {
+		return turnable;
+	}
+
+	public void setTurnable(boolean turnable) {
+		this.turnable = turnable;
+	}
+
+	public boolean isRotatable() {
+		return rotatable;
+	}
+
+	public void setRotatable(boolean rotatable) {
+		this.rotatable = rotatable;
+	}
+
+	public CubeController(Context context, boolean turnable, boolean rotatable) {
 		this.cubeView = new CubeView(context);
 		this.magicCube = new MagicCube(3);
 		this.cubeView.setMagicCube(magicCube);
 		this.magicCube.view = cubeView;
 		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
-		this.touchEnabled = touchEnabled;
+		this.turnable = turnable;
+		this.rotatable = rotatable;
 	}
 
 	public boolean isInAnimation() {
@@ -157,7 +174,7 @@ public class CubeController {
 		int startX, startY;
 
 		public boolean onTouch(View v, MotionEvent evt) {
-			if (!touchEnabled) {
+			if (!turnable && !rotatable) {
 				return true;
 			}
 			switch (evt.getAction()) {
@@ -179,6 +196,9 @@ public class CubeController {
 			}
 			Point3I p = cubeView.mapToCubePosition(x, y);
 			if (p.x == 0 && p.y == 0 && p.x == 0) {
+				if (!rotatable) {
+					return;
+				}
 				if (Math.abs(deltaX) > Math.abs(deltaY)) {
 					if (deltaX > 0) {
 						turnBySymbol("y'");
@@ -201,6 +221,9 @@ public class CubeController {
 					}
 				}
 			} else {
+				if (!turnable) {
+					return;
+				}
 				turnByGesture(p.x, p.y, p.z, deltaX, deltaY);
 			}
 		}

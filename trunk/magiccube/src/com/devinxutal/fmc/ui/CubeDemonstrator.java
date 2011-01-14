@@ -6,7 +6,6 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -19,9 +18,10 @@ import com.devinxutal.fmc.control.MoveController;
 import com.devinxutal.fmc.control.MoveControllerListener;
 import com.devinxutal.fmc.control.MoveSequence;
 import com.devinxutal.fmc.control.MoveController.State;
+import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
-public class CubeDemostrator extends ViewGroup implements
+public class CubeDemonstrator extends ViewGroup implements
 		MoveControllerListener {
 	private CubeController cubeController;
 
@@ -30,25 +30,30 @@ public class CubeDemostrator extends ViewGroup implements
 	// widgets
 	private CubeView cubeView;
 	private MoveSequenceIndicator indicator;
-	private LinearLayout buttonBar;
+	private ButtonBar buttonBar;
 	private ImageButton prevButton;
 	private ImageButton nextButton;
 	private ImageButton playButton;
 	private ImageButton resetButton;
 
 	//
+	private CubeState initialState;
 	private String[] symbols;
 	private int current;
 	private Map<Integer, Integer> sequenceIndexToSymbolsIndex = new HashMap<Integer, Integer>();
 
-	public CubeDemostrator(Context context, String[] symbols) {
+	public CubeDemonstrator(Context context, CubeState initialState,
+			String[] symbols) {
 		super(context);
 		init();
-
 		this.symbols = symbols;
+		this.initialState = initialState;
+		if (this.initialState == null) {
+			this.initialState = cubeController.getMagicCube().getCubeState();
+		}
+		this.cubeController.getMagicCube().setCubeState(this.initialState);
 		indicator.setMoveSymbols(symbols);
 		current = 0;
-
 	}
 
 	@Override
@@ -70,7 +75,7 @@ public class CubeDemostrator extends ViewGroup implements
 
 	private void init() {
 
-		cubeController = new CubeController(getContext(), true);
+		cubeController = new CubeController(getContext(), false, true);
 		moveController = new MoveController(cubeController);
 
 		this.moveController.addMoveControllerListener(this);
@@ -96,12 +101,9 @@ public class CubeDemostrator extends ViewGroup implements
 		resetButton.setBackgroundResource(R.drawable.play_button);
 		resetButton.setImageResource(R.drawable.icon_reset);
 
-		buttonBar = new LinearLayout(getContext());
-		buttonBar.setOrientation(LinearLayout.HORIZONTAL);
-		buttonBar.setGravity(Gravity.CENTER_HORIZONTAL
-				| Gravity.CENTER_VERTICAL);
-		buttonBar.addView(prevButton, new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		buttonBar = new ButtonBar(getContext());
+		buttonBar.addView(prevButton, new LinearLayout.LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1f));
 		buttonBar.addView(playButton, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		buttonBar.addView(nextButton, new LayoutParams(
@@ -118,63 +120,99 @@ public class CubeDemostrator extends ViewGroup implements
 
 	}
 
+	private int nextIndex() {
+		int to = current;
+		Move toMove;
+		while (to < symbols.length) {
+			if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(symbols[to],
+					cubeController.getMagicCube().getOrder())) != null) {
+				to++;
+				break;
+			}
+			to++;
+		}
+		while (to < symbols.length) {
+			if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(symbols[to],
+					cubeController.getMagicCube().getOrder())) != null) {
+				return to;
+			}
+			to++;
+		}
+		return to;
+	}
+
+	private int prevIndex() {
+		int to = current;
+		for (to = current - 1; to >= 0; to--) {
+			if ((SymbolMoveUtil.parseMoveFromSymbol(symbols[to], cubeController
+					.getMagicCube().getOrder())) != null) {
+				to--;
+				break;
+			}
+		}
+		for (; to >= 0; to--) {
+			if ((SymbolMoveUtil.parseMoveFromSymbol(symbols[to], cubeController
+					.getMagicCube().getOrder())) != null) {
+				to++;
+				return to;
+			}
+		}
+		return Math.max(0, to);
+	}
+
+	private Move nextMove() {
+		int to = current;
+		Move toMove;
+		while (to < symbols.length) {
+			if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(symbols[to],
+					cubeController.getMagicCube().getOrder())) != null) {
+				return toMove;
+			}
+			to++;
+		}
+		return null;
+	}
+
+	private Move prevMove() {
+		int to = current;
+		if (to == 0) {
+			return null;
+		}
+		Move toMove = null;
+		for (to = current - 1; to >= 0; to--) {
+			if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(symbols[to],
+					cubeController.getMagicCube().getOrder())) != null) {
+				toMove.direction = -toMove.direction;
+				break;
+			}
+		}
+		return toMove;
+	}
+
 	class ButtonsOnClick implements OnClickListener {
 
 		public void onClick(View view) {
 			if (view == prevButton) {
 				if (moveController.getState() == MoveController.State.STOPPED) {
-					int to = current;
-					if (to == 0) {
-						return;
+					int to = prevIndex();
+					Move move = prevMove();
+
+					current = to;
+					indicator.moveTo(to);
+					if (move != null) {
+						moveController.startMove(move);
 					}
-					Move toMove = null;
-					for (to = current - 1; to >= 0; to--) {
-						if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(
-								symbols[to], cubeController.getMagicCube()
-										.getOrder())) != null) {
-							break;
-						}
-					}
-					if (toMove != null) {
-						toMove.direction = -toMove.direction;
-						if (moveController.startMove(toMove)) {
-							indicator.moveTo(to);
-							current = to;
-						}
-					} else {
-						if (to < current) {
-							indicator.moveTo(to);
-							current = to;
-						}
-					}
+
 				}
 
 			} else if (view == nextButton) {
 				if (moveController.getState() == MoveController.State.STOPPED) {
-					int to = current;
-					Move toMove = null;
-					while (to < symbols.length) {
-						if ((toMove = SymbolMoveUtil.parseMoveFromSymbol(
-								symbols[to], cubeController.getMagicCube()
-										.getOrder())) != null) {
-							break;
-						}
-						to++;
-					}
-					if (toMove != null && to < symbols.length) {
-						to++;
-						// step to the left next movable symbol;
-						while (to < symbols.length) {
-							if (SymbolMoveUtil.parseMoveFromSymbol(symbols[to],
-									cubeController.getMagicCube().getOrder()) != null) {
-								break;
-							}
-							to++;
-						}
-						if (moveController.startMove(toMove)) {
-							indicator.moveTo(to);
-							current = to;
-						}
+					int to = nextIndex();
+					Move move = nextMove();
+					current = to;
+					indicator.moveTo(to);
+					if (move != null) {
+						moveController.startMove(move);
 					}
 				}
 			} else if (view == playButton) {
@@ -195,34 +233,32 @@ public class CubeDemostrator extends ViewGroup implements
 						moveController.startMove(seq);
 					}
 				} else if (moveController.getState() == MoveController.State.RUNNING_MULTPLE_STEP) {
-					moveController.pauseMove();
-				} else if (moveController.getState() == MoveController.State.PAUSED) {
-					moveController.resumeMove();
+					moveController.stopMove();
 				}
 			} else if (view == resetButton) {
 				if (moveController.getState() == MoveController.State.STOPPED) {
+					cubeController.getMagicCube().setCubeState(initialState);
+					cubeController.getCubeView().requestRender();
 					current = 0;
 					indicator.moveTo(0);
 				}
 			}
-			// cubeController.turnBySymbol(indicator.getCurrentSymbol());
-			// indicator.moveForward();
 		}
 	}
 
 	public void moveSequenceStepped(int index) {
 		Log.v("cc", "move controller stepped: " + index);
-		final int to = sequenceIndexToSymbolsIndex.get(index);
-		this.current = to;
+		int toInt = sequenceIndexToSymbolsIndex.get(index);
+		current = toInt;
+		final int to = nextIndex();
+		current = to;
 		Log.v("cc", "correspond to : " + to);
 		Context c = this.getContext();
 		if (c instanceof Activity) {
 			((Activity) c).runOnUiThread(new Runnable() {
 				public void run() {
-
-					indicator.moveTo(to + 1);
+					indicator.moveTo(to);
 				}
-
 			});
 		}
 	}
@@ -250,4 +286,47 @@ public class CubeDemostrator extends ViewGroup implements
 		return cubeController;
 	}
 
+	class ButtonBar extends ViewGroup {
+		public ButtonBar(Context context) {
+			super(context);
+		}
+
+		private static final int GAP = 10;
+
+		@Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+			if (this.getChildCount() != 0) {
+				this.getChildAt(0).measure(widthMeasureSpec, heightMeasureSpec);
+
+				this.setMeasuredDimension(widthMeasureSpec, 2 * GAP
+						+ this.getChildAt(0).getMeasuredHeight());
+			} else {
+				this.setMeasuredDimension(widthMeasureSpec, 2 * GAP);
+			}
+		}
+
+		@Override
+		protected void onLayout(boolean changed, int l, int t, int r, int b) {
+			if (!changed) {
+				return;
+			}
+			int height = b - t;
+			int width = r - l;
+			int n = this.getChildCount();
+			if (n > 0) {
+				// this.getChildAt(0).measure(LayoutParams.WRAP_CONTENT,
+				// LayoutParams.WRAP_CONTENT);
+				int h = this.getChildAt(0).getMeasuredHeight();
+				int w = (width - (n + 1) * GAP) / n;
+				int nt = (height - h) / 2;
+				int nb = nt + h;
+				for (int i = 0; i < n; i++) {
+					View v = this.getChildAt(i);
+					int x = (i + 1) * GAP + i * w;
+					v.layout(x, nt, x + w, nb);
+				}
+			}
+		}
+
+	}
 }

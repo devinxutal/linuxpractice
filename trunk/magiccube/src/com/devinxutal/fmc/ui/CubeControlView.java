@@ -22,8 +22,12 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 	private static final int BTN_ROTATE_X = 3304;
 	private static final int BTN_ROTATE_Y = 3305;
 	private static final int BTN_ROTATE_Z = 3306;
+	private static final int BTN_HELP = 3307;
+	private static final int BTN_SETTING = 3308;
+	private static final int BTN_MENU = 3309;
 
-	private List<ImageButton> buttons;
+	private List<ImageButton> buttons1;
+	private List<ImageButton> buttons2;
 	private boolean collapsed = true;
 	private boolean collapseChanged = false;
 
@@ -37,16 +41,29 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 	}
 
 	private void init() {
-		buttons = new LinkedList<ImageButton>();
+		buttons1 = new LinkedList<ImageButton>();
 
 		int[] ids = new int[] { BTN_COLLAPSE, //
-				BTN_ZOOM_IN, //
+				BTN_MENU, //
+				BTN_SETTING, //
+				BTN_HELP };//
+		int[] res = new int[] { R.drawable.icon_collapse, //
+				R.drawable.icon_menu, //
+				R.drawable.icon_setting, //
+				R.drawable.icon_help //
+		};//
+		for (int i = 0; i < ids.length; i++) {
+			ImageButton button = makeButton(ids[i], res[i]);
+			buttons1.add(button);
+		}
+
+		buttons2 = new LinkedList<ImageButton>();
+		ids = new int[] { BTN_ZOOM_IN, //
 				BTN_ZOOM_OUT, //
 				BTN_ROTATE_X, //
 				BTN_ROTATE_Y, //
 				BTN_ROTATE_Z };//
-		int[] res = new int[] { R.drawable.icon_play, //
-				R.drawable.icon_zoom_in, //
+		res = new int[] { R.drawable.icon_zoom_in, //
 				R.drawable.icon_zoom_out, //
 				R.drawable.icon_rotate_x, //
 				R.drawable.icon_rotate_y, //
@@ -54,9 +71,9 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		};//
 		for (int i = 0; i < ids.length; i++) {
 			ImageButton button = makeButton(ids[i], res[i]);
-			buttons.add(button);
+			buttons2.add(button);
 		}
-		this.addView(buttons.get(0));
+		this.addView(buttons1.get(0));
 	}
 
 	private ImageButton makeButton(int id, int resid) {
@@ -75,7 +92,7 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			return;
 		}
 		collapseChanged = false;
-		ImageButton collapseButton = buttons.get(0);
+		ImageButton collapseButton = buttons1.get(0);
 		collapseButton.measure(r - l, b - t);
 		int width = r - l;
 		int height = b - t;
@@ -84,14 +101,14 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		int btn_h = collapseButton.getMeasuredHeight();
 		int btn_len = width > height ? btn_h : btn_w;
 		int margin = 10;
-		int padding = ((len - 2 * margin) - buttons.size() * btn_len)
-				/ (buttons.size() - 1);
+		int padding = ((len - 2 * margin) - buttons1.size() * btn_len)
+				/ (buttons1.size() - 1);
 
 		collapseButton.layout(margin, margin, btn_w + margin, btn_h + margin);
 
 		if (!collapsed) {
 			int index = -1;
-			for (ImageButton btn : buttons) {
+			for (ImageButton btn : buttons1) {
 				index++;
 				if (index == 0) {
 					continue;
@@ -107,16 +124,36 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 				}
 			}
 		}
+
+		padding = ((len - 2 * margin) - buttons2.size() * btn_len)
+				/ (buttons2.size() - 1);
+
+		if (!collapsed) {
+			int index = -1;
+			for (ImageButton btn : buttons2) {
+				index++;
+				if (width < height) {
+					btn.layout(margin + index * (padding + btn_w), height
+							- margin - btn_h, margin + index
+							* (padding + btn_w) + btn_w, height - margin);
+				} else {
+					btn.layout(width - margin - btn_h, margin + index
+							* (padding + btn_h), width - margin, margin + index
+							* (padding + btn_h) + btn_h);
+				}
+			}
+		}
 	}
 
 	private void resetButtons() {
-		if (collapsed) {
-			for (int i = 1; i < buttons.size(); i++) {
-				this.removeView(buttons.get(i));
+		this.removeAllViews();
+		this.addView(buttons1.get(0));
+		if (!collapsed) {
+			for (int i = 1; i < buttons1.size(); i++) {
+				this.addView(buttons1.get(i));
 			}
-		} else {
-			for (int i = 1; i < buttons.size(); i++) {
-				this.addView(buttons.get(i));
+			for (ImageButton b : buttons2) {
+				this.addView(b);
 			}
 		}
 		this.invalidate();

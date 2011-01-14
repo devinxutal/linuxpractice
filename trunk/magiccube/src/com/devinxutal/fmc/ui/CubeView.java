@@ -47,6 +47,19 @@ public class CubeView extends GLSurfaceView {
 		Log.v("cc", "CubeView init finished");
 	}
 
+	@Override
+	public void onPause() {
+		Log.v("CubeView", "on pause");
+		this.setRenderMode(RENDERMODE_CONTINUOUSLY);
+		super.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		this.setRenderMode(RENDERMODE_WHEN_DIRTY);
+		super.onResume();
+	}
+
 	public CubeRenderer getCubeRenderer() {
 		return this.cubeRenderer;
 	}

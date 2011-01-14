@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class MoveController implements AnimationListener {
 	public enum State {
-		RUNING_SINGLE_STEP, RUNNING_MULTPLE_STEP, PAUSED, STOPPED
+		RUNING_SINGLE_STEP, RUNNING_MULTPLE_STEP, STOPPED
 	}
 
 	private State state = State.STOPPED;
@@ -44,34 +44,12 @@ public class MoveController implements AnimationListener {
 		return succeed;
 	}
 
-	public boolean pauseMove() {
+	public boolean stopMove() {
 		if (this.state != State.RUNNING_MULTPLE_STEP) {
 			return false;
 		}
-		moveThread.paused = true;
-		changeState(State.PAUSED);
-		return true;
-	}
-
-	public boolean stopMove() {
-		if (this.state != State.RUNNING_MULTPLE_STEP
-				&& this.state != State.PAUSED) {
-			return false;
-		}
 		this.moveThread.canceled = true;
-		if (this.state == State.PAUSED) {
-			this.moveThread.paused = false;
-		}
-		changeState(State.STOPPED);
-		return false;
-	}
-
-	public boolean resumeMove() {
-		if (this.state != State.PAUSED) {
-			return false;
-		}
-		this.moveThread.paused = false;
-		changeState(State.RUNNING_MULTPLE_STEP);
+		// changeState(State.STOPPED);
 		return false;
 	}
 
