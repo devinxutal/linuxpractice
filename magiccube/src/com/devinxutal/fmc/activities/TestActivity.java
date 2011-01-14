@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.devinxutal.fmc.cfg.Configuration;
+
 public class TestActivity extends Activity {
 
 	Timer timer;
@@ -31,6 +34,10 @@ public class TestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Configuration.config()
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
 		FrameLayout layout = new FrameLayout(this);
 		view = new PictureView(this);
 		try {
@@ -206,7 +213,6 @@ public class TestActivity extends Activity {
 		}
 
 		private int index = -1;
-
 
 		public boolean onTouch(View view, MotionEvent event) {
 			Log.v("TestActivity", "touched");

@@ -3,16 +3,27 @@ package com.devinxutal.fmc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.cfg.Configuration;
 
 public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		Configuration.config()
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
 		this.setContentView(R.layout.main);
 		int ids[] = new int[] { R.id.main_btn_free_play,
 				R.id.main_btn_time_play, R.id.main_btn_demonstrator,
