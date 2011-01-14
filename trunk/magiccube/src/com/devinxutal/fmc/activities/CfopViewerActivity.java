@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,44 +18,43 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
 import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
+import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.solver.CfopSolver;
 import com.devinxutal.fmc.util.AlgorithmUtils;
 
 public class CfopViewerActivity extends ListActivity {
 	static List<String> formulas = new LinkedList<String>();
 	static {
-		for (int i = 0; i < 17; i++) {
-			String num = (i + 1) + "";
-			if (i < 9) {
-				num = "0" + num;
-			}
-			formulas.add("C" + num);
-		}
 		for (int i = 0; i < 41; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			formulas.add("F" + num);
+			formulas.add("F2L " + num);
 		}
 		for (int i = 0; i < 57; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			formulas.add("O" + num);
+			formulas.add("OLL " + num);
 		}
 		for (int i = 0; i < 21; i++) {
 			String num = (i + 1) + "";
 			if (i < 9) {
 				num = "0" + num;
 			}
-			formulas.add("P" + num);
+			formulas.add("PLL " + num);
 		}
 	}
 
 	private void startDemostrator(String text) {
-		PatternAlgorithm pa = solver.getAlgorithm(text);
+		String parts[] = text.split(" ");
+		if (parts.length != 2) {
+			return;
+		}
+		PatternAlgorithm pa = solver
+				.getAlgorithm(parts[0].charAt(0) + parts[1]);
 		if (pa != null) {
 			Intent i = new Intent(this, CubeDemostratorActivity.class);
 			i.putExtra("formula", pa.getFormula());
@@ -69,6 +69,10 @@ public class CfopViewerActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Configuration.config()
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
 
 		ListView lv = getListView();
 
