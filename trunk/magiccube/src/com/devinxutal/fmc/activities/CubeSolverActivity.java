@@ -35,13 +35,13 @@ public class CubeSolverActivity extends Activity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Configuration.config()
-		.setSharedPreferences(
-				PreferenceManager
-						.getDefaultSharedPreferences(getBaseContext()));
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
 		controller = new CubeController(this);
 		mController = new MoveController(controller);
 		setContentView(controller.getCubeView());
-		solver = new CfopSolver();
+		solver = CfopSolver.getSolver(this);
 		try {
 			solver.init(getAssets().open("algorithm/cfop_pattern"), getAssets()
 					.open("algorithm/cfop_algorithm"));

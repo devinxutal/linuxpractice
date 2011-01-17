@@ -1,6 +1,5 @@
 package com.devinxutal.fmc.activities;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -64,7 +65,7 @@ public class CfopViewerActivity extends ListActivity {
 		}
 	}
 
-	private CfopSolver solver = new CfopSolver();
+	private CfopSolver solver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,9 @@ public class CfopViewerActivity extends ListActivity {
 				.setSharedPreferences(
 						PreferenceManager
 								.getDefaultSharedPreferences(getBaseContext()));
-
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		ListView lv = getListView();
 
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_item,
@@ -88,11 +91,6 @@ public class CfopViewerActivity extends ListActivity {
 			}
 		});
 
-		try {
-			solver.init(this.getAssets().open("algorithm/cfop_pattern"), this
-					.getAssets().open("algorithm/cfop_algorithm"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		solver = CfopSolver.getSolver(this);
 	}
 }

@@ -20,9 +20,13 @@
 
 	<string name="hello">Hello World, MagicCube!</string>
 	<string name="app_name">Fancy Cube Lite</string>
+
+
 	<string name="menu_presentation">Presentation</string>
 	<string name="menu_preferences">Preferences</string>
-
+	<string name="menu_help">Help</string>
+	<string name="menu_solve_it">Solve it</string>
+	<string name="menu_shuffle_it">Shuffle</string>
 	<string name="help">Help</string>
 	<string name="help_take_photo">Take a photo of your cube.</string>
 
@@ -41,4 +45,17 @@
 		three other faces visible by turning your cube upside down, then press
 		"Go!" button.
 	</string>
+
+	<string name="toast_shuffleing_cube">Shuffling cube</string>
+	<string name="toast_steps">steps</string>
+
+	<string name="help_info_title">Help Information</string>
+	<string name="help_info_cube">
+		Fancy Cube is the greatest cube game on ANDROID ever, which allows you to play with a vivid rubiks cube.\n\n
+		[Cube Control]\n\n
+		TURN: flick the cube along any side corner, or edge to turn that face in a particular direction.\n\n
+		ROTATE: to rotate the whole cube, just flick the cube in any black area. in some particular situation that cube turning is disabled, flicking the cube in ANY area leads to a cube rotation.\n\n
+		OTHER: you can unfold the control pad (click the icon in the upper left corner of the screen) to get a easier control over the cube. Here you can zoom in/out the cube and rotate it.\n\n
+	</string>
+
 </resources>
