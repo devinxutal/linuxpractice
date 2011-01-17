@@ -18,6 +18,10 @@ import com.devinxutal.fmc.primitives.Point3I;
 import com.devinxutal.fmc.ui.CubeView;
 
 public class CubeController {
+	public interface CubeListener {
+		public void cubeSolved();
+	}
+
 	private CubeView cubeView;
 	private MagicCube magicCube;
 
@@ -27,7 +31,8 @@ public class CubeController {
 	private Timer animationTimer;
 	private Timer presentationTimer;
 
-	private List<AnimationListener> listeners = new LinkedList<AnimationListener>();
+	private List<AnimationListener> animationListeners = new LinkedList<AnimationListener>();
+	private List<CubeListener> cubeListeners = new LinkedList<CubeListener>();
 
 	public CubeController(Context context) {
 		this(context, true, true);
@@ -76,6 +81,9 @@ public class CubeController {
 				move.direction, move.doubleTurn);
 		if (succeed) {
 			startAnimation();
+			if (magicCube.solved()) {
+				this.notifyCubeSolved();
+			}
 		}
 		return succeed;
 	}
@@ -84,6 +92,9 @@ public class CubeController {
 		boolean succeed = this.magicCube.turnByGesture(i, j, k, dx, dy);
 		if (succeed) {
 			startAnimation();
+			if (magicCube.solved()) {
+				this.notifyCubeSolved();
+			}
 		} else {
 			// t.setText("turn not succeeded");
 			// t.show();
@@ -95,6 +106,9 @@ public class CubeController {
 		boolean succeed = this.magicCube.turnBySymbol(symbol);
 		if (succeed) {
 			startAnimation();
+			if (magicCube.solved()) {
+				this.notifyCubeSolved();
+			}
 		} else {
 			// t.setText("turn not succeeded");
 			// t.show();
@@ -153,20 +167,38 @@ public class CubeController {
 	}
 
 	public boolean addAnimationListener(AnimationListener l) {
-		return listeners.add(l);
+		return animationListeners.add(l);
 	}
 
 	public boolean removeAnimationListener(AnimationListener l) {
-		return listeners.remove(l);
+		return animationListeners.remove(l);
 	}
 
 	public void clearAnimationListeners(AnimationListener l) {
-		listeners.clear();
+		animationListeners.clear();
 	}
 
 	protected void notifyAnimationFinished() {
-		for (AnimationListener l : listeners) {
+		for (AnimationListener l : animationListeners) {
 			l.animationFinishied();
+		}
+	}
+
+	public boolean addCubeListener(CubeListener l) {
+		return cubeListeners.add(l);
+	}
+
+	public boolean removeCubeListener(CubeListener l) {
+		return cubeListeners.remove(l);
+	}
+
+	public void clearCubeListeners(CubeListener l) {
+		cubeListeners.clear();
+	}
+
+	protected void notifyCubeSolved() {
+		for (CubeListener l : cubeListeners) {
+			l.cubeSolved();
 		}
 	}
 
@@ -195,7 +227,7 @@ public class CubeController {
 				return;
 			}
 			Point3I p = cubeView.mapToCubePosition(x, y);
-			if (p.x == 0 && p.y == 0 && p.x == 0) {
+			if ((p.x == 0 && p.y == 0 && p.x == 0) || (rotatable && !turnable)) {
 				if (!rotatable) {
 					return;
 				}

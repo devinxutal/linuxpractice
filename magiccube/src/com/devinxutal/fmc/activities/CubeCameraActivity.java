@@ -21,9 +21,9 @@ public class CubeCameraActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Configuration.config()
-		.setSharedPreferences(
-				PreferenceManager
-						.getDefaultSharedPreferences(getBaseContext()));
+				.setSharedPreferences(
+						PreferenceManager
+								.getDefaultSharedPreferences(getBaseContext()));
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

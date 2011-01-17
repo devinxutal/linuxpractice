@@ -1,64 +1,46 @@
 package com.devinxutal.fmc.ui;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Handler;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.View;
+import android.widget.TextView;
 
-public class CubeTimer extends View {
-	private static final String TAG = "CubeTimer";
-
+public class CubeTimer extends TextView {
 	private boolean running = false;
-	private Paint paint;
 	private Handler mHandler = new Handler();
 	private long startTime;
 	private long accumulatedTime = 0;
 
 	public CubeTimer(Context context) {
 		super(context);
-		paint = new Paint();
-		paint.setColor(Color.rgb(255, 100, 255));
-		paint.setAntiAlias(true);
-		paint.setTypeface(Typeface.MONOSPACE);
+		this.setTextColor(Color.rgb(180, 150, 255));
+
+		this.setShadowLayer(0.2f, 1, 1, Color.rgb(100, 100, 100));
+
+		this.setText("00:00:00.0");
 	}
 
-	public void surfaceCreated(SurfaceHolder holder) {
-		Log.v(TAG, "surface created");
+	public long getTime() {
+		long time = accumulatedTime;
+
+		if (running) {
+			time += System.currentTimeMillis() - startTime;
+		}
+		return time;
 	}
 
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		Log.v(TAG, "surface changed");
-	}
-
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.v(TAG, "surface destroyed");
-	}
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		int height = this.getHeight();
-		int width = this.getWidth();
-		String time = parseTime();
-		float w = paint.measureText(time);
-		float h = paint.descent() - paint.ascent();
-		float x = (width - w) / 2;
-		float y = (height - h) / 2 - paint.ascent();
-		canvas.drawText(time, x, y, paint);
+	public void setTime(long time) {
+		accumulatedTime = time;
+		startTime = System.currentTimeMillis();
+		this.setText(parseTime());
 	}
 
 	private String parseTime() {
-		long now = System.currentTimeMillis();
-		long ms = now - startTime + accumulatedTime;
-		if (!running) {
-			ms = 0;
+		long ms = accumulatedTime;
+		if (running) {
+			ms += System.currentTimeMillis() - startTime;
 		}
+
 		int fraction = (int) (ms % 1000) / 100;
 		int time = (int) ms / 1000;
 		int h = (time / 3600) % 100;
@@ -74,15 +56,15 @@ public class CubeTimer extends View {
 		return str;
 	}
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		Log.v(TAG, "on measure");
-		float w = getPaddingLeft() + getPaddingRight()
-				+ paint.measureText("00:00:00.0");
-		float h = getPaddingTop() + getPaddingBottom() + paint.descent()
-				- paint.ascent();
-		this.setMeasuredDimension((int) w + 1, (int) h + 1);
-	}
+	// @Override
+	// protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	// Log.v(TAG, "on measure");
+	// float w = getPaddingLeft() + getPaddingRight()
+	// + paint.measureText("00:00:00.0");
+	// float h = getPaddingTop() + getPaddingBottom() + paint.descent()
+	// - paint.ascent();
+	// this.setMeasuredDimension((int) w + 1, (int) h + 1);
+	// }
 
 	public void start() {
 		if (running) {
@@ -108,10 +90,12 @@ public class CubeTimer extends View {
 		}
 		this.accumulatedTime = 0;
 		this.startTime = -1;
+		this.setText(parseTime());
 	}
 
 	private Runnable cubeTimerTask = new Runnable() {
 		public void run() {
+			setText(parseTime());
 			invalidate();
 			if (running) {
 				mHandler.postDelayed(this, 100);

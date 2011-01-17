@@ -17,6 +17,7 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 	private CubeController controller;
 	private List<CubeControlListener> listeners = new LinkedList<CubeControlListener>();
 
+	public static final int BTN_PLAY = 3300;
 	public static final int BTN_COLLAPSE = 3301;
 	public static final int BTN_ZOOM_IN = 3302;
 	public static final int BTN_ZOOM_OUT = 3303;
@@ -29,10 +30,12 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 
 	private List<ImageButton> buttons1;
 	private List<ImageButton> buttons2;
+	private ImageButton playButton;
 	private CubeTimer cubeTimer;
 	private boolean collapsed = true;
 	private boolean collapseChanged = false;
 	private boolean useTimer = false;
+	private boolean showPlayButton = true;
 
 	public CubeControlView(Context context, boolean useTimer) {
 		super(context);
@@ -54,7 +57,14 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			cubeTimer = new CubeTimer(getContext());
 			this.addView(cubeTimer);
 		}
-
+		playButton = new ImageButton(getContext());
+		playButton.setId(BTN_PLAY);
+		playButton.setBackgroundResource(R.drawable.transparent_button);
+		playButton.setImageResource(R.drawable.icon_play_large);
+		playButton.setOnClickListener(this);
+		if (showPlayButton) {
+			this.addView(playButton);
+		}
 		buttons1 = new LinkedList<ImageButton>();
 
 		int[] ids = new int[] { BTN_COLLAPSE, //
@@ -101,7 +111,6 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		Log.v("CubeControlView", "layouting, " + changed);
 		if (!changed && !collapseChanged) {
 			return;
 		}
@@ -175,12 +184,33 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			Log.v("CubeControlView", "layout  timer: " + left + ", " + top);
 			cubeTimer.layout(left, top, left + w, top + h);
 		}
+
+		if (showPlayButton) {
+			playButton.measure(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT);
+			int h = playButton.getMeasuredHeight();
+			int w = playButton.getMeasuredWidth();
+			int left = (width - w) / 2;
+			int top = (height - h) / 2;
+			playButton.layout(left, top, left + w, top + h);
+		}
+	}
+
+	public void showPlayButton(boolean show) {
+		if (showPlayButton != show) {
+			showPlayButton = show;
+			collapseChanged = true;
+			resetButtons();
+		}
 	}
 
 	private void resetButtons() {
 		this.removeAllViews();
 		if (useTimer) {
 			this.addView(cubeTimer);
+		}
+		if (showPlayButton) {
+			this.addView(playButton);
 		}
 		this.addView(buttons1.get(0));
 		if (!collapsed) {
@@ -226,6 +256,10 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 			return;
 		}
 		controller.turnBySymbol(symbol);
+	}
+
+	public void setPlayButtonImage(int resid) {
+		this.playButton.setImageResource(resid);
 	}
 
 	private void zoomIn() {

@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
@@ -21,6 +22,9 @@ import com.devinxutal.fmc.util.AlgorithmUtils;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class CfopSolver extends AbstractSolver {
+
+	private static CfopSolver solver = new CfopSolver();
+
 	public List<PatternAlgorithm> C;
 	public List<PatternAlgorithm> F;
 	public List<PatternAlgorithm> O;
@@ -39,6 +43,8 @@ public class CfopSolver extends AbstractSolver {
 
 	public static int order = 3;
 
+	private boolean initialized = false;
+
 	static {
 		String[] array_rotates = new String[] { "y", "y'", "y2" };
 		String[] array_upturns = new String[] { "U", "U'", "U2" };
@@ -52,8 +58,33 @@ public class CfopSolver extends AbstractSolver {
 		}
 	}
 
-	public CfopSolver() {
+	private CfopSolver() {
 		init();
+	}
+
+	public static CfopSolver getSolver(Activity activity) {
+		if (!solver.isInitialized()) {
+			Log.v("CfopSolver", "initializing");
+			solver.initialize(activity);
+		}
+		return solver;
+	}
+
+	public boolean isInitialized() {
+		return initialized;
+	}
+
+	public void initialize(Activity activity) {
+		if (this.initialized) {
+			return;
+		}
+		try {
+			this.init(activity.getAssets().open("algorithm/cfop_pattern"),
+					activity.getAssets().open("algorithm/cfop_algorithm"));
+			initialized = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public PatternAlgorithm getAlgorithm(String name) {
@@ -186,42 +217,6 @@ public class CfopSolver extends AbstractSolver {
 			e.printStackTrace();
 		}
 		return patternMap;
-	}
-
-	public void init(InputStream in) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String line = null;
-		List<PatternAlgorithm> list = C;
-		try {
-			while ((line = reader.readLine()) != null) {
-
-				line = line.trim();
-				if (line.length() == 0 || line.startsWith("#")) {
-					continue;
-				} else if (line.length() == 1) {
-					switch (line.charAt(0)) {
-					case 'C':
-						list = C;
-						break;
-					case 'F':
-						list = F;
-						break;
-					case 'O':
-						list = O;
-						break;
-					case 'P':
-						list = P;
-						break;
-					}
-				} else {
-					PatternAlgorithm pa = AlgorithmUtils.parsePatternAlgorithm(
-							line, 3);
-					list.add(pa);
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void init() {
