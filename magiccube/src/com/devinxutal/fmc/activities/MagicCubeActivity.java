@@ -1,9 +1,18 @@
 package com.devinxutal.fmc.activities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -27,8 +36,12 @@ import com.devinxutal.fmc.control.MoveControllerListener;
 import com.devinxutal.fmc.control.MoveSequence;
 import com.devinxutal.fmc.control.CubeController.CubeListener;
 import com.devinxutal.fmc.model.CubeState;
+import com.devinxutal.fmc.model.MagicCube;
+import com.devinxutal.fmc.solver.CfopSolver;
 import com.devinxutal.fmc.ui.CubeControlView;
 import com.devinxutal.fmc.ui.CubeControlView.CubeControlListener;
+import com.devinxutal.fmc.util.SymbolMoveUtil;
+import com.devinxutal.fmc.util.VersionUtil;
 
 public class MagicCubeActivity extends Activity {
 	public static final String TAG = "MagicCubeActivity";
@@ -43,11 +56,16 @@ public class MagicCubeActivity extends Activity {
 	private MoveController moveController;
 	private CubeControlView controlView;
 	private Toast toast;
+
+	private Dialog progressDialog;
+
 	private boolean timedMode = false;
-	// used only when restore state;
-	private long elapsedTime = 0;
 
 	private State state = State.FREE;
+
+	// used only when restore state;
+	private long elapsedTime = 0;
+	private boolean collapsed = true;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -103,6 +121,7 @@ public class MagicCubeActivity extends Activity {
 		} else {
 			switchState(state);
 		}
+		this.controlView.setCollapsed(collapsed);
 	}
 
 	private void switchState(State to) {
@@ -156,6 +175,7 @@ public class MagicCubeActivity extends Activity {
 					.getTime());
 		}
 		outState.putSerializable("state", state);
+		outState.putBoolean("padCollapsed", controlView.isCollapsed());
 		super.onSaveInstanceState(outState);
 	}
 
@@ -169,6 +189,7 @@ public class MagicCubeActivity extends Activity {
 		}
 		timedMode = savedInstanceState.getBoolean("timedMode", false);
 		elapsedTime = savedInstanceState.getLong("elapsedTime", 0);
+		collapsed = savedInstanceState.getBoolean("padCollapsed", true);
 		this.state = (State) savedInstanceState.getSerializable("state");
 		initByRestoredState();
 		super.onRestoreInstanceState(savedInstanceState);
@@ -208,11 +229,16 @@ public class MagicCubeActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.solve_it:
-			Intent a = new Intent(getBaseContext(), CubeSolverActivity.class);
-			startActivity(a);
+			this.solveCurrentCube();
 			return true;
 		case R.id.shuffle_it:
 			shuffle(SHUFFLE_STEPS);
+			return true;
+		case R.id.save:
+			saveCubeState();
+			return true;
+		case R.id.load:
+			loadCubeState();
 			return true;
 		case R.id.preferences:
 			Intent preferencesActivity = new Intent(getBaseContext(),
@@ -349,12 +375,112 @@ public class MagicCubeActivity extends Activity {
 
 	}
 
+	public void loadCubeState() {
+		if (!VersionUtil.checkProVersion(this)) {
+			return;
+		}
+		File file = Environment.getExternalStorageDirectory();
+		try {
+			File dataFile = new File(file, Constants.CUBE_SAVING_DIR + "/"
+					+ Constants.CUBE_SAVING_FILE);
+			if (!dataFile.exists()) {
+				toast.setText("Saved cube not found.");
+				toast.show();
+			}
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					dataFile));
+			CubeState stat = (CubeState) in.readObject();
+			in.close();
+			this.cubeController.getMagicCube().setCubeState(stat);
+			this.cubeController.getCubeView().requestRender();
+			toast.setText("Load successfully");
+		} catch (Exception e) {
+			toast.setText("Load failed, check the state of media storage");
+			e.printStackTrace();
+		}
+		toast.show();
+	}
+
+	public void saveCubeState() {
+		if (!VersionUtil.checkProVersion(this)) {
+			return;
+		}
+		File file = Environment.getExternalStorageDirectory();
+		try {
+			File dir = new File(file, Constants.CUBE_SAVING_DIR);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			File dataFile = new File(dir, Constants.CUBE_SAVING_FILE);
+			if (!dataFile.exists()) {
+				dataFile.createNewFile();
+			}
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(dataFile));
+			out.writeObject(this.cubeController.getMagicCube().getCubeState());
+			out.close();
+			toast.setText("Save successfully");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			toast.setText("Save failed, check the state of media storage");
+			e.printStackTrace();
+		}
+		toast.show();
+	}
+
 	public void openHelpDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Help Information")
+		builder.setTitle(R.string.help_info)
 				.setMessage(R.string.help_info_cube).setCancelable(false)
-				.setPositiveButton("OK", null);
+				.setPositiveButton(R.string.common_ok, null);
 		AlertDialog alert = builder.create();
 		alert.show();
+	}
+
+	public void solveCurrentCube() {
+		progressDialog = ProgressDialog.show(this, "", getResources()
+				.getString(R.string.progress_solving_cube), true);
+		new SolveCubeThread().start();
+
+		return;
+	}
+
+	class SolveCubeThread extends Thread {
+
+		@Override
+		public void run() {
+			MagicCube cube = new MagicCube(cubeController.getMagicCube()
+					.getOrder());
+			cube.setCubeState(cubeController.getMagicCube().getCubeState());
+			CfopSolver solver = CfopSolver.getSolver(MagicCubeActivity.this);
+			MoveSequence seq = new MoveSequence();
+			while (!cube.solved()) {
+				MoveSequence s = solver.nextMoves(cube);
+				Move m = null;
+				while ((m = s.step()) != null) {
+					cube.turn(m.dimension, m.layers, m.direction, m.doubleTurn);
+					seq.addMove(m);
+				}
+			}
+			MoveSequence optimizedSeq = SymbolMoveUtil
+					.optimizeMoveSequence(seq);
+			final Intent intent = new Intent(getBaseContext(),
+					CubeDemonstratorActivity.class);
+			intent.putExtra("model", cubeController.getMagicCube()
+					.getCubeState());
+			intent.putExtra("formula", SymbolMoveUtil
+					.parseSymbolsFromMoveSequence(optimizedSeq, cubeController
+							.getMagicCube().getOrder()));
+			MagicCubeActivity.this.runOnUiThread(new Runnable() {
+
+				public void run() {
+					if (progressDialog != null) {
+						progressDialog.cancel();
+					}
+					startActivity(intent);
+				}
+			});
+
+		}
 	}
 }

@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -324,9 +325,13 @@ public class MoveSequenceIndicator extends SurfaceView {
 		dm.paint.setColor(colorIndicator);
 		// paint.setStyle(Style.STROKE);
 		dm.paint.setAlpha(100);
-		canvas.drawRect(indicatorOffset, yOffset, indicatorOffset
-				+ DrawingMetrics.LEN_IND, yOffset + bufferBitmap.getHeight(),
-				dm.paint);
+		RectF rect = new RectF(indicatorOffset, yOffset, indicatorOffset
+				+ DrawingMetrics.LEN_IND, yOffset + bufferBitmap.getHeight());
+		// canvas.drawRect(indicatorOffset, yOffset, indicatorOffset
+		// + DrawingMetrics.LEN_IND, yOffset + bufferBitmap.getHeight(),
+		// dm.paint);
+		canvas.drawRoundRect(rect, DrawingMetrics.LEN_IND / 5,
+				DrawingMetrics.LEN_IND / 8, dm.paint);
 	}
 
 	public class AnimationThread extends Thread {

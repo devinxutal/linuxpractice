@@ -491,10 +491,6 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			}
 			this.invalidate();
 
-			// for test
-			if (event.getX() < 20) {
-				getColors();
-			}
 			return true;
 		}
 
@@ -502,12 +498,12 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			CubeColor[][][] colors = new CubeColor[5][5][5];
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
-					colors[i + 1][4][j + 1] = discoverColor(face1[i][j]);
+					colors[i + 1][4][j + 1] = discoverColor(face1[j][i]);
 				}
 			}
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
-					colors[i + 1][3 - j][4] = discoverColor(face2[i][j]);
+					colors[i + 1][3 - j][4] = discoverColor(face2[j][i]);
 				}
 			}
 			for (int i = 0; i < 3; i++) {
@@ -516,25 +512,6 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				}
 			}
 			return colors;
-		}
-
-		public int[] getColors() {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					discoverColor(face1[i][j]);
-				}
-			}
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					discoverColor(face2[i][j]);
-				}
-			}
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					discoverColor(face3[i][j]);
-				}
-			}
-			return null;
 		}
 
 		private CubeColor discoverColor(PointF p) {

@@ -28,6 +28,8 @@ public class CubeController {
 	private boolean inAnimation = false;
 	private boolean turnable = true;
 	private boolean rotatable = true;
+	private boolean solved = true;
+
 	private Timer animationTimer;
 	private Timer presentationTimer;
 
@@ -81,9 +83,7 @@ public class CubeController {
 				move.direction, move.doubleTurn);
 		if (succeed) {
 			startAnimation();
-			if (magicCube.solved()) {
-				this.notifyCubeSolved();
-			}
+			checkSolved();
 		}
 		return succeed;
 	}
@@ -92,9 +92,7 @@ public class CubeController {
 		boolean succeed = this.magicCube.turnByGesture(i, j, k, dx, dy);
 		if (succeed) {
 			startAnimation();
-			if (magicCube.solved()) {
-				this.notifyCubeSolved();
-			}
+			checkSolved();
 		} else {
 			// t.setText("turn not succeeded");
 			// t.show();
@@ -106,9 +104,7 @@ public class CubeController {
 		boolean succeed = this.magicCube.turnBySymbol(symbol);
 		if (succeed) {
 			startAnimation();
-			if (magicCube.solved()) {
-				this.notifyCubeSolved();
-			}
+			checkSolved();
 		} else {
 			// t.setText("turn not succeeded");
 			// t.show();
@@ -123,6 +119,16 @@ public class CubeController {
 		} else {
 			// t.setText("rotate not succeeded");
 			// t.show();
+		}
+	}
+
+	private void checkSolved() {
+		boolean s = this.magicCube.solved();
+		if (s != solved) {
+			solved = s;
+			if (solved == true) {
+				notifyCubeSolved();
+			}
 		}
 	}
 

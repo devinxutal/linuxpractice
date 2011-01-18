@@ -3,7 +3,7 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<ImageView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/cube"
+		android:layout_height="wrap_content" android:src="@drawable/logo"
 		android:layout_gravity="center_horizontal" android:padding="20px" />
 	<Button android:id="@+id/main_btn_free_play"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
