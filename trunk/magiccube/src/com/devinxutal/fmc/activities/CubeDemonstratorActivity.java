@@ -11,7 +11,7 @@ import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeDemonstrator;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
-public class CubeDemostratorActivity extends Activity {
+public class CubeDemonstratorActivity extends Activity {
 
 	CubeDemonstrator demostrator;
 

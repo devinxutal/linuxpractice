@@ -57,7 +57,7 @@ public class CfopViewerActivity extends ListActivity {
 		PatternAlgorithm pa = solver
 				.getAlgorithm(parts[0].charAt(0) + parts[1]);
 		if (pa != null) {
-			Intent i = new Intent(this, CubeDemostratorActivity.class);
+			Intent i = new Intent(this, CubeDemonstratorActivity.class);
 			i.putExtra("formula", pa.getFormula());
 			i.putExtra("model", AlgorithmUtils.PatternToCubeState(
 					(ColorPattern) pa.getPattern(), 3));

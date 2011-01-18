@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<LinearLayout android:orientation="horizontal"
+	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_gravity="center_horizontal">
 		<ImageView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:src="@drawable/cube"
+			android:layout_height="wrap_content" android:src="@drawable/logo"
 			android:layout_gravity="center_horizontal" android:padding="20px" />
 	</LinearLayout>
 	<LinearLayout android:orientation="horizontal"
@@ -17,9 +17,9 @@
 			<Button android:id="@+id/main_btn_free_play"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:text="@string/main_btn_free_play" />
-			<Button android:id="@+id/main_btn_time_play"
+			<Button android:id="@+id/main_btn_cube_solver"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:text="@string/main_btn_time_play" />
+				android:text="@string/main_btn_cube_solver" />
 			<Button android:id="@+id/main_btn_demonstrator"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:text="@string/main_btn_demonstrator" />
@@ -27,16 +27,15 @@
 		<LinearLayout android:orientation="vertical"
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:layout_weight="0.5">
+			<Button android:id="@+id/main_btn_time_play"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="@string/main_btn_time_play" />
 			<Button android:id="@+id/main_btn_cfop_viewer"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:text="@string/main_btn_cfop_viewer" />
-			<Button android:id="@+id/main_btn_cube_solver"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:text="@string/main_btn_cube_solver" />
+			
 			<Button android:id="@+id/main_btn_about" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:text="@string/main_btn_about" />
 		</LinearLayout>
 	</LinearLayout>
-
-
 </LinearLayout>

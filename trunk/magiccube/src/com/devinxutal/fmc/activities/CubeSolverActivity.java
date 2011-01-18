@@ -42,12 +42,6 @@ public class CubeSolverActivity extends Activity implements
 		mController = new MoveController(controller);
 		setContentView(controller.getCubeView());
 		solver = CfopSolver.getSolver(this);
-		try {
-			solver.init(getAssets().open("algorithm/cfop_pattern"), getAssets()
-					.open("algorithm/cfop_algorithm"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		// shuffle();
 		t = Toast.makeText(this, "", 10000);
 		mController.addMoveControllerListener(this);

@@ -4,11 +4,14 @@
 	<string name="common_cancel">Cancel</string>
 	<string name="common_yes">Yes</string>
 	<string name="common_no">No</string>
+	<string name="common_save">Save</string>
+	<string name="common_load">Load</string>
 	<string name="common_next">Next</string>
 	<string name="common_back">Back</string>
 	<string name="common_finish">Finish</string>
 	<string name="common_go">Go</string>
 	<string name="common_go_go">Go!</string>
+	<string name="common_solve_now">Solve Now!</string>
 
 	<string name="main_btn_free_play">Free Play</string>
 	<string name="main_btn_time_play">Timed Play</string>
@@ -27,6 +30,8 @@
 	<string name="menu_help">Help</string>
 	<string name="menu_solve_it">Solve it</string>
 	<string name="menu_shuffle_it">Shuffle</string>
+
+	<string name="help_info">Help Information</string>
 	<string name="help">Help</string>
 	<string name="help_take_photo">Take a photo of your cube.</string>
 
@@ -36,26 +41,117 @@
 		wrong color, just tap it and re-assign a correct color
 	</string>
 
+
+
+	<string name="cube_capture_problem_title">Cube capturing problem</string>
+	<string name="cube_capture_problem_content">The cube state is invalid. Please be sure that
+		every piece of the cube is assigned with the right color.</string>
 	<string name="cube_capture">Cube Capturing</string>
 	<string name="cube_capture_step1_sign">STEP 1</string>
 	<string name="cube_capture_step2_sign">STEP 2</string>
+	<string name="cube_capture_step3_sign">FINISH</string>
 	<string name="cube_capture_step1_desc">Take a photo of your cube, and identify the colors
 		of the UP, FRONT, RIGHT side. Just like the cube showed below</string>
 	<string name="cube_capture_step2_desc">Take a photo of the other three sides: make the
 		three other faces visible by turning your cube upside down, then press
 		"Go!" button.
 	</string>
-
+	<string name="cube_capture_step3_desc">You have finish capturing the cube, now press the
+		Solve button to view the solution now!
+	</string>
 	<string name="toast_shuffleing_cube">Shuffling cube</string>
 	<string name="toast_steps">steps</string>
 
 	<string name="help_info_title">Help Information</string>
 	<string name="help_info_cube">
-		Fancy Cube is the greatest cube game on ANDROID ever, which allows you to play with a vivid rubiks cube.\n\n
-		[Cube Control]\n\n
-		TURN: flick the cube along any side corner, or edge to turn that face in a particular direction.\n\n
-		ROTATE: to rotate the whole cube, just flick the cube in any black area. in some particular situation that cube turning is disabled, flicking the cube in ANY area leads to a cube rotation.\n\n
-		OTHER: you can unfold the control pad (click the icon in the upper left corner of the screen) to get a easier control over the cube. Here you can zoom in/out the cube and rotate it.\n\n
+		Fancy Cube is the greatest cube game on ANDROID
+		ever, which allows you to play with a vivid rubiks cube.\n\n
+		[Cube
+		Control]\n\n
+		TURN: flick the cube along any side corner, or edge to
+		turn that face in a particular direction.\n\n
+		ROTATE: to rotate the
+		whole cube, just flick the cube in any black area. in some particular
+		situation that cube turning is disabled, flicking the cube in ANY area
+		leads to a cube rotation.\n\n
+		OTHER: you can unfold the control pad
+		(click the icon in the upper left corner of the screen) to get a
+		easier control over the cube. Here you can zoom in/out the cube and
+		rotate it.\n\n
+	</string>
+
+
+	<string name="version_title">Pro Edition Required</string>
+	<string name="version_desc">This function is only provided in Pro edition,
+		please go Android Market and search for [Fancy Cube Pro]</string>
+
+	<string name="progress_solving_cube">Solving cube, please wait...</string>
+	<string name="progress_validating_cube">Validating and solving the cube, please wait...
+	</string>
+	<string name="about_fancy_cube">About Fancy Cube</string>
+	<string name="about_info">
+		Fancy Cube is the greatest cube game on ANDROID
+		ever, which allows you to play with a vivid rubiks cube. A lot of
+		fancy functions are supported:\n\n
+		* Easy control, user can control the
+		cube by simply flicking the cube and black area. control buttons are
+		also supported to provide another way to control the cube. Zoom in/out
+		are supported by control buttons.\n\n
+		* Cube solution at any
+		time, and
+		Fancy Cube can demonstrate the solution with an interactive 3D
+		animation. \n\n
+		*
+		Solve a
+		real cube. Fancy Cube can capture a real cube
+		using camera and
+		image
+		recognition technology, then solve it in either
+		simple or
+		interactive
+		way. Beginners can solve their own cube with Fancy
+		Cube!\n\n
+		*Cube
+		algorithm viewer. currently Fridrichs CFOP algorithm
+		are
+		embedded in
+		Fancy Cube.
+		every algorithm can be demonstrated in 3D
+		animation.
+		\n
+		[Cube
+		Control]\n\n
+		TURN: flick the cube along any side
+		corner,
+		or edge
+		to
+		turn
+		that face in a particular direction.\n\n
+		ROTATE: to
+		rotate
+		the
+		whole
+		cube, just flick the cube in any black area. in some
+		particular
+		situation that cube turning is disabled, flicking the cube
+		in ANY area
+		leads to a cube rotation.\n\n
+		OTHER: you can unfold the
+		control pad
+		(click the icon in the upper left corner of the screen) to
+		get a
+		easier
+		control over the cube. Here you can zoom in/out the cube
+		and
+		rotate
+		it.\n\n
+
+		\n\n
+
+		Developer information
+		Yinfei Xu \n
+		devinxutal@gmail.com \n
+		http://twitter.com/devinxutal \n
 	</string>
 
 </resources>

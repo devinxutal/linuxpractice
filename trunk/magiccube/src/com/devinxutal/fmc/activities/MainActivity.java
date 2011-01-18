@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 
 import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.cfg.Configuration;
+import com.devinxutal.fmc.solver.CfopSolver;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -36,6 +37,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				e.printStackTrace();
 			}
 		}
+		CfopSolver.getSolver(this);
 	}
 
 	public void onClick(View view) {
@@ -50,18 +52,17 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.putExtra("timedMode", true);
 			break;
 		case R.id.main_btn_demonstrator:
-			i = new Intent(this, CubeDemostratorActivity.class);
+			i = new Intent(this, CubeDemonstratorActivity.class);
 			i.putExtra("formula", "FRUR'(RUR'U)r2yz'");
 			break;
 		case R.id.main_btn_cfop_viewer:
 			i = new Intent(this, CfopViewerActivity.class);
 			break;
 		case R.id.main_btn_cube_solver:
-			i = new Intent(this, CubeSolverActivity.class);
-			break;
-
-		case R.id.main_btn_about:
 			i = new Intent(this, CubeCapturingActivity.class);
+			break;
+		case R.id.main_btn_about:
+			i = new Intent(this, AboutActivity.class);
 			break;
 		}
 		startActivity(i);

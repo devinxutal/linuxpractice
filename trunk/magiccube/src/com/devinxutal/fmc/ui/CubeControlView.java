@@ -51,6 +51,15 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		return cubeTimer;
 	}
 
+	public void setCollapsed(boolean collapsed) {
+		if (this.collapsed != collapsed) {
+			this.collapsed = collapsed;
+			this.collapseChanged = true;
+			resetButtons();
+			invalidate();
+		}
+	}
+
 	private void init() {
 
 		if (useTimer) {
@@ -295,5 +304,9 @@ public class CubeControlView extends ViewGroup implements OnClickListener {
 		for (CubeControlListener l : listeners) {
 			l.buttonClickced(id);
 		}
+	}
+
+	public boolean isCollapsed() {
+		return collapsed;
 	}
 }

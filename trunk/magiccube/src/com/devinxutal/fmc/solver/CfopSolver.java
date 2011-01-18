@@ -64,7 +64,7 @@ public class CfopSolver extends AbstractSolver {
 
 	public static CfopSolver getSolver(Activity activity) {
 		if (!solver.isInitialized()) {
-			Log.v("CfopSolver", "initializing");
+			Log.v("CfopSolver", "initializing solver");
 			solver.initialize(activity);
 		}
 		return solver;
@@ -88,7 +88,7 @@ public class CfopSolver extends AbstractSolver {
 	}
 
 	public PatternAlgorithm getAlgorithm(String name) {
-		Log.v("CfopSolver", "get algorithm by name " + name);
+		// Log.v("CfopSolver", "get algorithm by name " + name);
 		if (name == null || name.length() != 3) {
 			return null;
 		}
@@ -120,19 +120,19 @@ public class CfopSolver extends AbstractSolver {
 	public MoveSequence nextMoves(MagicCube cube) {
 		BasicCubeModel model = new BasicCubeModel(cube);
 		if (!cPattern.match(model)) { // do C
-			Log.v("CfogSolver", "Cross not formed");
+			// Log.v("CfogSolver", "Cross not formed");
 			return doC(model);
 		} else if (!fPattern.match(model)) { // do F
-			Log.v("CfogSolver", "F2L not formed");
+			// Log.v("CfogSolver", "F2L not formed");
 			return doF(model);
 		} else if (!oPattern.match(model)) { // do O
-			Log.v("CfogSolver", "OLL not formed");
+			// Log.v("CfogSolver", "OLL not formed");
 			return doO(model);
 		} else if (!pPattern.match(model)) { // do P
-			Log.v("CfogSolver", "PLL not formed");
+			// Log.v("CfogSolver", "PLL not formed");
 			return doP(model);
 		} else if (pPattern.match(model)) {
-			Log.v("CfogSolver", "PLL formed, ajust upside");
+			// Log.v("CfogSolver", "PLL formed, ajust upside");
 			return ajustUp(model);
 		} else {
 			return null;
@@ -177,8 +177,8 @@ public class CfopSolver extends AbstractSolver {
 					MoveSequence seq = new MoveSequence(formula, 3);
 					Pattern p = patternMap.get(prefix + name);
 					if (p != null) {
-						Log.v("CfopSolver", "find a formula: " + name + ": "
-								+ formula);
+						// Log.v("CfopSolver", "find a formula: " + name + ": "
+						// + formula);
 						PatternAlgorithm pa = new PatternAlgorithm(parts[0], p,
 								seq, formula);
 
@@ -208,7 +208,7 @@ public class CfopSolver extends AbstractSolver {
 					String parts[] = line.split("\t");
 					PatternAlgorithm pa = AlgorithmUtils.parsePatternAlgorithm(
 							line, 3);
-					Log.v("CfopSolver", "find a pattern: " + parts[0]);
+					// Log.v("CfopSolver", "find a pattern: " + parts[0]);
 					patternMap.put(prefix + parts[0], AlgorithmUtils
 							.parsePattern(parts[1], 3));
 				}
@@ -273,9 +273,9 @@ public class CfopSolver extends AbstractSolver {
 				}
 				for (PatternAlgorithm pa : C) {
 					if (pa.getPattern().match(model)) {
-						setMessage("find matching F2L fomula:\n" + pa.getName()
-								+ ": \n" + pa.getFormula());
-						Log.v("CfopSolver", "find matching F2L fomula:"
+						setMessage("find matching CROSS fomula:\n"
+								+ pa.getName() + ": \n" + pa.getFormula());
+						Log.v("CfopSolver", "find matching CROSS fomula:"
 								+ pa.getName() + ": " + pa.getFormula());
 						MoveSequence moves = pa.getMoves();
 						moves.reset();
@@ -289,7 +289,7 @@ public class CfopSolver extends AbstractSolver {
 			}
 		}
 
-		Log.v("CfopSolver", "cannot find matching F2L fomula");
+		// Log.v("CfopSolver", "cannot find matching F2L fomula");
 		return null;
 	}
 
@@ -311,8 +311,8 @@ public class CfopSolver extends AbstractSolver {
 					if (pa.getPattern().match(model)) {
 						setMessage("find matching F2L fomula:\n" + pa.getName()
 								+ ": \n" + pa.getFormula());
-						Log.v("CfopSolver", "find matching F2L fomula:"
-								+ pa.getName() + ": " + pa.getFormula());
+						// Log.v("CfopSolver", "find matching F2L fomula:"
+						// + pa.getName() + ": " + pa.getFormula());
 						MoveSequence moves = pa.getMoves();
 						moves.reset();
 						Move move;
@@ -325,7 +325,8 @@ public class CfopSolver extends AbstractSolver {
 			}
 		}
 
-		Log.v("CfopSolver", "cannot find matching F2L fomula, solve DeadLock");
+		// Log.v("CfopSolver",
+		// "cannot find matching F2L fomula, solve DeadLock");
 		return solveF2lDeadLock(model);
 	}
 
@@ -341,8 +342,8 @@ public class CfopSolver extends AbstractSolver {
 				if (pa.getPattern().match(model)) {
 					setMessage("find matching OLL fomula:\n" + pa.getName()
 							+ ": \n" + pa.getFormula());
-					Log.v("CfopSolver", "find matching OLL fomula:"
-							+ pa.getName() + ": " + pa.getFormula());
+					// Log.v("CfopSolver", "find matching OLL fomula:"
+					// + pa.getName() + ": " + pa.getFormula());
 					MoveSequence moves = pa.getMoves();
 					moves.reset();
 					Move move;
@@ -354,7 +355,7 @@ public class CfopSolver extends AbstractSolver {
 			}
 		}
 
-		Log.v("CfopSolver", "cannot find matching OLL fomula");
+		// Log.v("CfopSolver", "cannot find matching OLL fomula");
 		return null;
 	}
 
@@ -370,8 +371,8 @@ public class CfopSolver extends AbstractSolver {
 				if (pa.getPattern().match(model)) {
 					setMessage("find matching PLL fomula:\n" + pa.getName()
 							+ ": \n" + pa.getFormula());
-					Log.v("CfopSolver", "find matching PLL fomula:"
-							+ pa.getName() + ": " + pa.getFormula());
+					// Log.v("CfopSolver", "find matching PLL fomula:"
+					// + pa.getName() + ": " + pa.getFormula());
 					MoveSequence moves = pa.getMoves();
 					moves.reset();
 					Move move;
@@ -383,7 +384,7 @@ public class CfopSolver extends AbstractSolver {
 			}
 		}
 
-		Log.v("CfopSolver", "cannot find matching PLL fomula");
+		// Log.v("CfopSolver", "cannot find matching PLL fomula");
 		return null;
 	}
 
