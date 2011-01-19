@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements OnClickListener {
 								.getDefaultSharedPreferences(getBaseContext()));
 		this.setContentView(R.layout.main);
 		int ids[] = new int[] { R.id.main_btn_free_play,
-				R.id.main_btn_time_play, R.id.main_btn_demonstrator,
+				R.id.main_btn_time_play, R.id.main_btn_preference,
 				R.id.main_btn_cfop_viewer, R.id.main_btn_cube_solver,
 				R.id.main_btn_about };
 		for (int id : ids) {
@@ -51,9 +51,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			i = new Intent(this, MagicCubeActivity.class);
 			i.putExtra("timedMode", true);
 			break;
-		case R.id.main_btn_demonstrator:
-			i = new Intent(this, CubeDemonstratorActivity.class);
-			i.putExtra("formula", "FRUR'(RUR'U)r2yz'");
+		case R.id.main_btn_preference:
+			i = new Intent(this, Preferences.class);
 			break;
 		case R.id.main_btn_cfop_viewer:
 			i = new Intent(this, CfopViewerActivity.class);
