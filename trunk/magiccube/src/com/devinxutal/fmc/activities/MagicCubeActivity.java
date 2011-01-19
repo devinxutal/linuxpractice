@@ -462,7 +462,7 @@ public class MagicCubeActivity extends Activity {
 	private void preferenceChanged() {
 		Log.v(TAG, "preference changed");
 		int cubeSize = Configuration.config().getCubeSize();
-		if (cubeSize != cubeController.getMagicCube().getOrder()) {
+		if (cubeSize != cubeController.getMagicCube().getOrder() && !timedMode) {
 			cubeController.getMagicCube().setOrder(cubeSize);
 			cubeController.getCubeView().requestRender();
 		}

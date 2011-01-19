@@ -20,6 +20,7 @@
 	<string name="main_btn_cfop_viewer">CFOP Viewer</string>
 	<string name="main_btn_cube_solver">Solve a Cube</string>
 	<string name="main_btn_tester">Test Camera</string>
+	<string name="main_btn_preference">Preferences</string>
 
 	<string name="hello">Hello World, MagicCube!</string>
 	<string name="app_name">Fancy Cube Lite</string>
