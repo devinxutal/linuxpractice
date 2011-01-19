@@ -40,6 +40,7 @@ import com.devinxutal.fmc.model.MagicCube;
 import com.devinxutal.fmc.solver.CfopSolver;
 import com.devinxutal.fmc.ui.CubeControlView;
 import com.devinxutal.fmc.ui.CubeControlView.CubeControlListener;
+import com.devinxutal.fmc.util.DialogUtil;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 import com.devinxutal.fmc.util.VersionUtil;
 
@@ -47,6 +48,7 @@ public class MagicCubeActivity extends Activity {
 	public static final String TAG = "MagicCubeActivity";
 
 	public static final int SHUFFLE_STEPS = 3;
+	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
 	public enum State {
 		SHUFFLING, PAUSED, PLAY, OBSERVE, FREE, WAIT_REPLAY
@@ -80,8 +82,8 @@ public class MagicCubeActivity extends Activity {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
 
 		this.timedMode = getIntent().getBooleanExtra("timedMode", false);
-
-		cubeController = new CubeController(this, true, true);
+		int order = Configuration.config().getCubeSize();
+		cubeController = new CubeController(this, order, true, true);
 		moveController = new MoveController(cubeController);
 		controlView = new CubeControlView(this, timedMode);
 		toast = Toast.makeText(this, "", 5000);
@@ -165,6 +167,12 @@ public class MagicCubeActivity extends Activity {
 	}
 
 	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		Log.v(TAG, "option menu closed");
+		super.onOptionsMenuClosed(menu);
+	}
+
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		Log.v(TAG, "onSaveInstanceState");
 		outState.putSerializable(Constants.CUBE_STATE, cubeController
@@ -218,6 +226,14 @@ public class MagicCubeActivity extends Activity {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PREFERENCE_REQUEST_CODE) {
+			this.preferenceChanged();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
@@ -243,7 +259,7 @@ public class MagicCubeActivity extends Activity {
 		case R.id.preferences:
 			Intent preferencesActivity = new Intent(getBaseContext(),
 					Preferences.class);
-			startActivity(preferencesActivity);
+			startActivityForResult(preferencesActivity, PREFERENCE_REQUEST_CODE);
 			return true;
 		case R.id.help:
 			openHelpDialog();
@@ -375,6 +391,14 @@ public class MagicCubeActivity extends Activity {
 
 	}
 
+	private void restoreCubeState(CubeState state) {
+		if (state.order != cubeController.getMagicCube().getOrder()) {
+			cubeController.getMagicCube().setOrder(state.order);
+			cubeController.getMagicCube().setCubeState(state);
+		}
+		cubeController.getCubeView().requestRender();
+	}
+
 	public void loadCubeState() {
 		if (!VersionUtil.checkProVersion(this)) {
 			return;
@@ -391,8 +415,7 @@ public class MagicCubeActivity extends Activity {
 					dataFile));
 			CubeState stat = (CubeState) in.readObject();
 			in.close();
-			this.cubeController.getMagicCube().setCubeState(stat);
-			this.cubeController.getCubeView().requestRender();
+			restoreCubeState(stat);
 			toast.setText("Load successfully");
 		} catch (Exception e) {
 			toast.setText("Load failed, check the state of media storage");
@@ -421,7 +444,6 @@ public class MagicCubeActivity extends Activity {
 			out.close();
 			toast.setText("Save successfully");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			toast.setText("Save failed, check the state of media storage");
 			e.printStackTrace();
 		}
@@ -437,7 +459,21 @@ public class MagicCubeActivity extends Activity {
 		alert.show();
 	}
 
+	private void preferenceChanged() {
+		Log.v(TAG, "preference changed");
+		int cubeSize = Configuration.config().getCubeSize();
+		if (cubeSize != cubeController.getMagicCube().getOrder()) {
+			cubeController.getMagicCube().setOrder(cubeSize);
+			cubeController.getCubeView().requestRender();
+		}
+	}
+
 	public void solveCurrentCube() {
+		if (this.cubeController.getMagicCube().getOrder() != 3) {
+			DialogUtil.showDialog(this, R.string.cube_not_support_title,
+					R.string.cube_not_support_content);
+			return;
+		}
 		progressDialog = ProgressDialog.show(this, "", getResources()
 				.getString(R.string.progress_solving_cube), true);
 		new SolveCubeThread().start();

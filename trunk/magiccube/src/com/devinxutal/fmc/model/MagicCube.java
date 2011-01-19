@@ -82,6 +82,15 @@ public class MagicCube {
 		}
 	}
 
+	public void setOrder(int order) {
+		if (this.order != order) {
+			this.order = order;
+			initCube();
+			this.cubie = new CubbyWithESquare();
+			this.turner = new CubeTurner<CubeColor>(order);
+		}
+	}
+
 	public int getOrder() {
 		return order;
 	}

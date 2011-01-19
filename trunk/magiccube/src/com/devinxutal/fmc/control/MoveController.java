@@ -3,8 +3,6 @@ package com.devinxutal.fmc.control;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-
 public class MoveController implements AnimationListener {
 	public enum State {
 		RUNING_SINGLE_STEP, RUNNING_MULTPLE_STEP, STOPPED
@@ -15,10 +13,19 @@ public class MoveController implements AnimationListener {
 	private CubeController cubeController;
 
 	private MoveThread moveThread;
+	private int moveInterval;
 
 	public MoveController(CubeController controller) {
 		this.cubeController = controller;
 		this.cubeController.addAnimationListener(this);
+	}
+
+	public int getMoveInterval() {
+		return moveInterval;
+	}
+
+	public void setMoveInterval(int moveInterval) {
+		this.moveInterval = moveInterval;
 	}
 
 	public boolean startMove(IMoveSequence sequence) {
@@ -108,8 +115,6 @@ public class MoveController implements AnimationListener {
 
 	class MoveThread extends Thread {
 		private IMoveSequence sequence;
-		private int interval = 200;
-		private boolean paused = false;
 		private boolean canceled = false;
 
 		public MoveThread(IMoveSequence sequence) {
@@ -125,23 +130,13 @@ public class MoveController implements AnimationListener {
 				if (canceled) {
 					break;
 				}
-				Log.v("cc", "before paused");
-				while (paused) {
-					try {
-						sleep(100);
-						Log.v("cc", "paused");
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
 				try {
-					sleep(interval);
+					sleep(moveInterval);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				cubeController.turnByMove(mv);
 				notifyMoveSequenceStepped(sequence.currentMoveIndex());
-				long start = System.currentTimeMillis();
 				try {
 					synchronized (this) {
 						this.wait();
@@ -149,8 +144,6 @@ public class MoveController implements AnimationListener {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				long end = System.currentTimeMillis();
-				Log.v("cc", "wait time: " + (end - start));
 			}
 			changeState(MoveController.State.STOPPED);
 		}

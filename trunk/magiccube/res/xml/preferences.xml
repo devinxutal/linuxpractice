@@ -20,12 +20,13 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_cat_performance">
-
-		<ListPreference android:title="@string/pref_ent_rendermode"
-			android:summary="@string/perf_ent_rendermode_summary" android:key="render_mode"
-			android:defaultValue="1" android:entries="@array/pref_ent_rendermode_entries"
+		<!--
+			<ListPreference android:title="@string/pref_ent_rendermode"
+			android:summary="@string/perf_ent_rendermode_summary"
+			android:key="render_mode" android:defaultValue="1"
+			android:entries="@array/pref_ent_rendermode_entries"
 			android:entryValues="@array/pref_ent_rendermode_values" />
-
+		-->
 		<ListPreference android:title="@string/pref_ent_animation_quality"
 			android:summary="@string/pref_ent_animation_quality_summary"
 			android:key="animation_quality" android:defaultValue="2"

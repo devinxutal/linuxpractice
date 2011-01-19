@@ -120,6 +120,10 @@ public class CubeDemonstrator extends ViewGroup implements
 
 	}
 
+	public MoveController getMoveController() {
+		return moveController;
+	}
+
 	private int nextIndex() {
 		int to = current;
 		Move toMove;
