@@ -1,19 +1,25 @@
 package com.devinxutal.fmc.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.devinxutal.fmc.R;
 import com.devinxutal.fmc.cfg.Configuration;
 import com.devinxutal.fmc.model.CubeState;
 import com.devinxutal.fmc.ui.CubeDemonstrator;
 import com.devinxutal.fmc.util.SymbolMoveUtil;
 
 public class CubeDemonstratorActivity extends Activity {
+	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
-	CubeDemonstrator demostrator;
+	private CubeDemonstrator demostrator;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -33,8 +39,45 @@ public class CubeDemonstratorActivity extends Activity {
 
 		demostrator = new CubeDemonstrator(this, state, SymbolMoveUtil
 				.parseSymbolSequenceAsArray(sequence));
-
+		demostrator.getMoveController().setMoveInterval(
+				Configuration.config().getRotationInterval());
 		setContentView(demostrator);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.demo_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.preferences:
+			Intent preferencesActivity = new Intent(getBaseContext(),
+					Preferences.class);
+			startActivityForResult(preferencesActivity, PREFERENCE_REQUEST_CODE);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PREFERENCE_REQUEST_CODE) {
+			this.preferenceChanged();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private void preferenceChanged() {
+		if (demostrator.getMoveController().getMoveInterval() != Configuration
+				.config().getRotationInterval()) {
+			demostrator.getMoveController().setMoveInterval(
+					Configuration.config().getRotationInterval());
+		}
 	}
 
 	@Override

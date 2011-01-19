@@ -62,6 +62,10 @@
 	<string name="toast_shuffleing_cube">Shuffling cube</string>
 	<string name="toast_steps">steps</string>
 
+	<string name="cube_not_support_title">Cube Not Supported</string>
+	<string name="cube_not_support_content">Cube solution is currently supported only for 3x3
+		cube</string>
+
 	<string name="help_info_title">Help Information</string>
 	<string name="help_info_cube">
 		Fancy Cube is the greatest cube game on ANDROID

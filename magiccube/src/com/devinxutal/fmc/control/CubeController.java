@@ -57,8 +57,13 @@ public class CubeController {
 	}
 
 	public CubeController(Context context, boolean turnable, boolean rotatable) {
+		this(context, 3, turnable, rotatable);
+	}
+
+	public CubeController(Context context, int order, boolean turnable,
+			boolean rotatable) {
 		this.cubeView = new CubeView(context);
-		this.magicCube = new MagicCube(3);
+		this.magicCube = new MagicCube(order);
 		this.cubeView.setMagicCube(magicCube);
 		this.magicCube.view = cubeView;
 		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
@@ -138,12 +143,14 @@ public class CubeController {
 		}
 		this.inAnimation = true;
 		this.magicCube.getCubie().prepareAnimation();
-		int step = Configuration.config().getAnimationQuality() * 3;
-		this.magicCube.getAnimationInfo().setAnimation(step);
-		this.animationTimer = new Timer();
+
 		int animationDuration = Configuration.config().getAnimationSpeed();
-		Log.v("CubeController", "animationDuration" + animationDuration);
-		Log.v("CubeController", "step " + step);
+		int stepInterval = 10 + 90 / Configuration.config()
+				.getAnimationQuality();
+
+		this.magicCube.getAnimationInfo().setAnimation(
+				animationDuration / stepInterval);
+		this.animationTimer = new Timer();
 		this.animationTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -155,7 +162,7 @@ public class CubeController {
 				}
 			}
 
-		}, 0, animationDuration / step);
+		}, 0, stepInterval);
 	}
 
 	private void finishAnimation() {
