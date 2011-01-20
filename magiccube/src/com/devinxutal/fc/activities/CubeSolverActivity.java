@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.control.CubeController;
 import com.devinxutal.fc.control.IMoveSequence;
@@ -19,7 +20,6 @@ import com.devinxutal.fc.control.MoveControllerListener;
 import com.devinxutal.fc.control.MoveSequence;
 import com.devinxutal.fc.control.MoveController.State;
 import com.devinxutal.fc.solver.CfopSolver;
-import com.devinxutal.fmc.R;
 
 public class CubeSolverActivity extends Activity implements
 		MoveControllerListener {

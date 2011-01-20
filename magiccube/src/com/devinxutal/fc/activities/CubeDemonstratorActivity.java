@@ -10,11 +10,11 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.model.CubeState;
 import com.devinxutal.fc.ui.CubeDemonstrator;
 import com.devinxutal.fc.util.SymbolMoveUtil;
-import com.devinxutal.fmc.R;
 
 public class CubeDemonstratorActivity extends Activity {
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.control.Move;
 import com.devinxutal.fc.control.MoveSequence;
@@ -25,7 +26,6 @@ import com.devinxutal.fc.model.MagicCube;
 import com.devinxutal.fc.solver.CfopSolver;
 import com.devinxutal.fc.ui.CubeCameraPreview;
 import com.devinxutal.fc.util.SymbolMoveUtil;
-import com.devinxutal.fmc.R;
 
 public class CubeCapturingActivity extends Activity {
 	private static final String TAG = "CameraDemo";
