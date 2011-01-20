@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.control.CubeController;
-import com.devinxutal.fmc.R;
 
 public class CubeControlView extends ViewGroup implements OnClickListener {
 	private CubeController controller;

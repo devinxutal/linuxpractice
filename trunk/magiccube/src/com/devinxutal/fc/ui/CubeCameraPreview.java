@@ -31,10 +31,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.model.CubeColor;
 import com.devinxutal.fc.ui.CubeColorPickerDialog.OnColorChangedListener;
 import com.devinxutal.fc.util.ImageUtil;
-import com.devinxutal.fmc.R;
 
 public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		PlaneCubeListener { // <1>
@@ -609,7 +609,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			nextButton.setText(R.string.common_next);
 			helpButton.setText("?");
 			helpButton
-					.setBackgroundResource(com.devinxutal.fmc.R.drawable.play_button);
+					.setBackgroundResource(com.devinxutal.fc.R.drawable.play_button);
 			this.addView(backButton);
 			this.addView(nextButton);
 			this.addView(helpButton);
@@ -657,7 +657,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			this.addView(imageView);
 			this.addView(cubeView);
 			// test
-			this.imageView.setImageResource(com.devinxutal.fmc.R.drawable.cube);
+			this.imageView.setImageResource(com.devinxutal.fc.R.drawable.cube);
 		}
 
 		@Override
