@@ -45,6 +45,12 @@ public class CubeDemonstratorActivity extends Activity {
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		this.demostrator.onDestroy();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
@@ -58,6 +64,8 @@ public class CubeDemonstratorActivity extends Activity {
 		case R.id.preferences:
 			Intent preferencesActivity = new Intent(getBaseContext(),
 					Preferences.class);
+			preferencesActivity.putExtra("pref_res",
+					R.xml.preferences_demonstrator);
 			startActivityForResult(preferencesActivity, PREFERENCE_REQUEST_CODE);
 			return true;
 		}

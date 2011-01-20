@@ -47,7 +47,6 @@ import com.devinxutal.fmc.util.VersionUtil;
 public class MagicCubeActivity extends Activity {
 	public static final String TAG = "MagicCubeActivity";
 
-	public static final int SHUFFLE_STEPS = 3;
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
 	public enum State {
@@ -90,15 +89,18 @@ public class MagicCubeActivity extends Activity {
 		controlView.addCubeControlListener(new ControlButtonClicked());
 		controlView.setCubeController(cubeController);
 		moveController.addMoveControllerListener(new MoveListener());
+		moveController.setMoveInterval(Configuration.config()
+				.getRotationInterval());
 		FrameLayout layout = new FrameLayout(this);
 		layout.addView(cubeController.getCubeView());
 		cubeController.addCubeListener(new CubeSolved());
 		layout.addView(controlView);
+
 		setContentView(layout);
 		switchState(State.FREE);
 		if (savedInstanceState == null && timedMode) {
 
-			shuffle(SHUFFLE_STEPS);
+			shuffle(Configuration.config().getShuffleSteps());
 		}
 	}
 
@@ -106,6 +108,9 @@ public class MagicCubeActivity extends Activity {
 	protected void onDestroy() {
 		if (timedMode) {
 			controlView.getCubeTimer().stop();
+		}
+		if (moveController.getState() == MoveController.State.RUNNING_MULTPLE_STEP) {
+			moveController.stopMove();
 		}
 		super.onDestroy();
 	}
@@ -119,7 +124,7 @@ public class MagicCubeActivity extends Activity {
 			state = State.PAUSED;
 		}
 		if (state == State.SHUFFLING) {
-			shuffle(SHUFFLE_STEPS);
+			shuffle(Configuration.config().getShuffleSteps());
 		} else {
 			switchState(state);
 		}
@@ -248,7 +253,7 @@ public class MagicCubeActivity extends Activity {
 			this.solveCurrentCube();
 			return true;
 		case R.id.shuffle_it:
-			shuffle(SHUFFLE_STEPS);
+			shuffle(Configuration.config().getShuffleSteps());
 			return true;
 		case R.id.save:
 			saveCubeState();
@@ -380,7 +385,7 @@ public class MagicCubeActivity extends Activity {
 		if (moveController.getState() != MoveController.State.STOPPED) {
 			return;
 		}
-		shuffle(SHUFFLE_STEPS);
+		shuffle(Configuration.config().getShuffleSteps());
 	}
 
 	public void pause() {
@@ -400,12 +405,12 @@ public class MagicCubeActivity extends Activity {
 	}
 
 	public void loadCubeState() {
-		if (!VersionUtil.checkProVersion(this)) {
+		if (!VersionUtil.checkProVersion(this, true)) {
 			return;
 		}
 		File file = Environment.getExternalStorageDirectory();
 		try {
-			File dataFile = new File(file, Constants.CUBE_SAVING_DIR + "/"
+			File dataFile = new File(file, Constants.DATA_DIR + "/"
 					+ Constants.CUBE_SAVING_FILE);
 			if (!dataFile.exists()) {
 				toast.setText("Saved cube not found.");
@@ -425,12 +430,12 @@ public class MagicCubeActivity extends Activity {
 	}
 
 	public void saveCubeState() {
-		if (!VersionUtil.checkProVersion(this)) {
+		if (!VersionUtil.checkProVersion(this, true)) {
 			return;
 		}
 		File file = Environment.getExternalStorageDirectory();
 		try {
-			File dir = new File(file, Constants.CUBE_SAVING_DIR);
+			File dir = new File(file, Constants.DATA_DIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
@@ -466,12 +471,14 @@ public class MagicCubeActivity extends Activity {
 			cubeController.getMagicCube().setOrder(cubeSize);
 			cubeController.getCubeView().requestRender();
 		}
+		moveController.setMoveInterval(Configuration.config()
+				.getRotationInterval());
 	}
 
 	public void solveCurrentCube() {
 		if (this.cubeController.getMagicCube().getOrder() != 3) {
-			DialogUtil.showDialog(this, R.string.cube_not_support_title,
-					R.string.cube_not_support_content);
+			DialogUtil.showDialog(this, R.string.cube_solve_problem_title,
+					R.string.cube_solve_problem_desc);
 			return;
 		}
 		progressDialog = ProgressDialog.show(this, "", getResources()

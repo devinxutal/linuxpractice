@@ -13,6 +13,8 @@ import com.devinxutal.fmc.model.MagicCube;
 public class SymbolMoveUtil {
 	private static final String TAG = "SymbolMoveUtil";
 
+	private static Random r = new Random();
+
 	public static List<String> parseSymbolSequenceAsList(String sequence) {
 		LinkedList<String> list = new LinkedList<String>();
 		if (sequence == null || sequence.length() == 0) {
@@ -252,8 +254,8 @@ public class SymbolMoveUtil {
 	}
 
 	public static Move randomMove(int cubeOrder) {
+		Log.v("SymbolMoveUtil", "random move");
 		Move move = new Move();
-		Random r = new Random();
 		move.direction = r.nextDouble() >= 0.5 ? 1 : -1;
 		int rd = r.nextInt(3);
 		if (rd == 0) {
@@ -318,7 +320,7 @@ public class SymbolMoveUtil {
 	}
 
 	private static Move combineMove(Move m1, Move m2) {
-		
+
 		if (m1.dimension != m2.dimension) {
 			return null;
 		}

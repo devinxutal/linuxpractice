@@ -20,7 +20,7 @@ public enum CubeColor {
 		case BLUE:
 			return Color.rgb(0, 0, 255);
 		case GREEN:
-			return Color.rgb(50, 255, 100);
+			return Color.rgb(0, 200, 100);
 		case ANY:
 			return Color.rgb(100, 100, 100);
 		}

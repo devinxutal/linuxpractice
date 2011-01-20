@@ -27,6 +27,14 @@ public class Configuration {
 		return defaultValue;
 	}
 
+	public int getShuffleSteps() {
+		int defaultValue = 20;
+		if (preference != null) {
+			return Integer.valueOf(preference.getString("shuffle_steps", "20"));
+		}
+		return defaultValue;
+	}
+
 	public int getRotationInterval() {
 		int defaultValue = 500;
 		if (preference != null) {

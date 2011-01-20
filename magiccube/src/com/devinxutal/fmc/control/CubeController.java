@@ -222,6 +222,9 @@ public class CubeController {
 			if (!turnable && !rotatable) {
 				return true;
 			}
+			if (inAnimation) {
+				return true;
+			}
 			switch (evt.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				startX = (int) evt.getX();

@@ -3,6 +3,8 @@ package com.devinxutal.fmc.control;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
 public class MoveController implements AnimationListener {
 	public enum State {
 		RUNING_SINGLE_STEP, RUNNING_MULTPLE_STEP, STOPPED
@@ -13,7 +15,7 @@ public class MoveController implements AnimationListener {
 	private CubeController cubeController;
 
 	private MoveThread moveThread;
-	private int moveInterval;
+	private int moveInterval = 400;
 
 	public MoveController(CubeController controller) {
 		this.cubeController = controller;
@@ -25,6 +27,7 @@ public class MoveController implements AnimationListener {
 	}
 
 	public void setMoveInterval(int moveInterval) {
+		Log.v("MoveController", "set move interval: " + moveInterval);
 		this.moveInterval = moveInterval;
 	}
 
