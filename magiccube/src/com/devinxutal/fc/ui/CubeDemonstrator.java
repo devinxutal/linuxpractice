@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.activities.CubeDemonstratorActivity;
 import com.devinxutal.fc.activities.Preferences;
 import com.devinxutal.fc.control.CubeController;
@@ -22,7 +23,6 @@ import com.devinxutal.fc.control.MoveSequence;
 import com.devinxutal.fc.control.MoveController.State;
 import com.devinxutal.fc.model.CubeState;
 import com.devinxutal.fc.util.SymbolMoveUtil;
-import com.devinxutal.fmc.R;
 
 public class CubeDemonstrator extends ViewGroup implements
 		MoveControllerListener {
