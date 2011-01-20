@@ -170,6 +170,11 @@ public class MoveSequenceIndicator extends SurfaceView {
 				measureHeight(heightMeasureSpec));
 	}
 
+	public void destroy() {
+		this.animationThread.flag = false;
+		this.animation.semaphore.release();
+	}
+
 	/**
 	 * Determines the width of this view
 	 * 
@@ -336,6 +341,11 @@ public class MoveSequenceIndicator extends SurfaceView {
 
 	public class AnimationThread extends Thread {
 		boolean flag = true;
+
+		public AnimationThread() {
+			super();
+			this.setName("Indicator Animation Thread");
+		}
 
 		@Override
 		public void run() {

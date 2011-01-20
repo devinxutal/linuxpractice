@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.devinxutal.fmc.R;
+import com.devinxutal.fmc.activities.CubeDemonstratorActivity;
+import com.devinxutal.fmc.activities.Preferences;
 import com.devinxutal.fmc.control.CubeController;
 import com.devinxutal.fmc.control.Move;
 import com.devinxutal.fmc.control.MoveController;
@@ -35,6 +38,7 @@ public class CubeDemonstrator extends ViewGroup implements
 	private ImageButton nextButton;
 	private ImageButton playButton;
 	private ImageButton resetButton;
+	private ImageButton prefButton;
 
 	//
 	private CubeState initialState;
@@ -101,14 +105,21 @@ public class CubeDemonstrator extends ViewGroup implements
 		resetButton.setBackgroundResource(R.drawable.play_button);
 		resetButton.setImageResource(R.drawable.icon_reset);
 
+		prefButton = new ImageButton(getContext());
+		prefButton.setBackgroundResource(R.drawable.play_button);
+		prefButton.setImageResource(R.drawable.icon_setting);
+
 		buttonBar = new ButtonBar(getContext());
+
+		buttonBar.addView(resetButton, new LayoutParams(
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		buttonBar.addView(prevButton, new LinearLayout.LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1f));
 		buttonBar.addView(playButton, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		buttonBar.addView(nextButton, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		buttonBar.addView(resetButton, new LayoutParams(
+		buttonBar.addView(prefButton, new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		this.addView(buttonBar);
 
@@ -117,7 +128,13 @@ public class CubeDemonstrator extends ViewGroup implements
 		prevButton.setOnClickListener(l);
 		playButton.setOnClickListener(l);
 		resetButton.setOnClickListener(l);
+		prefButton.setOnClickListener(l);
 
+	}
+
+	public void onDestroy() {
+
+		this.indicator.destroy();
 	}
 
 	public MoveController getMoveController() {
@@ -246,6 +263,14 @@ public class CubeDemonstrator extends ViewGroup implements
 					current = 0;
 					indicator.moveTo(0);
 				}
+			} else if (view == prefButton) {
+				Activity activity = (Activity) getContext();
+				Intent preferencesActivity = new Intent(activity
+						.getBaseContext(), Preferences.class);
+				preferencesActivity.putExtra("pref_res",
+						R.xml.preferences_demonstrator);
+				activity.startActivityForResult(preferencesActivity,
+						CubeDemonstratorActivity.PREFERENCE_REQUEST_CODE);
 			}
 		}
 	}
