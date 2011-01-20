@@ -8,9 +8,9 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.ui.CubeCameraPreview;
-import com.devinxutal.fmc.R;
 
 public class CubeCameraActivity extends Activity {
 	private static final String TAG = "CameraDemo";

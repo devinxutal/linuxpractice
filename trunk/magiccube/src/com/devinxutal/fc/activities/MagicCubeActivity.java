@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.cfg.Constants;
 import com.devinxutal.fc.control.CubeController;
@@ -42,7 +43,6 @@ import com.devinxutal.fc.ui.CubeControlView.CubeControlListener;
 import com.devinxutal.fc.util.DialogUtil;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 import com.devinxutal.fc.util.VersionUtil;
-import com.devinxutal.fmc.R;
 
 public class MagicCubeActivity extends Activity {
 	public static final String TAG = "MagicCubeActivity";

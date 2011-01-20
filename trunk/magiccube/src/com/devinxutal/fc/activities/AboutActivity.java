@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
-import com.devinxutal.fmc.R;
 
 public class AboutActivity extends Activity {
 

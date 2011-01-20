@@ -16,12 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.algorithm.pattern.ColorPattern;
 import com.devinxutal.fc.algorithm.patternalgorithm.PatternAlgorithm;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.solver.CfopSolver;
 import com.devinxutal.fc.util.AlgorithmUtils;
-import com.devinxutal.fmc.R;
 
 public class CfopViewerActivity extends ListActivity {
 	static List<String> formulas = new LinkedList<String>();

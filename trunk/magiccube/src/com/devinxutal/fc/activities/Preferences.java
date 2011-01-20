@@ -5,7 +5,7 @@ import android.preference.PreferenceActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.devinxutal.fmc.R;
+import com.devinxutal.fc.R;
 
 public class Preferences extends PreferenceActivity {
 	@Override
