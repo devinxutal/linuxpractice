@@ -12,8 +12,8 @@ import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Constants;
-import com.devinxutal.fmc.R;
 
 public class VersionUtil {
 
