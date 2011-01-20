@@ -3,7 +3,7 @@ package com.devinxutal.fc.util;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import com.devinxutal.fmc.R;
+import com.devinxutal.fc.R;
 
 public class DialogUtil {
 	public static void showDialog(Context context, int title, int content) {
