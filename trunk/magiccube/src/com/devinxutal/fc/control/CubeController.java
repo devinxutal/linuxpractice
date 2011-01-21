@@ -31,7 +31,6 @@ public class CubeController {
 	private boolean solved = true;
 
 	private Timer animationTimer;
-	private Timer presentationTimer;
 
 	private List<AnimationListener> animationListeners = new LinkedList<AnimationListener>();
 	private List<CubeListener> cubeListeners = new LinkedList<CubeListener>();
@@ -156,12 +155,11 @@ public class CubeController {
 			public void run() {
 				CubeAnimationInfo info = magicCube.getAnimationInfo();
 				info.step();
-				cubeView.requestRender();
 				if (info.currentStep() >= info.totalStep()) {
 					finishAnimation();
 				}
+				cubeView.requestRender();
 			}
-
 		}, 0, stepInterval);
 	}
 

@@ -10,11 +10,10 @@ import android.widget.ImageButton;
 
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
-import com.devinxutal.fc.ui.CubeCameraPreview;
+import com.devinxutal.fc.ui.CubeCameraView;
 
 public class CubeCameraActivity extends Activity {
-	private static final String TAG = "CameraDemo";
-	CubeCameraPreview preview;
+	CubeCameraView preview;
 	ImageButton buttonClick;
 
 	@Override
@@ -32,7 +31,7 @@ public class CubeCameraActivity extends Activity {
 		setContentView(R.layout.cubecamara);
 
 		FrameLayout frameLayout = ((FrameLayout) findViewById(R.id.preview));
-		preview = new CubeCameraPreview(this);
+		preview = new CubeCameraView(this);
 		frameLayout.addView(preview);
 	}
 

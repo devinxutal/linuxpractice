@@ -22,8 +22,10 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.admob.android.ads.AdManager;
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.cfg.Constants;
@@ -40,6 +42,7 @@ import com.devinxutal.fc.model.MagicCube;
 import com.devinxutal.fc.solver.CfopSolver;
 import com.devinxutal.fc.ui.CubeControlView;
 import com.devinxutal.fc.ui.CubeControlView.CubeControlListener;
+import com.devinxutal.fc.util.AdUtil;
 import com.devinxutal.fc.util.DialogUtil;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 import com.devinxutal.fc.util.VersionUtil;
@@ -96,7 +99,9 @@ public class MagicCubeActivity extends Activity {
 		cubeController.addCubeListener(new CubeSolved());
 		layout.addView(controlView);
 
-		setContentView(layout);
+		setContentView(R.layout.adframe);
+		AdUtil.determineAd(this);
+		((LinearLayout) this.findViewById(R.id.content_area)).addView(layout);
 		switchState(State.FREE);
 		if (savedInstanceState == null && timedMode) {
 
@@ -307,17 +312,34 @@ public class MagicCubeActivity extends Activity {
 			if (timedMode) {
 				controlView.getCubeTimer().stop();
 				switchState(State.WAIT_REPLAY);
-
-				toast
-						.setText("Congratulations!\nYou've solve the cube\nTime cost: "
-								+ controlView.getCubeTimer().getTime()
-								/ 1000
-								+ " seconds");
+				showSolvedDialog();
 				toast.show();
 			} else {
 				toast.setText("Congratulations!\nYou've solve the cube");
 				toast.show();
 			}
+		}
+
+		private void showSolvedDialog() {
+			AlertDialog.Builder builder = new AlertDialog.Builder(
+					MagicCubeActivity.this);
+			builder
+					.setTitle("Cube solved")
+					.setMessage(
+							"Congratulations! You've solve the cube in "
+									+ (controlView.getCubeTimer().getTime() / 1000)
+									+ "."
+									+ ((controlView.getCubeTimer().getTime() / 100) % 10)
+									+ " seconds.").setCancelable(false)
+					.setPositiveButton(R.string.common_ok, null);
+			AlertDialog alert = builder.create();
+			alert.show();
+
+			toast
+					.setText("Congratulations!\nYou've solve the cube\nTime cost: "
+							+ controlView.getCubeTimer().getTime()
+							/ 1000
+							+ " seconds");
 		}
 	}
 
@@ -526,4 +548,5 @@ public class MagicCubeActivity extends Activity {
 
 		}
 	}
+
 }

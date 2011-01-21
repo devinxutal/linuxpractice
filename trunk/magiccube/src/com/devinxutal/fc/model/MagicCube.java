@@ -2,6 +2,7 @@ package com.devinxutal.fc.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -596,7 +597,7 @@ public class MagicCube {
 			}
 		}
 
-		public void draw(GL10 gl) {
+		public synchronized void draw(GL10 gl) {
 			if (inAnimation) {
 				CubeAnimationInfo info = getAnimationInfo();
 				float angle = info.doubleTurn ? 180f : 90f;
@@ -700,6 +701,8 @@ public class MagicCube {
 		private ESquare[][][] cube_pieces;
 		private List<ESquare> draw_pieces;
 		private List<Square> pick_pieces;
+
+		private Semaphore semaphore = new Semaphore(1);
 
 		public CubbyWithESquare() {
 			cube_pieces = new ESquare[order + 2][order + 2][order + 2];
@@ -882,6 +885,12 @@ public class MagicCube {
 		}
 
 		public void draw(GL10 gl) {
+			try {
+				semaphore.acquire();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
 			if (inAnimation) {
 				Log.v(TAG, "draw cube , in animation");
 				CubeAnimationInfo info = getAnimationInfo();
@@ -897,13 +906,16 @@ public class MagicCube {
 				} else if (info.dimension == MagicCube.DIM_Z) {
 					moveGroup.rz = rt;
 				}
-				moveGroup.draw(gl);
-				staticGroup.draw(gl);
+				synchronized (this) {
+					moveGroup.draw(gl);
+					staticGroup.draw(gl);
+				}
 			} else {
 				for (ESquare s : draw_pieces) {
 					s.draw(gl);
 				}
 			}
+			semaphore.release();
 		}
 
 		public void drawPickingArea(GL10 gl) {
@@ -923,7 +935,12 @@ public class MagicCube {
 		}
 
 		public void prepareAnimation() {
-
+			try {
+				semaphore.acquire();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
 			Log.v(TAG, "prepare Animation");
 			CubeAnimationInfo info = getAnimationInfo();
 			inAnimation = true;
@@ -936,38 +953,20 @@ public class MagicCube {
 			moveGroup.rx = staticGroup.rx = 0;
 			moveGroup.ry = staticGroup.ry = 0;
 			moveGroup.rz = staticGroup.rz = 0;
-
-			for (ESquare tmp : this.draw_pieces) {
-				staticGroup.add(tmp);
-			}
-			for (int layer : info.layers) {
-				for (int i = 0; i <= order + 1; i++) {
-					for (int j = 0; j <= order + 1; j++) {
-						ESquare tmp = null;
-						if (info.dimension == MagicCube.DIM_X) {
-							tmp = cube_pieces[layer][i][j];
-						} else if (info.dimension == MagicCube.DIM_Y) {
-							tmp = cube_pieces[i][layer][j];
-						} else if (info.dimension == MagicCube.DIM_Z) {
-							tmp = cube_pieces[i][j][layer];
-						}
-						if (tmp != null) {
-							moveGroup.add(tmp);
-							staticGroup.remove(tmp);
-						}
-					}
+			synchronized (this) {
+				for (ESquare tmp : this.draw_pieces) {
+					staticGroup.add(tmp);
 				}
-				if (layer == 1 || layer == order) {
-					int lyr = layer == 1 ? 0 : order + 1;
-					for (int i = 1; i <= order; i++) {
-						for (int j = 1; j <= order; j++) {
+				for (int layer : info.layers) {
+					for (int i = 0; i <= order + 1; i++) {
+						for (int j = 0; j <= order + 1; j++) {
 							ESquare tmp = null;
 							if (info.dimension == MagicCube.DIM_X) {
-								tmp = cube_pieces[lyr][i][j];
+								tmp = cube_pieces[layer][i][j];
 							} else if (info.dimension == MagicCube.DIM_Y) {
-								tmp = cube_pieces[i][lyr][j];
+								tmp = cube_pieces[i][layer][j];
 							} else if (info.dimension == MagicCube.DIM_Z) {
-								tmp = cube_pieces[i][j][lyr];
+								tmp = cube_pieces[i][j][layer];
 							}
 							if (tmp != null) {
 								moveGroup.add(tmp);
@@ -975,8 +974,28 @@ public class MagicCube {
 							}
 						}
 					}
+					if (layer == 1 || layer == order) {
+						int lyr = layer == 1 ? 0 : order + 1;
+						for (int i = 1; i <= order; i++) {
+							for (int j = 1; j <= order; j++) {
+								ESquare tmp = null;
+								if (info.dimension == MagicCube.DIM_X) {
+									tmp = cube_pieces[lyr][i][j];
+								} else if (info.dimension == MagicCube.DIM_Y) {
+									tmp = cube_pieces[i][lyr][j];
+								} else if (info.dimension == MagicCube.DIM_Z) {
+									tmp = cube_pieces[i][j][lyr];
+								}
+								if (tmp != null) {
+									moveGroup.add(tmp);
+									staticGroup.remove(tmp);
+								}
+							}
+						}
+					}
 				}
 			}
+			semaphore.release();
 		}
 	}
 
