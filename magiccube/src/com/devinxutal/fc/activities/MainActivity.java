@@ -15,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 
-import com.admob.android.ads.AdManager;
 import com.android.vending.licensing.AESObfuscator;
 import com.android.vending.licensing.LicenseChecker;
 import com.android.vending.licensing.LicenseCheckerCallback;
@@ -40,8 +39,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		AdManager
-				.setTestDevices(new String[] { "7037AF0B100BC4F3CC9F4B5401F96685" });
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
