@@ -18,7 +18,7 @@
 	<string name="main_btn_about">About</string>
 	<string name="main_btn_demonstrator">Demonstrator</string>
 	<string name="main_btn_cfop_viewer">CFOP Viewer</string>
-	<string name="main_btn_cube_solver">Solve a Cube</string>
+	<string name="main_btn_cube_solver">Solve Real Cube</string>
 	<string name="main_btn_tester">Test Camera</string>
 	<string name="main_btn_preference">Preferences</string>
 
@@ -36,10 +36,11 @@
 	<string name="help">Help</string>
 	<string name="help_take_photo">Take a photo of your cube.</string>
 
-	<string name="help_locate_cube">Move the joysticks to perfectly fit the cube.
+	<string name="help_locate_cube">Move the white joy sticks to perfectly fit the
+		cube.
 	</string>
-	<string name="help_comfirm_color">Confirm the recognized cube, if any piece get a
-		wrong color, just tap it and re-assign a correct color
+	<string name="help_comfirm_color">Confirm the recognized cube, if any piece gets a
+		wrong color, just tap it and re-assign a correct color.
 	</string>
 
 	<string name="cube_solve_problem_title">No solution</string>
@@ -124,8 +125,7 @@
 		time, and
 		Fancy Cube can demonstrate the solution with an interactive 3D
 		animation. \n\n
-		*
-		Solve a
+		* Solve a
 		real cube. Fancy Cube can capture a real cube
 		using camera and
 		image
@@ -134,14 +134,14 @@
 		interactive
 		way. Beginners can solve their own cube with Fancy
 		Cube!\n\n
-		*Cube
-		algorithm viewer. currently Fridrichs CFOP algorithm
+		* Cube
+		algorithm viewer. currently Fridrich\'s CFOP algorithm
 		are
 		embedded in
 		Fancy Cube.
 		every algorithm can be demonstrated in 3D
 		animation.
-		\n
+		\n\n
 		[Cube
 		Control]\n\n
 		TURN: flick the cube along any side

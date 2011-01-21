@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -16,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 
+import com.admob.android.ads.AdManager;
 import com.android.vending.licensing.AESObfuscator;
 import com.android.vending.licensing.LicenseChecker;
 import com.android.vending.licensing.LicenseCheckerCallback;
@@ -33,14 +33,15 @@ public class MainActivity extends Activity implements OnClickListener {
 			-57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64,
 			89 };
 
-	private Handler mHandler;
-
 	private LicenseCheckerCallback mLicenseCheckerCallback;
 	private LicenseChecker mChecker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		AdManager
+				.setTestDevices(new String[] { "7037AF0B100BC4F3CC9F4B5401F96685" });
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
@@ -63,7 +64,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		CfopSolver.getSolver(this);
 
 		// for lisencing
-		mHandler = new Handler();
 		// Try to use more data here. ANDROID_ID is a single point of attack.
 		String deviceId = Secure.getString(getContentResolver(),
 				Secure.ANDROID_ID);

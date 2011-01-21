@@ -9,17 +9,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.model.CubeState;
 import com.devinxutal.fc.ui.CubeDemonstrator;
+import com.devinxutal.fc.util.AdUtil;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 
 public class CubeDemonstratorActivity extends Activity {
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
-	private CubeDemonstrator demostrator;
+	private CubeDemonstrator demonstrator;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -37,17 +39,20 @@ public class CubeDemonstratorActivity extends Activity {
 		String sequence = getIntent().getStringExtra("formula");
 		CubeState state = (CubeState) getIntent().getSerializableExtra("model");
 
-		demostrator = new CubeDemonstrator(this, state, SymbolMoveUtil
+		demonstrator = new CubeDemonstrator(this, state, SymbolMoveUtil
 				.parseSymbolSequenceAsArray(sequence));
-		demostrator.getMoveController().setMoveInterval(
+		demonstrator.getMoveController().setMoveInterval(
 				Configuration.config().getRotationInterval());
-		setContentView(demostrator);
+		setContentView(R.layout.adframe);
+		AdUtil.determineAd(this);
+		((LinearLayout) this.findViewById(R.id.content_area))
+				.addView(demonstrator);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.demostrator.onDestroy();
+		this.demonstrator.onDestroy();
 	}
 
 	@Override
@@ -81,22 +86,22 @@ public class CubeDemonstratorActivity extends Activity {
 	}
 
 	private void preferenceChanged() {
-		if (demostrator.getMoveController().getMoveInterval() != Configuration
+		if (demonstrator.getMoveController().getMoveInterval() != Configuration
 				.config().getRotationInterval()) {
-			demostrator.getMoveController().setMoveInterval(
+			demonstrator.getMoveController().setMoveInterval(
 					Configuration.config().getRotationInterval());
 		}
 	}
 
 	@Override
 	protected void onPause() {
-		this.demostrator.getCubeController().getCubeView().onPause();
+		this.demonstrator.getCubeController().getCubeView().onPause();
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		this.demostrator.getCubeController().getCubeView().onResume();
+		this.demonstrator.getCubeController().getCubeView().onResume();
 		super.onResume();
 	}
 

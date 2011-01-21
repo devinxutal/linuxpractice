@@ -24,12 +24,12 @@ import com.devinxutal.fc.model.CubeColor;
 import com.devinxutal.fc.model.CubeState;
 import com.devinxutal.fc.model.MagicCube;
 import com.devinxutal.fc.solver.CfopSolver;
-import com.devinxutal.fc.ui.CubeCameraPreview;
+import com.devinxutal.fc.ui.CubeCameraView;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 
 public class CubeCapturingActivity extends Activity {
 	private static final String TAG = "CameraDemo";
-	CubeCameraPreview preview;
+	CubeCameraView preview;
 	ImageButton buttonClick;
 
 	TextView stepView;
@@ -37,7 +37,7 @@ public class CubeCapturingActivity extends Activity {
 	TextView description;
 	ProgressDialog progressDialog;
 
-	private int step = 1;
+	private int step = 0;
 	private CubeState cubeState;
 
 	@Override

@@ -1,8 +1,6 @@
 package com.devinxutal.fc.ui;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,7 +17,6 @@ import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
-import android.hardware.Camera.Size;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -34,9 +31,11 @@ import android.widget.ImageView;
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.model.CubeColor;
 import com.devinxutal.fc.ui.CubeColorPickerDialog.OnColorChangedListener;
+import com.devinxutal.fc.util.HelpInfoUtil;
 import com.devinxutal.fc.util.ImageUtil;
+import com.devinxutal.fc.util.HelpInfoUtil.HelpInfo;
 
-public class CubeCameraPreview extends FrameLayout implements OnClickListener,
+public class CubeCameraView extends FrameLayout implements OnClickListener,
 		PlaneCubeListener { // <1>
 
 	public enum Stage {
@@ -52,8 +51,9 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 	private CubeValidator validator;
 
 	private Stage stage;
+	private HelpInfo helpInfo;
 
-	public CubeCameraPreview(Context context) {
+	public CubeCameraView(Context context) {
 		super(context);
 		preview = new PreviewArea(context);
 
@@ -70,6 +70,9 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		this.control.backButton.setOnClickListener(this);
 		this.control.helpButton.setOnClickListener(this);
 		this.validator.cubeView.addPlaneCubeListener(this);
+
+		helpInfo = HelpInfoUtil.readHelpInfo((Activity) this.getContext());
+
 		switchStage(Stage.PHOTO);
 	}
 
@@ -95,6 +98,12 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			if (camera != null) {
 				this.camera.startPreview();
 			}
+			if (helpInfo.cubeSolverHelpInfoStep1FirstShow) {
+				helpInfo.cubeSolverHelpInfoStep1FirstShow = false;
+				HelpInfoUtil.writeHelpInfo((Activity) this.getContext(),
+						helpInfo);
+				showHelpDialog();
+			}
 		} else if (to == Stage.LOCATE) {
 			this.removeAllViews();
 			this.addView(locator);
@@ -106,6 +115,12 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			if (camera != null) {
 				this.camera.stopPreview();
 			}
+			if (helpInfo.cubeSolverHelpInfoStep2FirstShow) {
+				helpInfo.cubeSolverHelpInfoStep2FirstShow = false;
+				HelpInfoUtil.writeHelpInfo((Activity) this.getContext(),
+						helpInfo);
+				showHelpDialog();
+			}
 		} else if (to == Stage.COMFIRM) {
 			this.removeAllViews();
 			this.addView(validator);
@@ -116,8 +131,15 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			if (camera != null) {
 				this.camera.stopPreview();
 			}
+			if (helpInfo.cubeSolverHelpInfoStep3FirstShow) {
+				helpInfo.cubeSolverHelpInfoStep3FirstShow = false;
+				HelpInfoUtil.writeHelpInfo((Activity) this.getContext(),
+						helpInfo);
+				showHelpDialog();
+			}
 		}
 		invalidate();
+
 	}
 
 	public CubeLocator getCubeLocator() {
@@ -163,22 +185,18 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		public void surfaceCreated(SurfaceHolder holder) {
 			camera = Camera.open();
 			Parameters params = camera.getParameters();
-			List<Size> sizes = params.getSupportedPictureSizes();
-			if (sizes != null && sizes.size() > 0) {
-				Size min = sizes.get(0);
-				for (Size s : sizes) {
-					if (s.width < min.width) {
-						min = s;
-					}
-				}
-				params.setPictureSize(min.width, min.height);
-			}
+			/*
+			 * List<Size> sizes = params.getSupportedPictureSizes(); if (sizes
+			 * != null && sizes.size() > 0) { Size min = sizes.get(0); for (Size
+			 * s : sizes) { if (s.width < min.width) { min = s; } }
+			 * params.setPictureSize(min.width, min.height); }
+			 */
 			Log.v(TAG, "Getting focuse mode");
-			if (params.getSupportedFocusModes() != null) {
-				for (String mode : params.getSupportedFocusModes()) {
-					Log.v(TAG, "FOCUSE MODE :: " + mode);
-				}
-			}
+			/*
+			 * if (params.getSupportedFocusModes() != null) { for (String mode :
+			 * params.getSupportedFocusModes()) { Log.v(TAG, "FOCUSE MODE :: " +
+			 * mode); } }
+			 */
 			try {
 				camera.setParameters(params);
 				camera.setPreviewDisplay(holder);
@@ -202,7 +220,6 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		public static final int MOVE_MODE = 1;
 
 		private Bitmap bitmap;
-		private Bitmap original;
 
 		Paint paint;
 		PointF[] points;
@@ -253,14 +270,9 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		}
 
 		public void setBitmap(Bitmap bm) {
-			this.original = bm;
 			if (this.getWidth() > 0) {
-				bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
-						Bitmap.Config.ARGB_8888);
-				Canvas c = new Canvas(bitmap);
-				c.drawBitmap(original, new Rect(0, 0, original.getWidth(),
-						original.getHeight()), new Rect(0, 0,
-						bitmap.getWidth(), bitmap.getHeight()), paint);
+				bitmap = Bitmap.createScaledBitmap(bm, getWidth(), getHeight(),
+						false);
 			}
 		}
 
@@ -397,12 +409,8 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			points[6] = new PointF(cx - lensr3, cy - lenhalf);
 
 			//
-			if (original != null) {
-				bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-				Canvas c = new Canvas(bitmap);
-				c.drawBitmap(original, new Rect(0, 0, original.getWidth(),
-						original.getHeight()), new Rect(0, 0,
-						bitmap.getWidth(), bitmap.getHeight()), paint);
+			if (bitmap != null) {
+				bitmap = Bitmap.createScaledBitmap(bitmap, w, h, false);
 			}
 
 		}
@@ -526,6 +534,10 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				for (int j = 0; j < step; j++) {
 					float x = (i - step / 2f) * gap + p.x;
 					float y = (j - step / 2f) * gap + p.y;
+					if (x < 0 || x >= bitmap.getWidth() || y < 0
+							|| y >= bitmap.getHeight()) {
+						continue;
+					}
 					int pixel = bitmap.getPixel((int) x, (int) y);
 					avgR += Color.red(pixel);
 					avgG += Color.green(pixel);
@@ -608,8 +620,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			backButton.setText(R.string.common_back);
 			nextButton.setText(R.string.common_next);
 			helpButton.setText("?");
-			helpButton
-					.setBackgroundResource(com.devinxutal.fc.R.drawable.play_button);
+			helpButton.setBackgroundResource(R.drawable.play_button);
 			this.addView(backButton);
 			this.addView(nextButton);
 			this.addView(helpButton);
@@ -657,7 +668,7 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 			this.addView(imageView);
 			this.addView(cubeView);
 			// test
-			this.imageView.setImageResource(com.devinxutal.fc.R.drawable.cube);
+			this.imageView.setImageResource(R.drawable.cube);
 		}
 
 		@Override
@@ -705,31 +716,34 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 				break;
 			}
 		} else if (view == control.helpButton) {
-			int contentId = 0;
-			switch (stage) {
-			case PHOTO:
-				contentId = R.string.help_take_photo;
-				break;
-			case LOCATE:
-				contentId = R.string.help_locate_cube;
-				break;
-			case COMFIRM:
-				contentId = R.string.help_comfirm_color;
-				break;
-			}
-			AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-			builder.setTitle(R.string.help).setMessage(contentId)
-					.setPositiveButton(R.string.common_ok,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-
-								}
-							});
-			AlertDialog alert = builder.create();
-			alert.show();
-
+			showHelpDialog();
 		}
+
+	}
+
+	private void showHelpDialog() {
+		int contentId = 0;
+		switch (stage) {
+		case PHOTO:
+			contentId = R.string.help_take_photo;
+			break;
+		case LOCATE:
+			contentId = R.string.help_locate_cube;
+			break;
+		case COMFIRM:
+			contentId = R.string.help_comfirm_color;
+			break;
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setTitle(R.string.help).setMessage(contentId)
+				.setPositiveButton(R.string.common_ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+
+							}
+						});
+		AlertDialog alert = builder.create();
+		alert.show();
 
 	}
 
@@ -746,7 +760,6 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 
 	PictureCallback jpegCallback = new PictureCallback() { // <8>
 		public void onPictureTaken(byte[] data, Camera camera) {
-			FileOutputStream outStream = null;
 			try {
 				Parameters p = camera.getParameters();
 				Log.v(TAG, "picture taken, size: " + p.getPictureSize().width
@@ -782,11 +795,11 @@ public class CubeCameraPreview extends FrameLayout implements OnClickListener,
 		CubeColorPickerDialog dialog = new CubeColorPickerDialog(getContext(),
 				new OnColorChangedListener() {
 					public void colorChanged(CubeColor color) {
-						CubeCameraPreview.this.validator.cubeView.setColor(x,
-								y, z, color);
+						CubeCameraView.this.validator.cubeView.setColor(x, y,
+								z, color);
 					}
 
-				}, CubeCameraPreview.this.validator.cubeView.getColor(x, y, z));
+				}, CubeCameraView.this.validator.cubeView.getColor(x, y, z));
 		dialog.show();
 	}
 }

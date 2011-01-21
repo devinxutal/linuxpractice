@@ -7,7 +7,7 @@ fancy functions are supported:
  
 * Solve a real cube. Fancy Cube can capture a real cube using camera and image recognition technology, then solve it in either simple or interactive way. Beginners can solve their own cube with Fancy Cube!
 
-*Cube algorithm viewer. currently Fridrichs CFOP algorithm are embedded in Fancy Cube. every algorithm can be demonstrated in 3D animation.
+* Cube algorithm viewer. currently Fridrichs CFOP algorithm are embedded in Fancy Cube. every algorithm can be demonstrated in 3D animation.
 
 [Cube Control]
 
@@ -21,3 +21,37 @@ OTHER: you can unfold the control pad (click the icon in the upper left corner o
 Yinfei Xu 
 devinxutal@gmail.com 
 http://twitter.com/devinxutal
+
+
+Pro:
+Never solve a cube yet? Fancy Cube will lead you to success step by step!
+
+Fancy Cube is the greatest cube game on ANDROID ever, which allows you to play with a vivid rubiks cube. A lot of
+fancy functions are supported:
+
+* Easy control, user can control the cube by simply flicking the cube and black area. control buttons are also supported to provide another way to control the cube. Zoom in/out are supported by control buttons.
+
+* Cube solution at any time, and Fancy Cube can demonstrate the solution with an interactive 3D animation.
+ 
+* Solve a real cube. Fancy Cube can capture a real cube using camera and image recognition technology, then solve it in either simple or interactive way. Beginners can solve their own cube with Fancy Cube!
+
+* Cube algorithm viewer. currently Fridrichs CFOP algorithm are embedded in Fancy Cube. every algorithm can be demonstrated in 3D animation.
+
+[Cube Control]
+
+TURN: flick the cube along any side corner, or edge to turn that face in a particular direction.\n\n
+
+ROTATE: to rotate the whole cube, just flick the cube in any black area. in some particular situation that cube turning is disabled, flicking the cube in ANY area leads to a cube rotation.
+
+OTHER: you can unfold the control pad (click the icon in the upper left corner of the screen) to get a easier control over the cube. Here you can zoom in/out the cube and rotate it.
+
+[Author Information]
+
+Yinfei Xu 
+devinxutal@gmail.com 
+http://twitter.com/devinxutal
+
+
+Version changes:
+
+this is the initial version of Fancy Cube which includes all fuction listed in description.
