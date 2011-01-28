@@ -30,6 +30,8 @@ public class CubeController {
 	private boolean rotatable = true;
 	private boolean solved = true;
 
+	private int stepCount = 0;
+
 	private Timer animationTimer;
 
 	private List<AnimationListener> animationListeners = new LinkedList<AnimationListener>();
@@ -134,6 +136,14 @@ public class CubeController {
 				notifyCubeSolved();
 			}
 		}
+	}
+
+	public void resetStepCount() {
+		stepCount = 0;
+	}
+
+	public int getStepCount() {
+		return stepCount;
 	}
 
 	private void startAnimation() {
@@ -270,7 +280,9 @@ public class CubeController {
 				if (!turnable) {
 					return;
 				}
-				turnByGesture(p.x, p.y, p.z, deltaX, deltaY);
+				if (turnByGesture(p.x, p.y, p.z, deltaX, deltaY)) {
+					stepCount++;
+				}
 			}
 		}
 
