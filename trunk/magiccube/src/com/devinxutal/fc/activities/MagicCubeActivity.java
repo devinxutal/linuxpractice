@@ -10,22 +10,26 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.admob.android.ads.AdManager;
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.cfg.Constants;
@@ -59,6 +63,7 @@ public class MagicCubeActivity extends Activity {
 	private CubeController cubeController;
 	private MoveController moveController;
 	private CubeControlView controlView;
+	private ViewGroup successScreen;
 	private Toast toast;
 
 	private Dialog progressDialog;
@@ -100,12 +105,23 @@ public class MagicCubeActivity extends Activity {
 		layout.addView(controlView);
 
 		setContentView(R.layout.adframe);
+		// determine ad placement
 		AdUtil.determineAd(this);
+		// add main frame
 		((LinearLayout) this.findViewById(R.id.content_area)).addView(layout);
+		// add successScreen
+		if (timedMode) {
+			ViewGroup group = (ViewGroup) this.findViewById(R.id.mask_layer);
+			LayoutInflater inflater = (LayoutInflater) this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			inflater.inflate(R.layout.succeedscreen, group);
+			successScreen = (ViewGroup) this.findViewById(R.id.succeed_screen);
+			hideSuccessScreen();
+		}
+		//
 		switchState(State.FREE);
 		if (savedInstanceState == null && timedMode) {
-
-			shuffle(Configuration.config().getShuffleSteps());
+			wrappedShuffle();
 		}
 	}
 
@@ -129,7 +145,7 @@ public class MagicCubeActivity extends Activity {
 			state = State.PAUSED;
 		}
 		if (state == State.SHUFFLING) {
-			shuffle(Configuration.config().getShuffleSteps());
+			wrappedShuffle();
 		} else {
 			switchState(state);
 		}
@@ -258,7 +274,7 @@ public class MagicCubeActivity extends Activity {
 			this.solveCurrentCube();
 			return true;
 		case R.id.shuffle_it:
-			shuffle(Configuration.config().getShuffleSteps());
+			wrappedShuffle();
 			return true;
 		case R.id.save:
 			saveCubeState();
@@ -312,34 +328,11 @@ public class MagicCubeActivity extends Activity {
 			if (timedMode) {
 				controlView.getCubeTimer().stop();
 				switchState(State.WAIT_REPLAY);
-				showSolvedDialog();
-				toast.show();
+				showSuccessScreen();
 			} else {
 				toast.setText("Congratulations!\nYou've solve the cube");
 				toast.show();
 			}
-		}
-
-		private void showSolvedDialog() {
-			AlertDialog.Builder builder = new AlertDialog.Builder(
-					MagicCubeActivity.this);
-			builder
-					.setTitle("Cube solved")
-					.setMessage(
-							"Congratulations! You've solve the cube in "
-									+ (controlView.getCubeTimer().getTime() / 1000)
-									+ "."
-									+ ((controlView.getCubeTimer().getTime() / 100) % 10)
-									+ " seconds.").setCancelable(false)
-					.setPositiveButton(R.string.common_ok, null);
-			AlertDialog alert = builder.create();
-			alert.show();
-
-			toast
-					.setText("Congratulations!\nYou've solve the cube\nTime cost: "
-							+ controlView.getCubeTimer().getTime()
-							/ 1000
-							+ " seconds");
 		}
 	}
 
@@ -355,6 +348,7 @@ public class MagicCubeActivity extends Activity {
 				public void run() {
 					if (from == MoveController.State.RUNNING_MULTPLE_STEP
 							&& to == MoveController.State.STOPPED) {
+						cubeController.resetStepCount();
 						if (timedMode) {
 							switchState(State.OBSERVE);
 						} else {
@@ -363,6 +357,14 @@ public class MagicCubeActivity extends Activity {
 					}
 				}
 			});
+		}
+	}
+
+	public void wrappedShuffle() {
+		if (Constants.TEST) {
+			shuffle(2);
+		} else {
+			shuffle(Configuration.config().getShuffleSteps());
 		}
 	}
 
@@ -390,6 +392,19 @@ public class MagicCubeActivity extends Activity {
 		switchState(State.SHUFFLING);
 	}
 
+	private void showSuccessScreen() {
+		this.successScreen.setVisibility(View.VISIBLE);
+		TextView timeText = ((TextView) this.findViewById(R.id.time_text));
+		TextView stepsText = ((TextView) this.findViewById(R.id.steps_text));
+		long time = controlView.getCubeTimer().getTime();
+		timeText.setText(time / 1000 + "." + time % 1000 + " seconds");
+		stepsText.setText("" + cubeController.getStepCount() + " moves");
+	}
+
+	private void hideSuccessScreen() {
+		this.successScreen.setVisibility(View.INVISIBLE);
+	}
+
 	public void play() {
 		Log.v(TAG, "in play , state: " + state + ", move controller: "
 				+ moveController.getState());
@@ -407,7 +422,7 @@ public class MagicCubeActivity extends Activity {
 		if (moveController.getState() != MoveController.State.STOPPED) {
 			return;
 		}
-		shuffle(Configuration.config().getShuffleSteps());
+		wrappedShuffle();
 	}
 
 	public void pause() {

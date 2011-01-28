@@ -12,7 +12,10 @@
 	<string name="common_go">Go</string>
 	<string name="common_go_go">Go!</string>
 	<string name="common_solve_now">Solve Now!</string>
-
+	<string name="common_submit">Submit</string>
+	<string name="common_cong">Congratulations</string>
+	<string name="common_steps">STEP</string>
+	<string name="common_time">TIME</string>
 	<string name="main_btn_free_play">Free Play</string>
 	<string name="main_btn_time_play">Timed Play</string>
 	<string name="main_btn_about">About</string>
@@ -31,6 +34,10 @@
 	<string name="menu_help">Help</string>
 	<string name="menu_solve_it">Solve it</string>
 	<string name="menu_shuffle_it">Shuffle</string>
+
+
+
+	<string name="prompt_solve_succeed">You\'ve successfully solve the cube.</string>
 
 	<string name="help_info">Help Information</string>
 	<string name="help">Help</string>
