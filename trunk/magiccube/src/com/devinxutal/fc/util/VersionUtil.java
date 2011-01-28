@@ -118,7 +118,7 @@ public class VersionUtil {
 							goToMarket = new Intent(
 									Intent.ACTION_VIEW,
 									Uri
-											.parse("market://details?id=com.devinxutal.fmc"));
+											.parse("market://details?id=com.devinxutal.fc.pro"));
 							((Activity) context).startActivity(goToMarket);
 						} catch (Exception e) {
 							e.printStackTrace();
