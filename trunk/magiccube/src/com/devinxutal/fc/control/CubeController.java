@@ -2,10 +2,9 @@ package com.devinxutal.fc.control;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,13 +31,30 @@ public class CubeController {
 
 	private int stepCount = 0;
 
-	private Timer animationTimer;
-
 	private List<AnimationListener> animationListeners = new LinkedList<AnimationListener>();
 	private List<CubeListener> cubeListeners = new LinkedList<CubeListener>();
 
+	private Handler handler;
+	private AnimationThread animationThread;
+
 	public CubeController(Context context) {
 		this(context, true, true);
+	}
+
+	public CubeController(Context context, boolean turnable, boolean rotatable) {
+		this(context, 3, turnable, rotatable);
+	}
+
+	public CubeController(Context context, int order, boolean turnable,
+			boolean rotatable) {
+		this.cubeView = new CubeView(context);
+		this.magicCube = new MagicCube(order);
+		this.cubeView.setMagicCube(magicCube);
+		this.magicCube.view = cubeView;
+		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
+		this.turnable = turnable;
+		this.rotatable = rotatable;
+		this.handler = new android.os.Handler();
 	}
 
 	public boolean isTurnable() {
@@ -54,21 +70,6 @@ public class CubeController {
 	}
 
 	public void setRotatable(boolean rotatable) {
-		this.rotatable = rotatable;
-	}
-
-	public CubeController(Context context, boolean turnable, boolean rotatable) {
-		this(context, 3, turnable, rotatable);
-	}
-
-	public CubeController(Context context, int order, boolean turnable,
-			boolean rotatable) {
-		this.cubeView = new CubeView(context);
-		this.magicCube = new MagicCube(order);
-		this.cubeView.setMagicCube(magicCube);
-		this.magicCube.view = cubeView;
-		this.cubeView.setOnTouchListener(new OnCubeViewTouched());
-		this.turnable = turnable;
 		this.rotatable = rotatable;
 	}
 
@@ -159,18 +160,13 @@ public class CubeController {
 
 		this.magicCube.getAnimationInfo().setAnimation(
 				animationDuration / stepInterval);
-		this.animationTimer = new Timer();
-		this.animationTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				CubeAnimationInfo info = magicCube.getAnimationInfo();
-				info.step();
-				if (info.currentStep() >= info.totalStep()) {
-					finishAnimation();
-				}
-				cubeView.requestRender();
-			}
-		}, 0, stepInterval);
+
+		if (animationThread == null) {
+			animationThread = new AnimationThread();
+		}
+		animationThread.delay = stepInterval;
+
+		handler.postDelayed(animationThread, stepInterval);
 	}
 
 	private void finishAnimation() {
@@ -179,11 +175,6 @@ public class CubeController {
 		}
 		this.magicCube.getCubie().finishAnimation();
 		inAnimation = false;
-		if (animationTimer != null) {
-			animationTimer.cancel();
-			animationTimer.purge();
-			animationTimer = null;
-		}
 		notifyAnimationFinished();
 	}
 
@@ -280,8 +271,10 @@ public class CubeController {
 				if (!turnable) {
 					return;
 				}
-				if (turnByGesture(p.x, p.y, p.z, deltaX, deltaY)) {
-					stepCount++;
+
+				stepCount++;
+				if (!turnByGesture(p.x, p.y, p.z, deltaX, deltaY)) {
+					stepCount--;
 				}
 			}
 		}
@@ -311,5 +304,20 @@ public class CubeController {
 			this.getCubeView().requestRender();
 		}
 
+	}
+
+	class AnimationThread implements Runnable {
+		private long delay;
+
+		public void run() {
+			CubeAnimationInfo info = magicCube.getAnimationInfo();
+			info.step();
+			if (info.currentStep() >= info.totalStep()) {
+				finishAnimation();
+			} else {
+				handler.postDelayed(animationThread, delay);
+			}
+			cubeView.requestRender();
+		}
 	}
 }

@@ -5,12 +5,24 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +37,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,6 +63,7 @@ import com.devinxutal.fc.ui.CubeControlView;
 import com.devinxutal.fc.ui.CubeControlView.CubeControlListener;
 import com.devinxutal.fc.util.AdUtil;
 import com.devinxutal.fc.util.DialogUtil;
+import com.devinxutal.fc.util.PreferenceUtil;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 import com.devinxutal.fc.util.VersionUtil;
 
@@ -65,6 +81,8 @@ public class MagicCubeActivity extends Activity {
 	private CubeControlView controlView;
 	private ViewGroup successScreen;
 	private Toast toast;
+	private Button successScreenBackButton;
+	private Button successScreenSubmitButton;
 
 	private Dialog progressDialog;
 
@@ -116,7 +134,15 @@ public class MagicCubeActivity extends Activity {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			inflater.inflate(R.layout.succeedscreen, group);
 			successScreen = (ViewGroup) this.findViewById(R.id.succeed_screen);
-			hideSuccessScreen();
+			successScreenBackButton = (Button) this
+					.findViewById(R.id.back_button);
+			successScreenSubmitButton = (Button) this
+					.findViewById(R.id.submit_button);
+			OnClickListener l = new ButtonsOnClick();
+			successScreenBackButton.setOnClickListener(l);
+			successScreenSubmitButton.setOnClickListener(l);
+			AdUtil.determineAd(this, R.id.ss_ad_area);
+			hideSuccessScreen(false);
 		}
 		//
 		switchState(State.FREE);
@@ -325,14 +351,20 @@ public class MagicCubeActivity extends Activity {
 	class CubeSolved implements CubeListener {
 
 		public void cubeSolved() {
-			if (timedMode) {
-				controlView.getCubeTimer().stop();
-				switchState(State.WAIT_REPLAY);
-				showSuccessScreen();
-			} else {
-				toast.setText("Congratulations!\nYou've solve the cube");
-				toast.show();
-			}
+			MagicCubeActivity.this.runOnUiThread(new Runnable() {
+				public void run() {
+					if (timedMode) {
+						controlView.getCubeTimer().stop();
+						switchState(State.WAIT_REPLAY);
+						showSuccessScreen();
+					} else {
+						toast
+								.setText("Congratulations!\nYou've solve the cube");
+						toast.show();
+					}
+				}
+			});
+
 		}
 	}
 
@@ -357,6 +389,25 @@ public class MagicCubeActivity extends Activity {
 					}
 				}
 			});
+		}
+	}
+
+	class ButtonsOnClick implements OnClickListener {
+		public void onClick(View view) {
+			if (view.getId() == R.id.back_button) {
+				MagicCubeActivity.this.hideSuccessScreen(true);
+			} else if (view.getId() == R.id.submit_button) {
+				if (((Button) view)
+						.getText()
+						.equals(
+								MagicCubeActivity.this
+										.getString(R.string.success_screen_submit_score))) {
+					MagicCubeActivity.this.submitRecord();
+				} else {
+					DialogUtil.showRankDialog(MagicCubeActivity.this,
+							cubeController.getMagicCube().getOrder());
+				}
+			}
 		}
 	}
 
@@ -399,10 +450,16 @@ public class MagicCubeActivity extends Activity {
 		long time = controlView.getCubeTimer().getTime();
 		timeText.setText(time / 1000 + "." + time % 1000 + " seconds");
 		stepsText.setText("" + cubeController.getStepCount() + " moves");
+		this.successScreenSubmitButton
+				.setText(R.string.success_screen_submit_score);
+		controlView.showPlayButton(false);
 	}
 
-	private void hideSuccessScreen() {
+	private void hideSuccessScreen(boolean showPlayButton) {
 		this.successScreen.setVisibility(View.INVISIBLE);
+		if (showPlayButton) {
+			controlView.showPlayButton(true);
+		}
 	}
 
 	public void play() {
@@ -512,6 +569,42 @@ public class MagicCubeActivity extends Activity {
 				.getRotationInterval());
 	}
 
+	public void submitRecord() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle(R.string.record_submit_input_name_title);
+		final EditText input = new EditText(this);
+		input.setText(PreferenceUtil.readPlayerName(this));
+		LinearLayout layout = new LinearLayout(this);
+		layout.setPadding(20, 10, 20, 10);
+		layout.addView(input, ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		alert.setView(layout);
+
+		alert.setPositiveButton(R.string.common_ok,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						PreferenceUtil.writePlayerName(MagicCubeActivity.this,
+								input.getText().toString());
+						submitRecord(input.getText().toString());
+					}
+				});
+
+		alert.setNegativeButton(R.string.common_cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						return;
+					}
+				});
+		alert.show();
+	}
+
+	private void submitRecord(String player) {
+		progressDialog = ProgressDialog.show(this, "", getResources()
+				.getString(R.string.record_submit_submitting_record), true);
+		new SubmitRecordThread(player).start();
+	}
+
 	public void solveCurrentCube() {
 		if (this.cubeController.getMagicCube().getOrder() != 3) {
 			DialogUtil.showDialog(this, R.string.cube_solve_problem_title,
@@ -561,6 +654,64 @@ public class MagicCubeActivity extends Activity {
 				}
 			});
 
+		}
+	}
+
+	class SubmitRecordThread extends Thread {
+		private String player;
+
+		public SubmitRecordThread(String player) {
+			this.player = player;
+		}
+
+		@Override
+		public void run() {
+			String url = Constants.URL_COMMIT_RECORD;
+			Map<String, String> data = new HashMap<String, String>();
+			data.put("player", player);
+			data.put("time", controlView.getCubeTimer().getTime() + "");
+			data.put("steps", cubeController.getStepCount() + "");
+			data.put("order", cubeController.getMagicCube().getOrder() + "");
+			data.put("shuffles", Configuration.config().getShuffleSteps() + "");
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(url);
+			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
+			for (Map.Entry<String, String> m : data.entrySet()) {
+				postData.add(new BasicNameValuePair(m.getKey(), m.getValue()));
+			}
+			int statusCode = HttpStatus.SC_ACCEPTED;
+			try {
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+						postData, HTTP.UTF_8);
+
+				httpPost.setEntity(entity);
+				HttpResponse response = httpClient.execute(httpPost);
+				statusCode = response.getStatusLine().getStatusCode();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			final int sc = statusCode;
+			MagicCubeActivity.this.runOnUiThread(new Runnable() {
+
+				public void run() {
+					if (progressDialog != null) {
+						progressDialog.cancel();
+						progressDialog = null;
+					}
+					if (sc == HttpStatus.SC_OK) {
+						toast.setText("Your record has been submitted.");
+						toast.show();
+						successScreenSubmitButton
+								.setText(R.string.success_screen_world_rank);
+					} else {
+						toast
+								.setText("Submit failed, please check your network connection.");
+						toast.show();
+					}
+				}
+
+			});
 		}
 	}
 
