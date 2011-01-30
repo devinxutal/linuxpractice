@@ -1,9 +1,39 @@
 package com.devinxutal.fc.util;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devinxutal.fc.R;
+import com.devinxutal.fc.cfg.Constants;
+import com.devinxutal.fc.record.CubeRecord;
 
 public class DialogUtil {
 	public static void showDialog(Context context, int title, int content) {
@@ -21,5 +51,162 @@ public class DialogUtil {
 		AlertDialog alert = builder.create();
 		alert.show();
 
+	}
+
+	public static void showRankDialog(final Activity context, final int order) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(context);
+		final ProgressDialog dialog = ProgressDialog.show(context, "", context
+				.getResources().getString(
+						R.string.success_screen_retrieving_data), true);
+		Thread thread = new Thread() {
+
+			public void run() {
+				String url = Constants.URL_QUERY_RECORD;
+				Map<String, String> data = new HashMap<String, String>();
+				data.put("order", order + "");
+				data.put("from", 1 + "");
+				data.put("count", 10 + "");
+				DefaultHttpClient httpClient = new DefaultHttpClient();
+				HttpPost httpPost = new HttpPost(url);
+				ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
+				for (Map.Entry<String, String> m : data.entrySet()) {
+					postData.add(new BasicNameValuePair(m.getKey(), m
+							.getValue()));
+				}
+				int statusCode = HttpStatus.SC_ACCEPTED;
+				final List<CubeRecord> records = new LinkedList<CubeRecord>();
+				try {
+					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+							postData, HTTP.UTF_8);
+
+					httpPost.setEntity(entity);
+					HttpResponse response = httpClient.execute(httpPost);
+					statusCode = response.getStatusLine().getStatusCode();
+
+					if (statusCode == HttpStatus.SC_OK) {
+						BufferedReader reader = new BufferedReader(
+								new InputStreamReader(response.getEntity()
+										.getContent()));
+						String line = null;
+						while ((line = reader.readLine()) != null
+								&& line.length() > 15) {
+							Log.v("DialogUtil", line);
+							CubeRecord record = CubeRecord.parse(line);
+							if (record != null) {
+								records.add(record);
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				final int sc = statusCode;
+				context.runOnUiThread(new Runnable() {
+
+					public void run() {
+						if (dialog != null) {
+							dialog.cancel();
+						}
+						if (sc == HttpStatus.SC_OK) {
+							AlertDialog.Builder alert = new AlertDialog.Builder(
+									context);
+							alert.setView(createRankView(context, records));
+							alert.setTitle(context.getResources().getString(
+									R.string.success_screen_world_rank)
+									+ " [" + order + "x" + order + "]");
+
+							alert.setPositiveButton(R.string.common_ok,
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int whichButton) {
+
+										}
+									});
+							alert.setNegativeButton(R.string.common_more,
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int whichButton) {
+											Intent goToMarket = null;
+											goToMarket = new Intent(
+													Intent.ACTION_VIEW,
+													Uri
+															.parse(Constants.URL_WORLD_RANK
+																	+ "?order="
+																	+ order));
+											((Activity) context)
+													.startActivity(goToMarket);
+										}
+									});
+							alert.show();
+						} else {
+							Toast.makeText(context, "Network connection error",
+									1000).show();
+						}
+					}
+
+				});
+			}
+		};
+		thread.start();
+	}
+
+	private static View createRankView(Activity context,
+			List<CubeRecord> records) {
+		TableLayout layout = new TableLayout(context);
+
+		layout.addView(createRankHeader(context), new TableLayout.LayoutParams(
+				TableLayout.LayoutParams.FILL_PARENT,
+				TableLayout.LayoutParams.WRAP_CONTENT));
+		for (CubeRecord record : records) {
+			layout.addView(createRankEntry(context, record),
+					new TableLayout.LayoutParams(
+							TableLayout.LayoutParams.FILL_PARENT,
+							TableLayout.LayoutParams.WRAP_CONTENT));
+
+		}
+		return layout;
+	}
+
+	public static TableRow createRankEntry(Context context, CubeRecord record) {
+		TableRow row = new TableRow(context);
+
+		row.addView(createTableCell(context, record.getRank() + ""),
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, record.getPlayer() + ""),
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, record.getTimeString() + ""),
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, record.getSteps() + ""),
+				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+
+		return row;
+	}
+
+	public static TableRow createRankHeader(Activity context) {
+		TableRow row = new TableRow(context);
+
+		row.addView(createTableCell(context, context.getResources().getString(
+				R.string.record_rank)), LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, context.getResources().getString(
+				R.string.record_player)), LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, context.getResources().getString(
+				R.string.record_time)), LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+		row.addView(createTableCell(context, context.getResources().getString(
+				R.string.record_steps)), LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+
+		return row;
+	}
+
+	public static TextView createTableCell(Context context, String content) {
+		TextView view = new TextView(context);
+		view.setText(content);
+		view.setPadding(5, 2, 5, 2);
+		return view;
 	}
 }

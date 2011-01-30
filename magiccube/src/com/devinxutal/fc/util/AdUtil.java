@@ -25,4 +25,10 @@ public class AdUtil {
 					.addView(createAdView(activity));
 		}
 	}
+	public static void determineAd(Activity activity,int adAreaID) {
+		if (Constants.VERSION == Constants.VERSION_LITE) {
+			((LinearLayout) activity.findViewById(adAreaID))
+					.addView(createAdView(activity));
+		}
+	}
 }

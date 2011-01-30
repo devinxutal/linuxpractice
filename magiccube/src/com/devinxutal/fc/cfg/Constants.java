@@ -20,5 +20,17 @@ public class Constants {
 	public static final String DATA_DIR = "data/com.devinxutal.fmc/files";
 	public static final String CUBE_SAVING_FILE = "cube.dat";
 
+	public static final String PACKAGE_NAME_LITE = "com.devinxutal.fc.lite";
+	public static final String PACKAGE_NAME_PRO = "com.devinxutal.fc.pro";
+
 	// public static final String VERSION_SAVING_FILE = "cube.dat";
+
+	public static final String URL_SERVER = "http://perfect-games.appspot.com";
+	public static final String URL_COMMIT_RECORD = URL_SERVER
+			+ "/commitCubeRecord";
+	public static final String URL_QUERY_RECORD = URL_SERVER
+			+ "/queryCubeRecords";
+	public static final String URL_WORLD_RANK = URL_SERVER
+			+ "/fancyCubeWorldRank";
+
 }

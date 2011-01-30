@@ -61,6 +61,7 @@ public class VersionUtil {
 		editor.commit();
 	}
 
+
 	//
 	// public static VersionInfo readVersionInfo() {
 	// File file = Environment.getExternalStorageDirectory();
