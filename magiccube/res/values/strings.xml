@@ -16,6 +16,8 @@
 	<string name="common_cong">Congratulations</string>
 	<string name="common_steps">STEP</string>
 	<string name="common_time">TIME</string>
+	<string name="common_more">More</string>
+
 	<string name="main_btn_free_play">Free Play</string>
 	<string name="main_btn_time_play">Timed Play</string>
 	<string name="main_btn_about">About</string>
@@ -28,7 +30,6 @@
 	<string name="hello">Hello World, MagicCube!</string>
 	<string name="app_name">Fancy Cube Lite</string>
 
-
 	<string name="menu_presentation">Presentation</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_help">Help</string>
@@ -36,8 +37,13 @@
 	<string name="menu_shuffle_it">Shuffle</string>
 
 
-
+	<string name="record_submit_input_name_title">Enter your name</string>
+	<string name="record_submit_submitting_record">Submitting, please wait...</string>
+	<string name="success_screen_retrieving_data">Retrieving data...</string>
 	<string name="prompt_solve_succeed">You\'ve successfully solve the cube.</string>
+
+	<string name="success_screen_submit_score">Submit Score</string>
+	<string name="success_screen_world_rank">World Rank</string>
 
 	<string name="help_info">Help Information</string>
 	<string name="help">Help</string>
@@ -105,6 +111,12 @@
 	<string name="version_trials_1">You have </string>
 	<string name="version_trials_2">trials left.</string>
 	<string name="version_continue_hint">Do you want to continue?</string>
+
+	<string name="record_rank">Rank</string>
+	<string name="record_player">Player</string>
+	<string name="record_time">Time</string>
+	<string name="record_steps">Moves</string>
+	<string name="record_cube_size">Size</string>
 
 	<!-- Unlicensed dialog messages -->
 	<string name="unlicensed_dialog_title">Application not licensed</string>

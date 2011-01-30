@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:gravity="center_vertical"
-	android:id="@+id/succeed_screen" android:background="#AA222222">
+	android:id="@+id/succeed_screen" android:background="#CC222222">
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:gravity="center">
@@ -41,13 +41,10 @@
 					android:gravity="left"></TextView>
 			</TableRow>
 		</TableLayout>
-		<LinearLayout android:orientation="horizontal"
+		<LinearLayout android:orientation="horizontal" android:id="@+id/ss_ad_area"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:gravity="center_horizontal" android:paddingTop="10dip" />
-		<TextView android:layout_height="wrap_content" android:id="@+id/description"
-			android:textColor="#FFFFFF99" android:text="" android:layout_width="wrap_content"
-			android:textSize="18dip" android:typeface="normal" android:padding="10dip"
-			android:gravity="center_horizontal"></TextView>
+		
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:gravity="center_horizontal" android:paddingTop="10dip">
