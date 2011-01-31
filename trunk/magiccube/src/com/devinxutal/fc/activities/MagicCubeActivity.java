@@ -366,14 +366,16 @@ public class MagicCubeActivity extends Activity {
 		public void cubeSolved() {
 			MagicCubeActivity.this.runOnUiThread(new Runnable() {
 				public void run() {
-					if (timedMode) {
-						controlView.getCubeTimer().stop();
-						switchState(State.WAIT_REPLAY);
-						showSuccessScreen();
-					} else {
-						toast
-								.setText("Congratulations!\nYou've solve the cube");
-						toast.show();
+					if (state == State.PLAY) {
+						if (timedMode) {
+							controlView.getCubeTimer().stop();
+							switchState(State.WAIT_REPLAY);
+							showSuccessScreen();
+						} else {
+							toast
+									.setText("Congratulations!\nYou've solve the cube");
+							toast.show();
+						}
 					}
 				}
 			});
