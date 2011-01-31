@@ -24,6 +24,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -105,6 +106,7 @@ public class MagicCubeActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		this.setScreenOrientation();
 
 		this.timedMode = getIntent().getBooleanExtra("timedMode", false);
 		int order = Configuration.config().getCubeSize();
@@ -320,6 +322,17 @@ public class MagicCubeActivity extends Activity {
 		return false;
 	}
 
+	private void setScreenOrientation() {
+		String att = Configuration.config().getScreenOrientation();
+		if (att.equals("auto")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+		} else if (att.equals("portrait")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else if (att.equals("landscape")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
+	}
+
 	class ControlButtonClicked implements CubeControlListener {
 		public void buttonClickced(int id) {
 			switch (id) {
@@ -490,12 +503,18 @@ public class MagicCubeActivity extends Activity {
 
 	}
 
-	private void restoreCubeState(CubeState state) {
-		if (state.order != cubeController.getMagicCube().getOrder()) {
+	private boolean restoreCubeState(CubeState state) {
+		Log.v("MainCubeActivity", "restore cube state: ");
+		boolean result = false;
+		if (state.order == cubeController.getMagicCube().getOrder()) {
+
+			Log.v("MainCubeActivity", "restoring cube state");
 			cubeController.getMagicCube().setOrder(state.order);
 			cubeController.getMagicCube().setCubeState(state);
+			result = true;
 		}
 		cubeController.getCubeView().requestRender();
+		return result;
 	}
 
 	public void loadCubeState() {
@@ -514,8 +533,11 @@ public class MagicCubeActivity extends Activity {
 					dataFile));
 			CubeState stat = (CubeState) in.readObject();
 			in.close();
-			restoreCubeState(stat);
-			toast.setText("Load successfully");
+			if (restoreCubeState(stat)) {
+				toast.setText("Load successfully");
+			} else {
+				toast.setText("Load failed, cube size mismatch");
+			}
 		} catch (Exception e) {
 			toast.setText("Load failed, check the state of media storage");
 			e.printStackTrace();
@@ -561,12 +583,21 @@ public class MagicCubeActivity extends Activity {
 	private void preferenceChanged() {
 		Log.v(TAG, "preference changed");
 		int cubeSize = Configuration.config().getCubeSize();
-		if (cubeSize != cubeController.getMagicCube().getOrder() && !timedMode) {
-			cubeController.getMagicCube().setOrder(cubeSize);
-			cubeController.getCubeView().requestRender();
+		if (cubeSize != cubeController.getMagicCube().getOrder()) {
+			if (!timedMode) {
+				cubeController.getMagicCube().setOrder(cubeSize);
+			} else {
+				toast
+						.setText("Cube size will not change in timed mode util next play");
+				toast.show();
+			}
 		}
+
+		cubeController.getCubeView().getCubeRenderer().setRefitCube(true);
+		cubeController.getCubeView().requestRender();
 		moveController.setMoveInterval(Configuration.config()
 				.getRotationInterval());
+		this.setScreenOrientation();
 	}
 
 	public void submitRecord() {

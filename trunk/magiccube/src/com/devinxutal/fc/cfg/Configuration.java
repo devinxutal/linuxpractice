@@ -62,4 +62,12 @@ public class Configuration {
 		}
 		return defaultValue;
 	}
+
+	public String getScreenOrientation() {
+		String defaultValue = "auto";
+		if (preference != null) {
+			return preference.getString("screen_orientation", defaultValue);
+		}
+		return defaultValue;
+	}
 }

@@ -82,18 +82,19 @@ public class CubeView extends GLSurfaceView {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		Log.v("colortest", "[onSizeChanged]: " + w + ", " + h);
-		resetPicker();
+		resetPicker(true);
+
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
 	@Override
 	protected void onWindowVisibilityChanged(int visibility) {
 		Log.v("colortest", "[onWindowVisibilityChanged]");
-		resetPicker();
+		resetPicker(false);
 		super.onWindowVisibilityChanged(visibility);
 	}
 
-	protected void resetPicker() {
+	protected void resetPicker(final boolean refitCube) {
 		final int width = this.getWidth();
 		final int height = this.getHeight();
 
@@ -106,6 +107,9 @@ public class CubeView extends GLSurfaceView {
 				cubeRenderer.setViewWidth(width);
 				cubeRenderer.setViewHeight(height);
 				cubeRenderer.setResetColorPicker(true);
+				if (refitCube) {
+					cubeRenderer.setRefitCube(true);
+				}
 				requestRender();
 			}
 		});
