@@ -31,6 +31,8 @@ public class CubeRenderer implements Renderer {
 
 	private float scale = 1;
 
+	private boolean refitCube = true;
+
 	public void zoomIn() {
 		scale = scale * 1.1f;
 		this.resetColorPicker = true;
@@ -59,6 +61,10 @@ public class CubeRenderer implements Renderer {
 
 	public void setResetColorPicker(boolean reset) {
 		this.resetColorPicker = reset;
+	}
+
+	public void setRefitCube(boolean refit) {
+		this.refitCube = refit;
 	}
 
 	public void setViewWidth(int width) {
@@ -118,13 +124,69 @@ public class CubeRenderer implements Renderer {
 
 	}
 
-	public void checkColorPicker(GL10 gl) {
-		if (!this.resetColorPicker) {
-			return;
+	public void fitCube(GL10 gl) {
+		scale = 1;
+		translate = -5;
+		int len = 4 * viewWidth * viewHeight;
+		ByteBuffer bb = ByteBuffer.allocateDirect(len);
+		bb.order(ByteOrder.nativeOrder());
+		byte[] bytes = new byte[len];
+		double step = -3;
+		boolean black = false;
+		while (true) {
+			translate += step;
+
+			Log.v("CubeRenderer", "fitting: current translate: " + translate);
+			drawColorPicker(gl);
+			bb.rewind();
+			gl.glReadPixels(0, 0, viewWidth, viewHeight, GL10.GL_RGBA,
+					GL10.GL_UNSIGNED_BYTE, bb);
+			bb.get(bytes, 0, len);
+			boolean isblack = isblack(bytes,
+					Math.min(viewWidth, viewHeight) / 100);
+
+			Log.v("CubeRenderer", "current black:" + black
+					+ " detected black: " + isblack);
+			if (black != isblack) {
+				black = isblack;
+				if (step < 0.2) {
+					break;
+				}
+				step = -step / 3;
+			}
 		}
-		resetColorPicker = false;
-		Log.v("colortest", "[checkColorPicker] is running: viewHeight"
-				+ viewHeight + ", viewWidth:" + viewWidth);
+	}
+
+	private boolean isblack(byte[] bytes, int gap) {
+		for (int i = 0; i < viewWidth; i++) {
+			if (!pointIsBlack(bytes, i, gap)) {
+				return false;
+			}
+			if (!pointIsBlack(bytes, i, viewHeight - gap)) {
+				return false;
+			}
+		}
+		for (int i = 0; i < viewHeight; i++) {
+			if (!pointIsBlack(bytes, gap, i)) {
+				return false;
+			}
+			if (!pointIsBlack(bytes, viewWidth - gap, i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean pointIsBlack(byte[] bytes, int x, int y) {
+		int base = (y * viewWidth + x) * 4;
+		if (bytes[base + 0] == 0 && bytes[base + 1] == 0
+				&& bytes[base + 2] == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	private void drawColorPicker(GL10 gl) {
 		// Clears the screen and depth buffer.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
 				GL10.GL_DEPTH_BUFFER_BIT);
@@ -136,6 +198,20 @@ public class CubeRenderer implements Renderer {
 		gl.glRotatef(rz, 0, 0, 1);
 
 		magicCube.getCubie().drawPickingArea(gl);
+	}
+
+	public void checkColorPicker(GL10 gl) {
+		if (!this.resetColorPicker) {
+			return;
+		}
+		resetColorPicker = false;
+		Log.v("colortest", "[checkColorPicker] is running: viewHeight"
+				+ viewHeight + ", viewWidth:" + viewWidth);
+		if (refitCube) {
+			refitCube = false;
+			fitCube(gl);
+		}
+		drawColorPicker(gl);
 		// drawPickingArea
 		if (this.cubeView == null) {
 			return;
@@ -198,10 +274,6 @@ public class CubeRenderer implements Renderer {
 		// Reset the modelview matrix
 		gl.glLoadIdentity();// OpenGL docs.
 
-		// set translate;
-		translate = -8;
-		int len = Math.min(width, height);
-		translate = translate * height / (float) len;
 	}
 
 	public MagicCube getMagicCube() {

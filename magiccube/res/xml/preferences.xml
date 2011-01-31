@@ -22,6 +22,11 @@
 			android:key="animation_speed" android:defaultValue="400"
 			android:entries="@array/pref_ent_animation_speed_entries"
 			android:entryValues="@array/pref_ent_animation_speed_values" />
+		<ListPreference android:title="@string/pref_ent_screen_orientation"
+			android:summary="@string/pref_ent_screen_orientation_summary"
+			android:key="screen_orientation" android:defaultValue="auto"
+			android:entries="@array/pref_ent_screen_orientation_entries"
+			android:entryValues="@array/pref_ent_screen_orientation_values" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_cat_performance">

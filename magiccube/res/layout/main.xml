@@ -22,4 +22,6 @@
 		android:text="@string/main_btn_preference" />
 	<Button android:id="@+id/main_btn_about" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/main_btn_about" />
+	<Button android:id="@+id/main_btn_rank" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/success_screen_world_rank" />
 </LinearLayout>

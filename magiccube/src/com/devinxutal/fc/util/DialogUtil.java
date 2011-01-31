@@ -155,7 +155,7 @@ public class DialogUtil {
 	private static View createRankView(Activity context,
 			List<CubeRecord> records) {
 		TableLayout layout = new TableLayout(context);
-
+		layout.setStretchAllColumns(true);
 		layout.addView(createRankHeader(context), new TableLayout.LayoutParams(
 				TableLayout.LayoutParams.FILL_PARENT,
 				TableLayout.LayoutParams.WRAP_CONTENT));

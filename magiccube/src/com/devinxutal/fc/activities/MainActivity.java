@@ -23,6 +23,7 @@ import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.cfg.Constants;
 import com.devinxutal.fc.solver.CfopSolver;
+import com.devinxutal.fc.util.DialogUtil;
 import com.devinxutal.fc.util.VersionUtil;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -50,7 +51,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		int ids[] = new int[] { R.id.main_btn_free_play,
 				R.id.main_btn_time_play, R.id.main_btn_preference,
 				R.id.main_btn_cfop_viewer, R.id.main_btn_cube_solver,
-				R.id.main_btn_about };
+				R.id.main_btn_about, R.id.main_btn_rank };
 		for (int id : ids) {
 			try {
 				this.findViewById(id).setOnClickListener(this);
@@ -105,6 +106,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.main_btn_about:
 			i = new Intent(this, AboutActivity.class);
 			break;
+		case R.id.main_btn_rank:
+			DialogUtil.showRankDialog(this, Configuration.config()
+					.getCubeSize());
+			return;
 		}
 		startActivity(i);
 	}
