@@ -72,6 +72,7 @@ public class TwentySecondsRecord {
 		if (description == null) {
 			description = "";
 		}
+		description = "fix bug for len >15";
 
 		return player.replace('\t', ' ') + TAB + time + TAB
 				+ description.replace('\t', ' ') + TAB + commitTime;
