@@ -88,12 +88,13 @@ public class DialogUtil {
 								new InputStreamReader(response.getEntity()
 										.getContent()));
 						String line = null;
-						while ((line = reader.readLine()) != null
-								&& line.length() > 15) {
-							Log.v("DialogUtil", line);
-							CubeRecord record = CubeRecord.parse(line);
-							if (record != null) {
-								records.add(record);
+						while ((line = reader.readLine()) != null) {
+							if (line.trim().length() > 0) {
+								Log.v("DialogUtil", line);
+								CubeRecord record = CubeRecord.parse(line);
+								if (record != null) {
+									records.add(record);
+								}
 							}
 						}
 					}

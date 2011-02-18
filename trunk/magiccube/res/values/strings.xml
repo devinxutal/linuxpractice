@@ -40,7 +40,7 @@
 	<string name="record_submit_input_name_title">Enter your name</string>
 	<string name="record_submit_submitting_record">Submitting, please wait...</string>
 	<string name="success_screen_retrieving_data">Retrieving data...</string>
-	<string name="prompt_solve_succeed">You\'ve successfully solve the cube.</string>
+	<string name="prompt_solve_succeed">You\'ve successfully solved the cube.</string>
 
 	<string name="success_screen_submit_score">Submit Score</string>
 	<string name="success_screen_world_rank">World Rank</string>

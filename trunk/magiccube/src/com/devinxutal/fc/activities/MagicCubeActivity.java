@@ -417,7 +417,19 @@ public class MagicCubeActivity extends Activity {
 						.equals(
 								MagicCubeActivity.this
 										.getString(R.string.success_screen_submit_score))) {
-					MagicCubeActivity.this.submitRecord();
+
+					if (Configuration.config().getShuffleSteps() >= 20) {
+						MagicCubeActivity.this.submitRecord();
+					} else {
+						DialogUtil
+								.showDialog(
+										MagicCubeActivity.this,
+										"Record Submission Denied",
+										"The current SHUFFLE STEPS setting is "
+												+ Configuration.config()
+														.getShuffleSteps()
+												+ ". Only records with twenty more shuffles can be submitted.");
+					}
 				} else {
 					DialogUtil.showRankDialog(MagicCubeActivity.this,
 							cubeController.getMagicCube().getOrder());
