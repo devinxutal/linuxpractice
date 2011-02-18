@@ -80,21 +80,22 @@ public class DialogUtil {
 							postData, HTTP.UTF_8);
 
 					httpPost.setEntity(entity);
+
 					HttpResponse response = httpClient.execute(httpPost);
 					statusCode = response.getStatusLine().getStatusCode();
-
 					if (statusCode == HttpStatus.SC_OK) {
 						BufferedReader reader = new BufferedReader(
 								new InputStreamReader(response.getEntity()
 										.getContent()));
 						String line = null;
-						while ((line = reader.readLine()) != null
-								&& line.trim().length() > 0) {
-							Log.v("DialogUtil", line);
-							TwentySecondsRecord record = TwentySecondsRecord
-									.parse(line);
-							if (record != null) {
-								records.add(record);
+						while ((line = reader.readLine()) != null) {
+							if (line.trim().length() > 0) {
+								Log.v("DialogUtil", line);
+								TwentySecondsRecord record = TwentySecondsRecord
+										.parse(line);
+								if (record != null) {
+									records.add(record);
+								}
 							}
 						}
 					}
