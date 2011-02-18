@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.perfectgames.dao.TwentySecondsRecordDao;
 import com.appspot.perfectgames.model.TwentySecondsRecord;
+import com.appspot.perfectgames.util.StringUtility;
 
 public class CommitRecordServlet extends HttpServlet {
 
@@ -29,7 +30,11 @@ public class CommitRecordServlet extends HttpServlet {
 		String player = request.getParameter("player");
 		String timeStr = request.getParameter("time");
 		String description = request.getParameter("description");
-
+		if (player == null || player.length() == 0) {
+			player = "unknown";
+		}
+		player = StringUtility.trim(player);
+		description = StringUtility.trim(description);
 		long time = Long.valueOf(timeStr);
 
 		if (time <= 0) {

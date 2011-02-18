@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.appspot.perfectgames.dao.CubeRecordDao;
 import com.appspot.perfectgames.model.CubeRecord;
+import com.appspot.perfectgames.util.StringUtility;
 
 public class CommitRecordServlet extends HttpServlet {
 
@@ -33,6 +34,12 @@ public class CommitRecordServlet extends HttpServlet {
 		String stepsStr = request.getParameter("steps");
 		String description = request.getParameter("description");
 
+		if (player == null || player.length() == 0) {
+			player = "unknown";
+		}
+		player = StringUtility.trim(player);
+		description = StringUtility.trim(description);
+
 		long time = Long.valueOf(timeStr);
 		int order = Integer.valueOf(orderStr);
 		int shuffles = Integer.valueOf(shufflesStr);
@@ -41,7 +48,7 @@ public class CommitRecordServlet extends HttpServlet {
 		if (time <= 0 || steps <= 0 || order <= 0) {
 			return;
 		}
-		if(shuffles <20){
+		if (shuffles < 20) {
 			return;
 		}
 

@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.appspot.perfectgames.util.StringUtility;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
@@ -47,7 +48,7 @@ public class CubeRecord {
 	}
 
 	public String getDescription() {
-		return description;
+		return StringUtility.trim(description);
 	}
 
 	public void setDescription(String description) {
@@ -63,7 +64,7 @@ public class CubeRecord {
 	}
 
 	public String getPlayer() {
-		return player;
+		return StringUtility.trim(player);
 	}
 
 	public void setPlayer(String player) {
@@ -103,8 +104,7 @@ public class CubeRecord {
 			description = "";
 		}
 
-		return player.replace('\t', ' ') + TAB + time + TAB + +steps + TAB
-				+ order + TAB + shuffleSteps + TAB
-				+ description.replace('\t', ' ') + TAB + commitTime;
+		return getPlayer() + TAB + time + TAB + +steps + TAB + order + TAB
+				+ shuffleSteps + TAB + getDescription() + TAB + commitTime;
 	}
 }

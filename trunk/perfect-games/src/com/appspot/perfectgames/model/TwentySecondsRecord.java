@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.appspot.perfectgames.util.StringUtility;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
@@ -33,7 +34,7 @@ public class TwentySecondsRecord {
 	}
 
 	public String getDescription() {
-		return description;
+		return StringUtility.trim(description);
 	}
 
 	public void setDescription(String description) {
@@ -49,7 +50,7 @@ public class TwentySecondsRecord {
 	}
 
 	public String getPlayer() {
-		return player;
+		return StringUtility.trim(player);
 	}
 
 	public void setPlayer(String player) {
@@ -74,7 +75,7 @@ public class TwentySecondsRecord {
 		}
 		description = "fix bug for len >15";
 
-		return player.replace('\t', ' ') + TAB + time + TAB
-				+ description.replace('\t', ' ') + TAB + commitTime;
+		return getPlayer() + TAB + time + TAB + getDescription() + TAB
+				+ commitTime;
 	}
 }
