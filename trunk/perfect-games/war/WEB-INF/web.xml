@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<servlet>
+		<servlet-name>Perfect_games</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.Perfect_gamesServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FancyCubeCommitRecordServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.fancycube.CommitRecordServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FancyCubeUpdateRecordsServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.fancycube.UpdateRecordsServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FancyCubeQueryRecordsServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.fancycube.QueryRecordsServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FancyCubeWorldRankServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.fancycube.WorldRankServlet
+		</servlet-class>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>TwentySecondsCommitRecordServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.twentyseconds.CommitRecordServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TwentySecondsUpdateRecordsServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.twentyseconds.UpdateRecordsServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TwentySecondsQueryRecordsServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.twentyseconds.QueryRecordsServlet
+		</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>TwentySecondsWorldRankServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.twentyseconds.WorldRankServlet
+		</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Perfect_games</servlet-name>
+		<url-pattern>/perfect_games</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeCommitRecordServlet</servlet-name>
+		<url-pattern>/commitCubeRecord</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeUpdateRecordsServlet</servlet-name>
+		<url-pattern>/updateCubeRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeQueryRecordsServlet</servlet-name>
+		<url-pattern>/queryCubeRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeWorldRankServlet</servlet-name>
+		<url-pattern>/fancyCubeWorldRank</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeCommitRecordServlet</servlet-name>
+		<url-pattern>/fancycube/commitRecord</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeUpdateRecordsServlet</servlet-name>
+		<url-pattern>/fancycube/updateRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeQueryRecordsServlet</servlet-name>
+		<url-pattern>/fancycube/queryRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FancyCubeWorldRankServlet</servlet-name>
+		<url-pattern>/fancycube/WorldRank</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TwentySecondsCommitRecordServlet</servlet-name>
+		<url-pattern>/twentyseconds/commitRecord</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TwentySecondsUpdateRecordsServlet</servlet-name>
+		<url-pattern>/twentyseconds/updateRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TwentySecondsQueryRecordsServlet</servlet-name>
+		<url-pattern>/twentyseconds/queryRecords</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TwentySecondsWorldRankServlet</servlet-name>
+		<url-pattern>/twentyseconds/WorldRank</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
