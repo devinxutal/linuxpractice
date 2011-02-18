@@ -32,9 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devinxutal.man20.R;
-import com.devinxutal.man20.R.string;
 import com.devinxutal.man20.cfg.Constants;
-import com.devinxutal.man20.record.CubeRecord;
+import com.devinxutal.man20.record.TwentySecondsRecord;
 
 public class DialogUtil {
 	public static void showDialog(Context context, int title, int content) {
@@ -64,7 +63,6 @@ public class DialogUtil {
 			public void run() {
 				String url = Constants.URL_QUERY_RECORD;
 				Map<String, String> data = new HashMap<String, String>();
-				data.put("order", order + "");
 				data.put("from", 1 + "");
 				data.put("count", 10 + "");
 				DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -75,7 +73,7 @@ public class DialogUtil {
 							.getValue()));
 				}
 				int statusCode = HttpStatus.SC_ACCEPTED;
-				final List<CubeRecord> records = new LinkedList<CubeRecord>();
+				final List<TwentySecondsRecord> records = new LinkedList<TwentySecondsRecord>();
 				try {
 					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
 							postData, HTTP.UTF_8);
@@ -92,7 +90,8 @@ public class DialogUtil {
 						while ((line = reader.readLine()) != null
 								&& line.length() > 15) {
 							Log.v("DialogUtil", line);
-							CubeRecord record = CubeRecord.parse(line);
+							TwentySecondsRecord record = TwentySecondsRecord
+									.parse(line);
 							if (record != null) {
 								records.add(record);
 							}
@@ -133,9 +132,7 @@ public class DialogUtil {
 											goToMarket = new Intent(
 													Intent.ACTION_VIEW,
 													Uri
-															.parse(Constants.URL_WORLD_RANK
-																	+ "?order="
-																	+ order));
+															.parse(Constants.URL_WORLD_RANK));
 											((Activity) context)
 													.startActivity(goToMarket);
 										}
@@ -154,13 +151,14 @@ public class DialogUtil {
 	}
 
 	private static View createRankView(Activity context,
-			List<CubeRecord> records) {
+			List<TwentySecondsRecord> records) {
 		TableLayout layout = new TableLayout(context);
+		layout.setScrollContainer(true);
 		layout.setStretchAllColumns(true);
 		layout.addView(createRankHeader(context), new TableLayout.LayoutParams(
 				TableLayout.LayoutParams.FILL_PARENT,
 				TableLayout.LayoutParams.WRAP_CONTENT));
-		for (CubeRecord record : records) {
+		for (TwentySecondsRecord record : records) {
 			layout.addView(createRankEntry(context, record),
 					new TableLayout.LayoutParams(
 							TableLayout.LayoutParams.FILL_PARENT,
@@ -170,7 +168,8 @@ public class DialogUtil {
 		return layout;
 	}
 
-	public static TableRow createRankEntry(Context context, CubeRecord record) {
+	public static TableRow createRankEntry(Context context,
+			TwentySecondsRecord record) {
 		TableRow row = new TableRow(context);
 
 		row.addView(createTableCell(context, record.getRank() + ""),
@@ -179,8 +178,10 @@ public class DialogUtil {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		row.addView(createTableCell(context, record.getTimeString() + ""),
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		row.addView(createTableCell(context, record.getSteps() + ""),
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		String mr = context.getString(MilitaryRank.getRank(record.getTime(), 2)
+				.getStringID());
+		row.addView(createTableCell(context, mr), LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
 
 		return row;
 	}
@@ -198,9 +199,8 @@ public class DialogUtil {
 				R.string.record_time)), LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		row.addView(createTableCell(context, context.getResources().getString(
-				R.string.record_steps)), LayoutParams.FILL_PARENT,
+				R.string.record_military_rank)), LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
-
 		return row;
 	}
 

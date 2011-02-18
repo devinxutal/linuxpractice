@@ -23,8 +23,8 @@
 			<Button android:id="@+id/main_btn_preference"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/main_btn_preference" android:paddingBottom="10dip" />
-			<Button android:id="@+id/main_btn_about" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/main_btn_about"
+			<Button android:id="@+id/main_btn_more" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/main_btn_more"
 				android:paddingBottom="20dip" />
 			<Button android:id="@+id/main_btn_rank" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:text="@string/success_screen_world_rank"

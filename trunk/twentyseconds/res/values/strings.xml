@@ -15,6 +15,7 @@
 	<string name="common_time">TIME</string>
 	<string name="common_more">More</string>
 	<string name="common_replay">Play Again</string>
+	<string name="common_about">About</string>
 
 	<string name="rank_a_recruit">Recruit</string>
 	<string name="rank_b_private">Private</string>
@@ -31,6 +32,7 @@
 
 	<string name="main_btn_play_game">Play Game</string>
 	<string name="main_btn_about">About</string>
+	<string name="main_btn_more">More</string>
 	<string name="main_btn_preference">Preferences</string>
 	<string name="main_btn_world_rank">World Rank</string>
 
@@ -126,6 +128,7 @@
 	<string name="record_time">Time</string>
 	<string name="record_steps">Moves</string>
 	<string name="record_cube_size">Size</string>
+	<string name="record_military_rank">Military Rank</string>
 
 	<!-- Unlicensed dialog messages -->
 	<string name="unlicensed_dialog_title">Application not licensed</string>
@@ -142,61 +145,7 @@
 	</string>
 	<string name="about_fancy_cube">About Fancy Cube</string>
 	<string name="about_info">
-		Fancy Cube is the greatest cube game on ANDROID
-		ever, which allows you to play with a vivid rubiks cube. A lot of
-		fancy functions are supported:\n\n
-		* Easy control, user can control the
-		cube by simply flicking the cube and black area. control buttons are
-		also supported to provide another way to control the cube. Zoom in/out
-		are supported by control buttons.\n\n
-		* Cube solution at any
-		time, and
-		Fancy Cube can demonstrate the solution with an interactive 3D
-		animation. \n\n
-		* Solve a
-		real cube. Fancy Cube can capture a real cube
-		using camera and
-		image
-		recognition technology, then solve it in either
-		simple or
-		interactive
-		way. Beginners can solve their own cube with Fancy
-		Cube!\n\n
-		* Cube
-		algorithm viewer. currently Fridrich\'s CFOP algorithm
-		are
-		embedded in
-		Fancy Cube.
-		every algorithm can be demonstrated in 3D
-		animation.
-		\n\n
-		[Cube
-		Control]\n\n
-		TURN: flick the cube along any side
-		corner,
-		or edge
-		to
-		turn
-		that face in a particular direction.\n\n
-		ROTATE: to
-		rotate
-		the
-		whole
-		cube, just flick the cube in any black area. in some
-		particular
-		situation that cube turning is disabled, flicking the cube
-		in ANY area
-		leads to a cube rotation.\n\n
-		OTHER: you can unfold the
-		control pad
-		(click the icon in the upper left corner of the screen) to
-		get a
-		easier
-		control over the cube. Here you can zoom in/out the cube
-		and
-		rotate
-		it.\n\n
-
+		See if you can continue playing for 20 seconds.\n\n
 		\n\n
 
 		[Developer information]\n\n

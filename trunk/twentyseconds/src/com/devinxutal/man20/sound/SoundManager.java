@@ -81,7 +81,7 @@ public class SoundManager {
 	}
 
 	public void playBackgroundMusic() {
-		if (!Configuration.config().isSoundEffectsOn()) {
+		if (!Configuration.config().isBackgroundMusicOn()) {
 			return;
 		}
 		Log.v(TAG, "play background music");
