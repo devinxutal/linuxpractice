@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/updateCubeRecords</url>
+		<url>/fancycube/updateRecords</url>
+		<description>Repopulate the records every 1 hour</description>
+		<schedule>every 1 hours</schedule>
+		<timezone>Asia/Shanghai</timezone>
+	</cron>
+	<cron>
+		<url>/twentyseconds/updateRecords</url>
 		<description>Repopulate the records every 1 hour</description>
 		<schedule>every 1 hours</schedule>
 		<timezone>Asia/Shanghai</timezone>
