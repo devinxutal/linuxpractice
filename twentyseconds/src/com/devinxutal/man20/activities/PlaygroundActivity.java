@@ -20,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -153,7 +152,7 @@ public class PlaygroundActivity extends Activity {
 		preferenceChanged();
 		this.customizeButtons();
 
-		wakelock.acquire(60 * 10 * 1000);
+		wakelock.acquire();
 	}
 
 	@Override
@@ -271,18 +270,6 @@ public class PlaygroundActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void setScreenOrientation() {
-		String att = Configuration.config().getScreenOrientation();
-		if (att.equals("auto")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		} else if (att.equals("portrait")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else if (att.equals("landscape")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		}
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	}
-
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
 			switch (id) {
@@ -334,7 +321,15 @@ public class PlaygroundActivity extends Activity {
 						.equals(
 								PlaygroundActivity.this
 										.getString(R.string.success_screen_submit_score))) {
-					PlaygroundActivity.this.submitRecord();
+					if (Configuration.config().getDifficulty() == Configuration.DIFFICULTY_STANDARD) {
+						PlaygroundActivity.this.submitRecord();
+					} else {
+						DialogUtil
+								.showDialog(
+										PlaygroundActivity.this,
+										"Record Submission Denied",
+										"The current game difficulty setting is not STANDARD. Only records of STANDARD mode can be submitted.");
+					}
 				} else {
 					DialogUtil.showRankDialog(PlaygroundActivity.this, 3);
 				}
@@ -481,10 +476,7 @@ public class PlaygroundActivity extends Activity {
 			String url = Constants.URL_COMMIT_RECORD;
 			Map<String, String> data = new HashMap<String, String>();
 			data.put("player", player);
-			data.put("time", 11111111 + "");
-			data.put("steps", 10000 + "");
-			data.put("order", 3 + "");
-			data.put("shuffles", Configuration.config().getShuffleSteps() + "");
+			data.put("time", controlView.getGameTimer().getTime() + "");
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(url);
 			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
@@ -577,8 +569,8 @@ public class PlaygroundActivity extends Activity {
 			if (!useJoyStick) {
 				return;
 			}
-			gameController.getPlayground().getDefender().vx = dx;
-			gameController.getPlayground().getDefender().vy = dy;
+			gameController.getPlayground().getDefender().vx = dx * 1.5f;
+			gameController.getPlayground().getDefender().vy = dy * 1.5f;
 		}
 
 	}

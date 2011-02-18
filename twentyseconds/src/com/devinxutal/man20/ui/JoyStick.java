@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -50,7 +49,6 @@ public class JoyStick extends View implements OnTouchListener {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.v("JoyStick", "onDraw");
 		super.onDraw(canvas);
 		paint.setColor(colorPanel);
 		canvas.drawCircle(centerX, centerY, panelRadius, paint);

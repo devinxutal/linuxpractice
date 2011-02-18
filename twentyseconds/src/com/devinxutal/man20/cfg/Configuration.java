@@ -57,6 +57,10 @@ public class Configuration {
 		return false;
 	}
 
+	public static final int DIFFICULTY_EASY = 1;
+	public static final int DIFFICULTY_STANDARD = 2;
+	public static final int DIFFICULTY_HARD = 3;
+
 	public int getDifficulty() {
 		int defaultValue = 2;
 		if (preference != null) {

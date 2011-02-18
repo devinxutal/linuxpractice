@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		SoundManager.init(this);
 		customizeButtons();
 		int ids[] = new int[] { R.id.main_btn_play_game,
-				R.id.main_btn_preference, R.id.main_btn_about,
+				R.id.main_btn_preference, R.id.main_btn_more,
 				R.id.main_btn_rank };
 		for (int id : ids) {
 			try {
@@ -98,8 +98,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			i = new Intent(this, Preferences.class);
 			break;
 
-		case R.id.main_btn_about:
-			i = new Intent(this, AboutActivity.class);
+		case R.id.main_btn_more:
+			i = new Intent(Intent.ACTION_SEARCH);
+			i.setPackage("com.android.vending");
+			i.putExtra("query", "pub:\"Yinfei XU\"");
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			break;
 		case R.id.main_btn_rank:
 			DialogUtil.showRankDialog(this, 3);
@@ -137,7 +140,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			buttonFont = Typeface.createFromAsset(getAssets(),
 					Constants.FONT_PATH);
 		}
-		customizeButton((Button) this.findViewById(R.id.main_btn_about));
+		customizeButton((Button) this.findViewById(R.id.main_btn_more));
 		customizeButton((Button) this.findViewById(R.id.main_btn_play_game));
 		customizeButton((Button) this.findViewById(R.id.main_btn_preference));
 		customizeButton((Button) this.findViewById(R.id.main_btn_rank));
