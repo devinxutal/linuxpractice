@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="pref_cat_basic">Basic Settings</string>
+	<string name="pref_cat_performance">Performance</string>
+	<string name="pref_cat_control">Game Control</string>
+
+
+	<string name="preferences_title">Preferences</string>
+
+	<string name="pref_ent_control">Control</string>
+	<string name="pref_ent_control_summary">Select the way to control the craft</string>
+	<string-array name="pref_ent_control_entries">
+		<item>Virtual Joy Stick</item>
+		<item>Gravity Sensor</item>
+	</string-array>
+	<string-array name="pref_ent_control_values">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string name="pref_ent_difficulty">Difficulty</string>
+	<string name="pref_ent_difficulty_summary">Select difficulty of the game</string>
+	<string-array name="pref_ent_difficulty_entries">
+		<item>Easy</item>
+		<item>Standard</item>
+		<item>Hard</item>
+	</string-array>
+	<string-array name="pref_ent_difficulty_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+
+	<string name="pref_ent_joystick_position">Joy Stick Position</string>
+	<string name="pref_ent_joystick_position_summary">Select position of virtual joy stick</string>
+	<string-array name="pref_ent_joystick_position_entries">
+		<item>Left</item>
+		<item>Right</item>
+	</string-array>
+	<string-array name="pref_ent_joystick_position_values">
+		<item>2</item>
+		<item>1</item>
+	</string-array>
+
+
+	<string name="pref_ent_background_music">Background Music</string>
+	<string name="pref_ent_background_music_summary">this may disturb the gravity sensor. UNCHECK is
+		suggested
+	</string>
+
+	<string name="pref_ent_sound_effects">Sound Effects</string>
+	<string name="pref_ent_sound_effects_summary">Sound effects such as button-click and crash
+	</string>
+</resources>

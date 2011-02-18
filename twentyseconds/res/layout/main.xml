@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<ImageView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:src="@drawable/background"
+		android:layout_gravity="center_horizontal" />
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:gravity="bottom|right">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_weight="0.6">
+		</LinearLayout>
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_weight="1" android:gravity="center_horizontal|bottom"
+			android:padding="10dip">
+			<Button android:id="@+id/main_btn_play_game"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/main_btn_play_game" android:paddingBottom="10dip" />
+			<Button android:id="@+id/main_btn_preference"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/main_btn_preference" android:paddingBottom="10dip" />
+			<Button android:id="@+id/main_btn_about" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/main_btn_about"
+				android:paddingBottom="20dip" />
+			<Button android:id="@+id/main_btn_rank" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/success_screen_world_rank"
+				android:paddingBottom="10dip" />
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@+id/ad_area"
+		android:gravity="top|center_horizontal">
+	</LinearLayout>
+</FrameLayout>
