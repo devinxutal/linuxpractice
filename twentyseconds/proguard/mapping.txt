@@ -1,0 +1,1214 @@
+com.admob.android.ads.AdListener -> com.admob.android.ads.cm:
+com.admob.android.ads.AdManager -> com.admob.android.ads.ak:
+    java.lang.String a -> a
+    int b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    java.lang.String[] f -> f
+    java.lang.String g -> g
+    android.location.Location h -> h
+    boolean i -> i
+    boolean j -> j
+    long k -> k
+    java.lang.String l -> l
+    java.util.GregorianCalendar m -> m
+    com.admob.android.ads.AdManager$Gender n -> n
+    boolean o -> o
+    java.lang.Boolean p -> p
+    void clientError(java.lang.String) -> a
+    void a(android.content.Context) -> a
+    java.lang.String a(android.os.Bundle,java.lang.String,java.lang.String) -> a
+    java.lang.String getApplicationPackageName(android.content.Context) -> b
+    int getApplicationVersion(android.content.Context) -> c
+    java.lang.String getPublisherId(android.content.Context) -> d
+    java.lang.String getInterstitialPublisherId(android.content.Context) -> e
+    void a(java.lang.String) -> b
+    java.lang.String getTestAction() -> a
+    boolean isTestDevice(android.content.Context) -> f
+    boolean isEmulator() -> b
+    java.lang.String getUserId(android.content.Context) -> g
+    java.lang.String md5(java.lang.String) -> c
+    android.location.Location getCoordinates(android.content.Context) -> j
+    java.lang.String b(android.content.Context) -> h
+    java.lang.String a() -> c
+    java.lang.String getPostalCode() -> d
+    java.lang.String getOrientation(android.content.Context) -> i
+    java.lang.String b() -> e
+    java.lang.String c() -> f
+    com.admob.android.ads.a a(com.admob.android.ads.v) -> a
+    android.location.Location a(android.location.Location) -> a
+    long a(long) -> a
+    android.location.Location d() -> g
+    long e() -> h
+com.admob.android.ads.AdManager$1 -> com.admob.android.ads.al:
+    android.location.LocationManager a -> a
+    void onLocationChanged(android.location.Location) -> onLocationChanged
+    void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+com.admob.android.ads.AdManager$Gender -> com.admob.android.ads.bf:
+    com.admob.android.ads.AdManager$Gender MALE -> a
+    com.admob.android.ads.AdManager$Gender FEMALE -> b
+    com.admob.android.ads.AdManager$Gender[] a -> c
+    com.admob.android.ads.AdManager$Gender[] values() -> values
+    com.admob.android.ads.AdManager$Gender valueOf(java.lang.String) -> valueOf
+com.admob.android.ads.AdMobActivity -> com.admob.android.ads.AdMobActivity:
+    com.admob.android.ads.r a -> a
+    java.util.Vector b -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void finish() -> finish
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onDestroy() -> onDestroy
+com.admob.android.ads.AdMobActivity$1 -> com.admob.android.ads.cj:
+    int[] a -> a
+    int[] b -> b
+com.admob.android.ads.AdView -> com.admob.android.ads.AdView:
+    java.lang.Boolean a -> a
+    com.admob.android.ads.k b -> b
+    int c -> c
+    boolean d -> d
+    com.admob.android.ads.AdView$d e -> e
+    int f -> f
+    int g -> g
+    int h -> h
+    java.lang.String i -> i
+    java.lang.String j -> j
+    com.admob.android.ads.AdListener k -> k
+    boolean l -> l
+    boolean m -> m
+    boolean n -> n
+    long o -> o
+    com.admob.android.ads.AdView$a p -> p
+    com.admob.android.ads.j$b q -> q
+    com.admob.android.ads.AdView$f r -> r
+    android.os.Handler s -> s
+    void onMeasure(int,int) -> onMeasure
+    void c() -> f
+    void a(com.admob.android.ads.j,com.admob.android.ads.k) -> a
+    void setRequestInterval(int) -> c
+    void a(boolean) -> a
+    void d() -> g
+    void onWindowFocusChanged(boolean) -> onWindowFocusChanged
+    void onWindowVisibilityChanged(int) -> onWindowVisibilityChanged
+    int getPrimaryTextColor() -> a
+    void setPrimaryTextColor(int) -> a
+    int getSecondaryTextColor() -> b
+    void setSecondaryTextColor(int) -> b
+    void setBackgroundColor(int) -> setBackgroundColor
+    int getBackgroundColor() -> c
+    void setVisibility(int) -> setVisibility
+    void setEnabled(boolean) -> setEnabled
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void a(com.admob.android.ads.k) -> a
+    com.admob.android.ads.j$b a() -> d
+    com.admob.android.ads.AdView$f b() -> e
+    com.admob.android.ads.k a(com.admob.android.ads.AdView) -> a
+    com.admob.android.ads.AdListener b(com.admob.android.ads.AdView) -> b
+    com.admob.android.ads.AdView$a c(com.admob.android.ads.AdView) -> c
+    java.lang.String d(com.admob.android.ads.AdView) -> d
+    java.lang.String e(com.admob.android.ads.AdView) -> e
+    void f(com.admob.android.ads.AdView) -> f
+    boolean a$7f043dc5(com.admob.android.ads.AdView) -> g
+    void b$7f043dc9(com.admob.android.ads.AdView) -> h
+    long g(com.admob.android.ads.AdView) -> i
+    void a$3e201c39(com.admob.android.ads.AdView) -> j
+    void a(com.admob.android.ads.AdView,com.admob.android.ads.k) -> a
+    void b(com.admob.android.ads.AdView,com.admob.android.ads.k) -> b
+    com.admob.android.ads.k c(com.admob.android.ads.AdView,com.admob.android.ads.k) -> c
+    int h(com.admob.android.ads.AdView) -> k
+    void i(com.admob.android.ads.AdView) -> l
+com.admob.android.ads.AdView$1 -> com.admob.android.ads.bw:
+    com.admob.android.ads.k a -> a
+    com.admob.android.ads.AdView b -> b
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+com.admob.android.ads.AdView$a -> com.admob.android.ads.ae:
+    java.lang.ref.WeakReference a -> a
+    void a() -> a
+    void a(com.admob.android.ads.j) -> a
+    java.util.ArrayList a(java.util.Vector) -> a
+    android.os.Bundle a(com.admob.android.ads.n) -> a
+com.admob.android.ads.AdView$b -> com.admob.android.ads.ac:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.AdView$c -> com.admob.android.ads.aa:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.AdView$d -> com.admob.android.ads.y:
+    boolean a -> a
+    java.lang.ref.WeakReference b -> b
+    void run() -> run
+com.admob.android.ads.AdView$e -> com.admob.android.ads.w:
+    java.lang.ref.WeakReference a -> a
+    java.lang.ref.WeakReference b -> b
+    int c -> c
+    boolean d -> d
+    void run() -> run
+com.admob.android.ads.AdView$f -> com.admob.android.ads.u:
+    int b -> b
+    int c -> c
+    com.admob.android.ads.AdView$f a -> a
+    java.lang.String toString() -> toString
+com.admob.android.ads.AdView$g -> com.admob.android.ads.t:
+    java.lang.ref.WeakReference a -> a
+    java.lang.ref.WeakReference b -> b
+    void run() -> run
+com.admob.android.ads.AdView$g$1 -> com.admob.android.ads.v:
+    com.admob.android.ads.k a -> a
+    com.admob.android.ads.AdView b -> b
+    com.admob.android.ads.k c -> c
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+com.admob.android.ads.InterstitialAd -> com.admob.android.ads.br:
+    android.os.Handler a -> a
+    java.util.Timer b -> b
+    com.admob.android.ads.InterstitialAd$a c -> c
+    com.admob.android.ads.InterstitialAd$Event d -> d
+    java.lang.ref.WeakReference e -> e
+    boolean f -> f
+    com.admob.android.ads.j h -> g
+    java.lang.String i -> h
+    java.lang.String j -> i
+    com.admob.android.ads.InterstitialAd$c k -> j
+    long l -> k
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    com.admob.android.ads.InterstitialAd$Event e() -> e
+    java.lang.String getKeywords() -> f
+    java.lang.String getSearchQuery() -> g
+    com.admob.android.ads.InterstitialAd$c f() -> h
+    void a(com.admob.android.ads.InterstitialAd,com.admob.android.ads.j) -> a
+com.admob.android.ads.InterstitialAd$Event -> com.admob.android.ads.bv:
+    com.admob.android.ads.InterstitialAd$Event APP_START -> a
+    com.admob.android.ads.InterstitialAd$Event SCREEN_CHANGE -> b
+    com.admob.android.ads.InterstitialAd$Event PRE_ROLL -> c
+    com.admob.android.ads.InterstitialAd$Event POST_ROLL -> d
+    com.admob.android.ads.InterstitialAd$Event OTHER -> e
+    com.admob.android.ads.InterstitialAd$Event[] a -> f
+    com.admob.android.ads.InterstitialAd$Event[] values() -> values
+    com.admob.android.ads.InterstitialAd$Event valueOf(java.lang.String) -> valueOf
+com.admob.android.ads.InterstitialAd$a -> com.admob.android.ads.bg:
+    com.admob.android.ads.InterstitialAd b -> a
+    java.lang.ref.WeakReference c -> b
+    boolean a -> c
+    void run() -> run
+com.admob.android.ads.InterstitialAd$b -> com.admob.android.ads.bi:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.InterstitialAd$c -> com.admob.android.ads.bh:
+    com.admob.android.ads.InterstitialAd a -> a
+    void a() -> a
+    void a(com.admob.android.ads.j) -> a
+    boolean a(java.lang.String,int) -> a
+com.admob.android.ads.InterstitialAd$e -> com.admob.android.ads.bj:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.InterstitialAdListener -> com.admob.android.ads.bq:
+com.admob.android.ads.a -> com.admob.android.ads.j:
+    com.admob.android.ads.a a -> a
+    com.admob.android.ads.a e -> d
+    com.admob.android.ads.a b -> b
+    com.admob.android.ads.a c -> c
+    com.admob.android.ads.a d -> e
+    com.admob.android.ads.a[] f -> f
+    com.admob.android.ads.a[] values() -> values
+    com.admob.android.ads.a valueOf(java.lang.String) -> valueOf
+com.admob.android.ads.aa -> com.admob.android.ads.bl:
+    android.widget.RelativeLayout c -> c
+    android.widget.RelativeLayout d -> d
+    android.view.ViewGroup a -> a
+    android.widget.Button e -> e
+    boolean b -> b
+    java.lang.ref.WeakReference f -> f
+    void a(android.content.Context,java.lang.String,com.admob.android.ads.p,float,com.admob.android.ads.ac,com.admob.android.ads.r,java.lang.ref.WeakReference) -> a
+    void a() -> a
+    void b() -> b
+com.admob.android.ads.ab -> com.admob.android.ads.bc:
+    android.os.Handler a -> a
+    float b -> b
+    com.admob.android.ads.r c -> c
+    void a(com.admob.android.ads.r) -> a
+com.admob.android.ads.ac -> com.admob.android.ads.bd:
+    android.view.ViewGroup d -> d
+    long l -> l
+    android.widget.Button m -> m
+    android.widget.VideoView e -> e
+    com.admob.android.ads.d f -> f
+    java.lang.Runnable n -> n
+    int g -> g
+    boolean o -> o
+    com.admob.android.ads.ac$b p -> p
+    boolean h -> h
+    boolean i -> i
+    boolean j -> j
+    java.lang.ref.WeakReference q -> q
+    android.widget.MediaController r -> r
+    com.admob.android.ads.aa k -> k
+    void a(android.content.Context) -> a
+    void a() -> a
+    void a(android.view.View) -> a
+    void b(android.view.View) -> b
+    void b() -> b
+    void a(boolean) -> a
+    void b(boolean) -> b
+    void g() -> g
+    void c() -> c
+    void d() -> d
+    void onAttachedToWindow() -> onAttachedToWindow
+    void a(android.content.res.Configuration) -> a
+    boolean e() -> e
+    void f() -> f
+    void h() -> h
+    void a(com.admob.android.ads.ac) -> a
+    void a$f26a2af(com.admob.android.ads.ac) -> b
+    void a(com.admob.android.ads.ac,android.view.MotionEvent) -> a
+    void a(com.admob.android.ads.ac,android.content.Context) -> a
+com.admob.android.ads.ac$a -> com.admob.android.ads.cl:
+    java.lang.ref.WeakReference a -> a
+    void onPrepared(android.media.MediaPlayer) -> onPrepared
+    void onCompletion(android.media.MediaPlayer) -> onCompletion
+    boolean onError(android.media.MediaPlayer,int,int) -> onError
+com.admob.android.ads.ac$b -> com.admob.android.ads.ck:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.ac$c -> com.admob.android.ads.ca:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.ac$d -> com.admob.android.ads.cb:
+    java.lang.ref.WeakReference a -> a
+    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
+com.admob.android.ads.ac$e -> com.admob.android.ads.by:
+    java.lang.ref.WeakReference a -> a
+    java.lang.ref.WeakReference b -> b
+    java.lang.ref.WeakReference c -> c
+    void onClick(android.view.View) -> onClick
+com.admob.android.ads.ac$f -> com.admob.android.ads.bz:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.ac$g -> com.admob.android.ads.cd:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.ac$h -> com.admob.android.ads.ce:
+    java.lang.ref.WeakReference a -> a
+    void onClick(android.view.View) -> onClick
+com.admob.android.ads.ac$i -> com.admob.android.ads.cc:
+    java.lang.ref.WeakReference a -> a
+    boolean b -> b
+    void onClick(android.view.View) -> onClick
+com.admob.android.ads.ad -> com.admob.android.ads.ba:
+    java.lang.ref.WeakReference d -> a
+    java.lang.ref.WeakReference a -> b
+    com.admob.android.ads.ag b -> c
+    java.util.Map c -> d
+    void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
+    boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+    java.util.Hashtable a(java.lang.String) -> a
+com.admob.android.ads.ae -> com.admob.android.ads.bb:
+    void a(android.content.res.Configuration) -> a
+com.admob.android.ads.af -> com.admob.android.ads.ay:
+    float a -> a
+    boolean b -> b
+    float c -> c
+    void onMeasure(int,int) -> onMeasure
+com.admob.android.ads.ag -> com.admob.android.ads.az:
+com.admob.android.ads.ah -> com.admob.android.ads.aw:
+    float a -> a
+    android.graphics.PointF b -> b
+    float a(android.view.View) -> a
+    android.graphics.PointF b(android.view.View) -> b
+    com.admob.android.ads.ah c(android.view.View) -> c
+com.admob.android.ads.ai -> com.admob.android.ads.ax:
+    android.view.animation.Interpolator a -> a
+    float b -> b
+    float c -> c
+    float getInterpolation(float) -> getInterpolation
+com.admob.android.ads.aj -> com.admob.android.ads.au:
+    int[] a -> a
+    int[] b -> b
+    android.view.View c -> c
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.ak -> com.admob.android.ads.av:
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.al -> com.admob.android.ads.as:
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.am -> com.admob.android.ads.at:
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.an -> com.admob.android.ads.ap:
+    float[] a -> a
+    float[] b -> b
+    float c -> c
+    float d -> d
+    float e -> e
+    boolean f -> f
+    android.graphics.Camera g -> g
+    void initialize(int,int,int,int) -> initialize
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.analytics.InstallReceiver -> com.admob.android.ads.analytics.InstallReceiver:
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    java.lang.String a(java.lang.String,java.lang.String,java.lang.String) -> a
+    void a(android.content.Context,android.content.Intent) -> a
+com.admob.android.ads.analytics.InstallReceiver$1 -> com.admob.android.ads.analytics.a:
+    void a(com.admob.android.ads.e) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+com.admob.android.ads.ao -> com.admob.android.ads.ar:
+    float[] a -> a
+    float[] b -> b
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.ap -> com.admob.android.ads.an:
+    android.view.View a -> a
+    float b -> b
+    float c -> c
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.admob.android.ads.ap$a -> com.admob.android.ads.cn:
+    void g() -> g
+com.admob.android.ads.b -> com.admob.android.ads.k:
+    java.lang.String a -> a
+    int b -> b
+    long c -> c
+    java.lang.String d -> d
+    boolean e -> e
+    boolean f -> f
+    com.admob.android.ads.j a(com.admob.android.ads.m,android.content.Context,java.lang.String,java.lang.String,com.admob.android.ads.InterstitialAd$Event) -> a
+    com.admob.android.ads.j a(com.admob.android.ads.m,android.content.Context,java.lang.String,java.lang.String,int,int,int,com.admob.android.ads.k,int,com.admob.android.ads.j$b,com.admob.android.ads.InterstitialAd$Event,com.admob.android.ads.AdView$f) -> a
+    java.lang.String a$6bf999c4(android.content.Context) -> a
+    java.lang.String a(android.content.Context,java.lang.String,java.lang.String,int,com.admob.android.ads.j$b,com.admob.android.ads.InterstitialAd$Event,com.admob.android.ads.AdView$f) -> a
+    void a(java.lang.StringBuilder,java.lang.String,java.lang.String) -> a
+com.admob.android.ads.b$1 -> com.admob.android.ads.bx:
+    int[] a -> a
+com.admob.android.ads.c -> com.admob.android.ads.l:
+    boolean a -> a
+    void a(android.content.Context) -> a
+com.admob.android.ads.d -> com.admob.android.ads.m:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    com.admob.android.ads.d$a e -> e
+    java.util.HashSet f -> f
+    int g -> g
+    void a(java.lang.String,java.util.Map) -> a
+    java.lang.String a(java.lang.String,java.util.Map,boolean) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+    void a(com.admob.android.ads.e) -> a
+    void b(com.admob.android.ads.e) -> b
+com.admob.android.ads.d$a -> com.admob.android.ads.aj:
+com.admob.android.ads.e -> com.admob.android.ads.n:
+    byte[] a() -> c
+    java.lang.String b() -> d
+    void a(com.admob.android.ads.h) -> a
+    java.net.URL c() -> e
+    boolean d() -> a
+    void e() -> b
+    void f() -> f
+    void a$13462e() -> g
+    void a(java.lang.String) -> a
+    void a(java.lang.Object) -> a
+    java.lang.Object g() -> h
+com.admob.android.ads.f -> com.admob.android.ads.o:
+    java.util.concurrent.Executor m -> m
+    java.lang.String n -> n
+    java.lang.String a -> a
+    int b -> b
+    java.lang.Exception c -> c
+    java.util.Map d -> d
+    int e -> e
+    int f -> f
+    java.lang.String o -> o
+    java.lang.String g -> g
+    com.admob.android.ads.h h -> h
+    java.net.URL i -> i
+    byte[] j -> j
+    boolean k -> k
+    java.lang.String l -> l
+    java.lang.Object p -> p
+    java.lang.String h() -> i
+    byte[] a() -> c
+    java.lang.String b() -> d
+    void a(com.admob.android.ads.h) -> a
+    java.net.URL c() -> e
+    void f() -> f
+    void a(java.lang.String) -> a
+    void a$13462e() -> g
+    java.lang.Object g() -> h
+    void a(java.lang.Object) -> a
+com.admob.android.ads.g -> com.admob.android.ads.a:
+    boolean a -> a
+    com.admob.android.ads.e a$5e8b93fc(java.lang.String,java.lang.String,java.lang.String,com.admob.android.ads.h,int,java.lang.String) -> a
+    com.admob.android.ads.e a(java.lang.String,java.lang.String,java.lang.String,org.json.JSONObject,com.admob.android.ads.h) -> a
+    com.admob.android.ads.e a(java.lang.String,java.lang.String,java.lang.String,com.admob.android.ads.h) -> a
+    com.admob.android.ads.e a$422deb57(java.lang.String,java.lang.String,com.admob.android.ads.h) -> a
+    com.admob.android.ads.e a(java.lang.String,java.lang.String,java.lang.String) -> a
+com.admob.android.ads.h -> com.admob.android.ads.b:
+    void a(com.admob.android.ads.e) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+com.admob.android.ads.i -> com.admob.android.ads.c:
+    java.net.HttpURLConnection m -> m
+    java.net.URL n -> n
+    boolean d() -> a
+    void i() -> j
+    void e() -> b
+    void run() -> run
+com.admob.android.ads.j -> com.admob.android.ads.e:
+    int a -> a
+    android.graphics.Rect b -> b
+    android.graphics.PointF c -> c
+    android.graphics.PointF d -> d
+    android.graphics.PointF e -> e
+    android.graphics.Matrix f -> f
+    android.graphics.RectF g -> g
+    float h -> h
+    android.os.Handler i -> i
+    java.lang.String j -> j
+    boolean k -> k
+    boolean l -> l
+    java.util.Vector m -> m
+    android.graphics.Rect n -> n
+    long o -> o
+    int p -> p
+    int q -> q
+    java.lang.ref.WeakReference r -> r
+    com.admob.android.ads.k s -> s
+    int t -> t
+    int u -> u
+    int v -> v
+    org.json.JSONObject w -> w
+    com.admob.android.ads.u x -> x
+    int y -> y
+    java.util.Vector z -> z
+    com.admob.android.ads.j$c A -> A
+    double B -> B
+    double C -> C
+    com.admob.android.ads.q D -> D
+    com.admob.android.ads.j$b E -> E
+    boolean F -> F
+    com.admob.android.ads.s G -> G
+    void a(android.os.Handler) -> a
+    com.admob.android.ads.j a(com.admob.android.ads.m,android.content.Context,org.json.JSONObject,int,int,int,com.admob.android.ads.k,com.admob.android.ads.j$b) -> a
+    double b() -> a
+    void a(java.lang.String) -> a
+    int a(int) -> a
+    int a(int,double) -> a
+    android.graphics.Rect a(android.graphics.Rect) -> a
+    com.admob.android.ads.k c() -> b
+    void a(com.admob.android.ads.k) -> a
+    long d() -> c
+    void a(com.admob.android.ads.m) -> a
+    boolean e() -> d
+    void a(com.admob.android.ads.j$c) -> a
+    int f() -> e
+    int g() -> f
+    android.graphics.Rect h() -> g
+    void i() -> h
+    void a(org.json.JSONObject) -> a
+    void j() -> i
+    java.lang.String toString() -> toString
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    boolean a(android.content.Context,org.json.JSONObject) -> a
+    void a(boolean) -> a
+    boolean o() -> m
+    void k() -> j
+    void l() -> k
+    void q() -> n
+    boolean m() -> l
+    android.view.View b(org.json.JSONObject) -> b
+    android.view.animation.AnimationSet a(org.json.JSONArray,org.json.JSONObject,android.view.View,android.graphics.Rect) -> a
+    int c(org.json.JSONObject) -> c
+    void a(org.json.JSONObject,android.view.animation.Animation,android.view.animation.AnimationSet) -> a
+    void a(android.view.animation.Animation,int,int,float,java.lang.String,boolean) -> a
+    void a(java.lang.String,android.view.animation.Animation) -> a
+    android.view.animation.Animation a(android.view.View,android.graphics.Rect,org.json.JSONObject,org.json.JSONArray,org.json.JSONArray) -> a
+    com.admob.android.ads.ak a(float,float) -> a
+    com.admob.android.ads.am a(android.graphics.PointF,android.graphics.PointF,android.view.View,android.graphics.Rect) -> a
+    android.view.animation.AnimationSet a(org.json.JSONObject,android.view.View,android.graphics.Rect,long) -> a
+    android.view.animation.Animation a(int,java.lang.String,java.lang.String,float[],org.json.JSONArray,java.lang.String[],long,android.view.View,android.graphics.Rect,org.json.JSONObject,org.json.JSONArray) -> a
+    com.admob.android.ads.aj a(int,int,android.view.View) -> a
+    com.admob.android.ads.ap a(float,float,android.view.View) -> a
+    com.admob.android.ads.al a(android.graphics.RectF,android.graphics.RectF,android.view.View,android.graphics.Rect) -> a
+    android.graphics.PointF a(android.graphics.RectF,android.graphics.PointF) -> a
+    android.view.View a(org.json.JSONObject,android.graphics.Rect) -> a
+    void a$20242606(android.graphics.Canvas,android.graphics.Rect,int,int,float) -> a
+    android.view.View d(org.json.JSONObject) -> d
+    void r() -> o
+    android.view.animation.Interpolator a(java.lang.String,long,long,long) -> a
+    android.graphics.Matrix a(org.json.JSONArray) -> a
+    android.graphics.Matrix a(org.json.JSONObject,java.lang.String,android.graphics.Matrix) -> a
+    java.lang.String[] a(org.json.JSONObject,java.lang.String) -> a
+    float[] b(org.json.JSONArray) -> b
+    float[] b(org.json.JSONObject,java.lang.String) -> b
+    float a(org.json.JSONObject,java.lang.String,float) -> a
+    org.json.JSONArray b(int) -> b
+    int c(org.json.JSONArray) -> c
+    int a(org.json.JSONObject,java.lang.String,int) -> a
+    android.graphics.RectF d(org.json.JSONArray) -> d
+    android.graphics.RectF a(org.json.JSONObject,java.lang.String,android.graphics.RectF) -> a
+    android.graphics.Rect a(org.json.JSONObject,java.lang.String,android.graphics.Rect) -> a
+    android.graphics.PointF e(org.json.JSONArray) -> e
+    android.graphics.PointF a(org.json.JSONObject,java.lang.String,android.graphics.PointF) -> a
+    void a(com.admob.android.ads.j,org.json.JSONArray) -> a
+    void a(com.admob.android.ads.j) -> a
+com.admob.android.ads.j$a -> com.admob.android.ads.ci:
+    com.admob.android.ads.j$a e -> e
+    com.admob.android.ads.j$a f -> f
+    com.admob.android.ads.j$a g -> g
+    com.admob.android.ads.j$a a -> a
+    com.admob.android.ads.j$a h -> h
+    com.admob.android.ads.j$a i -> i
+    com.admob.android.ads.j$a b -> b
+    com.admob.android.ads.j$a j -> j
+    com.admob.android.ads.j$a c -> c
+    com.admob.android.ads.j$a d -> d
+    java.lang.String k -> k
+    com.admob.android.ads.j$a[] l -> l
+    com.admob.android.ads.j$a[] values() -> values
+    com.admob.android.ads.j$a valueOf(java.lang.String) -> valueOf
+    java.lang.String toString() -> toString
+    com.admob.android.ads.j$a a(java.lang.String) -> a
+com.admob.android.ads.j$b -> com.admob.android.ads.ch:
+    com.admob.android.ads.j$b a -> a
+    com.admob.android.ads.j$b b -> b
+    com.admob.android.ads.j$b c -> c
+    java.lang.String d -> d
+    com.admob.android.ads.j$b[] e -> e
+    com.admob.android.ads.j$b[] values() -> values
+    com.admob.android.ads.j$b valueOf(java.lang.String) -> valueOf
+    java.lang.String toString() -> toString
+com.admob.android.ads.j$c -> com.admob.android.ads.cg:
+    void a() -> e
+com.admob.android.ads.j$d -> com.admob.android.ads.cf:
+    java.lang.ref.WeakReference a -> a
+    org.json.JSONArray b -> b
+    void run() -> run
+com.admob.android.ads.k -> com.admob.android.ads.f:
+    com.admob.android.ads.j a -> a
+    com.admob.android.ads.AdView b -> b
+    java.util.Vector d -> d
+    android.view.View e -> e
+    long f -> f
+    boolean g -> g
+    android.view.View h -> h
+    android.widget.ProgressBar c -> c
+    float i -> i
+    com.admob.android.ads.k$d j -> j
+    void b(android.content.Context) -> b
+    void b() -> a
+    void a(com.admob.android.ads.j) -> a
+    com.admob.android.ads.j c() -> b
+    float a(android.content.Context) -> a
+    float d() -> c
+    void e() -> d
+    void a(android.view.View,android.widget.RelativeLayout$LayoutParams) -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void a() -> e
+    void f() -> f
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    void g() -> g
+    boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    boolean k() -> k
+    boolean l() -> l
+    long h() -> h
+    boolean dispatchTrackballEvent(android.view.MotionEvent) -> dispatchTrackballEvent
+    void m() -> m
+    org.json.JSONObject n() -> n
+    void a(android.view.View,org.json.JSONObject) -> a
+    java.util.Vector a(int,int,int,long,java.util.Vector) -> a
+    java.util.Vector a$4bbb3234(android.view.MotionEvent,java.util.Vector) -> a
+    java.util.Vector a(android.view.KeyEvent,java.util.Vector) -> a
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    java.lang.String i() -> i
+    org.json.JSONObject j() -> j
+    void setPressed(boolean) -> setPressed
+com.admob.android.ads.k$a -> com.admob.android.ads.bm:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.k$b -> com.admob.android.ads.bn:
+    org.json.JSONObject a -> a
+    java.lang.ref.WeakReference b -> b
+    void run() -> run
+com.admob.android.ads.k$c -> com.admob.android.ads.bo:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
+com.admob.android.ads.k$d -> com.admob.android.ads.bk:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.admob.android.ads.l -> com.admob.android.ads.g:
+    org.json.JSONObject j() -> j
+    java.lang.String i() -> i
+com.admob.android.ads.m -> com.admob.android.ads.h:
+    void a() -> a
+    void a(com.admob.android.ads.j) -> a
+com.admob.android.ads.n -> com.admob.android.ads.i:
+    android.os.Bundle a() -> a
+com.admob.android.ads.o -> com.admob.android.ads.z:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    com.admob.android.ads.r d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    android.os.Bundle a() -> a
+com.admob.android.ads.p -> com.admob.android.ads.x:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    int c -> c
+    int d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    double g -> g
+    java.lang.String h -> h
+    java.lang.String i -> i
+    boolean j -> j
+    java.lang.String k -> k
+    java.lang.String l -> l
+    java.util.Vector m -> m
+    android.os.Bundle a() -> a
+    boolean a(android.os.Bundle) -> a
+    boolean b() -> b
+    boolean c() -> c
+com.admob.android.ads.q -> com.admob.android.ads.ad:
+    com.admob.android.ads.r a -> a
+    java.util.Vector b -> b
+    com.admob.android.ads.u c -> c
+    android.widget.PopupWindow d -> d
+    void a(java.lang.String) -> a
+    void a(android.content.Intent) -> a
+    void a(android.app.Activity,android.view.View) -> a
+    void a() -> a
+    void l() -> k
+    void k() -> j
+    void a(android.content.Context) -> a
+    void a(android.content.Context,org.json.JSONObject,com.admob.android.ads.u) -> a
+    void a(android.content.Context,java.lang.String) -> a
+    void a(android.content.Context,org.json.JSONArray) -> a
+    void a(android.content.Context,org.json.JSONObject) -> a
+    android.content.Intent b(android.content.Context,java.lang.String) -> b
+    android.content.Intent b(android.content.Context) -> b
+    void a(java.util.Hashtable) -> a
+    void b() -> b
+    boolean c() -> c
+    void a(android.os.Bundle,java.lang.String,java.lang.Object) -> a
+    android.os.Bundle a(org.json.JSONObject) -> a
+    void a(java.util.List,org.json.JSONObject,java.lang.String) -> a
+com.admob.android.ads.q$1 -> com.admob.android.ads.d:
+    void a(com.admob.android.ads.e) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+com.admob.android.ads.q$2 -> com.admob.android.ads.am:
+    int[] a -> a
+com.admob.android.ads.q$a -> com.admob.android.ads.be:
+    com.admob.android.ads.q$a a -> a
+    com.admob.android.ads.q$a b -> b
+    com.admob.android.ads.q$a c -> c
+    java.lang.String d -> d
+    com.admob.android.ads.q$a[] e -> e
+    com.admob.android.ads.q$a[] values() -> values
+    com.admob.android.ads.q$a valueOf(java.lang.String) -> valueOf
+    java.lang.String toString() -> toString
+    com.admob.android.ads.q$a a(int) -> a
+com.admob.android.ads.r -> com.admob.android.ads.ab:
+    com.admob.android.ads.j$a a -> a
+    java.lang.String b -> b
+    java.util.Vector c -> c
+    java.lang.String d -> d
+    com.admob.android.ads.q$a e -> e
+    boolean m -> m
+    boolean f -> f
+    android.graphics.Point g -> g
+    android.graphics.Point n -> n
+    com.admob.android.ads.p h -> h
+    java.lang.String i -> i
+    java.lang.String j -> j
+    java.lang.String o -> o
+    android.os.Bundle k -> k
+    boolean l -> l
+    void a(java.lang.String,boolean) -> a
+    java.util.Hashtable b() -> b
+    android.os.Bundle a() -> a
+    boolean a(android.os.Bundle) -> a
+    void a(org.json.JSONObject,com.admob.android.ads.u,java.lang.String) -> a
+    int[] a(android.graphics.Point) -> a
+    android.graphics.Point a(int[]) -> a
+    boolean a(byte) -> a
+com.admob.android.ads.s -> com.admob.android.ads.ag:
+    com.admob.android.ads.s a -> a
+    java.io.File b -> b
+    long c -> c
+    long d -> d
+    java.util.PriorityQueue e -> e
+    java.util.Hashtable f -> f
+    com.admob.android.ads.s a(android.content.Context) -> a
+    void a(java.io.File) -> a
+    void b(java.io.File) -> b
+    void c(java.io.File) -> c
+    android.graphics.Bitmap a(java.lang.String) -> a
+    void a(java.lang.String,android.graphics.Bitmap) -> a
+    void a() -> a
+    void b() -> b
+    void a(com.admob.android.ads.s) -> a
+com.admob.android.ads.s$a -> com.admob.android.ads.aq:
+    com.admob.android.ads.s a -> a
+    void run() -> run
+com.admob.android.ads.s$b -> com.admob.android.ads.ao:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.admob.android.ads.t -> com.admob.android.ads.af:
+    com.admob.android.ads.t a -> a
+    android.content.Context b -> b
+    java.lang.Thread c -> c
+    java.lang.String d -> d
+    java.util.Properties e -> e
+    android.content.Context f -> f
+    void a(android.content.Context) -> a
+    java.lang.String a(java.lang.String) -> a
+    java.lang.String a() -> a
+    boolean b() -> b
+    java.io.File a(android.content.Context,java.lang.String) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+    void a(com.admob.android.ads.e) -> a
+com.admob.android.ads.u -> com.admob.android.ads.ai:
+    java.util.Hashtable a -> a
+    java.util.HashSet b -> b
+    com.admob.android.ads.s c -> c
+    com.admob.android.ads.u$a e -> e
+    java.lang.ref.WeakReference d -> d
+    boolean a() -> a
+    void b() -> b
+    void a(org.json.JSONObject,java.lang.String) -> a
+    void a(java.lang.String,java.lang.String,java.lang.String,boolean) -> a
+    void a(com.admob.android.ads.e,java.lang.Exception) -> a
+    void a(com.admob.android.ads.e) -> a
+    void c() -> c
+    void d() -> d
+com.admob.android.ads.u$a -> com.admob.android.ads.bp:
+    void k() -> j
+    void l() -> k
+com.admob.android.ads.v -> com.admob.android.ads.ah:
+    android.media.AudioManager a -> a
+com.admob.android.ads.view.AdMobWebView -> com.admob.android.ads.a.a:
+    java.lang.String c -> c
+    com.admob.android.ads.ad d -> d
+    boolean a -> a
+    java.lang.ref.WeakReference b -> b
+    void loadUrl(java.lang.String) -> loadUrl
+    com.admob.android.ads.ad a(java.lang.ref.WeakReference) -> a
+    void onClick(android.view.View) -> onClick
+    void a() -> a
+    void a(java.lang.String,java.lang.Object[]) -> a
+    java.lang.String a(java.lang.Object) -> a
+com.admob.android.ads.w -> com.admob.android.ads.q:
+    java.lang.String a -> a
+    boolean b -> b
+    android.os.Bundle a() -> a
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+com.admob.android.ads.x -> com.admob.android.ads.p:
+    int a -> a
+    int b -> b
+    android.widget.ImageView c -> c
+    float d -> d
+    boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    void a(boolean) -> a
+com.admob.android.ads.y -> com.admob.android.ads.s:
+    java.lang.String a -> a
+    boolean b -> b
+    com.admob.android.ads.q e -> e
+    com.admob.android.ads.ad a(java.lang.ref.WeakReference) -> a
+    void a() -> a
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+com.admob.android.ads.y$a -> com.admob.android.ads.bt:
+    com.admob.android.ads.y a -> b
+    void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
+com.admob.android.ads.z -> com.admob.android.ads.r:
+    org.json.JSONObject a -> a
+    org.json.JSONObject b -> b
+    boolean e -> e
+    void b() -> a_
+com.admob.android.ads.z$a -> com.admob.android.ads.bu:
+    java.util.Timer e -> e
+    java.util.TimerTask f -> f
+    boolean a -> b
+    boolean b -> c
+    com.admob.android.ads.j c -> d
+    void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
+    boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+com.admob.android.ads.z$a$1 -> com.admob.android.ads.bs:
+    com.admob.android.ads.z$a a -> a
+    void run() -> run
+com.devinxutal.man20.activities.AboutActivity -> com.devinxutal.man20.activities.AboutActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+com.devinxutal.man20.activities.MainActivity -> com.devinxutal.man20.activities.MainActivity:
+    byte[] SALT -> a
+    android.graphics.Typeface buttonFont -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onClick(android.view.View) -> onClick
+    void customizeButton(android.widget.Button) -> a
+com.devinxutal.man20.activities.PlaygroundActivity -> com.devinxutal.man20.activities.PlaygroundActivity:
+    com.devinxutal.man20.control.GameController gameController -> a
+    com.devinxutal.man20.ui.GameControlView controlView -> b
+    android.view.ViewGroup successScreen -> c
+    android.widget.Toast toast -> d
+    android.widget.Button successScreenBackButton -> e
+    android.widget.Button successScreenSubmitButton -> f
+    android.widget.Button successScreenReplayButton -> g
+    android.app.Dialog progressDialog -> h
+    com.devinxutal.man20.activities.PlaygroundActivity$State state -> i
+    long elapsedTime -> j
+    boolean collapsed -> k
+    android.hardware.SensorManager sensorManager -> l
+    android.hardware.Sensor sensor -> m
+    boolean sensorRunning -> n
+    boolean useJoyStick -> o
+    boolean useAccelerometer -> p
+    com.devinxutal.man20.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> q
+    com.devinxutal.man20.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> r
+    android.graphics.Typeface buttonFont -> s
+    android.os.PowerManager$WakeLock wakelock -> t
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void switchState(com.devinxutal.man20.activities.PlaygroundActivity$State) -> a
+    void onOptionsMenuClosed(android.view.Menu) -> onOptionsMenuClosed
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void hideSuccessScreen() -> e
+    void play() -> a
+    void pause() -> b
+    void replay() -> c
+    void stop() -> d
+    void preferenceChanged() -> f
+    void stopListening() -> g
+    void customizeButton(android.widget.Button) -> a
+    com.devinxutal.man20.activities.PlaygroundActivity$State access$0(com.devinxutal.man20.activities.PlaygroundActivity) -> a
+    void access$1(com.devinxutal.man20.activities.PlaygroundActivity,com.devinxutal.man20.activities.PlaygroundActivity$State) -> a
+    void access$2(com.devinxutal.man20.activities.PlaygroundActivity) -> b
+    void access$3(com.devinxutal.man20.activities.PlaygroundActivity) -> c
+    com.devinxutal.man20.ui.GameControlView access$4(com.devinxutal.man20.activities.PlaygroundActivity) -> d
+    android.app.Dialog access$5(com.devinxutal.man20.activities.PlaygroundActivity) -> e
+    void access$6$24909b21(com.devinxutal.man20.activities.PlaygroundActivity) -> f
+    android.widget.Toast access$7(com.devinxutal.man20.activities.PlaygroundActivity) -> g
+    android.widget.Button access$8(com.devinxutal.man20.activities.PlaygroundActivity) -> h
+    boolean access$9(com.devinxutal.man20.activities.PlaygroundActivity) -> i
+    com.devinxutal.man20.control.GameController access$10(com.devinxutal.man20.activities.PlaygroundActivity) -> j
+    boolean access$11(com.devinxutal.man20.activities.PlaygroundActivity) -> k
+    void access$12(com.devinxutal.man20.activities.PlaygroundActivity,java.lang.String) -> a
+com.devinxutal.man20.activities.PlaygroundActivity$1 -> com.devinxutal.man20.activities.k:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    android.widget.EditText val$input -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.man20.activities.PlaygroundActivity$2 -> com.devinxutal.man20.activities.l:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.man20.activities.PlaygroundActivity$AccelerometerListener -> com.devinxutal.man20.activities.b:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+com.devinxutal.man20.activities.PlaygroundActivity$ButtonsOnClick -> com.devinxutal.man20.activities.f:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.devinxutal.man20.activities.PlaygroundActivity$ControlButtonClicked -> com.devinxutal.man20.activities.i:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void buttonClickced(int) -> a
+com.devinxutal.man20.activities.PlaygroundActivity$GameFinished -> com.devinxutal.man20.activities.j:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void gameFinishing() -> a
+    void gameFinished() -> b
+com.devinxutal.man20.activities.PlaygroundActivity$GameFinished$1 -> com.devinxutal.man20.activities.h:
+    com.devinxutal.man20.activities.PlaygroundActivity$GameFinished this$1 -> a
+    void run() -> run
+com.devinxutal.man20.activities.PlaygroundActivity$GameFinished$2 -> com.devinxutal.man20.activities.g:
+    com.devinxutal.man20.activities.PlaygroundActivity$GameFinished this$1 -> a
+    void run() -> run
+com.devinxutal.man20.activities.PlaygroundActivity$MyJoyStickListener -> com.devinxutal.man20.activities.e:
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void joyStickMoved(float,float) -> a
+com.devinxutal.man20.activities.PlaygroundActivity$State -> com.devinxutal.man20.activities.c:
+    com.devinxutal.man20.activities.PlaygroundActivity$State PLAY -> a
+    com.devinxutal.man20.activities.PlaygroundActivity$State PAUSED -> b
+    com.devinxutal.man20.activities.PlaygroundActivity$State ENDING -> c
+    com.devinxutal.man20.activities.PlaygroundActivity$State END -> d
+    com.devinxutal.man20.activities.PlaygroundActivity$State[] ENUM$VALUES -> e
+    com.devinxutal.man20.activities.PlaygroundActivity$State[] values() -> values
+    com.devinxutal.man20.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
+com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread -> com.devinxutal.man20.activities.a:
+    java.lang.String player -> b
+    com.devinxutal.man20.activities.PlaygroundActivity this$0 -> a
+    void run() -> run
+com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread$1 -> com.devinxutal.man20.activities.d:
+    com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread this$1 -> a
+    int val$sc -> b
+    void run() -> run
+com.devinxutal.man20.activities.Preferences -> com.devinxutal.man20.activities.Preferences:
+    void onCreate(android.os.Bundle) -> onCreate
+com.devinxutal.man20.cfg.Configuration -> com.devinxutal.man20.e.b:
+    com.devinxutal.man20.cfg.Configuration config -> d
+    android.content.SharedPreferences preference -> e
+    int CONTROL_JOY_STICK -> a
+    int CONTROL_SENSOR -> b
+    int CONTROL_BOTH -> f
+    int JOT_STICK_POSITION_LEFT -> c
+    int JOT_STICK_POSITION_RIGHT -> g
+    com.devinxutal.man20.cfg.Configuration config() -> a
+    void setSharedPreferences(android.content.SharedPreferences) -> a
+    int getControl() -> b
+    int getJoyStickPosition() -> c
+    boolean isBackgroundMusicOn() -> d
+    boolean isSoundEffectsOn() -> e
+    int getDifficulty() -> f
+com.devinxutal.man20.cfg.Constants -> com.devinxutal.man20.e.a:
+    int VERSION -> a
+com.devinxutal.man20.control.GameController -> com.devinxutal.man20.b.a:
+    com.devinxutal.man20.ui.PlaygroundView playgroundView -> a
+    com.devinxutal.man20.model.Playground playground -> b
+    java.util.List listeners -> c
+    com.devinxutal.man20.ui.PlaygroundView getPlaygroundView() -> a
+    boolean addGameListener(com.devinxutal.man20.control.GameController$GameListener) -> a
+    com.devinxutal.man20.model.Playground getPlayground() -> b
+    void gameFinishedCalledByPlaygroundView() -> c
+    void gameFinishingCalledByPlaygroundView() -> d
+com.devinxutal.man20.control.GameController$GameListener -> com.devinxutal.man20.b.b:
+    void gameFinishing() -> a
+    void gameFinished() -> b
+com.devinxutal.man20.model.Attacker -> com.devinxutal.man20.f.b:
+    float standardSpeed -> a
+    boolean active -> h
+    void move$13462e() -> a
+    boolean isActive() -> b
+    void activate(com.devinxutal.man20.model.Playground) -> a
+com.devinxutal.man20.model.Defender -> com.devinxutal.man20.f.a:
+    float radius -> a
+    float radiusScale -> h
+    void setVisibleRadius(float) -> a
+    float getVisibleRadius() -> a
+com.devinxutal.man20.model.Explosion -> com.devinxutal.man20.f.d:
+    int num -> a
+    float[] points -> b
+    float scale -> c
+    float x -> d
+    float y -> e
+    android.graphics.Paint paint -> f
+    int[] colors -> g
+    int totalStep -> h
+    int currentStep -> i
+    float maxTime -> j
+    float scaleDelta -> k
+    float currentScale -> l
+    int alpha -> m
+    int alphaDelta -> n
+    boolean step() -> a
+    void reset() -> b
+    void draw(android.graphics.Canvas) -> a
+com.devinxutal.man20.model.Movable -> com.devinxutal.man20.f.f:
+    float x -> b
+    float y -> c
+    float vx -> d
+    float vy -> e
+    float pgWidth -> f
+    float pgHeight -> g
+    float standardizedVX() -> c
+    float standardizedVY() -> d
+com.devinxutal.man20.model.Playground -> com.devinxutal.man20.f.c:
+    com.devinxutal.man20.model.Defender defender -> a
+    com.devinxutal.man20.model.Attacker[] attackers -> b
+    int numAttackers -> c
+    com.devinxutal.man20.model.Star[] stars -> d
+    int width -> e
+    int height -> f
+    boolean crashed -> g
+    com.devinxutal.man20.model.Attacker[] getAttackers() -> a
+    com.devinxutal.man20.model.Star[] getStars() -> b
+    com.devinxutal.man20.model.Defender getDefender() -> c
+    void setSize(int,int) -> a
+    void reset() -> d
+    void move$13462e() -> e
+    boolean isCrashed() -> f
+com.devinxutal.man20.model.Star -> com.devinxutal.man20.f.e:
+    float x -> a
+    float y -> b
+    float vx -> c
+    float vy -> d
+    float pgWidth -> e
+    float pgHeight -> f
+    boolean active -> g
+    void move$13462e() -> a
+    boolean isActive() -> b
+    void activate$7db2b09b() -> c
+com.devinxutal.man20.record.TwentySecondsRecord -> com.devinxutal.man20.d.a:
+    java.lang.String player -> a
+    long time -> b
+    java.util.Date commitTime -> c
+    int rank -> d
+    java.lang.String description -> e
+    int getRank() -> a
+    long getTime() -> b
+    java.lang.String getTimeString() -> c
+    java.lang.String getPlayer() -> d
+    com.devinxutal.man20.record.TwentySecondsRecord parse(java.lang.String) -> a
+com.devinxutal.man20.sound.SoundManager -> com.devinxutal.man20.c.a:
+    android.media.SoundPool soundpool -> a
+    android.app.Activity activity -> b
+    android.media.MediaPlayer mediaPlayer -> c
+    android.media.AudioManager audioManager -> d
+    int btnMusicID -> e
+    int crashMusicID -> f
+    boolean initialized -> g
+    com.devinxutal.man20.sound.SoundManager soundManager -> h
+    float BACKGROUND_SOUND_VOLUME -> i
+    com.devinxutal.man20.sound.SoundManager get(android.app.Activity) -> a
+    void init(android.app.Activity) -> b
+    void release() -> a
+    void playBackgroundMusic() -> b
+    void stopBackgroundMusic() -> c
+    void pauseBackgroundMusic() -> d
+    void playButtonClickEffect() -> e
+    void playCrashEffect() -> f
+com.devinxutal.man20.ui.GameControlView -> com.devinxutal.man20.ui.f:
+    com.devinxutal.man20.control.GameController controller -> a
+    java.util.List listeners -> b
+    android.widget.ImageButton playButton -> c
+    java.util.List buttons1 -> d
+    com.devinxutal.man20.ui.JoyStick joyStick -> e
+    com.devinxutal.man20.ui.GameTimer gameTimer -> f
+    boolean collapsed -> g
+    boolean showJoyStick -> h
+    boolean widgetChanged -> i
+    void setGameController(com.devinxutal.man20.control.GameController) -> a
+    com.devinxutal.man20.ui.GameTimer getGameTimer() -> a
+    com.devinxutal.man20.ui.JoyStick getJoyStick() -> b
+    void init() -> c
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    void setPlayButtonStatus(int) -> a
+    void showJoyStick(boolean) -> a
+    void onClick(android.view.View) -> onClick
+    boolean addCubeControlListener(com.devinxutal.man20.ui.GameControlView$GameControlListener) -> a
+com.devinxutal.man20.ui.GameControlView$GameControlListener -> com.devinxutal.man20.ui.a:
+    void buttonClickced(int) -> a
+com.devinxutal.man20.ui.GameTimer -> com.devinxutal.man20.ui.g:
+    boolean running -> a
+    android.os.Handler mHandler -> b
+    long startTime -> c
+    long accumulatedTime -> d
+    java.lang.Runnable cubeTimerTask -> e
+    long getTime() -> a
+    java.lang.String parseTime() -> e
+    void start() -> b
+    void stop() -> c
+    void reset() -> d
+    java.lang.String access$0(com.devinxutal.man20.ui.GameTimer) -> a
+    boolean access$1(com.devinxutal.man20.ui.GameTimer) -> b
+    android.os.Handler access$2(com.devinxutal.man20.ui.GameTimer) -> c
+com.devinxutal.man20.ui.GameTimer$1 -> com.devinxutal.man20.ui.d:
+    com.devinxutal.man20.ui.GameTimer this$0 -> a
+    void run() -> run
+com.devinxutal.man20.ui.JoyStick -> com.devinxutal.man20.ui.b:
+    android.graphics.Paint paint -> a
+    java.util.List listeners -> b
+    int height -> c
+    int width -> d
+    int centerX -> e
+    int centerY -> f
+    int stickRadius -> g
+    int panelRadius -> h
+    int colorPanel -> i
+    int colorEdge -> j
+    int colorStick -> k
+    float x -> l
+    float y -> m
+    void onMeasure(int,int) -> onMeasure
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
+    void ajustStickPosition(float,float) -> a
+    boolean addJoyStickListener(com.devinxutal.man20.ui.JoyStick$JoyStickListener) -> a
+    void notifyJoyStickMoved() -> a
+com.devinxutal.man20.ui.JoyStick$JoyStickListener -> com.devinxutal.man20.ui.c:
+    void joyStickMoved(float,float) -> a
+com.devinxutal.man20.ui.PlaygroundView -> com.devinxutal.man20.ui.PlaygroundView:
+    java.lang.String TAG -> a
+    com.devinxutal.man20.ui.PlaygroundView$AnimationThread animationThread -> b
+    com.devinxutal.man20.control.GameController gameController -> c
+    com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics dm -> d
+    com.devinxutal.man20.model.Playground playground -> e
+    com.devinxutal.man20.model.Explosion explosion -> f
+    boolean finishedAlreadyNotified -> g
+    boolean finishingAlreadyNotified -> h
+    boolean notifyFinished -> i
+    void setGameController(com.devinxutal.man20.control.GameController) -> a
+    void setPlayground(com.devinxutal.man20.model.Playground) -> a
+    void init() -> b
+    void onMeasure(int,int) -> onMeasure
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void onWindowVisibilityChanged(int) -> onWindowVisibilityChanged
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void reset() -> a
+    void paint(android.graphics.Canvas) -> a
+    void pause(boolean) -> a
+    void surfaceChanged(android.view.SurfaceHolder,int,int,int) -> surfaceChanged
+    void surfaceCreated(android.view.SurfaceHolder) -> surfaceCreated
+    void surfaceDestroyed(android.view.SurfaceHolder) -> surfaceDestroyed
+    com.devinxutal.man20.model.Playground access$0(com.devinxutal.man20.ui.PlaygroundView) -> a
+    boolean access$1(com.devinxutal.man20.ui.PlaygroundView) -> b
+    com.devinxutal.man20.control.GameController access$2(com.devinxutal.man20.ui.PlaygroundView) -> c
+    void access$3$e49787b(com.devinxutal.man20.ui.PlaygroundView) -> d
+    void access$4(com.devinxutal.man20.ui.PlaygroundView,com.devinxutal.man20.model.Explosion) -> a
+    com.devinxutal.man20.model.Explosion access$5(com.devinxutal.man20.ui.PlaygroundView) -> e
+    void access$6(com.devinxutal.man20.ui.PlaygroundView) -> f
+    boolean access$7(com.devinxutal.man20.ui.PlaygroundView) -> g
+    void access$8$e49787b(com.devinxutal.man20.ui.PlaygroundView) -> h
+com.devinxutal.man20.ui.PlaygroundView$AnimationThread -> com.devinxutal.man20.ui.e:
+    boolean flag -> a
+    boolean paused -> b
+    com.devinxutal.man20.ui.PlaygroundView this$0 -> c
+    void run() -> run
+com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics -> com.devinxutal.man20.ui.h:
+    int[] STAR_COLORS -> a
+    android.graphics.Paint paint -> b
+    android.graphics.Bitmap defenderOriginal -> c
+    android.graphics.Bitmap defender -> d
+    com.devinxutal.man20.ui.PlaygroundView this$0 -> e
+    void resetDefender() -> a
+    android.graphics.Paint access$0(com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics) -> a
+    android.graphics.Bitmap access$1(com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics) -> b
+com.devinxutal.man20.util.AdUtil -> com.devinxutal.man20.a.a:
+    void determineAd(android.app.Activity,int) -> a
+com.devinxutal.man20.util.DialogUtil -> com.devinxutal.man20.a.b:
+    void showRankDialog(android.app.Activity) -> a
+    android.widget.TextView createTableCell(android.content.Context,java.lang.String) -> a
+    android.view.View access$0(android.app.Activity,java.util.List) -> a
+com.devinxutal.man20.util.DialogUtil$1 -> com.devinxutal.man20.a.h:
+    android.app.Activity val$context -> a
+    android.app.ProgressDialog val$dialog -> b
+    void run() -> run
+com.devinxutal.man20.util.DialogUtil$1$1 -> com.devinxutal.man20.a.g:
+    com.devinxutal.man20.util.DialogUtil$1 this$1 -> a
+    android.app.ProgressDialog val$dialog -> b
+    int val$sc -> c
+    android.app.Activity val$context -> d
+    java.util.List val$records -> e
+    void run() -> run
+com.devinxutal.man20.util.DialogUtil$1$1$1 -> com.devinxutal.man20.a.d:
+    com.devinxutal.man20.util.DialogUtil$1$1 this$2 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.man20.util.DialogUtil$1$1$2 -> com.devinxutal.man20.a.e:
+    com.devinxutal.man20.util.DialogUtil$1$1 this$2 -> a
+    android.app.Activity val$context -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.man20.util.MilitaryRank -> com.devinxutal.man20.a.c:
+    int stringID -> a
+    int drawableID -> b
+    com.devinxutal.man20.util.MilitaryRank[] RANKS -> c
+    com.devinxutal.man20.util.MilitaryRank getRank$107ad41b(long) -> a
+    int getStringID() -> a
+    int getDrawableID() -> b
+com.devinxutal.man20.util.RandomUtil -> com.devinxutal.man20.a.f:
+    java.util.Random r -> a

@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -53,7 +54,7 @@ public class DialogUtil {
 
 	}
 
-	public static void showRankDialog(final Activity context, final int order) {
+	public static void showRankDialog(final Activity context) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(context);
 		final ProgressDialog dialog = ProgressDialog.show(context, "", context
 				.getResources().getString(
@@ -88,7 +89,7 @@ public class DialogUtil {
 										.getContent()));
 						String line = null;
 						while ((line = reader.readLine()) != null
-								&& line.length() > 15) {
+								&& line.trim().length() > 0) {
 							Log.v("DialogUtil", line);
 							TwentySecondsRecord record = TwentySecondsRecord
 									.parse(line);
@@ -111,9 +112,9 @@ public class DialogUtil {
 							AlertDialog.Builder alert = new AlertDialog.Builder(
 									context);
 							alert.setView(createRankView(context, records));
+
 							alert.setTitle(context.getResources().getString(
-									R.string.success_screen_world_rank)
-									+ " [" + order + "x" + order + "]");
+									R.string.success_screen_world_rank));
 
 							alert.setPositiveButton(R.string.common_ok,
 									new DialogInterface.OnClickListener() {
@@ -152,8 +153,9 @@ public class DialogUtil {
 
 	private static View createRankView(Activity context,
 			List<TwentySecondsRecord> records) {
+		ScrollView ll = new ScrollView(context);
+		ll.setScrollContainer(true);
 		TableLayout layout = new TableLayout(context);
-		layout.setScrollContainer(true);
 		layout.setStretchAllColumns(true);
 		layout.addView(createRankHeader(context), new TableLayout.LayoutParams(
 				TableLayout.LayoutParams.FILL_PARENT,
@@ -165,7 +167,8 @@ public class DialogUtil {
 							TableLayout.LayoutParams.WRAP_CONTENT));
 
 		}
-		return layout;
+		ll.addView(layout);
+		return ll;
 	}
 
 	public static TableRow createRankEntry(Context context,

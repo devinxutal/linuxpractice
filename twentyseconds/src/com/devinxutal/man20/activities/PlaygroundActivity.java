@@ -331,7 +331,7 @@ public class PlaygroundActivity extends Activity {
 										"The current game difficulty setting is not STANDARD. Only records of STANDARD mode can be submitted.");
 					}
 				} else {
-					DialogUtil.showRankDialog(PlaygroundActivity.this, 3);
+					DialogUtil.showRankDialog(PlaygroundActivity.this);
 				}
 			} else if (view.getId() == R.id.back_button) {
 				PlaygroundActivity.this.finish();

@@ -105,7 +105,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			break;
 		case R.id.main_btn_rank:
-			DialogUtil.showRankDialog(this, 3);
+			DialogUtil.showRankDialog(this);
 			return;
 		}
 		startActivity(i);
