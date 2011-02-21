@@ -27,6 +27,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.Vibrator;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -98,7 +99,8 @@ public class PlaygroundActivity extends Activity {
 	private Typeface buttonFont;
 
 	// wake lock
-	WakeLock wakelock;
+	private WakeLock wakelock;
+	private Vibrator vibrator;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -114,6 +116,8 @@ public class PlaygroundActivity extends Activity {
 
 		PowerManager pm = (PowerManager) this
 				.getSystemService(Context.POWER_SERVICE);
+
+		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		wakelock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
 				| PowerManager.ON_AFTER_RELEASE, TAG);
 		gameController = new GameController(this);
@@ -291,6 +295,7 @@ public class PlaygroundActivity extends Activity {
 
 			PlaygroundActivity.this.runOnUiThread(new Runnable() {
 				public void run() {
+					vibrator.vibrate(200);
 					stop();
 				}
 			});
