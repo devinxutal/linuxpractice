@@ -8,7 +8,7 @@ public class Constants {
 	public static final int VERSION_PRO = 0;
 	public static final int VERSION_LITE = 1;
 
-	public static int VERSION = VERSION_PRO;
+	public static int VERSION = VERSION_LITE;
 
 	public static final boolean TEST = true;
 

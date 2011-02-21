@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -216,6 +217,8 @@ public class CubeController {
 
 	protected class OnCubeViewTouched implements OnTouchListener {
 		int startX, startY;
+		float oldDist;
+		boolean zoomMode = false;
 
 		public boolean onTouch(View v, MotionEvent evt) {
 			if (!turnable && !rotatable) {
@@ -235,6 +238,12 @@ public class CubeController {
 				break;
 			}
 			return true;
+		}
+
+		private float spacing(MotionEvent event) {
+			float x = event.getX(0) - event.getX(1);
+			float y = event.getY(0) - event.getY(1);
+			return FloatMath.sqrt(x * x + y * y);
 		}
 
 		protected void processAction(int x, int y, int deltaX, int deltaY) {

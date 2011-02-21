@@ -17,6 +17,20 @@ import com.devinxutal.fc.model.CubeState;
 
 public class PreferenceUtil {
 
+	public static boolean canShowUpgradeNotice(Activity activity) {
+		SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(activity.getBaseContext());
+		return p.getBoolean("show_upgrade_notice", true);
+	}
+
+	public static void setShowUpgradeNotice(Activity activity, boolean can) {
+		SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(activity.getBaseContext());
+		Editor editor = p.edit();
+		editor.putBoolean("show_upgrade_notice", can);
+		editor.commit();
+	}
+
 	public static String readPlayerName(Activity activity) {
 		SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(activity.getBaseContext());
@@ -48,7 +62,8 @@ public class PreferenceUtil {
 			boolean timed) {
 		SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(activity.getBaseContext());
-		Log.v("PreferenceUtil","write cube state: "+objectToString(state).length());
+		Log.v("PreferenceUtil", "write cube state: "
+				+ objectToString(state).length());
 		if (p == null) {
 			return;
 		}

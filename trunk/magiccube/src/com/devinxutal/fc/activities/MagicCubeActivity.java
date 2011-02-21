@@ -27,7 +27,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -86,7 +88,7 @@ public class MagicCubeActivity extends Activity {
 	private Button successScreenSubmitButton;
 
 	private Dialog progressDialog;
-
+	private Vibrator vibrator;
 	private boolean timedMode = false;
 
 	private State state = State.FREE;
@@ -107,6 +109,7 @@ public class MagicCubeActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
 		this.setScreenOrientation();
+		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
 		this.timedMode = getIntent().getBooleanExtra("timedMode", false);
 		int order = Configuration.config().getCubeSize();
@@ -366,15 +369,21 @@ public class MagicCubeActivity extends Activity {
 		public void cubeSolved() {
 			MagicCubeActivity.this.runOnUiThread(new Runnable() {
 				public void run() {
-					if (state == State.PLAY) {
-						if (timedMode) {
+
+					if (timedMode) {
+						if (state == State.PLAY) {
 							controlView.getCubeTimer().stop();
+							vibrate();
 							switchState(State.WAIT_REPLAY);
 							showSuccessScreen();
-						} else {
+
+						}
+					} else {
+						if (state != State.SHUFFLING) {
 							toast
 									.setText("Congratulations!\nYou've solve the cube");
 							toast.show();
+							vibrate();
 						}
 					}
 				}
@@ -425,9 +434,8 @@ public class MagicCubeActivity extends Activity {
 								.showDialog(
 										MagicCubeActivity.this,
 										"Record Submission Denied",
-										"The current SHUFFLE STEPS setting is "
-												+ Configuration.config()
-														.getShuffleSteps()
+										"The current SHUFFLE STEPS is "
+												+ currentshuffle
 												+ ". Only records with twenty more shuffles can be submitted.");
 					}
 				} else {
@@ -446,6 +454,8 @@ public class MagicCubeActivity extends Activity {
 		}
 	}
 
+	private int currentshuffle = 0;
+
 	public void shuffle(int step) {
 		if (this.state != State.FREE && this.state != State.WAIT_REPLAY) {
 			return;
@@ -453,6 +463,8 @@ public class MagicCubeActivity extends Activity {
 		if (moveController.getState() != MoveController.State.STOPPED) {
 			return;
 		}
+
+		currentshuffle = step;
 		IMoveSequence seq = new InfiniteMoveSequence(cubeController
 				.getMagicCube().getOrder());
 		Move move = null;
@@ -533,6 +545,11 @@ public class MagicCubeActivity extends Activity {
 
 	public void loadCubeState() {
 		if (!VersionUtil.checkProVersion(this, true)) {
+			return;
+		}
+		if (timedMode) {
+			DialogUtil.showDialog(this, "Load Denied",
+					"Load is denied in timed mode.");
 			return;
 		}
 		File file = Environment.getExternalStorageDirectory();
@@ -718,6 +735,8 @@ public class MagicCubeActivity extends Activity {
 			data.put("steps", cubeController.getStepCount() + "");
 			data.put("order", cubeController.getMagicCube().getOrder() + "");
 			data.put("shuffles", Configuration.config().getShuffleSteps() + "");
+			data.put("android_id", Secure.getString(MagicCubeActivity.this
+					.getContentResolver(), Secure.ANDROID_ID));
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(url);
 			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
@@ -758,6 +777,11 @@ public class MagicCubeActivity extends Activity {
 
 			});
 		}
+	}
+
+	private void vibrate() {
+		long[] pattern = { 0, 1000, 2000, 3000 };
+		vibrator.vibrate(100);
 	}
 
 }

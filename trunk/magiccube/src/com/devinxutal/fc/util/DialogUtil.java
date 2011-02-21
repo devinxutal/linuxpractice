@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -155,6 +156,8 @@ public class DialogUtil {
 
 	private static View createRankView(Activity context,
 			List<CubeRecord> records) {
+		ScrollView ll = new ScrollView(context);
+		ll.setScrollContainer(true);
 		TableLayout layout = new TableLayout(context);
 		layout.setStretchAllColumns(true);
 		layout.addView(createRankHeader(context), new TableLayout.LayoutParams(
@@ -167,7 +170,9 @@ public class DialogUtil {
 							TableLayout.LayoutParams.WRAP_CONTENT));
 
 		}
-		return layout;
+
+		ll.addView(layout);
+		return ll;
 	}
 
 	public static TableRow createRankEntry(Context context, CubeRecord record) {

@@ -24,6 +24,7 @@ import com.devinxutal.fc.cfg.Configuration;
 import com.devinxutal.fc.cfg.Constants;
 import com.devinxutal.fc.solver.CfopSolver;
 import com.devinxutal.fc.util.DialogUtil;
+import com.devinxutal.fc.util.PreferenceUtil;
 import com.devinxutal.fc.util.VersionUtil;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -75,6 +76,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (VersionUtil.checkProVersion(this, false)) {
 			doCheck();
 		}
+		this.showNoticeDialog();
 	}
 
 	@Override
@@ -219,5 +221,25 @@ public class MainActivity extends Activity implements OnClickListener {
 				}).create();
 
 		alert.show();
+	}
+
+	private void showNoticeDialog() {
+		if (PreferenceUtil.canShowUpgradeNotice(MainActivity.this)) {
+			Dialog alert = new AlertDialog.Builder(this)
+					.setTitle("Upgrade Notice")
+					.setMessage(
+							"Fancy Cube is currently available on android 1.6 and higher platform. And we need to upgrade Fancy Cube to android 2.1 to support other fancy functions (such as multi-touch zoom). So this may be the final version for android 1.6 and 2.0.")
+					.setPositiveButton("OK", null).setNegativeButton(
+							"Never Show Again",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									PreferenceUtil.setShowUpgradeNotice(
+											MainActivity.this, false);
+								}
+							}).create();
+
+			alert.show();
+		}
 	}
 }
