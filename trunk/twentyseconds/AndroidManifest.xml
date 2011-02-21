@@ -37,6 +37,7 @@
 		<meta-data android:value="true" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" />
 	</application>
 	<uses-sdk android:minSdkVersion="4" />
+	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
