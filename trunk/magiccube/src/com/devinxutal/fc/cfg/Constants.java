@@ -27,10 +27,10 @@ public class Constants {
 
 	public static final String URL_SERVER = "http://perfect-games.appspot.com";
 	public static final String URL_COMMIT_RECORD = URL_SERVER
-			+ "/commitCubeRecord";
+			+ "/fancycube/commitRecord";
 	public static final String URL_QUERY_RECORD = URL_SERVER
-			+ "/queryCubeRecords";
+			+ "/fancycube/queryRecords";
 	public static final String URL_WORLD_RANK = URL_SERVER
-			+ "/fancyCubeWorldRank";
+			+ "/fancycube/worldRank";
 
 }
