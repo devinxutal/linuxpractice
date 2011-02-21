@@ -1,0 +1,12 @@
+1. Constants.java
+		TEST = false;
+		VERSION = ?
+		
+2. AndroidManifest.xml
+		package_name: lite/pro
+		cut away for LITE: <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+		dubuggable = false
+		update version code
+		
+3. strings
+		app_name
