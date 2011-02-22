@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_cat_basic">
+		<CheckBoxPreference android:title="@string/pref_ent_background_music"
+			android:summary="@string/pref_ent_background_music_summary"
+			android:key="background_music" android:defaultValue="false" />
+		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
+			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
+			android:defaultValue="false" />
+		<ListPreference android:title="@string/pref_ent_difficulty"
+			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
+			android:defaultValue="2" android:entries="@array/pref_ent_difficulty_entries"
+			android:entryValues="@array/pref_ent_difficulty_values" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/pref_cat_control">
+		<ListPreference android:title="@string/pref_ent_control"
+			android:summary="@string/pref_ent_control_summary" android:key="control_manner"
+			android:defaultValue="2" android:entries="@array/pref_ent_control_entries"
+			android:entryValues="@array/pref_ent_control_values" />
+
+		<ListPreference android:title="@string/pref_ent_joystick_position"
+			android:summary="@string/pref_ent_joystick_position_summary"
+			android:key="joystick_position" android:defaultValue="1"
+			android:entries="@array/pref_ent_joystick_position_entries"
+			android:entryValues="@array/pref_ent_joystick_position_values" />
+
+	</PreferenceCategory>
+</PreferenceScreen>
