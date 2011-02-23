@@ -26,6 +26,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
@@ -121,7 +122,7 @@ public class PlaygroundActivity extends Activity {
 		gameController = new GameController(this);
 		controlView = new GameControlView(this);
 		toast = Toast.makeText(this, "", 5000);
-		controlView.addCubeControlListener(new ControlButtonClicked());
+		controlView.addGameControlListener(new ControlButtonClicked());
 		controlView.setGameController(gameController);
 		FrameLayout layout = new FrameLayout(this);
 		layout.addView(gameController.getPlaygroundView());
@@ -286,23 +287,41 @@ public class PlaygroundActivity extends Activity {
 
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
-			switch (id) {
+		}
 
+		public void buttonPressed(int id) {
+			Log.v(TAG, "button down : " + id);
+			switch (id) {
 			case GameControlView.BTN_LEFT:
-				Log.v(TAG, "left button clicked");
-				gameController.processCommand(Command.LEFT);
+				gameController.processCommand(Command.LEFT_DOWN);
 				break;
 			case GameControlView.BTN_RIGHT:
-				Log.v(TAG, "left button clicked");
-				gameController.processCommand(Command.RIGHT);
+				gameController.processCommand(Command.RIGHT_DOWN);
 				break;
 			case GameControlView.BTN_TURN:
-				Log.v(TAG, "left button clicked");
-				gameController.processCommand(Command.TURN);
+				gameController.processCommand(Command.TURN_DOWN);
 				break;
 			case GameControlView.BTN_DOWN:
-				Log.v(TAG, "left button clicked");
-				gameController.processCommand(Command.DOWN);
+				gameController.processCommand(Command.DOWN_DOWN);
+				break;
+			}
+		}
+
+		public void buttonReleased(int id) {
+
+			Log.v(TAG, "button up : " + id);
+			switch (id) {
+			case GameControlView.BTN_LEFT:
+				gameController.processCommand(Command.LEFT_UP);
+				break;
+			case GameControlView.BTN_RIGHT:
+				gameController.processCommand(Command.RIGHT_UP);
+				break;
+			case GameControlView.BTN_TURN:
+				gameController.processCommand(Command.TURN_UP);
+				break;
+			case GameControlView.BTN_DOWN:
+				gameController.processCommand(Command.DOWN_UP);
 				break;
 			}
 		}
@@ -597,7 +616,7 @@ public class PlaygroundActivity extends Activity {
 				}
 			}
 			gameController.getPlaygroundView().invalidate();
-
+			
 		}
 
 	}
