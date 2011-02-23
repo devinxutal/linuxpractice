@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Log;
 
@@ -18,20 +17,23 @@ import com.devinxutal.tetris.control.Command;
 public class Playground {
 	public static final int VERTICAL_BLOCKS = 20;
 	public static final int HORIZONTAL_BLOCKS = 10;
+	public static final int GAP_LEN = 1;
 	private static final String TAG = "Playground";
 	private int width;
 	private int height;
 	private int blockSize;
-	private int gapLen = 1;
 
 	private boolean inAnimation = false;
 	private boolean eliminating[] = new boolean[VERTICAL_BLOCKS];
 	private int eliminatingCurrentStep = 0;
 	private int eliminatingTotalSteps = 3;
 
+	private boolean finished = false;
+
 	private Block activeBlock = null;
 	private int blockOffsetX = 0;
 	private int blockOffsetY = 0;
+	private int originalOffsetY = 0;
 
 	private int playground[][] = new int[VERTICAL_BLOCKS][HORIZONTAL_BLOCKS];
 
@@ -45,13 +47,28 @@ public class Playground {
 
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getBlockSize() {
+		return blockSize;
+	}
+
 	public void reset() {
+
+		inAnimation = false;
+		finished = false;
+
 		for (int i = 0; i < VERTICAL_BLOCKS; i++) {
 			for (int j = 0; j < HORIZONTAL_BLOCKS; j++) {
 				playground[i][j] = -1;
 			}
 		}
-		inAnimation = false;
 		for (int i = 0; i < eliminating.length; i++) {
 			eliminating[i] = false;
 		}
@@ -61,6 +78,11 @@ public class Playground {
 		for (int i = 0; i < blockQueueLen; i++) {
 			blockQueue.addLast(new Block());
 		}
+
+	}
+
+	public boolean isFinished() {
+		return finished;
 	}
 
 	public ScoreAndLevel getScoreAndLevel() {
@@ -80,7 +102,9 @@ public class Playground {
 
 			} else {
 				settleBlock();
+				checkFinish();
 				checkElimination();
+
 			}
 		}
 	}
@@ -121,13 +145,13 @@ public class Playground {
 	}
 
 	public void determinSize(int maxWidth, int maxHeight) {
-		int bs1 = (maxWidth - (HORIZONTAL_BLOCKS - 1) * gapLen)
+		int bs1 = (maxWidth - (HORIZONTAL_BLOCKS + 1) * GAP_LEN)
 				/ HORIZONTAL_BLOCKS;
-		int bs2 = (maxHeight - (VERTICAL_BLOCKS - 1) * gapLen)
+		int bs2 = (maxHeight - (VERTICAL_BLOCKS + 1) * GAP_LEN)
 				/ VERTICAL_BLOCKS;
 		blockSize = Math.min(bs1, bs2);
-		width = HORIZONTAL_BLOCKS * (gapLen + blockSize) - gapLen;
-		height = VERTICAL_BLOCKS * (gapLen + blockSize) - gapLen;
+		width = HORIZONTAL_BLOCKS * (GAP_LEN + blockSize) + GAP_LEN;
+		height = VERTICAL_BLOCKS * (GAP_LEN + blockSize) + GAP_LEN;
 
 		dm.onSizeChanged();
 	}
@@ -140,7 +164,7 @@ public class Playground {
 
 	public void draw(Canvas canvas, int x, int y) {
 		dm.paint.setColor(Color.BLACK);
-		canvas.drawRect(new Rect(x, y, x + width, y + height), dm.paint);
+		// canvas.drawRect(new Rect(x, y, x + width, y + height), dm.paint);
 		for (int row = 0; row < VERTICAL_BLOCKS; row++) {
 			if (inAnimation && eliminating[row]
 					&& (eliminatingCurrentStep % 2 == 0)) {
@@ -150,8 +174,8 @@ public class Playground {
 				int color = playground[row][j];
 				if (color >= 0) {
 					canvas.drawBitmap(dm.sized_blocks[color], x + j
-							* (blockSize + gapLen), y + row
-							* (blockSize + gapLen), dm.paint);
+							* (blockSize + GAP_LEN) + GAP_LEN, y + row
+							* (blockSize + GAP_LEN) + GAP_LEN, dm.paint);
 				}
 			}
 		}
@@ -164,10 +188,12 @@ public class Playground {
 						int yy = blockOffsetY + i;
 						if (xx >= 0 && xx < HORIZONTAL_BLOCKS && yy >= 0
 								&& yy < VERTICAL_BLOCKS) {
-							canvas.drawBitmap(dm.sized_blocks[activeBlock
-									.getBlockType().ordinal()], x + xx
-									* (blockSize + gapLen), y + yy
-									* (blockSize + gapLen), dm.paint);
+							canvas
+									.drawBitmap(dm.sized_blocks[activeBlock
+											.getBlockType().ordinal()], x + xx
+											* (blockSize + GAP_LEN) + GAP_LEN,
+											y + yy * (blockSize + GAP_LEN)
+													+ GAP_LEN, dm.paint);
 						}
 					}
 				}
@@ -314,9 +340,25 @@ public class Playground {
 	private void allocateBlock() {
 		this.activeBlock = blockQueue.poll();
 		blockQueue.addLast(new Block());
-
-		blockOffsetX = 2;
-		blockOffsetY = 0;
+		blockOffsetX = 3;
+		blockOffsetY = -4;
+		int emptyRows = 0;
+		boolean[][] matrix = activeBlock.getMatrix();
+		for (int i = 3; i >= 0; i--) {
+			boolean empty = true;
+			for (int j = 0; j < 4; j++) {
+				if (matrix[i][j]) {
+					empty = false;
+					break;
+				}
+			}
+			if (empty) {
+				emptyRows++;
+			} else {
+				break;
+			}
+		}
+		blockOffsetY = emptyRows - 4 + 1;
 	}
 
 	private void settleBlock() {
@@ -382,5 +424,12 @@ public class Playground {
 		}
 
 		inAnimation = false;
+	}
+
+	private boolean checkFinish() {
+		if (originalOffsetY == blockOffsetY) {
+			finished = true;
+		}
+		return finished;
 	}
 }
