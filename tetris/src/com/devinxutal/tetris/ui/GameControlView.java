@@ -52,7 +52,6 @@ public class GameControlView extends LinearLayout implements OnTouchListener {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		dm.recalc();
-		Log.v(TAG, "onDraw");
 
 		dm.paint.setAntiAlias(true);
 		dm.paint.setAlpha(255);
@@ -67,15 +66,41 @@ public class GameControlView extends LinearLayout implements OnTouchListener {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			float x = event.getX();
 			float y = event.getY();
+			boolean notified = false;
 			for (ButtonInfo button : buttons) {
-				if (MathUtil.distance(x, y, button.x, button.y) <= button.radius) {
-					this.notifyButtonClicked(button.buttonID);
-					break;
+				if (MathUtil.distance(x, y, button.x, button.y) <= button.radius
+						&& !notified) {
+					if (!button.pressed) {
+						button.pressed = true;
+						this.notifyButtonPressed(button.buttonID);
+					}
+					notified = true;
+				} else {
+					if (button.pressed) {
+						button.pressed = false;
+						this.notifyButtonReleased(button.buttonID);
+					}
+				}
+
+			}
+		} else if (event.getAction() == MotionEvent.ACTION_UP) {
+			Log.v(TAG, "touched up");
+			float x = event.getX();
+			float y = event.getY();
+			for (ButtonInfo button : buttons) {
+				if (button.pressed) {
+					button.pressed = false;
+					if (MathUtil.distance(x, y, button.x, button.y) <= button.radius) {
+						this.notifyButtonReleased(button.buttonID);
+						this.notifyButtonClicked(button.buttonID);
+					} else {
+						this.notifyButtonReleased(button.buttonID);
+					}
 				}
 
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void onClick(View view) {
@@ -87,23 +112,39 @@ public class GameControlView extends LinearLayout implements OnTouchListener {
 
 	public interface GameControlListener {
 		void buttonClickced(int id);
+
+		void buttonPressed(int id);
+
+		void buttonReleased(int id);
 	}
 
-	public boolean addCubeControlListener(GameControlListener l) {
+	public boolean addGameControlListener(GameControlListener l) {
 		return listeners.add(l);
 	}
 
-	public boolean removeCubeControlListener(GameControlListener l) {
+	public boolean removeGameControlListener(GameControlListener l) {
 		return listeners.remove(l);
 	}
 
-	public void clearCubeControlListener() {
+	public void clearGameControlListener() {
 		listeners.clear();
 	}
 
 	public void notifyButtonClicked(int id) {
 		for (GameControlListener l : listeners) {
 			l.buttonClickced(id);
+		}
+	}
+
+	public void notifyButtonPressed(int id) {
+		for (GameControlListener l : listeners) {
+			l.buttonPressed(id);
+		}
+	}
+
+	public void notifyButtonReleased(int id) {
+		for (GameControlListener l : listeners) {
+			l.buttonReleased(id);
 		}
 	}
 
@@ -199,6 +240,7 @@ class ButtonInfo {
 	int buttonID;
 	Bitmap buttonBG;
 	Bitmap buttonIcon;
+	boolean pressed = false;
 
 	public ButtonInfo(int x, int y, int radius, int buttonID, Bitmap buttonBG,
 			Bitmap buttonIcon) {
@@ -209,6 +251,7 @@ class ButtonInfo {
 		this.buttonID = buttonID;
 		this.buttonBG = buttonBG;
 		this.buttonIcon = buttonIcon;
+
 	}
 
 }

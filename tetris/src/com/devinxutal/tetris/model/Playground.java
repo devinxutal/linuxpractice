@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Log;
 
@@ -109,27 +110,24 @@ public class Playground {
 		}
 	}
 
-	public void processCommand(Command cmd) {
+	public boolean processCommand(Command cmd) {
 		Log.v(TAG, "processCommand 1");
 		if (this.activeBlock == null) {
-			return;
+			return false;
 		}
 
 		Log.v(TAG, "processCommand 2");
 		switch (cmd) {
 		case TURN:
-			turnBlock();
-			break;
+			return turnBlock();
 		case LEFT:
-			moveBlockLeft();
-			break;
+			return moveBlockLeft();
 		case RIGHT:
-			moveBlockRight();
-			break;
+			return moveBlockRight();
 		case DOWN:
-			moveBlockDown();
-			break;
+			return moveBlockDown();
 		}
+		return false;
 	}
 
 	public boolean isInAnimation() {
@@ -161,6 +159,46 @@ public class Playground {
 	}
 
 	private DrawingMetrics dm = new DrawingMetrics();
+
+	public void drawPendingBlocks(Canvas canvas, Rect rect1, Rect rect2,
+			Rect rect3) {
+		Log.v(TAG, "draw pending blocks");
+		this.drawBlock(canvas, blockQueue.get(0), rect1);
+		this.drawBlock(canvas, blockQueue.get(1), rect2);
+		this.drawBlock(canvas, blockQueue.get(2), rect3);
+	}
+
+	public void drawBlock(Canvas canvas, Block block, Rect rect) {
+		Log.v(TAG, "draw block with rect: " + rect.left + "," + rect.top + ","
+				+ rect.width() + "," + rect.height());
+		int bs = Math.min(rect.width(), rect.height()) / 4;
+		int startX = rect.left + (rect.width() - bs * 4) / 2;
+		int startY = rect.top + (rect.height() - bs * 4) / 2;
+		int row = block.rowCount();
+		int col = block.columnCount();
+		int fc = block.firstValidColumn();
+		int fr = block.firstValidRow();
+		Log.v(TAG, "row col fr fc: " + row + "," + col + "," + fr + "," + fc);
+		startX += (4 - col) * bs / 2;
+		startY += (4 - row) * bs / 2;
+		Rect from = new Rect(0, 0, dm.sized_blocks[0].getWidth(),
+				dm.sized_blocks[0].getHeight());
+		Rect to = new Rect();
+		dm.paint.reset();
+		dm.paint.setAntiAlias(true);
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (block.getMatrix()[fr + i][fc + j]) {
+					to.left = j * bs + startX;
+					to.top = i * bs + startY;
+					to.right = to.left + bs;
+					to.bottom = to.top + bs;
+					canvas.drawBitmap(dm.sized_blocks[block.getBlockType()
+							.ordinal()], from, to, dm.paint);
+				}
+			}
+		}
+	}
 
 	public void draw(Canvas canvas, int x, int y) {
 		dm.paint.setColor(Color.BLACK);
@@ -432,4 +470,5 @@ public class Playground {
 		}
 		return finished;
 	}
+
 }

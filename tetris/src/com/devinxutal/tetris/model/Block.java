@@ -23,7 +23,77 @@ public class Block {
 	}
 
 	public void turn() {
+		recalculated = false;
 		current = (current + 1) % this.numStatus;
+	}
+
+	boolean recalculated = false;
+
+	private int fc;
+	private int fr;
+	private int rc;
+	private int cc;
+
+	private void recalc() {
+		if (recalculated) {
+			return;
+		}
+		fc = 0;
+		fr = 0;
+		rc = 0;
+		cc = 0;
+		boolean rowStarted = false;
+		boolean columnStarted = false;
+		for (int i = 0; i < 4; i++) {
+			boolean rowEmpty = true;
+			boolean columnEmpty = true;
+			for (int j = 0; j < 4; j++) {
+				if (getMatrix()[i][j]) {
+					rowEmpty = false;
+				}
+				if (getMatrix()[j][i]) {
+					columnEmpty = false;
+				}
+			}
+			if (!rowStarted && !rowEmpty) {
+				rowStarted = true;
+				fr = i;
+			} else if (rowStarted && rowEmpty && rc == 0) {
+				rc = i - fr;
+			}
+			if (!columnStarted && !columnEmpty) {
+				columnStarted = true;
+				fc = i;
+			} else if (columnStarted && columnEmpty && cc == 0) {
+				cc = i - fc;
+			}
+		}
+		if (cc == 0) {
+			cc = 4 - fc;
+		}
+		if (rc == 0) {
+			rc = 4 - fr;
+		}
+	}
+
+	public int firstValidColumn() {
+		recalc();
+		return fc;
+	}
+
+	public int firstValidRow() {
+		recalc();
+		return fr;
+	}
+
+	public int columnCount() {
+		recalc();
+		return cc;
+	}
+
+	public int rowCount() {
+		recalc();
+		return rc;
 	}
 
 	public boolean[][] getMatrix() {

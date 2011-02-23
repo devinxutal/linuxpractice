@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.Bitmap.Config;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.devinxutal.tetris.R;
@@ -21,7 +22,7 @@ public class BitmapUtil {
 	private Bitmap aimButton1;
 	private Bitmap aimButton2;
 	private Paint paint;
-
+	private Drawable infoBar;
 	private static BitmapUtil util;
 
 	public synchronized static BitmapUtil get(Context context) {
@@ -40,6 +41,7 @@ public class BitmapUtil {
 					R.drawable.aim_button_1);
 			aimButton2 = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.aim_button_2);
+			infoBar = context.getResources().getDrawable(R.drawable.info_bar);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,6 +59,10 @@ public class BitmapUtil {
 
 	public Bitmap getAimButtonBitmap2() {
 		return aimButton2;
+	}
+
+	public Drawable getInfoBar() {
+		return infoBar;
 	}
 
 	public Bitmap getBackgroundBitmap(int width, int height) {

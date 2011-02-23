@@ -8,9 +8,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -166,6 +168,9 @@ public class PlaygroundView extends View {
 		int height = this.getHeight();
 		dm.resetPaint();
 		playground.draw(canvas, (width - w) / 2, (height - h) / 2);
+		//
+		playground.drawPendingBlocks(canvas, dm.next1BlockRect,
+				dm.next2BlockRect, dm.next3BlockRect);
 
 	}
 
@@ -187,6 +192,9 @@ public class PlaygroundView extends View {
 		private BitmapUtil bitmapUtil;
 		private Bitmap bgBitmap;
 		private Bitmap gridBitmap;
+		private Rect next1BlockRect;
+		private Rect next2BlockRect;
+		private Rect next3BlockRect;
 
 		public DrawingMetrics() {
 			paint = new Paint();
@@ -219,6 +227,7 @@ public class PlaygroundView extends View {
 		}
 
 		private void regenerateBackground() {
+			BitmapUtil util = BitmapUtil.get(getContext());
 			this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
 					getHeight());
 			Canvas canvas = new Canvas(bgBitmap);
@@ -264,8 +273,39 @@ public class PlaygroundView extends View {
 							+ gridSize * j + gap, paint);
 				}
 			}
-
 			bg.recycle();
+
+			// draw nextBlock bar
+			Drawable nextBar = util.getInfoBar();
+			int barHeight = nextBar.getIntrinsicHeight();
+			int barWidth = (width - playground.getWidth() - 13) / 2;
+			int barStartX = width - barWidth - 4;
+			int barStartY = 5;
+			int bs1 = (int) (barHeight * 0.6f);
+			int bs2 = Math.min((int) (bs1 * 0.8),
+					(int) ((barWidth - barHeight) / 2 * 0.8));
+
+			next1BlockRect = new Rect(barStartX + (barHeight - bs1) / 2,
+					barStartY + (barHeight - bs1) / 2, barStartX
+							+ (barHeight - bs1) / 2 + bs1, barStartY
+							+ (barHeight - bs1) / 2 + bs1);
+			int next2BlockRectStartX = barStartX + barHeight
+					+ (barWidth - barHeight - 2 * bs2) / 4;
+			int next2BlockRectStartY = next1BlockRect.top + (bs1 - bs2) / 2;
+			next2BlockRect = (new Rect(next2BlockRectStartX,
+					next2BlockRectStartY, next2BlockRectStartX + bs2,
+					next2BlockRectStartY + bs2));
+			int next3BlockRectStartX = next2BlockRectStartX + bs2
+					+ (barWidth - barHeight - 2 * bs2) / 4;
+
+			next3BlockRect = (new Rect(next3BlockRectStartX,
+					next2BlockRectStartY, next3BlockRectStartX + bs2,
+					next2BlockRectStartY + bs2));
+
+			nextBar.setBounds(new Rect(barStartX, barStartY, barStartX
+					+ barWidth, barStartY + barHeight));
+			nextBar.draw(canvas);
+			// 
 		}
 	}
 
