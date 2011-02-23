@@ -31,6 +31,7 @@ import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -122,10 +123,10 @@ public class PlaygroundActivity extends Activity {
 		toast = Toast.makeText(this, "", 5000);
 		controlView.addCubeControlListener(new ControlButtonClicked());
 		controlView.setGameController(gameController);
-		controlView.getJoyStick().addJoyStickListener(joyStickListener);
 		FrameLayout layout = new FrameLayout(this);
 		layout.addView(gameController.getPlaygroundView());
 		gameController.addGameListener(new GameFinished());
+
 		layout.addView(controlView);
 
 		successScreen = new LinearLayout(this);
@@ -149,17 +150,16 @@ public class PlaygroundActivity extends Activity {
 		AdUtil.determineAd(this, R.id.ss_ad_area);
 		hideSuccessScreen();
 		//
-		switchState(State.PLAY);
+		switchState(State.END);
 		preferenceChanged();
 		this.customizeButtons();
 
 		wakelock.acquire();
-		this.gameController.start();
+		this.play();
 	}
 
 	@Override
 	protected void onDestroy() {
-		controlView.getGameTimer().stop();
 		if (wakelock.isHeld()) {
 			wakelock.release();
 		}
@@ -167,7 +167,6 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private void initByRestoredState() {
-		this.controlView.getGameTimer().setTime(elapsedTime);
 		Log.v(TAG, "initByRestoredState: " + state);
 		if (state == State.PLAY) {
 			state = State.PAUSED;
@@ -175,28 +174,42 @@ public class PlaygroundActivity extends Activity {
 		switchState(state);
 	}
 
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		Log.v(TAG, "key up " + event.getKeyCode());
+		switch (event.getKeyCode()) {
+		case KeyEvent.KEYCODE_DPAD_UP:
+			gameController.processCommand(Command.TURN);
+			break;
+		case KeyEvent.KEYCODE_DPAD_DOWN:
+			gameController.processCommand(Command.DOWN);
+			break;
+		case KeyEvent.KEYCODE_DPAD_CENTER:
+			gameController.processCommand(Command.DOWN);
+			break;
+		case KeyEvent.KEYCODE_DPAD_LEFT:
+			gameController.processCommand(Command.LEFT);
+			break;
+		case KeyEvent.KEYCODE_DPAD_RIGHT:
+			gameController.processCommand(Command.RIGHT);
+			break;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
 	private void switchState(State to) {
 
 		if (to == State.PAUSED) {
-			this.controlView
-					.setPlayButtonStatus(GameControlView.PLAY_BUTTON_STATUS_PLAY);
 			SoundManager.get(this).pauseBackgroundMusic();
 		} else if (to == State.PLAY) {
-			this.controlView
-					.setPlayButtonStatus(GameControlView.PLAY_BUTTON_STATUS_PAUSE);
-			this.controlView.getGameTimer().start();
 
 			SoundManager.get(this).playBackgroundMusic();
 
 		} else if (to == State.ENDING) {
-			this.controlView
-					.setPlayButtonStatus(GameControlView.PLAY_BUTTON_STATUS_NONE);
 			SoundManager.get(this).stopBackgroundMusic();
 			SoundManager.get(this).playCrashEffect();
 
 		} else if (to == State.END) {
-			this.controlView
-					.setPlayButtonStatus(GameControlView.PLAY_BUTTON_STATUS_NONE);
 
 		}
 		this.state = to;
@@ -248,7 +261,6 @@ public class PlaygroundActivity extends Activity {
 		if (wakelock.isHeld()) {
 			wakelock.release();
 		}
-		this.controlView.getGameTimer().stop();
 		this.gameController.destroy();
 		SoundManager.get(this).stopBackgroundMusic();
 		this.stopListening();
@@ -276,13 +288,22 @@ public class PlaygroundActivity extends Activity {
 		public void buttonClickced(int id) {
 			switch (id) {
 
-			case GameControlView.BTN_PLAY:
-				Log.v(TAG, "play button clicked");
-				if (state == State.PAUSED) {
-					play();
-				} else if (state == State.PLAY) {
-					pause();
-				}
+			case GameControlView.BTN_LEFT:
+				Log.v(TAG, "left button clicked");
+				gameController.processCommand(Command.LEFT);
+				break;
+			case GameControlView.BTN_RIGHT:
+				Log.v(TAG, "left button clicked");
+				gameController.processCommand(Command.RIGHT);
+				break;
+			case GameControlView.BTN_TURN:
+				Log.v(TAG, "left button clicked");
+				gameController.processCommand(Command.TURN);
+				break;
+			case GameControlView.BTN_DOWN:
+				Log.v(TAG, "left button clicked");
+				gameController.processCommand(Command.DOWN);
+				break;
 			}
 		}
 	}
@@ -343,7 +364,7 @@ public class PlaygroundActivity extends Activity {
 
 	private void showSuccessScreen() {
 		Log.v(TAG, "showing screen");
-		long time = controlView.getGameTimer().getTime();
+		long time = 10000;
 		int title = R.string.prompt_title_failed;
 		int desc = R.string.prompt_faied;
 		if (time / 1000 >= 20) {
@@ -378,25 +399,21 @@ public class PlaygroundActivity extends Activity {
 		if (this.state != State.PAUSED && this.state != State.END) {
 			return;
 		}
-		controlView.getGameTimer().start();
-		gameController.getPlaygroundView().pause(false);
+		gameController.start();
 		switchState(State.PLAY);
 	}
 
 	public void pause() {
-		controlView.getGameTimer().stop();
 		gameController.getPlaygroundView().pause(true);
 		switchState(State.PAUSED);
 	}
 
 	public void replay() {
-		controlView.getGameTimer().reset();
 		gameController.getPlaygroundView().reset();
 		play();
 	}
 
 	public void stop() {
-		controlView.getGameTimer().stop();
 		switchState(State.ENDING);
 	}
 
@@ -422,7 +439,6 @@ public class PlaygroundActivity extends Activity {
 			this.useAccelerometer = true;
 			this.useJoyStick = true;
 		}
-		this.controlView.showJoyStick(useJoyStick);
 		if (this.useAccelerometer && !this.sensorRunning) {
 			this.startListening();
 		} else if (!this.useAccelerometer && this.sensorRunning) {
@@ -478,7 +494,6 @@ public class PlaygroundActivity extends Activity {
 			String url = Constants.URL_COMMIT_RECORD;
 			Map<String, String> data = new HashMap<String, String>();
 			data.put("player", player);
-			data.put("time", controlView.getGameTimer().getTime() + "");
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(url);
 			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
@@ -577,7 +592,7 @@ public class PlaygroundActivity extends Activity {
 					gameController.processCommand(Command.LEFT);
 				}
 			} else {
-				if (dy < 0-.5f) {
+				if (dy < 0 - .5f) {
 					gameController.processCommand(Command.TURN);
 				}
 			}

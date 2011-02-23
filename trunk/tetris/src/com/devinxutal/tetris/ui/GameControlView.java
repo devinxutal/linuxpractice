@@ -4,32 +4,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.view.View.OnTouchListener;
+import android.widget.LinearLayout;
 
-import com.devinxutal.tetris.R;
-import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.control.GameController;
+import com.devinxutal.tetris.util.BitmapUtil;
+import com.devinxutal.tetris.util.MathUtil;
 
-public class GameControlView extends ViewGroup implements OnClickListener {
+public class GameControlView extends LinearLayout implements OnTouchListener {
 	private GameController controller;
 	private List<GameControlListener> listeners = new LinkedList<GameControlListener>();
 
 	public static final int BTN_PLAY = 3300;
+	public static final int BTN_LEFT = 3301;
+	public static final int BTN_RIGHT = 3302;
+	public static final int BTN_TURN = 3303;
+	public static final int BTN_DOWN = 3304;
+	private static final String TAG = "GameControlView";
 
-	private ImageButton playButton;
-	private List<ImageButton> buttons1;
-	private JoyStick joyStick;
-	private GameTimer gameTimer;
-	private boolean collapsed = true;
-	private boolean showJoyStick = true;
-	private boolean widgetChanged = true;
+	private DrawingMetrics dm = new DrawingMetrics();
+
+	private List<ButtonInfo> buttons = new LinkedList<ButtonInfo>();
 
 	public GameControlView(Context context) {
 		super(context);
+		this.setBackgroundColor(Color.argb(1, 255, 255, 255));
 		init();
 	}
 
@@ -37,149 +44,38 @@ public class GameControlView extends ViewGroup implements OnClickListener {
 		this.controller = controller;
 	}
 
-	public GameTimer getGameTimer() {
-		return gameTimer;
-	}
-
-	public JoyStick getJoyStick() {
-		return joyStick;
-	}
-
 	private void init() {
-
-		gameTimer = new GameTimer(getContext());
-		this.addView(gameTimer);
-
-		buttons1 = new LinkedList<ImageButton>();
-
-		int[] ids = new int[] { BTN_PLAY };//
-		int[] res = new int[] { R.drawable.icon_pause, //
-
-		};//
-		for (int i = 0; i < ids.length; i++) {
-			ImageButton button = makeButton(ids[i], res[i]);
-			buttons1.add(button);
-		}
-		playButton = buttons1.get(0);
-		this.addView(playButton);
-		joyStick = new JoyStick(this.getContext());
-		this.addView(joyStick);
-	}
-
-	private ImageButton makeButton(int id, int resid) {
-		ImageButton b = new ImageButton(getContext());
-		b.setId(id);
-		b.setBackgroundResource(R.drawable.transparent_button);
-		b.setImageResource(resid);
-		b.setOnClickListener(this);
-		return b;
+		this.setOnTouchListener(this);
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		if (!changed && !widgetChanged) {
-			return;
-		}
-		widgetChanged = false;
-		ImageButton collapseButton = buttons1.get(0);
-		collapseButton.measure(r - l, b - t);
-		int width = r - l;
-		int height = b - t;
-		int len = width > height ? height : width;
-		int btn_w = collapseButton.getMeasuredWidth();
-		int btn_h = collapseButton.getMeasuredHeight();
-		int btn_len = width > height ? btn_h : btn_w;
-		int margin = 10;
-		int padding = 0;
-		if (buttons1.size() > 1) {
-			padding = ((len - 2 * margin) - buttons1.size() * btn_len)
-					/ (buttons1.size() - 1);
-		}
-		collapseButton.layout(margin, margin, btn_w + margin, btn_h + margin);
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		dm.recalc();
+		Log.v(TAG, "onDraw");
 
-		if (!collapsed) {
-			int index = -1;
-			for (ImageButton btn : buttons1) {
-				index++;
-				if (index == 0) {
-					continue;
-				}
-				if (width < height) {
-					btn.layout(margin + index * (padding + btn_w), margin,
-							margin + index * (padding + btn_w) + btn_w, margin
-									+ btn_h);
-				} else {
-					btn.layout(margin, margin + index * (padding + btn_h),
-							margin + btn_w, margin + index * (padding + btn_h)
-									+ btn_h);
-				}
-			}
-		}
-
-		gameTimer.measure(-1, -1);
-		int h = gameTimer.getMeasuredHeight();
-		int w = gameTimer.getMeasuredWidth();
-		int left = width - w - margin;
-		int top = 0 + margin;
-		if (!collapsed) {
-			if (width < height) {
-				top += margin + btn_h;
-			} else {
-				left -= margin + btn_w;
-			}
-		}
-
-		Log.v("CubeControlView", "layout  timer: " + left + ", " + top);
-		gameTimer.layout(left, top, left + w, top + h);
-
-		if (showJoyStick) {
-
-			joyStick.measure(LayoutParams.WRAP_CONTENT,
-					LayoutParams.WRAP_CONTENT);
-			len = Math.min(height, width) / 3;
-			if (Configuration.config().getJoyStickPosition() == Configuration.JOT_STICK_POSITION_LEFT) {
-
-				joyStick.layout(margin, height - margin - len, margin + len,
-						height - margin);
-			} else {
-
-				joyStick.layout(width - margin - len, height - margin - len,
-						width - margin, height - margin);
-			}
+		dm.paint.setAntiAlias(true);
+		dm.paint.setAlpha(255);
+		for (ButtonInfo button : buttons) {
+			canvas.drawBitmap(button.buttonBG, button.x - button.radius,
+					button.y - button.radius, dm.paint);
 		}
 	}
 
-	public static final int PLAY_BUTTON_STATUS_PLAY = 1;
-	public static final int PLAY_BUTTON_STATUS_PAUSE = 2;
-	public static final int PLAY_BUTTON_STATUS_NONE = 3;
+	public boolean onTouch(View arg0, MotionEvent event) {
+		Log.v(TAG, "touched");
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			float x = event.getX();
+			float y = event.getY();
+			for (ButtonInfo button : buttons) {
+				if (MathUtil.distance(x, y, button.x, button.y) <= button.radius) {
+					this.notifyButtonClicked(button.buttonID);
+					break;
+				}
 
-	public void setPlayButtonStatus(int status) {
-		switch (status) {
-		case PLAY_BUTTON_STATUS_PLAY:
-			playButton.setImageResource(R.drawable.icon_play);
-			playButton.setVisibility(VISIBLE);
-			break;
-		case PLAY_BUTTON_STATUS_PAUSE:
-			playButton.setImageResource(R.drawable.icon_pause);
-			playButton.setVisibility(VISIBLE);
-			break;
-		case PLAY_BUTTON_STATUS_NONE:
-			playButton.setImageResource(R.drawable.icon_play);
-			playButton.setVisibility(INVISIBLE);
-			break;
-		}
-	}
-
-	public void showJoyStick(boolean show) {
-		if (showJoyStick != show) {
-			showJoyStick = show;
-			widgetChanged = true;
-			if (show) {
-				this.joyStick.setVisibility(VISIBLE);
-			} else {
-				this.joyStick.setVisibility(INVISIBLE);
 			}
 		}
+		return false;
 	}
 
 	public void onClick(View view) {
@@ -211,7 +107,108 @@ public class GameControlView extends ViewGroup implements OnClickListener {
 		}
 	}
 
-	public boolean isCollapsed() {
-		return collapsed;
+	public class DrawingMetrics {
+
+		public final int[] STAR_COLORS = new int[] { Color.rgb(150, 0, 50),
+				Color.rgb(0, 150, 50), Color.rgb(150, 150, 0),
+				Color.rgb(150, 0, 100), Color.rgb(0, 0, 150) };
+
+		private Paint paint;
+		private BitmapUtil bitmapUtil;
+
+		Bitmap buttonBG1 = null;
+		Bitmap buttonBG2 = null;
+		int playgroundWidth;
+		int playgroundHeight;
+		int width;
+		int height;
+		int sideWidth;
+		int button1Radius;
+		int button2Radius;
+
+		public DrawingMetrics() {
+			paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setTextSize(18);
+			paint.setTypeface(Typeface.DEFAULT_BOLD);
+			bitmapUtil = BitmapUtil.get(getContext());
+		}
+
+		public void recalc() {
+			if (width != getWidth()) {
+				playgroundWidth = controller.getPlayground().getWidth();
+				playgroundHeight = controller.getPlayground().getHeight();
+				width = getWidth();
+				height = getHeight();
+				sideWidth = (width - playgroundWidth) / 2;
+				recalcButtons();
+
+			}
+		}
+
+		private void recalcButtons() {
+			Bitmap button1 = BitmapUtil.get(getContext()).getAimButtonBitmap1();
+			Bitmap button2 = BitmapUtil.get(getContext()).getAimButtonBitmap2();
+			button1Radius = button1.getWidth() / 2;
+			button2Radius = button2.getWidth() / 2;
+			Pair delta = delta(button1Radius, button2Radius, 0);
+			buttons.clear();
+			int buttonY = height - 2 * button1Radius;
+			int buttonX = width - sideWidth + button1Radius;
+			buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
+					BTN_RIGHT, button1, null));
+			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY - delta.y,
+					button2Radius, BTN_TURN, button2, null));
+			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY + delta.y,
+					button2Radius, BTN_DOWN, button2, null));
+
+			buttonX = sideWidth - button1Radius;
+			buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
+					BTN_LEFT, button1, null));
+			buttons.add(new ButtonInfo(buttonX - delta.x, buttonY - delta.y,
+					button2Radius, BTN_TURN, button2, null));
+			buttons.add(new ButtonInfo(buttonX - delta.x, buttonY + delta.y,
+					button2Radius, BTN_DOWN, button2, null));
+
+		}
+
+		private Pair delta(int r1, int r2, int gap) {
+			int edge1 = r1 + r2 + gap;
+			int edge2 = r2 + gap / 2;
+			int edge3 = (int) Math.round(Math.sqrt(edge1 * edge1 - edge2
+					* edge2));
+			return new Pair(edge3, edge2);
+		}
 	}
+}
+
+class Pair {
+	int x;
+	int y;
+
+	public Pair(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
+class ButtonInfo {
+	int x;
+	int y;
+	int radius;
+	int buttonID;
+	Bitmap buttonBG;
+	Bitmap buttonIcon;
+
+	public ButtonInfo(int x, int y, int radius, int buttonID, Bitmap buttonBG,
+			Bitmap buttonIcon) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.buttonID = buttonID;
+		this.buttonBG = buttonBG;
+		this.buttonIcon = buttonIcon;
+	}
+
 }

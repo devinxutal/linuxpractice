@@ -61,7 +61,7 @@ public class SoundManager {
 					BACKGROUND_SOUND_VOLUME);
 
 			mediaPlayer.setDataSource(activity.getAssets().openFd(
-					"sounds/bg.mp3").getFileDescriptor());
+					"sounds/tetris.mid").getFileDescriptor());
 			mediaPlayer.prepare();
 		} catch (Exception e1) {
 			e1.printStackTrace();

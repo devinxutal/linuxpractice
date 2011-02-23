@@ -109,7 +109,7 @@ public class GameController {
 	}
 
 	class HandlerRunnable implements Runnable {
-		@Override
+
 		public void run() {
 			Log.v(TAG, "Controller running");
 			playground.moveOn();
@@ -123,6 +123,8 @@ public class GameController {
 					handler.postDelayed(runnable, 500);
 				}
 			}
+
 		}
+
 	}
 }
