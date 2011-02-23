@@ -153,21 +153,21 @@ public class GameControlView extends LinearLayout implements OnTouchListener {
 			button2Radius = button2.getWidth() / 2;
 			Pair delta = delta(button1Radius, button2Radius, 0);
 			buttons.clear();
-			int buttonY = height - 2 * button1Radius;
-			int buttonX = width - sideWidth + button1Radius;
+			int buttonY = height - button2Radius * 2 - 5;
+			int buttonX = width - button1Radius;
 			buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
 					BTN_RIGHT, button1, null));
-			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY - delta.y,
-					button2Radius, BTN_TURN, button2, null));
-			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY + delta.y,
-					button2Radius, BTN_DOWN, button2, null));
-
-			buttonX = sideWidth - button1Radius;
-			buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-					BTN_LEFT, button1, null));
 			buttons.add(new ButtonInfo(buttonX - delta.x, buttonY - delta.y,
 					button2Radius, BTN_TURN, button2, null));
 			buttons.add(new ButtonInfo(buttonX - delta.x, buttonY + delta.y,
+					button2Radius, BTN_DOWN, button2, null));
+
+			buttonX = button1Radius;
+			buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
+					BTN_LEFT, button1, null));
+			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY - delta.y,
+					button2Radius, BTN_TURN, button2, null));
+			buttons.add(new ButtonInfo(buttonX + delta.x, buttonY + delta.y,
 					button2Radius, BTN_DOWN, button2, null));
 
 		}
