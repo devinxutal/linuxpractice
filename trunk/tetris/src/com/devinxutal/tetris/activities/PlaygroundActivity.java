@@ -26,6 +26,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -174,6 +175,7 @@ public class PlaygroundActivity extends Activity {
 		} else {
 			this.pause();
 		}
+		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
 
 	@Override

@@ -65,7 +65,8 @@ public class SoundManager {
 		try {
 			mediaPlayer.reset();
 			mediaPlayer.setLooping(true);
-			AssetFileDescriptor fd = activity.getAssets().openFd("tetris.mp3");
+			AssetFileDescriptor fd = activity.getAssets().openFd(
+					"sounds/tetris.mp3");
 			mediaPlayer.setDataSource(fd.getFileDescriptor(), fd
 					.getStartOffset(), fd.getLength());
 			mediaPlayer.prepare();
