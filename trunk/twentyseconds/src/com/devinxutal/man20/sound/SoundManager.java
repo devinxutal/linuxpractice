@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -59,9 +60,10 @@ public class SoundManager {
 			mediaPlayer.setLooping(true);
 			mediaPlayer.setVolume(BACKGROUND_SOUND_VOLUME,
 					BACKGROUND_SOUND_VOLUME);
-
-			mediaPlayer.setDataSource(activity.getAssets().openFd(
-					"sounds/bg.mp3").getFileDescriptor());
+			AssetFileDescriptor fd = activity.getAssets().openFd(
+					"sounds/bg.mp3");
+			mediaPlayer.setDataSource(fd.getFileDescriptor(), fd
+					.getStartOffset(), fd.getLength());
 			mediaPlayer.prepare();
 		} catch (Exception e1) {
 			e1.printStackTrace();
