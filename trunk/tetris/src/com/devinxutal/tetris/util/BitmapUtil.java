@@ -22,7 +22,8 @@ public class BitmapUtil {
 	private Bitmap aimButton1;
 	private Bitmap aimButton2;
 	private Paint paint;
-	private Drawable infoBar;
+	private Drawable hInfoBar;
+	private Drawable vInfoBar;
 	private static BitmapUtil util;
 
 	public synchronized static BitmapUtil get(Context context) {
@@ -41,7 +42,11 @@ public class BitmapUtil {
 					R.drawable.aim_button_1);
 			aimButton2 = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.aim_button_2);
-			infoBar = context.getResources().getDrawable(R.drawable.info_bar);
+			hInfoBar = context.getResources()
+					.getDrawable(R.drawable.h_info_bar);
+
+			vInfoBar = context.getResources()
+					.getDrawable(R.drawable.v_info_bar);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,8 +66,12 @@ public class BitmapUtil {
 		return aimButton2;
 	}
 
-	public Drawable getInfoBar() {
-		return infoBar;
+	public Drawable getVerticalInfoBar() {
+		return vInfoBar;
+	}
+
+	public Drawable getHorizontalInfoBar() {
+		return hInfoBar;
 	}
 
 	public Bitmap getBackgroundBitmap(int width, int height) {

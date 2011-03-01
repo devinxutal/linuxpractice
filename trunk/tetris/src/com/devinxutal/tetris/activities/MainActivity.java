@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		if (buttonFont == null) {
 
 			buttonFont = Typeface.createFromAsset(getAssets(),
-					Constants.FONT_PATH);
+					Constants.FONT_PATH_SCRIPT);
 		}
 		customizeButton((Button) this.findViewById(R.id.main_btn_more));
 		customizeButton((Button) this.findViewById(R.id.main_btn_play_game));

@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.util.Log;
 
 import com.devinxutal.tetris.control.Command;
+import com.devinxutal.tetris.model.SavablePlayground.SavableBlock;
 
 public class Playground {
 	public static final int VERTICAL_BLOCKS = 20;
@@ -28,12 +29,13 @@ public class Playground {
 	private boolean eliminating[] = new boolean[VERTICAL_BLOCKS];
 	private int eliminatingCurrentStep = 0;
 	private int eliminatingTotalSteps = 3;
-
+	private int eliminationLines = 0;
 	private boolean finished = false;
 
 	private Block activeBlock = null;
 	private int blockOffsetX = 0;
 	private int blockOffsetY = 0;
+	private int projectedY = 0;
 	private int originalOffsetY = 0;
 
 	private int playground[][] = new int[VERTICAL_BLOCKS][HORIZONTAL_BLOCKS];
@@ -45,7 +47,7 @@ public class Playground {
 	private ScoreAndLevel scoreLevel = new ScoreAndLevel();
 
 	public Playground() {
-
+		this.reset();
 	}
 
 	public int getWidth() {
@@ -61,9 +63,9 @@ public class Playground {
 	}
 
 	public void reset() {
-
 		inAnimation = false;
 		finished = false;
+		this.scoreLevel.reset();
 
 		for (int i = 0; i < VERTICAL_BLOCKS; i++) {
 			for (int j = 0; j < HORIZONTAL_BLOCKS; j++) {
@@ -91,6 +93,7 @@ public class Playground {
 	}
 
 	public void moveOn() {
+		isFinishingElimination = false;
 		if (inAnimation) {
 			eliminatingCurrentStep++;
 			if (eliminatingCurrentStep > eliminatingTotalSteps) {
@@ -126,6 +129,8 @@ public class Playground {
 			return moveBlockRight();
 		case DOWN:
 			return moveBlockDown();
+		case DIRECT_DOWN:
+			return moveBlockDirectDown();
 		}
 		return false;
 	}
@@ -163,9 +168,17 @@ public class Playground {
 	public void drawPendingBlocks(Canvas canvas, Rect rect1, Rect rect2,
 			Rect rect3) {
 		Log.v(TAG, "draw pending blocks");
-		this.drawBlock(canvas, blockQueue.get(0), rect1);
-		this.drawBlock(canvas, blockQueue.get(1), rect2);
-		this.drawBlock(canvas, blockQueue.get(2), rect3);
+		if (this.blockQueue != null) {
+			if (blockQueue.size() >= 1) {
+				this.drawBlock(canvas, blockQueue.get(0), rect1);
+			}
+			if (blockQueue.size() >= 2) {
+				this.drawBlock(canvas, blockQueue.get(1), rect2);
+			}
+			if (blockQueue.size() >= 3) {
+				this.drawBlock(canvas, blockQueue.get(2), rect3);
+			}
+		}
 	}
 
 	public void drawBlock(Canvas canvas, Block block, Rect rect) {
@@ -200,6 +213,37 @@ public class Playground {
 		}
 	}
 
+	public SavablePlayground getSavablePlayground() {
+		SavablePlayground sp = new SavablePlayground();
+		sp.playground = this.playground;
+		sp.activeBlock = sp.create(this.activeBlock);
+		sp.offsetX = this.blockOffsetX;
+		sp.offsetY = this.blockOffsetY;
+		sp.blockQueue = new LinkedList<SavableBlock>();
+		for (Block b : this.blockQueue) {
+			sp.blockQueue.add(sp.create(b));
+		}
+		sp.scoreLevel = this.scoreLevel;
+		return sp;
+	}
+
+	public void restoreSavablePlayground(SavablePlayground sp) {
+		this.playground = sp.playground;
+		this.activeBlock = null;
+		if (sp.activeBlock != null) {
+			this.activeBlock = new Block(sp.activeBlock.blockType,
+					sp.activeBlock.current);
+		}
+		this.blockOffsetX = sp.offsetX;
+		this.blockOffsetY = sp.offsetY;
+		this.blockQueue.clear();
+		for (SavableBlock sb : sp.blockQueue) {
+			this.blockQueue.add(new Block(sb.blockType, sb.current));
+		}
+		this.scoreLevel = sp.scoreLevel;
+		this.calculateProjectedY();
+	}
+
 	public void draw(Canvas canvas, int x, int y) {
 		dm.paint.setColor(Color.BLACK);
 		// canvas.drawRect(new Rect(x, y, x + width, y + height), dm.paint);
@@ -219,19 +263,37 @@ public class Playground {
 		}
 		if (activeBlock != null) {
 			boolean[][] matrix = activeBlock.getMatrix();
+
 			for (int i = 0; i < 4; i++) {
 				for (int j = 0; j < 4; j++) {
 					if (matrix[i][j]) {
 						int xx = blockOffsetX + j;
 						int yy = blockOffsetY + i;
+						// draw actual;
 						if (xx >= 0 && xx < HORIZONTAL_BLOCKS && yy >= 0
 								&& yy < VERTICAL_BLOCKS) {
+
 							canvas
 									.drawBitmap(dm.sized_blocks[activeBlock
 											.getBlockType().ordinal()], x + xx
 											* (blockSize + GAP_LEN) + GAP_LEN,
 											y + yy * (blockSize + GAP_LEN)
 													+ GAP_LEN, dm.paint);
+						}
+						// draw projected;
+						yy = (projectedY + i);
+						if (xx >= 0 && xx < HORIZONTAL_BLOCKS && yy >= 0
+								&& yy < VERTICAL_BLOCKS) {
+							if (blockOffsetY != projectedY) {
+								dm.paint.setAlpha(80);
+								canvas.drawBitmap(dm.sized_blocks[activeBlock
+										.getBlockType().ordinal()], x + xx
+										* (blockSize + GAP_LEN) + GAP_LEN, y
+										+ (projectedY + i)
+										* (blockSize + GAP_LEN) + GAP_LEN,
+										dm.paint);
+								dm.paint.setAlpha(255);
+							}
 						}
 					}
 				}
@@ -306,6 +368,16 @@ public class Playground {
 		return true;
 	}
 
+	private boolean moveBlockDirectDown() {
+		if (activeBlock == null) {
+			return false;
+		}
+		if (projectedY != blockOffsetY) {
+			blockOffsetY = projectedY;
+		}
+		return true;
+	}
+
 	private boolean moveBlockLeft() {
 		if (activeBlock == null) {
 			return false;
@@ -327,6 +399,7 @@ public class Playground {
 			}
 		}
 		blockOffsetX--;
+		calculateProjectedY();
 		return true;
 	}
 
@@ -351,6 +424,7 @@ public class Playground {
 			}
 		}
 		blockOffsetX++;
+		calculateProjectedY();
 		return true;
 	}
 
@@ -358,26 +432,46 @@ public class Playground {
 		if (activeBlock == null) {
 			return false;
 		}
+		int trials[] = new int[] { 0, -1, 1, -2, 2 };
+		for (int offset : trials) {
+			if (tryTurn(offset, activeBlock)) {
+				activeBlock.turn();
+				blockOffsetX += offset;
+				calculateProjectedY();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean tryTurn(int xOffset, Block block) {
+		if (activeBlock == null) {
+			return false;
+		}
 		boolean[][] matrix = activeBlock.getTurnedMatrix();
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (matrix[i][j]) {
-					int x = blockOffsetX + j;
+					int x = blockOffsetX + j + xOffset;
 					int y = blockOffsetY + i;
-					if (x < 0 || x >= HORIZONTAL_BLOCKS || y < 0
-							|| y >= VERTICAL_BLOCKS || playground[y][x] >= 0) {
+					if (x < 0 || x >= HORIZONTAL_BLOCKS || y >= VERTICAL_BLOCKS) {
+						return false;
+					}
+					if (y >= 0 && playground[y][x] >= 0) {
 						return false;
 					}
 				}
 			}
 		}
-		activeBlock.turn();
 		return true;
 	}
 
 	private void allocateBlock() {
 		this.activeBlock = blockQueue.poll();
 		blockQueue.addLast(new Block());
+		if (this.activeBlock == null) {
+			return;
+		}
 		blockOffsetX = 3;
 		blockOffsetY = -4;
 		int emptyRows = 0;
@@ -397,6 +491,7 @@ public class Playground {
 			}
 		}
 		blockOffsetY = emptyRows - 4 + 1;
+		calculateProjectedY();
 	}
 
 	private void settleBlock() {
@@ -421,6 +516,7 @@ public class Playground {
 
 	private boolean checkElimination() {
 		inAnimation = false;
+		eliminationLines = 0;
 		for (int row = VERTICAL_BLOCKS - 1; row >= 0; row--) {
 			boolean eli = true;
 			for (int i = 0; i < HORIZONTAL_BLOCKS; i++) {
@@ -438,12 +534,20 @@ public class Playground {
 					eliminatingCurrentStep = -1;
 				}
 				eliminating[row] = true;
+				eliminationLines++;
 			}
 		}
 		return inAnimation;
 	}
 
+	private boolean isFinishingElimination = false;
+
+	public boolean isFinishingElimination() {
+		return isFinishingElimination;
+	}
+
 	private void finishElimination() {
+		isFinishingElimination = true;
 		int to = VERTICAL_BLOCKS - 1;
 		int from = VERTICAL_BLOCKS - 1;
 		for (; from >= 0; from--, to--) {
@@ -462,6 +566,7 @@ public class Playground {
 		}
 
 		inAnimation = false;
+		scoreLevel.eliminateLines(eliminationLines);
 	}
 
 	private boolean checkFinish() {
@@ -469,6 +574,16 @@ public class Playground {
 			finished = true;
 		}
 		return finished;
+	}
+
+	private void calculateProjectedY() {
+		if (activeBlock != null) {
+			int Ybackup = this.blockOffsetY;
+			while (moveBlockDown())
+				;
+			projectedY = blockOffsetY;
+			blockOffsetY = Ybackup;
+		}
 	}
 
 }

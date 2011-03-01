@@ -16,6 +16,10 @@
 	<string name="common_more">More</string>
 	<string name="common_replay">Play Again</string>
 	<string name="common_about">About</string>
+	<string name="common_paused">Paused</string>
+	<string name="common_resume">Resume</string>
+	<string name="common_quit_game">Quit Game</string>
+	<string name="common_options">Options</string>
 
 	<string name="rank_a_recruit">Recruit</string>
 	<string name="rank_b_private">Private</string>
