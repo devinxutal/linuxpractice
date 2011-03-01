@@ -51,4 +51,17 @@
 	<string name="pref_ent_sound_effects">Sound Effects</string>
 	<string name="pref_ent_sound_effects_summary">Sound effects such as button-click and crash
 	</string>
+
+	<string name="pref_ent_screen_orientation">Screen orientation</string>
+	<string name="pref_ent_screen_orientation_summary">Set screen orientation while playing</string>
+	<string-array name="pref_ent_screen_orientation_entries">
+		<item>Auto</item>
+		<item>Portrait</item>
+		<item>Landscape</item>
+	</string-array>
+	<string-array name="pref_ent_screen_orientation_values">
+		<item>auto</item>
+		<item>portrait</item>
+		<item>landscape</item>
+	</string-array>
 </resources>

@@ -22,6 +22,15 @@ public class Block {
 		this.current = r.nextInt(this.numStatus);
 	}
 
+	public Block(BlockType type, int current) {
+		this(type);
+		this.current = current;
+	}
+
+	public int getCurrent() {
+		return current;
+	}
+
 	public void turn() {
 		recalculated = false;
 		current = (current + 1) % this.numStatus;

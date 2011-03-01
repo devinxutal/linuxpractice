@@ -20,15 +20,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -54,9 +53,10 @@ import com.devinxutal.tetris.cfg.Constants;
 import com.devinxutal.tetris.control.Command;
 import com.devinxutal.tetris.control.GameController;
 import com.devinxutal.tetris.control.GameController.GameListener;
+import com.devinxutal.tetris.model.SavablePlayground;
 import com.devinxutal.tetris.sound.SoundManager;
-import com.devinxutal.tetris.ui.GameControlView;
-import com.devinxutal.tetris.ui.GameControlView.GameControlListener;
+import com.devinxutal.tetris.ui.ControlView;
+import com.devinxutal.tetris.ui.ControlView.GameControlListener;
 import com.devinxutal.tetris.ui.JoyStick.JoyStickListener;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.DialogUtil;
@@ -73,12 +73,16 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private GameController gameController;
-	private GameControlView controlView;
+	private ControlView controlView;
 	private ViewGroup successScreen;
+	private ViewGroup pausedScreen;
 	private Toast toast;
 	private Button successScreenBackButton;
 	private Button successScreenSubmitButton;
 	private Button successScreenReplayButton;
+	private Button pauseScreenOptionButton;
+	private Button pauseScreenQuitButton;
+	private Button pauseScreenResumeButton;
 
 	private Dialog progressDialog;
 
@@ -100,9 +104,6 @@ public class PlaygroundActivity extends Activity {
 
 	private Typeface buttonFont;
 
-	// wake lock
-	WakeLock wakelock;
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -114,13 +115,12 @@ public class PlaygroundActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		setScreenOrientation();
 
 		PowerManager pm = (PowerManager) this
 				.getSystemService(Context.POWER_SERVICE);
-		wakelock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
-				| PowerManager.ON_AFTER_RELEASE, TAG);
 		gameController = new GameController(this);
-		controlView = new GameControlView(this);
+		controlView = gameController.getControlView();
 		toast = Toast.makeText(this, "", 5000);
 		controlView.addGameControlListener(new ControlButtonClicked());
 		controlView.setGameController(gameController);
@@ -132,6 +132,8 @@ public class PlaygroundActivity extends Activity {
 
 		successScreen = new LinearLayout(this);
 		layout.addView(successScreen);
+		pausedScreen = new LinearLayout(this);
+		layout.addView(pausedScreen);
 		this.setContentView(layout);
 
 		// add successScreen
@@ -150,20 +152,32 @@ public class PlaygroundActivity extends Activity {
 		successScreenReplayButton.setOnClickListener(l);
 		AdUtil.determineAd(this, R.id.ss_ad_area);
 		hideSuccessScreen();
+
+		// add pauseScreen
+		inflater.inflate(R.layout.pausescreen, pausedScreen);
+		pauseScreenOptionButton = (Button) this
+				.findViewById(R.id.options_button);
+		pauseScreenQuitButton = (Button) this.findViewById(R.id.quit_button);
+		pauseScreenResumeButton = (Button) this
+				.findViewById(R.id.resume_button);
+		pauseScreenOptionButton.setOnClickListener(l);
+		pauseScreenQuitButton.setOnClickListener(l);
+		pauseScreenResumeButton.setOnClickListener(l);
+		AdUtil.determineAd(this, R.id.ps_ad_area);
+		hidePauseScreen();
 		//
 		switchState(State.END);
 		preferenceChanged();
 		this.customizeButtons();
-
-		wakelock.acquire();
-		this.play();
+		if (savedInstanceState == null) {
+			this.play();
+		} else {
+			this.pause();
+		}
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (wakelock.isHeld()) {
-			wakelock.release();
-		}
 		super.onDestroy();
 	}
 
@@ -198,6 +212,33 @@ public class PlaygroundActivity extends Activity {
 		return super.onKeyUp(keyCode, event);
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (event.getKeyCode()) {
+		case KeyEvent.KEYCODE_MENU:
+			Log.v(TAG, "menu key down");
+			pause();
+			return false;
+		case KeyEvent.KEYCODE_BACK:
+			Log.v(TAG, "back key down");
+			pause();
+			return false;
+		default:
+			return super.onKeyDown(keyCode, event);
+		}
+	}
+
+	private void setScreenOrientation() {
+		String att = Configuration.config().getScreenOrientation();
+		if (att.equals("auto")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+		} else if (att.equals("portrait")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else if (att.equals("landscape")) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
+	}
+
 	private void switchState(State to) {
 
 		if (to == State.PAUSED) {
@@ -205,11 +246,8 @@ public class PlaygroundActivity extends Activity {
 		} else if (to == State.PLAY) {
 
 			SoundManager.get(this).playBackgroundMusic();
-
 		} else if (to == State.ENDING) {
 			SoundManager.get(this).stopBackgroundMusic();
-			SoundManager.get(this).playCrashEffect();
-
 		} else if (to == State.END) {
 
 		}
@@ -227,31 +265,22 @@ public class PlaygroundActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		Log.v(TAG, "onSaveInstanceState");
-		// outState.putSerializable(Constants.CUBE_STATE, cubeController
-		// .getMagicCube().getCubeState());
-		// outState.putBoolean("timedMode", timedMode);
-		// if (timedMode) {
-		// outState.putLong("elapsedTime", controlView.getCubeTimer()
-		// .getTime());
-		// }
-		// outState.putSerializable("state", state);
-		// outState.putBoolean("padCollapsed", controlView.isCollapsed());
+		this.gameController.finishAnimation();
+		outState.putSerializable(Constants.PLAYGROUND_STATE, gameController
+				.getPlayground().getSavablePlayground());
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		// Log.v(TAG, "onRestoreInstanceState");
-		// CubeState cubeState = (CubeState) (savedInstanceState
-		// .getSerializable(Constants.CUBE_STATE));
-		// if (cubeState != null) {
-		// this.cubeController.getMagicCube().setCubeState(cubeState);
-		// }
-		// timedMode = savedInstanceState.getBoolean("timedMode", false);
-		// elapsedTime = savedInstanceState.getLong("elapsedTime", 0);
-		// collapsed = savedInstanceState.getBoolean("padCollapsed", true);
-		// this.state = (State) savedInstanceState.getSerializable("state");
-		// initByRestoredState();
+		Log.v(TAG, "onRestoreInstanceState");
+		SavablePlayground sp = (SavablePlayground) (savedInstanceState
+				.getSerializable(Constants.PLAYGROUND_STATE));
+
+		if (sp != null) {
+			this.gameController.getPlayground().restoreSavablePlayground(sp);
+		}
+		initByRestoredState();
 		super.onRestoreInstanceState(savedInstanceState);
 
 	}
@@ -259,10 +288,7 @@ public class PlaygroundActivity extends Activity {
 	@Override
 	protected void onPause() {
 		Log.v(TAG, "pause");
-		if (wakelock.isHeld()) {
-			wakelock.release();
-		}
-		this.gameController.destroy();
+		pause();
 		SoundManager.get(this).stopBackgroundMusic();
 		this.stopListening();
 		super.onPause();
@@ -270,10 +296,6 @@ public class PlaygroundActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		Log.v(TAG, "resume");
-		if (!wakelock.isHeld()) {
-			wakelock.acquire();
-		}
 		super.onResume();
 	}
 
@@ -287,22 +309,42 @@ public class PlaygroundActivity extends Activity {
 
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
+			switch (id) {
+			case ControlView.BTN_LEFT:
+				gameController.processCommand(Command.LEFT);
+				break;
+			case ControlView.BTN_RIGHT:
+				gameController.processCommand(Command.RIGHT);
+				break;
+			case ControlView.BTN_TURN:
+				gameController.processCommand(Command.TURN);
+				break;
+			case ControlView.BTN_DOWN:
+				gameController.processCommand(Command.DOWN);
+				break;
+			case ControlView.BTN_DIRECT_DOWN:
+				gameController.processCommand(Command.DIRECT_DOWN);
+				break;
+			}
 		}
 
 		public void buttonPressed(int id) {
 			Log.v(TAG, "button down : " + id);
 			switch (id) {
-			case GameControlView.BTN_LEFT:
+			case ControlView.BTN_LEFT:
 				gameController.processCommand(Command.LEFT_DOWN);
 				break;
-			case GameControlView.BTN_RIGHT:
+			case ControlView.BTN_RIGHT:
 				gameController.processCommand(Command.RIGHT_DOWN);
 				break;
-			case GameControlView.BTN_TURN:
+			case ControlView.BTN_TURN:
 				gameController.processCommand(Command.TURN_DOWN);
 				break;
-			case GameControlView.BTN_DOWN:
+			case ControlView.BTN_DOWN:
 				gameController.processCommand(Command.DOWN_DOWN);
+				break;
+			case ControlView.BTN_DIRECT_DOWN:
+				gameController.processCommand(Command.DIRECT_DOWN);
 				break;
 			}
 		}
@@ -311,16 +353,16 @@ public class PlaygroundActivity extends Activity {
 
 			Log.v(TAG, "button up : " + id);
 			switch (id) {
-			case GameControlView.BTN_LEFT:
+			case ControlView.BTN_LEFT:
 				gameController.processCommand(Command.LEFT_UP);
 				break;
-			case GameControlView.BTN_RIGHT:
+			case ControlView.BTN_RIGHT:
 				gameController.processCommand(Command.RIGHT_UP);
 				break;
-			case GameControlView.BTN_TURN:
+			case ControlView.BTN_TURN:
 				gameController.processCommand(Command.TURN_UP);
 				break;
-			case GameControlView.BTN_DOWN:
+			case ControlView.BTN_DOWN:
 				gameController.processCommand(Command.DOWN_UP);
 				break;
 			}
@@ -375,8 +417,15 @@ public class PlaygroundActivity extends Activity {
 				} else {
 					DialogUtil.showRankDialog(PlaygroundActivity.this);
 				}
-			} else if (view.getId() == R.id.back_button) {
+			} else if (view.getId() == R.id.back_button
+					|| view.getId() == R.id.quit_button) {
 				PlaygroundActivity.this.finish();
+			} else if (view.getId() == R.id.resume_button) {
+				resume();
+			} else if (view.getId() == R.id.options_button) {
+				Intent intent = new Intent(PlaygroundActivity.this,
+						Preferences.class);
+				startActivity(intent);
 			}
 		}
 	}
@@ -414,6 +463,17 @@ public class PlaygroundActivity extends Activity {
 		this.successScreen.setVisibility(View.INVISIBLE);
 	}
 
+	private void showPauseScreen() {
+		Log.v(TAG, "showing pause screen");
+
+		this.pausedScreen.setVisibility(View.VISIBLE);
+	}
+
+	private void hidePauseScreen() {
+		Log.v(TAG, "hiding pause screen");
+		this.pausedScreen.setVisibility(View.INVISIBLE);
+	}
+
 	public void play() {
 		if (this.state != State.PAUSED && this.state != State.END) {
 			return;
@@ -423,8 +483,15 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	public void pause() {
-		gameController.getPlaygroundView().pause(true);
+		gameController.pause();
 		switchState(State.PAUSED);
+		showPauseScreen();
+	}
+
+	public void resume() {
+		gameController.start();
+		switchState(State.PLAY);
+		hidePauseScreen();
 	}
 
 	public void replay() {
@@ -616,7 +683,7 @@ public class PlaygroundActivity extends Activity {
 				}
 			}
 			gameController.getPlaygroundView().invalidate();
-			
+
 		}
 
 	}
@@ -625,7 +692,7 @@ public class PlaygroundActivity extends Activity {
 		if (buttonFont == null) {
 
 			buttonFont = Typeface.createFromAsset(getAssets(),
-					Constants.FONT_PATH);
+					Constants.FONT_PATH_SCRIPT);
 		}
 		customizeButton((Button) this.findViewById(R.id.submit_button));
 		customizeButton((Button) this.findViewById(R.id.replay_button));

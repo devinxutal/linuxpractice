@@ -3,11 +3,13 @@ package com.devinxutal.tetris.control;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.devinxutal.tetris.model.Playground;
+import com.devinxutal.tetris.sound.SoundManager;
+import com.devinxutal.tetris.ui.ControlView;
 import com.devinxutal.tetris.ui.PlaygroundView;
 
 public class GameController {
@@ -17,7 +19,7 @@ public class GameController {
 	public static final int INTERVAL_CONTROL_INIT = 400;
 	public static final int INTERVAL_CONTROL_STICK = 100;
 	public static final int INTERVAL_STEP_NORMAL = 600;
-	public static final int INTERVAL_STEP_ANIMATION = 250;
+	public static final int INTERVAL_STEP_ANIMATION = 150;
 
 	public static final int IC_STEP = 5;
 	private static final String TAG = "GameController";
@@ -28,7 +30,10 @@ public class GameController {
 		public void gameFinished();
 	}
 
+	private SoundManager soundManager;
+
 	private PlaygroundView playgroundView;
+	private ControlView controlView;
 	private Playground playground;
 	private List<GameListener> listeners = new LinkedList<GameListener>();
 
@@ -53,7 +58,20 @@ public class GameController {
 		playing = false;
 	}
 
+	public void reset() {
+		playground.reset();
+	}
+
+	public void finishAnimation() {
+		while (this.playground.isInAnimation()) {
+			this.playground.moveOn();
+		}
+	}
+
 	public void processCommand(Command cmd) {
+		if (!this.playing) {
+			return;
+		}
 		switch (cmd) {
 		case DOWN_UP:
 			pendingCommand = cmd = null;
@@ -83,7 +101,7 @@ public class GameController {
 			pendingCommand = null;
 		}
 		if (cmd != null) {
-			boolean success = this.playground.processCommand(cmd);
+			boolean success = this.letPlaygroundProcessCommand(cmd);
 			this.playgroundView.invalidate();
 			if (success) {
 				postStepDelay(INTERVAL_STEP_NORMAL);
@@ -139,7 +157,10 @@ public class GameController {
 		this.playgroundView = new PlaygroundView(context);
 		this.playgroundView.setPlayground(playground);
 		this.playgroundView.setGameController(this);
+		this.controlView = new ControlView(context);
+		this.playgroundView.setControlView(this.controlView);
 		this.handler = new Handler();
+		this.soundManager = SoundManager.get((Activity) context);
 	}
 
 	public void destroy() {
@@ -148,7 +169,6 @@ public class GameController {
 
 	public void gameFinishedCalledByPlaygroundView() {
 
-		Log.v(TAG, "game finished");
 		notifyGameFinished();
 	}
 
@@ -183,12 +203,19 @@ public class GameController {
 			}
 			playground.moveOn();
 			playgroundView.invalidate();
+			if (playground.isFinishingElimination()) {
+				soundManager.playEliminationEffect();
+			}
+			if (playground.isFinished()) {
+				playing = false;
 
-			if (playing) {
-				if (playground.isInAnimation()) {
-					postStepDelay(INTERVAL_STEP_ANIMATION);
-				} else {
-					postStepDelay(INTERVAL_STEP_NORMAL);
+			} else {
+				if (playing) {
+					if (playground.isInAnimation()) {
+						postStepDelay(INTERVAL_STEP_ANIMATION);
+					} else {
+						postStepDelay(INTERVAL_STEP_NORMAL);
+					}
 				}
 			}
 
@@ -206,14 +233,13 @@ public class GameController {
 
 		public void run() {
 			synchronized (this) {
-
 				idProcessed++;
 				if (idProcessed != idToProcess) {
 					return;
 				}
 			}
 			if (pendingCommand != null) {
-				boolean success = playground.processCommand(pendingCommand);
+				boolean success = letPlaygroundProcessCommand(pendingCommand);
 				playgroundView.invalidate();
 				postControlDelay(INTERVAL_CONTROL_STICK);
 				if (success) {
@@ -223,5 +249,33 @@ public class GameController {
 
 		}
 
+	}
+
+	private boolean letPlaygroundProcessCommand(Command command) {
+		boolean succeed = playground.processCommand(command);
+		if (succeed) {
+			switch (command) {
+			case LEFT:
+				soundManager.playMoveEffect();
+				break;
+			case RIGHT:
+				soundManager.playMoveEffect();
+				break;
+			case TURN:
+				soundManager.playTurnEffect();
+				break;
+			case DOWN:
+				soundManager.playMoveEffect();
+				break;
+			case DIRECT_DOWN:
+				soundManager.playDownEffect();
+				break;
+			}
+		}
+		return succeed;
+	}
+
+	public ControlView getControlView() {
+		return this.controlView;
 	}
 }

@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
 
+import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.cfg.Configuration;
 
 public class SoundManager {
@@ -18,7 +20,12 @@ public class SoundManager {
 	private MediaPlayer mediaPlayer;
 	private AudioManager audioManager;
 	private int btnMusicID = -1;
-	private int crashMusicID = -1;
+	private int turnMusicID = -1;
+	private int moveMusicID = -1;
+	private int downMusicID = -1;
+	private int eliminationMusicID = -1;
+
+	private float streamVolume = 1;
 
 	public static boolean initialized = false;
 	public static SoundManager soundManager = null;
@@ -52,16 +59,15 @@ public class SoundManager {
 	private SoundManager(Activity activity) {
 		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		mediaPlayer = new MediaPlayer();
+		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		audioManager = (AudioManager) activity
 				.getSystemService(Context.AUDIO_SERVICE);
 		try {
 			mediaPlayer.reset();
 			mediaPlayer.setLooping(true);
-			mediaPlayer.setVolume(BACKGROUND_SOUND_VOLUME,
-					BACKGROUND_SOUND_VOLUME);
-
-			mediaPlayer.setDataSource(activity.getAssets().openFd(
-					"sounds/tetris.mid").getFileDescriptor());
+			AssetFileDescriptor fd = activity.getAssets().openFd("tetris.mp3");
+			mediaPlayer.setDataSource(fd.getFileDescriptor(), fd
+					.getStartOffset(), fd.getLength());
 			mediaPlayer.prepare();
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -72,28 +78,32 @@ public class SoundManager {
 			this.btnMusicID = soundpool.load(activity.getAssets().openFd(
 					"sounds/buttonclick.mp3"), 1);
 
-			this.crashMusicID = soundpool.load(activity.getAssets().openFd(
-					"sounds/crash.mp3"), 1);
+			this.moveMusicID = soundpool.load(activity, R.raw.move, 10);
+			this.turnMusicID = soundpool.load(activity, R.raw.turn, 10);
+			this.downMusicID = soundpool.load(activity, R.raw.down, 10);
+			this.eliminationMusicID = soundpool.load(activity,
+					R.raw.elimination, 10);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		this.activity = activity;
+
+		streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = streamVolume
+				/ audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	}
 
 	public void playBackgroundMusic() {
+		Log.v(TAG, "play background music 1");
 		if (!Configuration.config().isBackgroundMusicOn()) {
 			return;
 		}
-		Log.v(TAG, "play background music");
+		Log.v(TAG, "play background music 2");
 		if (!mediaPlayer.isPlaying()) {
 			Log.v(TAG, "really play background music");
-			float streamVolume = audioManager
-					.getStreamVolume(AudioManager.STREAM_MUSIC);
-			streamVolume = BACKGROUND_SOUND_VOLUME
-					* streamVolume
-					/ audioManager
-							.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 			mediaPlayer.setVolume(streamVolume, streamVolume);
+			mediaPlayer.setVolume(1, 1);
+			Log.v(TAG, "really play background music");
 			mediaPlayer.start();
 		}
 	}
@@ -136,20 +146,52 @@ public class SoundManager {
 		}
 	}
 
-	public void playCrashEffect() {
-
+	public void playMoveEffect() {
 		if (!Configuration.config().isSoundEffectsOn()) {
 			return;
 		}
 		if (soundpool == null) {
 			return;
 		}
-		float streamVolume = audioManager
-				.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume
-				/ audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		if (crashMusicID >= 0) {
-			soundpool.play(crashMusicID, streamVolume, streamVolume, 1, 0, 1);
+		if (moveMusicID >= 0) {
+			soundpool.play(moveMusicID, streamVolume, streamVolume, 1, 0, 1);
+		}
+	}
+
+	public void playTurnEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		if (turnMusicID >= 0) {
+			soundpool.play(turnMusicID, streamVolume, streamVolume, 1, 0, 1);
+		}
+	}
+
+	public void playDownEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		if (downMusicID >= 0) {
+			soundpool.play(downMusicID, streamVolume, streamVolume, 1, 0, 1);
+		}
+	}
+
+	public void playEliminationEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		if (eliminationMusicID >= 0) {
+			soundpool.play(eliminationMusicID, streamVolume, streamVolume, 1,
+					0, 1);
 		}
 	}
 

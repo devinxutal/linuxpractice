@@ -1,7 +1,7 @@
 package com.devinxutal.tetris.cfg;
 
 public class Constants {
-	public static final String CUBE_STATE = "cube_state";
+	public static final String PLAYGROUND_STATE = "playground_state";
 
 	public static final String PREF_KEY_TRIALS_SOLVE_CUBE = "trials_solve_cube";
 
@@ -23,7 +23,9 @@ public class Constants {
 	public static final String PACKAGE_NAME_LITE = "com.devinxutal.fc.lite";
 	public static final String PACKAGE_NAME_PRO = "com.devinxutal.fc.pro";
 
-	public static final String FONT_PATH = "fonts/Artbrush.ttf";
+	public static final String FONT_PATH_SCRIPT = "fonts/Artbrush.ttf";
+	public static final String FONT_PATH_MONO = "fonts/ProFontWindows.ttf";
+	public static final String FONT_PATH_COMIC = "fonts/KOMIKAX.ttf";
 
 	// public static final String VERSION_SAVING_FILE = "cube.dat";
 
