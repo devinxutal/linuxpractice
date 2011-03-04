@@ -840,9 +840,20 @@ com.admob.android.ads.z$a -> com.admob.android.ads.bu:
 com.admob.android.ads.z$a$1 -> com.admob.android.ads.bs:
     com.admob.android.ads.z$a a -> a
     void run() -> run
-com.devinxutal.columns.activities.AboutActivity -> com.devinxutal.columns.activities.AboutActivity:
+com.devinxutal.tetris.activities.AboutActivity -> com.devinxutal.tetris.activities.AboutActivity:
     void onCreate(android.os.Bundle) -> onCreate
-com.devinxutal.columns.activities.MainActivity -> com.devinxutal.columns.activities.MainActivity:
+com.devinxutal.tetris.activities.HighScoreActivity -> com.devinxutal.tetris.activities.HighScoreActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onClick(android.view.View) -> onClick
+com.devinxutal.tetris.activities.LocalRankActivity -> com.devinxutal.tetris.activities.LocalRankActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+com.devinxutal.tetris.activities.LocalRankActivity$1 -> com.devinxutal.tetris.activities.h:
+    com.devinxutal.tetris.activities.LocalRankActivity this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.devinxutal.tetris.activities.MainActivity -> com.devinxutal.tetris.activities.MainActivity:
     byte[] SALT -> a
     android.graphics.Typeface buttonFont -> b
     void onCreate(android.os.Bundle) -> onCreate
@@ -851,364 +862,481 @@ com.devinxutal.columns.activities.MainActivity -> com.devinxutal.columns.activit
     void onResume() -> onResume
     void onClick(android.view.View) -> onClick
     void customizeButton(android.widget.Button) -> a
-com.devinxutal.columns.activities.PlaygroundActivity -> com.devinxutal.columns.activities.PlaygroundActivity:
-    com.devinxutal.columns.control.GameController gameController -> a
-    com.devinxutal.columns.ui.GameControlView controlView -> b
+com.devinxutal.tetris.activities.PlaygroundActivity -> com.devinxutal.tetris.activities.PlaygroundActivity:
+    com.devinxutal.tetris.control.GameController gameController -> a
+    com.devinxutal.tetris.ui.ControlView controlView -> b
     android.view.ViewGroup successScreen -> c
-    android.widget.Toast toast -> d
-    android.widget.Button successScreenBackButton -> e
-    android.widget.Button successScreenSubmitButton -> f
-    android.widget.Button successScreenReplayButton -> g
-    android.app.Dialog progressDialog -> h
-    com.devinxutal.man20.activities.PlaygroundActivity$State state -> i
-    long elapsedTime -> j
-    boolean collapsed -> k
-    android.hardware.SensorManager sensorManager -> l
-    android.hardware.Sensor sensor -> m
-    boolean sensorRunning -> n
-    boolean useJoyStick -> o
-    boolean useAccelerometer -> p
-    com.devinxutal.man20.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> q
-    com.devinxutal.man20.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> r
-    android.graphics.Typeface buttonFont -> s
-    android.os.PowerManager$WakeLock wakelock -> t
+    android.view.ViewGroup pausedScreen -> d
+    android.widget.Toast toast -> e
+    android.widget.Button successScreenBackButton -> f
+    android.widget.Button successScreenSubmitButton -> g
+    android.widget.Button successScreenReplayButton -> h
+    android.widget.Button pauseScreenOptionButton -> i
+    android.widget.Button pauseScreenQuitButton -> j
+    android.widget.Button pauseScreenResumeButton -> k
+    com.devinxutal.tetris.activities.PlaygroundActivity$State state -> l
+    long elapsedTime -> m
+    boolean collapsed -> n
+    android.hardware.SensorManager sensorManager -> o
+    boolean sensorRunning -> p
+    boolean useJoyStick -> q
+    boolean useAccelerometer -> r
+    com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> s
+    com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> t
+    android.graphics.Typeface typeface -> u
     void onCreate(android.os.Bundle) -> onCreate
     void onDestroy() -> onDestroy
-    void switchState(com.devinxutal.man20.activities.PlaygroundActivity$State) -> a
+    boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void setScreenOrientation() -> c
+    void switchState(com.devinxutal.tetris.activities.PlaygroundActivity$State) -> a
     void onOptionsMenuClosed(android.view.Menu) -> onOptionsMenuClosed
     void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
     void onPause() -> onPause
     void onResume() -> onResume
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    void hideSuccessScreen() -> e
-    void play() -> a
-    void pause() -> b
-    void replay() -> c
-    void stop() -> d
-    void preferenceChanged() -> f
-    void stopListening() -> g
+    void hideSuccessScreen() -> d
+    void hidePauseScreen() -> e
+    void play() -> f
+    void pause() -> g
+    void resume() -> a
+    void replay() -> b
+    void preferenceChanged() -> h
+    void customizeView(android.widget.TextView) -> a
     void customizeButton(android.widget.Button) -> a
-    com.devinxutal.man20.activities.PlaygroundActivity$State access$0(com.devinxutal.columns.activities.PlaygroundActivity) -> a
-    void access$1(com.devinxutal.columns.activities.PlaygroundActivity,com.devinxutal.man20.activities.PlaygroundActivity$State) -> a
-    void access$2(com.devinxutal.columns.activities.PlaygroundActivity) -> b
-    void access$3(com.devinxutal.columns.activities.PlaygroundActivity) -> c
-    com.devinxutal.columns.ui.GameControlView access$4(com.devinxutal.columns.activities.PlaygroundActivity) -> d
-    android.app.Dialog access$5(com.devinxutal.columns.activities.PlaygroundActivity) -> e
-    void access$6$24909b21(com.devinxutal.columns.activities.PlaygroundActivity) -> f
-    android.widget.Toast access$7(com.devinxutal.columns.activities.PlaygroundActivity) -> g
-    android.widget.Button access$8(com.devinxutal.columns.activities.PlaygroundActivity) -> h
-    boolean access$9(com.devinxutal.columns.activities.PlaygroundActivity) -> i
-    com.devinxutal.columns.control.GameController access$10(com.devinxutal.columns.activities.PlaygroundActivity) -> j
-    boolean access$11(com.devinxutal.columns.activities.PlaygroundActivity) -> k
-    void access$12(com.devinxutal.columns.activities.PlaygroundActivity,java.lang.String) -> a
-com.devinxutal.man20.activities.PlaygroundActivity$1 -> com.devinxutal.man20.activities.k:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
-    android.widget.EditText val$input -> b
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.man20.activities.PlaygroundActivity$2 -> com.devinxutal.man20.activities.l:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.man20.activities.PlaygroundActivity$AccelerometerListener -> com.devinxutal.man20.activities.b:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
+    com.devinxutal.tetris.control.GameController access$0(com.devinxutal.tetris.activities.PlaygroundActivity) -> a
+    void access$1(com.devinxutal.tetris.activities.PlaygroundActivity) -> b
+    void access$2(com.devinxutal.tetris.activities.PlaygroundActivity,com.devinxutal.tetris.activities.PlaygroundActivity$State) -> a
+    void access$3(com.devinxutal.tetris.activities.PlaygroundActivity) -> c
+    boolean access$8(com.devinxutal.tetris.activities.PlaygroundActivity) -> d
+com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener -> com.devinxutal.tetris.activities.d:
+    com.devinxutal.tetris.activities.PlaygroundActivity this$0 -> a
     void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
     void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-com.devinxutal.man20.activities.PlaygroundActivity$ButtonsOnClick -> com.devinxutal.man20.activities.f:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$ButtonsOnClick -> com.devinxutal.tetris.activities.g:
+    com.devinxutal.tetris.activities.PlaygroundActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.devinxutal.man20.activities.PlaygroundActivity$ControlButtonClicked -> com.devinxutal.man20.activities.i:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$ControlButtonClicked -> com.devinxutal.tetris.activities.c:
+    com.devinxutal.tetris.activities.PlaygroundActivity this$0 -> a
     void buttonClickced(int) -> a
-com.devinxutal.man20.activities.PlaygroundActivity$GameFinished -> com.devinxutal.man20.activities.j:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
-    void gameFinishing() -> a
-    void gameFinished() -> b
-com.devinxutal.man20.activities.PlaygroundActivity$GameFinished$1 -> com.devinxutal.man20.activities.h:
-    com.devinxutal.man20.activities.PlaygroundActivity$GameFinished this$1 -> a
+    void buttonPressed(int) -> b
+    void buttonReleased(int) -> c
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished -> com.devinxutal.tetris.activities.b:
+    com.devinxutal.tetris.activities.PlaygroundActivity this$0 -> a
+    void gameFinished() -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$2 -> com.devinxutal.tetris.activities.f:
+    com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished this$1 -> a
     void run() -> run
-com.devinxutal.man20.activities.PlaygroundActivity$GameFinished$2 -> com.devinxutal.man20.activities.g:
-    com.devinxutal.man20.activities.PlaygroundActivity$GameFinished this$1 -> a
-    void run() -> run
-com.devinxutal.man20.activities.PlaygroundActivity$MyJoyStickListener -> com.devinxutal.man20.activities.e:
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
-    void joyStickMoved(float,float) -> a
-com.devinxutal.man20.activities.PlaygroundActivity$State -> com.devinxutal.man20.activities.c:
-    com.devinxutal.man20.activities.PlaygroundActivity$State PLAY -> a
-    com.devinxutal.man20.activities.PlaygroundActivity$State PAUSED -> b
-    com.devinxutal.man20.activities.PlaygroundActivity$State ENDING -> c
-    com.devinxutal.man20.activities.PlaygroundActivity$State END -> d
-    com.devinxutal.man20.activities.PlaygroundActivity$State[] ENUM$VALUES -> e
-    com.devinxutal.man20.activities.PlaygroundActivity$State[] values() -> values
-    com.devinxutal.man20.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
-com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread -> com.devinxutal.man20.activities.a:
-    java.lang.String player -> b
-    com.devinxutal.columns.activities.PlaygroundActivity this$0 -> a
-    void run() -> run
-com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread$1 -> com.devinxutal.man20.activities.d:
-    com.devinxutal.man20.activities.PlaygroundActivity$SubmitRecordThread this$1 -> a
-    int val$sc -> b
-    void run() -> run
-com.devinxutal.columns.activities.Preferences -> com.devinxutal.columns.activities.Preferences:
+com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener -> com.devinxutal.tetris.activities.a:
+    com.devinxutal.tetris.activities.PlaygroundActivity this$0 -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$State -> com.devinxutal.tetris.activities.e:
+    com.devinxutal.tetris.activities.PlaygroundActivity$State PLAY -> a
+    com.devinxutal.tetris.activities.PlaygroundActivity$State PAUSED -> b
+    com.devinxutal.tetris.activities.PlaygroundActivity$State ENDING -> c
+    com.devinxutal.tetris.activities.PlaygroundActivity$State END -> d
+    com.devinxutal.tetris.activities.PlaygroundActivity$State[] ENUM$VALUES -> e
+    com.devinxutal.tetris.activities.PlaygroundActivity$State[] values() -> values
+    com.devinxutal.tetris.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
+com.devinxutal.tetris.activities.Preferences -> com.devinxutal.tetris.activities.Preferences:
     void onCreate(android.os.Bundle) -> onCreate
-com.devinxutal.columns.cfg.Configuration -> com.devinxutal.man20.e.b:
-    com.devinxutal.columns.cfg.Configuration config -> d
-    android.content.SharedPreferences preference -> e
-    int CONTROL_JOY_STICK -> a
-    int CONTROL_SENSOR -> b
-    int CONTROL_BOTH -> f
-    int JOT_STICK_POSITION_LEFT -> c
-    int JOT_STICK_POSITION_RIGHT -> g
-    com.devinxutal.columns.cfg.Configuration config() -> a
+com.devinxutal.tetris.activities.WorldRankActivity -> com.devinxutal.tetris.activities.WorldRankActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+com.devinxutal.tetris.cfg.Configuration -> com.devinxutal.tetris.c.a:
+    com.devinxutal.tetris.cfg.Configuration config -> a
+    android.content.SharedPreferences preference -> b
+    com.devinxutal.tetris.cfg.Configuration config() -> a
     void setSharedPreferences(android.content.SharedPreferences) -> a
-    int getControl() -> b
-    int getJoyStickPosition() -> c
-    boolean isBackgroundMusicOn() -> d
-    boolean isSoundEffectsOn() -> e
-    int getDifficulty() -> f
-com.devinxutal.columns.cfg.Constants -> com.devinxutal.man20.e.a:
+    int getDirectDownButtonPosition() -> b
+    int getCenterButtonAction() -> c
+    java.lang.String getBlockStyle() -> d
+    boolean isBackgroundMusicOn() -> e
+    void setBackgroundMusicOn(boolean) -> a
+    boolean isSoundEffectsOn() -> f
+    void setSoundEffectsOn(boolean) -> b
+    int getStartLevel() -> g
+    java.lang.String getScreenOrientation() -> h
+com.devinxutal.tetris.cfg.Constants -> com.devinxutal.tetris.c.b:
     int VERSION -> a
-com.devinxutal.columns.control.GameController -> com.devinxutal.man20.b.a:
-    com.devinxutal.columns.ui.PlaygroundView playgroundView -> a
-    com.devinxutal.columns.model.Playground playground -> b
-    java.util.List listeners -> c
-    com.devinxutal.columns.ui.PlaygroundView getPlaygroundView() -> a
-    boolean addGameListener(com.devinxutal.man20.control.GameController$GameListener) -> a
-    com.devinxutal.columns.model.Playground getPlayground() -> b
-    void gameFinishedCalledByPlaygroundView() -> c
-    void gameFinishingCalledByPlaygroundView() -> d
-com.devinxutal.man20.control.GameController$GameListener -> com.devinxutal.man20.b.b:
-    void gameFinishing() -> a
-    void gameFinished() -> b
-com.devinxutal.columns.model.Attacker -> com.devinxutal.man20.f.b:
-    float standardSpeed -> a
-    boolean active -> h
-    void move$13462e() -> a
-    boolean isActive() -> b
-    void activate(com.devinxutal.columns.model.Playground) -> a
-com.devinxutal.columns.model.Defender -> com.devinxutal.man20.f.a:
-    float radius -> a
-    float radiusScale -> h
-    void setVisibleRadius(float) -> a
-    float getVisibleRadius() -> a
-com.devinxutal.columns.model.Explosion -> com.devinxutal.man20.f.d:
-    int num -> a
-    float[] points -> b
-    float scale -> c
-    float x -> d
-    float y -> e
-    android.graphics.Paint paint -> f
-    int[] colors -> g
-    int totalStep -> h
-    int currentStep -> i
-    float maxTime -> j
-    float scaleDelta -> k
-    float currentScale -> l
-    int alpha -> m
-    int alphaDelta -> n
-    boolean step() -> a
-    void reset() -> b
-    void draw(android.graphics.Canvas) -> a
-com.devinxutal.columns.model.Movable -> com.devinxutal.man20.f.f:
-    float x -> b
-    float y -> c
-    float vx -> d
-    float vy -> e
-    float pgWidth -> f
-    float pgHeight -> g
-    float standardizedVX() -> c
-    float standardizedVY() -> d
-com.devinxutal.columns.model.Playground -> com.devinxutal.man20.f.c:
-    com.devinxutal.columns.model.Defender defender -> a
-    com.devinxutal.columns.model.Attacker[] attackers -> b
-    int numAttackers -> c
-    com.devinxutal.columns.model.Star[] stars -> d
-    int width -> e
-    int height -> f
-    boolean crashed -> g
-    com.devinxutal.columns.model.Attacker[] getAttackers() -> a
-    com.devinxutal.columns.model.Star[] getStars() -> b
-    com.devinxutal.columns.model.Defender getDefender() -> c
-    void setSize(int,int) -> a
-    void reset() -> d
-    void move$13462e() -> e
-    boolean isCrashed() -> f
-com.devinxutal.columns.model.Star -> com.devinxutal.man20.f.e:
-    float x -> a
-    float y -> b
-    float vx -> c
-    float vy -> d
-    float pgWidth -> e
-    float pgHeight -> f
-    boolean active -> g
-    void move$13462e() -> a
-    boolean isActive() -> b
-    void activate$7db2b09b() -> c
-com.devinxutal.columns.record.TwentySecondsRecord -> com.devinxutal.man20.d.a:
+com.devinxutal.tetris.control.ButtonInfo -> com.devinxutal.tetris.a.e:
+    int x -> a
+    int y -> b
+    int radius -> c
+    int buttonID -> d
+    android.graphics.Bitmap buttonBG -> e
+    android.graphics.Bitmap buttonIcon -> f
+    boolean pressed -> g
+com.devinxutal.tetris.control.Command -> com.devinxutal.tetris.a.c:
+    com.devinxutal.tetris.control.Command TURN -> a
+    com.devinxutal.tetris.control.Command LEFT -> b
+    com.devinxutal.tetris.control.Command RIGHT -> c
+    com.devinxutal.tetris.control.Command DOWN -> d
+    com.devinxutal.tetris.control.Command DIRECT_DOWN -> e
+    com.devinxutal.tetris.control.Command TURN_DOWN -> f
+    com.devinxutal.tetris.control.Command TURN_UP -> g
+    com.devinxutal.tetris.control.Command LEFT_DOWN -> h
+    com.devinxutal.tetris.control.Command LEFT_UP -> i
+    com.devinxutal.tetris.control.Command RIGHT_DOWN -> j
+    com.devinxutal.tetris.control.Command RIGHT_UP -> k
+    com.devinxutal.tetris.control.Command DOWN_DOWN -> l
+    com.devinxutal.tetris.control.Command DOWN_UP -> m
+    com.devinxutal.tetris.control.Command[] ENUM$VALUES -> n
+    com.devinxutal.tetris.control.Command[] values() -> values
+    com.devinxutal.tetris.control.Command valueOf(java.lang.String) -> valueOf
+com.devinxutal.tetris.control.GameController -> com.devinxutal.tetris.a.d:
+    com.devinxutal.tetris.sound.SoundManager soundManager -> a
+    com.devinxutal.tetris.ui.PlaygroundView playgroundView -> b
+    com.devinxutal.tetris.ui.ControlView controlView -> c
+    com.devinxutal.tetris.model.Playground playground -> d
+    java.util.List listeners -> e
+    android.os.Handler handler -> f
+    boolean playing -> g
+    com.devinxutal.tetris.control.GameController$StepRunnable stepRunnable -> h
+    com.devinxutal.tetris.control.GameController$ControlRunnable controlRunnable -> i
+    com.devinxutal.tetris.control.Command pendingCommand -> j
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> k
+    void start() -> a
+    void pause() -> b
+    void reset() -> c
+    void finishAnimation() -> d
+    void processCommand(com.devinxutal.tetris.control.Command) -> a
+    int getStepDelay() -> i
+    com.devinxutal.tetris.ui.PlaygroundView getPlaygroundView() -> e
+    boolean addGameListener(com.devinxutal.tetris.control.GameController$GameListener) -> a
+    void notifyGameFinished() -> f
+    com.devinxutal.tetris.model.Playground getPlayground() -> g
+    void configurationChanged(com.devinxutal.tetris.cfg.Configuration) -> a
+    void postControlDelay(int) -> a
+    void postStepDelay(int) -> b
+    boolean letPlaygroundProcessCommand(com.devinxutal.tetris.control.Command) -> b
+    com.devinxutal.tetris.ui.ControlView getControlView() -> h
+    com.devinxutal.tetris.model.Playground access$0(com.devinxutal.tetris.control.GameController) -> a
+    com.devinxutal.tetris.ui.PlaygroundView access$1(com.devinxutal.tetris.control.GameController) -> b
+    com.devinxutal.tetris.sound.SoundManager access$2(com.devinxutal.tetris.control.GameController) -> c
+    void access$3$62c8496d(com.devinxutal.tetris.control.GameController) -> d
+    boolean access$4(com.devinxutal.tetris.control.GameController) -> e
+    void access$5(com.devinxutal.tetris.control.GameController,int) -> a
+    int access$6(com.devinxutal.tetris.control.GameController) -> f
+    com.devinxutal.tetris.control.Command access$7(com.devinxutal.tetris.control.GameController) -> g
+    boolean access$8(com.devinxutal.tetris.control.GameController,com.devinxutal.tetris.control.Command) -> a
+    void access$9$62c8099c(com.devinxutal.tetris.control.GameController) -> h
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> j
+com.devinxutal.tetris.control.GameController$ControlRunnable -> com.devinxutal.tetris.a.f:
+    long idToProcess -> a
+    long idProcessed -> b
+    com.devinxutal.tetris.control.GameController this$0 -> c
+    void increaseIDToProcess() -> a
+    void run() -> run
+com.devinxutal.tetris.control.GameController$GameListener -> com.devinxutal.tetris.a.a:
+    void gameFinished() -> a
+com.devinxutal.tetris.control.GameController$StepRunnable -> com.devinxutal.tetris.a.b:
+    long idToProcess -> a
+    long idProcessed -> b
+    com.devinxutal.tetris.control.GameController this$0 -> c
+    void increaseIDToProcess() -> a
+    void run() -> run
+com.devinxutal.tetris.model.Block -> com.devinxutal.tetris.b.a:
+    boolean[][][] matrix -> a
+    int current -> b
+    int numStatus -> c
+    com.devinxutal.tetris.model.Block$BlockType blockType -> d
+    boolean recalculated -> e
+    int fc -> f
+    int fr -> g
+    int rc -> h
+    int cc -> i
+    int getCurrent() -> a
+    void turn() -> b
+    void recalc() -> j
+    int firstValidColumn() -> c
+    int firstValidRow() -> d
+    int columnCount() -> e
+    int rowCount() -> f
+    boolean[][] getMatrix() -> g
+    boolean[][] getTurnedMatrix() -> h
+    com.devinxutal.tetris.model.Block$BlockType getBlockType() -> i
+com.devinxutal.tetris.model.Block$BlockType -> com.devinxutal.tetris.b.g:
+    com.devinxutal.tetris.model.Block$BlockType I -> a
+    com.devinxutal.tetris.model.Block$BlockType J -> b
+    com.devinxutal.tetris.model.Block$BlockType L -> c
+    com.devinxutal.tetris.model.Block$BlockType O -> d
+    com.devinxutal.tetris.model.Block$BlockType S -> e
+    com.devinxutal.tetris.model.Block$BlockType T -> f
+    com.devinxutal.tetris.model.Block$BlockType Z -> g
+    boolean[][][][] matrix_array -> h
+    com.devinxutal.tetris.model.Block$BlockType[] ENUM$VALUES -> i
+    boolean[][][] getMatrix(com.devinxutal.tetris.model.Block$BlockType) -> a
+    com.devinxutal.tetris.model.Block$BlockType random() -> a
+    com.devinxutal.tetris.model.Block$BlockType[] values() -> values
+    com.devinxutal.tetris.model.Block$BlockType valueOf(java.lang.String) -> valueOf
+com.devinxutal.tetris.model.Playground -> com.devinxutal.tetris.b.f:
+    int width -> a
+    int height -> b
+    int blockSize -> c
+    boolean inAnimation -> d
+    boolean[] eliminating -> e
+    int eliminatingCurrentStep -> f
+    int eliminatingTotalSteps -> g
+    int eliminationLines -> h
+    boolean finished -> i
+    com.devinxutal.tetris.model.Block activeBlock -> j
+    int blockOffsetX -> k
+    int blockOffsetY -> l
+    int projectedY -> m
+    int originalOffsetY -> n
+    int rowsFallDown -> o
+    int[][] playground -> p
+    java.util.LinkedList blockQueue -> q
+    int blockQueueLen -> r
+    com.devinxutal.tetris.model.ScoreAndLevel scoreLevel -> s
+    com.devinxutal.tetris.model.Playground$DrawingMetrics dm -> t
+    boolean isFinishingElimination -> u
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> v
+    int getWidth() -> a
+    int getHeight() -> b
+    int getBlockSize() -> c
+    float getSpeedScale() -> d
+    void reset() -> e
+    boolean isFinished() -> f
+    com.devinxutal.tetris.model.ScoreAndLevel getScoreAndLevel() -> g
+    void moveOn() -> h
+    boolean processCommand(com.devinxutal.tetris.control.Command) -> a
+    boolean isInAnimation() -> i
+    void determinSize(int,int) -> a
+    void initDrawingMetrics(android.content.Context) -> a
+    void drawPendingBlocks(android.graphics.Canvas,android.graphics.Rect,android.graphics.Rect,android.graphics.Rect) -> a
+    void drawBlock(android.graphics.Canvas,com.devinxutal.tetris.model.Block,android.graphics.Rect) -> a
+    com.devinxutal.tetris.model.SavablePlayground getSavablePlayground() -> j
+    void restoreSavablePlayground(com.devinxutal.tetris.model.SavablePlayground) -> a
+    void draw(android.graphics.Canvas,int,int) -> a
+    boolean moveBlockDown() -> l
+    boolean isFinishingElimination() -> k
+    void calculateProjectedY() -> m
+    void configurationChanged(com.devinxutal.tetris.cfg.Configuration) -> a
+    int access$0(com.devinxutal.tetris.model.Playground) -> a
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> n
+com.devinxutal.tetris.model.Playground$DrawingMetrics -> com.devinxutal.tetris.b.b:
+    int[] COLORS -> b
+    android.graphics.Bitmap[] original_blocks -> c
+    android.graphics.Bitmap[] sized_blocks -> a
+    android.graphics.Paint paint -> d
+    java.lang.String blockStyle -> e
+    android.content.Context context -> f
+    com.devinxutal.tetris.model.Playground this$0 -> g
+    void init(android.content.Context) -> a
+    void onSizeChanged(boolean) -> a
+    void configurationChanged(com.devinxutal.tetris.cfg.Configuration) -> a
+    android.graphics.Paint access$0(com.devinxutal.tetris.model.Playground$DrawingMetrics) -> a
+com.devinxutal.tetris.model.SavablePlayground -> com.devinxutal.tetris.b.e:
+    int[][] playground -> a
+    com.devinxutal.tetris.model.SavablePlayground$SavableBlock activeBlock -> b
+    int offsetX -> c
+    int offsetY -> d
+    java.util.List blockQueue -> e
+    com.devinxutal.tetris.model.ScoreAndLevel scoreLevel -> f
+    com.devinxutal.tetris.model.SavablePlayground$SavableBlock create(com.devinxutal.tetris.model.Block) -> a
+com.devinxutal.tetris.model.SavablePlayground$SavableBlock -> com.devinxutal.tetris.b.d:
+    com.devinxutal.tetris.model.Block$BlockType blockType -> a
+    int current -> b
+    com.devinxutal.tetris.model.SavablePlayground this$0 -> c
+com.devinxutal.tetris.model.ScoreAndLevel -> com.devinxutal.tetris.b.c:
+    int level -> a
+    int score -> b
+    int totalLines -> c
+    int currentLines -> d
+    int addScore(int) -> a
+    int getScore() -> a
+    int getLevel() -> b
+    int getGoalRemained() -> c
+    java.lang.String getScroreString(int) -> b
+com.devinxutal.tetris.record.SavableLocalScore -> com.devinxutal.tetris.e.a:
     java.lang.String player -> a
-    long time -> b
-    java.util.Date commitTime -> c
-    int rank -> d
-    java.lang.String description -> e
-    int getRank() -> a
-    long getTime() -> b
-    java.lang.String getTimeString() -> c
-    java.lang.String getPlayer() -> d
-    com.devinxutal.columns.record.TwentySecondsRecord parse(java.lang.String) -> a
-com.devinxutal.columns.sound.SoundManager -> com.devinxutal.man20.c.a:
+    int score -> b
+    java.lang.String getPlayer() -> a
+    int getScore() -> b
+    int compareTo(java.lang.Object) -> compareTo
+com.devinxutal.tetris.record.SavableLocalScores -> com.devinxutal.tetris.e.b:
+    java.util.LinkedList robotScores -> a
+    java.util.List scores -> b
+    void trim() -> a
+    java.util.List getLocalRankForList$28cc3cee() -> b
+    void addScore(java.lang.String,int) -> a
+com.devinxutal.tetris.sound.SoundManager -> com.devinxutal.tetris.f.a:
     android.media.SoundPool soundpool -> a
     android.app.Activity activity -> b
     android.media.MediaPlayer mediaPlayer -> c
     android.media.AudioManager audioManager -> d
     int btnMusicID -> e
-    int crashMusicID -> f
-    boolean initialized -> g
-    com.devinxutal.columns.sound.SoundManager soundManager -> h
-    float BACKGROUND_SOUND_VOLUME -> i
-    com.devinxutal.columns.sound.SoundManager get(android.app.Activity) -> a
+    int turnMusicID -> f
+    int moveMusicID -> g
+    int downMusicID -> h
+    int eliminationMusicID -> i
+    float streamVolume -> j
+    boolean initialized -> k
+    com.devinxutal.tetris.sound.SoundManager soundManager -> l
+    float BACKGROUND_SOUND_VOLUME -> m
+    com.devinxutal.tetris.sound.SoundManager get(android.app.Activity) -> a
     void init(android.app.Activity) -> b
     void release() -> a
     void playBackgroundMusic() -> b
     void stopBackgroundMusic() -> c
     void pauseBackgroundMusic() -> d
     void playButtonClickEffect() -> e
-    void playCrashEffect() -> f
-com.devinxutal.columns.ui.GameControlView -> com.devinxutal.man20.ui.f:
-    com.devinxutal.columns.control.GameController controller -> a
+    void playMoveEffect() -> f
+    void playTurnEffect() -> g
+    void playDownEffect() -> h
+    void playEliminationEffect() -> i
+com.devinxutal.tetris.ui.ControlView -> com.devinxutal.tetris.ui.a:
+    com.devinxutal.tetris.control.GameController controller -> a
     java.util.List listeners -> b
-    android.widget.ImageButton playButton -> c
-    java.util.List buttons1 -> d
-    com.devinxutal.columns.ui.JoyStick joyStick -> e
-    com.devinxutal.columns.ui.GameTimer gameTimer -> f
-    boolean collapsed -> g
-    boolean showJoyStick -> h
-    boolean widgetChanged -> i
-    void setGameController(com.devinxutal.columns.control.GameController) -> a
-    com.devinxutal.columns.ui.GameTimer getGameTimer() -> a
-    com.devinxutal.columns.ui.JoyStick getJoyStick() -> b
-    void init() -> c
-    void onLayout(boolean,int,int,int,int) -> onLayout
-    void setPlayButtonStatus(int) -> a
-    void showJoyStick(boolean) -> a
-    void onClick(android.view.View) -> onClick
-    boolean addCubeControlListener(com.devinxutal.man20.ui.GameControlView$GameControlListener) -> a
-com.devinxutal.man20.ui.GameControlView$GameControlListener -> com.devinxutal.man20.ui.a:
-    void buttonClickced(int) -> a
-com.devinxutal.columns.ui.GameTimer -> com.devinxutal.man20.ui.g:
-    boolean running -> a
-    android.os.Handler mHandler -> b
-    long startTime -> c
-    long accumulatedTime -> d
-    java.lang.Runnable cubeTimerTask -> e
-    long getTime() -> a
-    java.lang.String parseTime() -> e
-    void start() -> b
-    void stop() -> c
-    void reset() -> d
-    java.lang.String access$0(com.devinxutal.columns.ui.GameTimer) -> a
-    boolean access$1(com.devinxutal.columns.ui.GameTimer) -> b
-    android.os.Handler access$2(com.devinxutal.columns.ui.GameTimer) -> c
-com.devinxutal.man20.ui.GameTimer$1 -> com.devinxutal.man20.ui.d:
-    com.devinxutal.columns.ui.GameTimer this$0 -> a
-    void run() -> run
-com.devinxutal.columns.ui.JoyStick -> com.devinxutal.man20.ui.b:
-    android.graphics.Paint paint -> a
-    java.util.List listeners -> b
-    int height -> c
-    int width -> d
-    int centerX -> e
-    int centerY -> f
-    int stickRadius -> g
-    int panelRadius -> h
-    int colorPanel -> i
-    int colorEdge -> j
-    int colorStick -> k
-    float x -> l
-    float y -> m
-    void onMeasure(int,int) -> onMeasure
-    void onDraw(android.graphics.Canvas) -> onDraw
+    float SLIDE_THRESHOLD -> c
+    java.util.List buttons -> d
+    java.util.List controlButtons -> e
+    android.widget.ImageButton soundButton -> f
+    android.widget.ImageButton musicButton -> g
+    com.devinxutal.tetris.cfg.Configuration config -> h
+    float oldX -> i
+    float oldY -> j
     void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void setButtons(java.util.List) -> a
+    void adjustDownButton() -> b
+    void setGameController(com.devinxutal.tetris.control.GameController) -> a
+    void init() -> c
+    void onDraw(android.graphics.Canvas) -> onDraw
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-    void ajustStickPosition(float,float) -> a
-    boolean addJoyStickListener(com.devinxutal.man20.ui.JoyStick$JoyStickListener) -> a
-    void notifyJoyStickMoved() -> a
-com.devinxutal.man20.ui.JoyStick$JoyStickListener -> com.devinxutal.man20.ui.c:
-    void joyStickMoved(float,float) -> a
-com.devinxutal.columns.ui.PlaygroundView -> com.devinxutal.columns.ui.PlaygroundView:
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    android.widget.ImageButton makeButton(int,int) -> a
+    void onClick(android.view.View) -> onClick
+    void resetControlButtons() -> d
+    boolean addGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener) -> a
+    void notifyButtonClicked(int) -> a
+    void notifyButtonReleased(int) -> b
+    void configurationChanged$8fc215e() -> a
+com.devinxutal.tetris.ui.ControlView$GameControlListener -> com.devinxutal.tetris.ui.b:
+    void buttonClickced(int) -> a
+    void buttonPressed(int) -> b
+    void buttonReleased(int) -> c
+com.devinxutal.tetris.ui.Pair -> com.devinxutal.tetris.ui.d:
+    int x -> a
+    int y -> b
+com.devinxutal.tetris.ui.PlaygroundView -> com.devinxutal.tetris.ui.PlaygroundView:
     java.lang.String TAG -> a
-    com.devinxutal.man20.ui.PlaygroundView$AnimationThread animationThread -> b
-    com.devinxutal.columns.control.GameController gameController -> c
-    com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics dm -> d
-    com.devinxutal.columns.model.Playground playground -> e
-    com.devinxutal.columns.model.Explosion explosion -> f
-    boolean finishedAlreadyNotified -> g
-    boolean finishingAlreadyNotified -> h
-    boolean notifyFinished -> i
-    void setGameController(com.devinxutal.columns.control.GameController) -> a
-    void setPlayground(com.devinxutal.columns.model.Playground) -> a
-    void init() -> b
+    com.devinxutal.tetris.control.GameController gameController -> b
+    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics dm -> c
+    com.devinxutal.tetris.model.Playground playground -> d
+    boolean finishedAlreadyNotified -> e
+    boolean finishingAlreadyNotified -> f
+    boolean notifyFinished -> g
+    com.devinxutal.tetris.ui.ControlView controlView -> h
+    void setGameController(com.devinxutal.tetris.control.GameController) -> a
+    com.devinxutal.tetris.model.Playground getPlayground() -> a
+    void setPlayground(com.devinxutal.tetris.model.Playground) -> a
+    void init() -> c
     void onMeasure(int,int) -> onMeasure
     void onSizeChanged(int,int,int,int) -> onSizeChanged
     void onWindowVisibilityChanged(int) -> onWindowVisibilityChanged
+    void reset() -> b
     void onDraw(android.graphics.Canvas) -> onDraw
-    void reset() -> a
-    void paint(android.graphics.Canvas) -> a
-    void pause(boolean) -> a
-    void surfaceChanged(android.view.SurfaceHolder,int,int,int) -> surfaceChanged
-    void surfaceCreated(android.view.SurfaceHolder) -> surfaceCreated
-    void surfaceDestroyed(android.view.SurfaceHolder) -> surfaceDestroyed
-    com.devinxutal.columns.model.Playground access$0(com.devinxutal.columns.ui.PlaygroundView) -> a
-    boolean access$1(com.devinxutal.columns.ui.PlaygroundView) -> b
-    com.devinxutal.columns.control.GameController access$2(com.devinxutal.columns.ui.PlaygroundView) -> c
-    void access$3$e49787b(com.devinxutal.columns.ui.PlaygroundView) -> d
-    void access$4(com.devinxutal.columns.ui.PlaygroundView,com.devinxutal.columns.model.Explosion) -> a
-    com.devinxutal.columns.model.Explosion access$5(com.devinxutal.columns.ui.PlaygroundView) -> e
-    void access$6(com.devinxutal.columns.ui.PlaygroundView) -> f
-    boolean access$7(com.devinxutal.columns.ui.PlaygroundView) -> g
-    void access$8$e49787b(com.devinxutal.columns.ui.PlaygroundView) -> h
-com.devinxutal.man20.ui.PlaygroundView$AnimationThread -> com.devinxutal.man20.ui.e:
-    boolean flag -> a
-    boolean paused -> b
-    com.devinxutal.columns.ui.PlaygroundView this$0 -> c
-    void run() -> run
-com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics -> com.devinxutal.man20.ui.h:
+    void setControlView(com.devinxutal.tetris.ui.ControlView) -> a
+    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics access$0(com.devinxutal.tetris.ui.PlaygroundView) -> a
+    com.devinxutal.tetris.model.Playground access$1(com.devinxutal.tetris.ui.PlaygroundView) -> b
+    com.devinxutal.tetris.ui.ControlView access$2(com.devinxutal.tetris.ui.PlaygroundView) -> c
+com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics -> com.devinxutal.tetris.ui.c:
     int[] STAR_COLORS -> a
     android.graphics.Paint paint -> b
-    android.graphics.Bitmap defenderOriginal -> c
-    android.graphics.Bitmap defender -> d
-    com.devinxutal.columns.ui.PlaygroundView this$0 -> e
-    void resetDefender() -> a
-    android.graphics.Paint access$0(com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics) -> a
-    android.graphics.Bitmap access$1(com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics) -> b
-com.devinxutal.columns.util.AdUtil -> com.devinxutal.man20.a.a:
+    com.devinxutal.tetris.util.BitmapUtil bitmapUtil -> c
+    android.graphics.Bitmap bgBitmap -> d
+    android.graphics.Bitmap gridBitmap -> e
+    android.graphics.Rect playgroundRect -> f
+    android.graphics.Rect next1BlockRect -> g
+    android.graphics.Rect next2BlockRect -> h
+    android.graphics.Rect next3BlockRect -> i
+    android.graphics.Rect scoreRect -> j
+    android.graphics.Rect levelRect -> k
+    android.graphics.Rect linesRect -> l
+    android.graphics.Typeface font -> m
+    android.graphics.Typeface scoreFont -> n
+    android.graphics.Typeface labelFont -> o
+    android.graphics.Typeface statFont -> p
+    float lineHeight -> q
+    float scoreLineHeight -> r
+    float labelLineHeight -> s
+    float statLineHeight -> t
+    float scoreSize -> u
+    int scoreDigits -> v
+    float scoreGap -> w
+    float labelSize -> x
+    float labelGap -> y
+    float statSize -> z
+    int statDigits -> A
+    float textStrokeScale -> B
+    com.devinxutal.tetris.ui.PlaygroundView this$0 -> C
+    void onSizeChanged(int,int) -> a
+    void resetPaint() -> a
+    void regenerateLandscapeBackground() -> b
+    void determinAndDrawControlButtons(android.graphics.Canvas) -> a
+    void determineScoreSize(float,float) -> a
+    void determineLabelSize(float,float) -> b
+    void determineStatSize(float,float) -> c
+    android.graphics.Paint access$0(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> a
+    android.graphics.Bitmap access$1(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> b
+    android.graphics.Rect access$2(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> c
+    android.graphics.Rect access$3(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> d
+    android.graphics.Rect access$4(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> e
+    android.graphics.Rect access$5(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> f
+    float access$6(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> g
+    android.graphics.Typeface access$7(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> h
+    float access$8(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> i
+    int access$9(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> j
+    android.graphics.Rect access$10(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> k
+    float access$11(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> l
+    float access$12(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> m
+    android.graphics.Typeface access$13(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> n
+    android.graphics.Rect access$14(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> o
+    float access$15(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> p
+    android.graphics.Rect access$16(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> q
+    float access$17(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> r
+    android.graphics.Typeface access$18(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> s
+com.devinxutal.tetris.util.AdUtil -> com.devinxutal.tetris.d.b:
     void determineAd(android.app.Activity,int) -> a
-com.devinxutal.columns.util.DialogUtil -> com.devinxutal.man20.a.b:
-    void showRankDialog(android.app.Activity) -> a
-    android.widget.TextView createTableCell(android.content.Context,java.lang.String) -> a
-    android.view.View access$0(android.app.Activity,java.util.List) -> a
-com.devinxutal.man20.util.DialogUtil$1 -> com.devinxutal.man20.a.h:
-    android.app.Activity val$context -> a
-    android.app.ProgressDialog val$dialog -> b
-    void run() -> run
-com.devinxutal.man20.util.DialogUtil$1$1 -> com.devinxutal.man20.a.g:
-    com.devinxutal.man20.util.DialogUtil$1 this$1 -> a
-    android.app.ProgressDialog val$dialog -> b
-    int val$sc -> c
-    android.app.Activity val$context -> d
-    java.util.List val$records -> e
-    void run() -> run
-com.devinxutal.man20.util.DialogUtil$1$1$1 -> com.devinxutal.man20.a.d:
-    com.devinxutal.man20.util.DialogUtil$1$1 this$2 -> a
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.man20.util.DialogUtil$1$1$2 -> com.devinxutal.man20.a.e:
-    com.devinxutal.man20.util.DialogUtil$1$1 this$2 -> a
-    android.app.Activity val$context -> b
-    void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.columns.util.MilitaryRank -> com.devinxutal.man20.a.c:
-    int stringID -> a
-    int drawableID -> b
-    com.devinxutal.columns.util.MilitaryRank[] RANKS -> c
-    com.devinxutal.columns.util.MilitaryRank getRank$107ad41b(long) -> a
-    int getStringID() -> a
-    int getDrawableID() -> b
-com.devinxutal.columns.util.RandomUtil -> com.devinxutal.man20.a.f:
+com.devinxutal.tetris.util.BitmapUtil -> com.devinxutal.tetris.d.e:
+    android.content.Context context -> a
+    android.graphics.Bitmap background -> b
+    android.graphics.Bitmap aimButton1 -> c
+    android.graphics.Bitmap aimButton2 -> d
+    android.graphics.Bitmap arrowDown -> e
+    android.graphics.Bitmap arrowUp -> f
+    android.graphics.Bitmap arrowLeft -> g
+    android.graphics.Bitmap arrowRight -> h
+    android.graphics.Paint paint -> i
+    android.graphics.drawable.Drawable hInfoBar -> j
+    android.graphics.drawable.Drawable vInfoBar -> k
+    com.devinxutal.tetris.util.BitmapUtil util -> l
+    com.devinxutal.tetris.util.BitmapUtil get(android.content.Context) -> a
+    android.graphics.Bitmap getAimButtonBitmap1(int) -> a
+    android.graphics.Bitmap getAimButtonBitmap2(int) -> b
+    android.graphics.drawable.Drawable getVerticalInfoBar() -> a
+    android.graphics.drawable.Drawable getHorizontalInfoBar() -> b
+    android.graphics.Bitmap getBackgroundBitmap(int,int) -> a
+    android.graphics.Bitmap getArrowBitmap(int,int) -> b
+com.devinxutal.tetris.util.MathUtil -> com.devinxutal.tetris.d.d:
+    double distance(double,double,double,double) -> a
+com.devinxutal.tetris.util.RandomUtil -> com.devinxutal.tetris.d.a:
     java.util.Random r -> a
+com.devinxutal.tetris.util.ScoreUtil -> com.devinxutal.tetris.d.c:
+    com.devinxutal.tetris.record.SavableLocalScores loadLocalScores() -> a
+    void saveCubeState(java.lang.String,int) -> a
+com.devinxutal.tetris.util.TextPainter -> com.devinxutal.tetris.d.f:
+    android.graphics.Paint textPaint -> a
+    android.graphics.Paint strokePaint -> b
+    android.graphics.Paint getStrokePaint() -> a
+    void setStrokeWidth(float) -> a
+    void setStrokeColor$13462e() -> b
+    void setTextColor$13462e() -> c
+    void setTextSize(float) -> b
+    void setTypeface(android.graphics.Typeface) -> a
+    void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float) -> a
+    void drawText(android.graphics.Canvas,java.lang.String,float,float,float) -> b
+    void drawCharacter(android.graphics.Canvas,java.lang.String,float,float) -> a
+    float measureTextWidth(java.lang.String,float) -> a
+    void drawCenteredText(android.graphics.Canvas,java.lang.String,android.graphics.Rect) -> a
