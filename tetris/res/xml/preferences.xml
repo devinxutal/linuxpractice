@@ -9,7 +9,7 @@
 			android:defaultValue="false" />
 		<ListPreference android:title="@string/pref_ent_difficulty"
 			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
-			android:defaultValue="2" android:entries="@array/pref_ent_difficulty_entries"
+			android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries"
 			android:entryValues="@array/pref_ent_difficulty_values" />
 		<ListPreference android:title="@string/pref_ent_screen_orientation"
 			android:summary="@string/pref_ent_screen_orientation_summary"
@@ -17,18 +17,24 @@
 			android:entries="@array/pref_ent_screen_orientation_entries"
 			android:entryValues="@array/pref_ent_screen_orientation_values" />
 	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_control">
-		<ListPreference android:title="@string/pref_ent_control"
-			android:summary="@string/pref_ent_control_summary" android:key="control_manner"
-			android:defaultValue="2" android:entries="@array/pref_ent_control_entries"
-			android:entryValues="@array/pref_ent_control_values" />
-
-		<ListPreference android:title="@string/pref_ent_joystick_position"
-			android:summary="@string/pref_ent_joystick_position_summary"
-			android:key="joystick_position" android:defaultValue="1"
-			android:entries="@array/pref_ent_joystick_position_entries"
-			android:entryValues="@array/pref_ent_joystick_position_values" />
-
+	<PreferenceCategory android:title="@string/pref_cat_appearence">
+		<ListPreference android:title="@string/pref_ent_block_style"
+			android:summary="@string/pref_ent_block_style_summary" android:key="block_style"
+			android:defaultValue="classic" android:entries="@array/pref_ent_block_style_entries"
+			android:entryValues="@array/pref_ent_block_style_values" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_landscape_control">
+		<ListPreference android:title="@string/pref_ent_direct_down_position"
+			android:summary="@string/pref_ent_direct_down_position_summary"
+			android:key="direct_down_position" android:defaultValue="1"
+			android:entries="@array/pref_ent_direct_down_position_entries"
+			android:entryValues="@array/pref_ent_direct_down_position_values" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_portrait_control">
+		<ListPreference android:title="@string/pref_ent_center_button_action"
+			android:summary="@string/pref_ent_center_button_action_summary"
+			android:key="center_button_action" android:defaultValue="2"
+			android:entries="@array/pref_ent_center_button_action_entries"
+			android:entryValues="@array/pref_ent_center_button_action_values" />
 	</PreferenceCategory>
 </PreferenceScreen>

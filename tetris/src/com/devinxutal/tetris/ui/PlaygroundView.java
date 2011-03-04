@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.cfg.Constants;
 import com.devinxutal.tetris.control.ButtonInfo;
 import com.devinxutal.tetris.control.GameController;
@@ -190,7 +191,7 @@ public class PlaygroundView extends View {
 					.getLevel()
 					+ "", dm.levelRect.left, dm.levelRect.top, dm.labelGap);
 			painter.drawMonoScore(canvas, playground.getScoreAndLevel()
-					.getTotalLines()
+					.getGoalRemained()
 					+ "", dm.linesRect.left, dm.linesRect.top, dm.labelGap);
 		} else {
 			painter.setTextSize(dm.scoreSize);
@@ -206,7 +207,7 @@ public class PlaygroundView extends View {
 					.getLevel()
 					+ "", dm.levelRect);
 			painter.drawCenteredText(canvas, playground.getScoreAndLevel()
-					.getTotalLines()
+					.getGoalRemained()
 					+ "", dm.linesRect);
 		}
 
@@ -255,14 +256,13 @@ public class PlaygroundView extends View {
 		private float labelGap;
 		private float statSize;
 		private int statDigits = 3;
-		private float textStrokeScale = 0.2f;
+		private float textStrokeScale = 0.15f;
 
 		public DrawingMetrics() {
 			font = Typeface.createFromAsset(getContext().getAssets(),
-					Constants.FONT_PATH_COMIC);
+					Constants.FONT_PATH_MONO);
 			scoreFont = statFont = font;
-			labelFont = Typeface.SANS_SERIF;
-			labelFont = Typeface.create("Arial", Typeface.BOLD);
+			labelFont = Typeface.create("Arial Black", Typeface.NORMAL);
 			paint = new Paint();
 			paint.setAntiAlias(true);
 			paint.setTextSize(18);
@@ -297,6 +297,9 @@ public class PlaygroundView extends View {
 
 		private void regenerateLandscapeBackground() {
 			BitmapUtil util = BitmapUtil.get(getContext());
+			if(this.bgBitmap!= null){
+				bgBitmap.recycle();
+			}
 			this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
 					getHeight());
 			Canvas canvas = new Canvas(bgBitmap);
@@ -342,12 +345,13 @@ public class PlaygroundView extends View {
 				}
 			}
 			bg.recycle();
-			// draw nextBlock bar
-			determinAndDrawNextBar(canvas);
 
 			// draw score and level
 			determinAndDrawStatistics(canvas);
 			determinAndDrawControlButtons(canvas);
+			// draw nextBlock bar, must behind determinAndDrawStatistics;
+			determinAndDrawNextBar(canvas);
+
 		}
 
 		private void determinAndDrawNextBar(Canvas canvas) {
@@ -360,7 +364,7 @@ public class PlaygroundView extends View {
 				int barHeight = nextBar.getIntrinsicHeight();
 				int barWidth = (width - playground.getWidth() - 13) / 2;
 				int barStartX = width - barWidth - 4;
-				int barStartY = 5;
+				int barStartY = levelRect.top;
 				int bs1 = (int) (barHeight * 0.6f);
 				int bs2 = Math.min((int) (bs1 * 0.8),
 						(int) ((barWidth - barHeight) / 2 * 0.8));
@@ -429,8 +433,8 @@ public class PlaygroundView extends View {
 			if (getWidth() > getHeight()) {
 				int scorePadding = 10;
 				int textGap = 10;
-				int scoreWidth = (width - playground.getWidth() - 12) / 2 - 2
-						* scorePadding;
+				int scoreWidth = Math.min((width - playground.getWidth() - 12)
+						/ 2 - 2 * scorePadding, playground.getWidth() * 4 / 5);
 				int scoreStartX = scorePadding;
 				int scoreStartY = scorePadding;
 				determineScoreSize(scoreWidth, scoreWidth);
@@ -445,7 +449,7 @@ public class PlaygroundView extends View {
 				painter.setTextColor(Color.WHITE);
 				painter.drawText(canvas, "LEVEL", scoreStartX, scoreStartY
 						+ lineHeight + textGap, labelGap);
-				painter.drawText(canvas, "LINES", scoreStartX, scoreStartY
+				painter.drawText(canvas, "GOAL", scoreStartX, scoreStartY
 						+ lineHeight * 2 + textGap, labelGap);
 				levelRect = new Rect(scoreStartX + scoreWidth / 2 + textGap,
 						(int) (scoreStartY + lineHeight + textGap), scoreStartX
@@ -457,17 +461,17 @@ public class PlaygroundView extends View {
 						scoreStartX + scoreWidth / 2 + textGap,
 						(int) (scoreStartY + 2 * lineHeight + textGap + lineHeight));
 			} else {
-				int scoreMaxWidth = playground.getWidth();
-				int scoreMaxHeight = playgroundRect.top - 2 * 5;
+				int scoreMaxWidth = playgroundRect.right
+						- playgroundRect.width() / 2;
+				int scoreMaxHeight = (playgroundRect.top - 2 * 5) * 9 / 10;
 				determineScoreSize(scoreMaxWidth, scoreMaxHeight);
-				int scoreStartX = (width - playground.getWidth()) / 2;
-				int scoreStartY = (int) (playgroundRect.top - scoreLineHeight) / 2;
+				int scoreStartX = 5;
+				int scoreStartY = 5;
 				scoreRect = new Rect(scoreStartX, scoreStartY, scoreStartX
-						+ playground.getWidth(), (int) (scoreStartY
-						+ lineHeight + 1));
+						+ scoreMaxWidth, (int) (scoreStartY + lineHeight + 1));
 
 				int leftWidth = playgroundRect.left;
-				int labelMaxWidth = leftWidth - 2 * 5;
+				int labelMaxWidth = (leftWidth - 2 * 5) * 9 / 10;
 				determineLabelSize(labelMaxWidth, height);
 				int labelStartY = playgroundRect.top;
 				int labelStartX = 5;
@@ -487,7 +491,7 @@ public class PlaygroundView extends View {
 						(int) (labelStartY + labelLineHeight * 1.5));
 
 				labelStartY = (int) (levelRect.bottom + labelLineHeight * 0.5);
-				painter.drawText(canvas, "LINES", labelStartX, labelStartY,
+				painter.drawText(canvas, "GOAL", labelStartX, labelStartY,
 						labelGap);
 				labelStartY = (int) (labelStartY + labelLineHeight);
 				linesRect = new Rect(labelStartX, labelStartY, labelStartX
@@ -524,54 +528,94 @@ public class PlaygroundView extends View {
 
 		private void determinAndDrawControlButtons(Canvas canvas) {
 			LinkedList<ButtonInfo> buttons = new LinkedList<ButtonInfo>();
-			Bitmap button1 = BitmapUtil.get(getContext()).getAimButtonBitmap1();
-			Bitmap button2 = BitmapUtil.get(getContext()).getAimButtonBitmap2();
-			int button1Radius = button1.getWidth() / 2;
-			int button2Radius = button2.getWidth() / 2;
-			Pair delta = buttonDelta(button1Radius, button2Radius, 0);
-			buttons.clear();
+
 			int buttonY = 0;
 			int buttonX = 0;
+			buttons.clear();
+			float iconScale = 1.4f;
 			if (getWidth() > getHeight()) {
+				int button1Radius = Math.min(playgroundRect.left * 3 / 5,
+						getHeight() * 3 / 10) / 2;
+				int button2Radius = button1Radius * 30 / 40;
+				Bitmap button1 = BitmapUtil.get(getContext())
+						.getAimButtonBitmap1(button1Radius * 2);
+				Bitmap button2 = BitmapUtil.get(getContext())
+						.getAimButtonBitmap2(button2Radius * 2);
+				Pair delta = buttonDelta(button1Radius, button2Radius, 0);
 				buttonY = getHeight() - button2Radius * 2 - 5;
 				buttonX = getWidth() - button1Radius;
 				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_RIGHT, button1, null));
+						ControlView.BTN_RIGHT, button1, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_RIGHT,
+										(int) (button1Radius * iconScale))));
 				buttons.add(new ButtonInfo(buttonX - delta.x,
 						buttonY - delta.y, button2Radius, ControlView.BTN_TURN,
-						button2, null));
+						button2, bitmapUtil.getArrowBitmap(
+								ControlView.BTN_TURN,
+								(int) (button2Radius * iconScale))));
 				buttons.add(new ButtonInfo(buttonX - delta.x,
 						buttonY + delta.y, button2Radius, ControlView.BTN_DOWN,
-						button2, null));
+						button2, bitmapUtil.getArrowBitmap(
+								ControlView.BTN_DOWN,
+								(int) (button2Radius * iconScale))));
 
 				buttonX = button1Radius;
 				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_LEFT, button1, null));
+						ControlView.BTN_LEFT, button1, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_LEFT,
+										(int) (button1Radius * iconScale))));
 				buttons.add(new ButtonInfo(buttonX + delta.x,
 						buttonY - delta.y, button2Radius, ControlView.BTN_TURN,
-						button2, null));
+						button2, bitmapUtil.getArrowBitmap(
+								ControlView.BTN_TURN,
+								(int) (button2Radius * iconScale))));
 				buttons.add(new ButtonInfo(buttonX + delta.x,
 						buttonY + delta.y, button2Radius,
-						ControlView.BTN_DIRECT_DOWN, button2, null));
+						ControlView.BTN_DIRECT_DOWN, button2, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DIRECT_DOWN,
+										(int) (button2Radius * iconScale))));
 			} else {
+				int button1Radius = Math.min(getHeight()
+						- playgroundRect.bottom - 10, getWidth() / 3) / 2;
+				if (getWidth() < 300) {
+					button1Radius = Math.min((getHeight()
+							- playgroundRect.bottom - 10) * 13 / 10,
+							getWidth() / 3) / 2;
+				}
+				int button2Radius = button1Radius * 4 / 5;
+				Bitmap button1 = BitmapUtil.get(getContext())
+						.getAimButtonBitmap1(button1Radius * 2);
+				Bitmap button2 = BitmapUtil.get(getContext())
+						.getAimButtonBitmap2(button2Radius * 2);
 				buttonY = getHeight() - button1Radius - 5;
 				buttonX = button1Radius + 5;
 				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_LEFT, button1, null));
+						ControlView.BTN_LEFT, button1, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_LEFT,
+										(int) (button1Radius * iconScale))));
 				buttons.add(new ButtonInfo(getWidth() - buttonX, buttonY,
-						button1Radius, ControlView.BTN_RIGHT, button1, null));
+						button1Radius, ControlView.BTN_RIGHT, button1,
+						bitmapUtil.getArrowBitmap(ControlView.BTN_RIGHT,
+								(int) (button1Radius * iconScale))));
 
 				buttonX = getWidth() / 2;
 				buttonY = getHeight() - button2Radius - 5;
 
 				buttons.add(new ButtonInfo(buttonX, buttonY, button2Radius,
-						ControlView.BTN_DOWN, button2, null));
+						ControlView.BTN_DOWN, button2, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DOWN,
+										(int) (button2Radius * iconScale))));
 			}
 
 			paint.setAlpha(255);
 			for (ButtonInfo button : buttons) {
+				paint.setAlpha(255);
 				canvas.drawBitmap(button.buttonBG, button.x - button.radius,
 						button.y - button.radius, paint);
+				paint.setAlpha(150);
+				canvas.drawBitmap(button.buttonIcon, button.x
+						- button.buttonIcon.getWidth() / 2, button.y
+						- button.buttonIcon.getHeight() / 2, paint);
 			}
 			if (controlView != null) {
 				controlView.setButtons(buttons);
@@ -653,6 +697,11 @@ public class PlaygroundView extends View {
 
 	public void setControlView(ControlView controlView) {
 		this.controlView = controlView;
+	}
+
+	public void configurationChanged(Configuration config) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.Log;
 
+import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.control.Command;
 import com.devinxutal.tetris.model.SavablePlayground.SavableBlock;
 
@@ -38,6 +39,8 @@ public class Playground {
 	private int projectedY = 0;
 	private int originalOffsetY = 0;
 
+	private int rowsFallDown = 0;
+
 	private int playground[][] = new int[VERTICAL_BLOCKS][HORIZONTAL_BLOCKS];
 
 	private LinkedList<Block> blockQueue = new LinkedList<Block>();
@@ -60,6 +63,12 @@ public class Playground {
 
 	public int getBlockSize() {
 		return blockSize;
+	}
+
+	public float getSpeedScale() {
+		float fatest = 0.1f;
+		return 1 - (1 - fatest) * scoreLevel.getLevel()
+				/ scoreLevel.getMaxLevel();
 	}
 
 	public void reset() {
@@ -101,12 +110,12 @@ public class Playground {
 			}
 		} else if (activeBlock == null) {
 			allocateBlock();
+			checkFinish();
 		} else {
 			if (moveBlockDown()) {
 
 			} else {
 				settleBlock();
-				checkFinish();
 				checkElimination();
 
 			}
@@ -128,7 +137,11 @@ public class Playground {
 		case RIGHT:
 			return moveBlockRight();
 		case DOWN:
-			return moveBlockDown();
+			boolean succeed = moveBlockDown();
+			if (succeed) {
+				rowsFallDown++;
+			}
+			return succeed;
 		case DIRECT_DOWN:
 			return moveBlockDirectDown();
 		}
@@ -156,7 +169,7 @@ public class Playground {
 		width = HORIZONTAL_BLOCKS * (GAP_LEN + blockSize) + GAP_LEN;
 		height = VERTICAL_BLOCKS * (GAP_LEN + blockSize) + GAP_LEN;
 
-		dm.onSizeChanged();
+		dm.onSizeChanged(false);
 	}
 
 	public void initDrawingMetrics(Context context) {
@@ -167,7 +180,6 @@ public class Playground {
 
 	public void drawPendingBlocks(Canvas canvas, Rect rect1, Rect rect2,
 			Rect rect3) {
-		Log.v(TAG, "draw pending blocks");
 		if (this.blockQueue != null) {
 			if (blockQueue.size() >= 1) {
 				this.drawBlock(canvas, blockQueue.get(0), rect1);
@@ -182,8 +194,6 @@ public class Playground {
 	}
 
 	public void drawBlock(Canvas canvas, Block block, Rect rect) {
-		Log.v(TAG, "draw block with rect: " + rect.left + "," + rect.top + ","
-				+ rect.width() + "," + rect.height());
 		int bs = Math.min(rect.width(), rect.height()) / 4;
 		int startX = rect.left + (rect.width() - bs * 4) / 2;
 		int startY = rect.top + (rect.height() - bs * 4) / 2;
@@ -191,7 +201,6 @@ public class Playground {
 		int col = block.columnCount();
 		int fc = block.firstValidColumn();
 		int fr = block.firstValidRow();
-		Log.v(TAG, "row col fr fc: " + row + "," + col + "," + fr + "," + fc);
 		startX += (4 - col) * bs / 2;
 		startY += (4 - row) * bs / 2;
 		Rect from = new Rect(0, 0, dm.sized_blocks[0].getWidth(),
@@ -311,6 +320,7 @@ public class Playground {
 		public Bitmap[] original_blocks = new Bitmap[7];
 		public Bitmap[] sized_blocks = new Bitmap[7];
 		private Paint paint;
+		private String blockStyle = "classic";
 
 		public DrawingMetrics() {
 			paint = new Paint();
@@ -319,25 +329,53 @@ public class Playground {
 			paint.setTypeface(Typeface.DEFAULT_BOLD);
 		}
 
+		private Context context;
+
 		public void init(Context context) {
+			this.context = context;
+			blockStyle = Configuration.config().getBlockStyle();
+			Log.v(TAG, "########### block style: " + blockStyle);
 			for (int i = 0; i < 7; i++) {
 				try {
 					original_blocks[i] = BitmapFactory.decodeStream(context
-							.getAssets().open("blocks/default/" + i + ".png"));
+							.getAssets().open(
+									"blocks/" + blockStyle + "/" + i + ".png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 
-		public void onSizeChanged() {
+		public void onSizeChanged(boolean mustChange) {
 			if (sized_blocks[0] == null
-					|| sized_blocks[0].getWidth() != blockSize) {
+					|| sized_blocks[0].getWidth() != blockSize || mustChange) {
 				for (int i = 0; i < 7; i++) {
-					sized_blocks[i] = Bitmap.createScaledBitmap(
-							original_blocks[i], blockSize, blockSize, false);
+					if (original_blocks[i] != null) {
+						sized_blocks[i] = Bitmap
+								.createScaledBitmap(original_blocks[i],
+										blockSize, blockSize, false);
+					}
 				}
 			}
+		}
+
+		public void configurationChanged(Configuration config) {
+			String bs = config.getBlockStyle();
+			if (!bs.equals(blockStyle) && context != null) {
+				blockStyle = bs;
+				for (int i = 0; i < 7; i++) {
+					try {
+						original_blocks[i] = BitmapFactory.decodeStream(context
+								.getAssets().open(
+										"blocks/" + blockStyle + "/" + i
+												+ ".png"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				onSizeChanged(true);
+			}
+
 		}
 	}
 
@@ -373,6 +411,7 @@ public class Playground {
 			return false;
 		}
 		if (projectedY != blockOffsetY) {
+			rowsFallDown += projectedY - blockOffsetY;
 			blockOffsetY = projectedY;
 		}
 		return true;
@@ -468,6 +507,7 @@ public class Playground {
 
 	private void allocateBlock() {
 		this.activeBlock = blockQueue.poll();
+		rowsFallDown = 0;
 		blockQueue.addLast(new Block());
 		if (this.activeBlock == null) {
 			return;
@@ -512,6 +552,7 @@ public class Playground {
 			}
 		}
 		this.activeBlock = null;
+		scoreLevel.rowsFallDown(rowsFallDown);
 	}
 
 	private boolean checkElimination() {
@@ -569,11 +610,26 @@ public class Playground {
 		scoreLevel.eliminateLines(eliminationLines);
 	}
 
-	private boolean checkFinish() {
-		if (originalOffsetY == blockOffsetY) {
-			finished = true;
+	private void checkFinish() {
+		finished = false;
+		if (activeBlock != null) {
+			boolean[][] matrix = activeBlock.getMatrix();
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+					if (matrix[i][j]) {
+						int x = blockOffsetX + j;
+						int y = blockOffsetY + i;
+						if (x >= 0 && x < HORIZONTAL_BLOCKS && y >= 0
+								&& y < VERTICAL_BLOCKS && playground[y][x] >= 0) {
+							finished = true;
+							return;
+						}
+					}
+				}
+			}
+		} else {
+			finished = false;
 		}
-		return finished;
 	}
 
 	private void calculateProjectedY() {
@@ -583,6 +639,12 @@ public class Playground {
 				;
 			projectedY = blockOffsetY;
 			blockOffsetY = Ybackup;
+		}
+	}
+
+	public void configurationChanged(Configuration config) {
+		if (this.dm != null) {
+			this.dm.configurationChanged(config);
 		}
 	}
 

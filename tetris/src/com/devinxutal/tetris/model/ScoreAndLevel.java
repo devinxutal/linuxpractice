@@ -2,17 +2,23 @@ package com.devinxutal.tetris.model;
 
 import java.io.Serializable;
 
+import com.devinxutal.tetris.cfg.Configuration;
+
 public class ScoreAndLevel implements Serializable {
+	public static final int MAX_LEVEL = 15;
 	int level;
 	int score;
 	int totalLines;
 	int currentLines;
 
 	public void reset() {
-		level = 0;
+		level = 1;
 		score = 0;
 		totalLines = 0;
 		currentLines = 0;
+		if (Configuration.config() != null) {
+			level = Configuration.config().getStartLevel();
+		}
 	}
 
 	public int getTotalLines() {
@@ -40,18 +46,41 @@ public class ScoreAndLevel implements Serializable {
 	}
 
 	public int getGoal() {
-		return (level + 1) * 5;
+		return level * 5;
+	}
+
+	public int getGoalRemained() {
+		return Math.max(getGoal() - getCurrentLines(), 0);
 	}
 
 	public void eliminateLines(int lineNum) {
-		int addScore = (int) Math.round(Math.pow(2, lineNum - 1)) * 10;
+		int addScore = 0;
+		switch (lineNum) {
+		case 1:
+			addScore = 20;
+			break;
+		case 2:
+			addScore = 60;
+			break;
+		case 3:
+			addScore = 120;
+			break;
+		case 4:
+			addScore = 200;
+			break;
+		}
 		addScore(addScore);
 		currentLines += lineNum;
 		totalLines += lineNum;
-		if (currentLines >= getGoal()) {
+		if (currentLines >= getGoal() && level < MAX_LEVEL) {
 			level++;
 			currentLines = 0;
 		}
+	}
+
+	public void rowsFallDown(int rows) {
+		int addScore = (rows / 4);
+		addScore(addScore);
 	}
 
 	public String getScroreString(int digits) {
@@ -65,5 +94,9 @@ public class ScoreAndLevel implements Serializable {
 			s = "0" + s;
 		}
 		return s;
+	}
+
+	public float getMaxLevel() {
+		return MAX_LEVEL;
 	}
 }

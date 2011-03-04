@@ -24,8 +24,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -213,5 +215,21 @@ public class DialogUtil {
 		view.setText(content);
 		view.setPadding(5, 2, 5, 2);
 		return view;
+	}
+
+	public static void showDialogWithView(Context context, String title,
+			int view_id) {
+		LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout l = new LinearLayout(context);
+		inflater.inflate(R.layout.help, l);
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setTitle(title).setCancelable(false).setPositiveButton(
+				R.string.common_ok, null).setView(l);
+		AlertDialog alert = builder.create();
+
+		// alert.setContentView(view_id);
+		alert.show();
+
 	}
 }

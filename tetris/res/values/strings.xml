@@ -20,6 +20,11 @@
 	<string name="common_resume">Resume</string>
 	<string name="common_quit_game">Quit Game</string>
 	<string name="common_options">Options</string>
+	<string name="common_score">SCORE</string>
+	<string name="common_game_over">GAME OVER</string>
+	<string name="common_help">Help</string>
+
+	<string name="common_high_score">High Scores</string>
 
 	<string name="rank_a_recruit">Recruit</string>
 	<string name="rank_b_private">Private</string>
@@ -38,9 +43,9 @@
 	<string name="main_btn_about">About</string>
 	<string name="main_btn_more">More</string>
 	<string name="main_btn_preference">Preferences</string>
-	<string name="main_btn_world_rank">World Rank</string>
+	<string name="main_btn_world_rank">High Scores</string>
 
-	<string name="app_name">Fancy Tetris</string>
+	<string name="app_name">Go Tetris</string>
 
 	<string name="menu_presentation">Presentation</string>
 	<string name="menu_preferences">Preferences</string>
