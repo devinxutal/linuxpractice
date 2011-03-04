@@ -2,7 +2,9 @@
 <resources>
 	<string name="pref_cat_basic">Basic Settings</string>
 	<string name="pref_cat_performance">Performance</string>
-	<string name="pref_cat_control">Game Control</string>
+	<string name="pref_cat_appearence">Appearence</string>
+	<string name="pref_cat_portrait_control">Control in Portrait Mode</string>
+	<string name="pref_cat_landscape_control">Control in Landscape Mode</string>
 
 
 	<string name="preferences_title">Preferences</string>
@@ -18,17 +20,41 @@
 		<item>2</item>
 	</string-array>
 
-	<string name="pref_ent_difficulty">Difficulty</string>
-	<string name="pref_ent_difficulty_summary">Select difficulty of the game</string>
+	<string name="pref_ent_difficulty">Start Level</string>
+	<string name="pref_ent_difficulty_summary">Select level to start at</string>
 	<string-array name="pref_ent_difficulty_entries">
-		<item>Easy</item>
-		<item>Standard</item>
-		<item>Hard</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>14</item>
+		<item>15</item>
 	</string-array>
 	<string-array name="pref_ent_difficulty_values">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>14</item>
+		<item>15</item>
 	</string-array>
 
 	<string name="pref_ent_joystick_position">Joy Stick Position</string>
@@ -52,7 +78,7 @@
 	<string name="pref_ent_sound_effects_summary">Sound effects such as button-click and crash
 	</string>
 
-	<string name="pref_ent_screen_orientation">Screen orientation</string>
+	<string name="pref_ent_screen_orientation">Screen Orientation</string>
 	<string name="pref_ent_screen_orientation_summary">Set screen orientation while playing</string>
 	<string-array name="pref_ent_screen_orientation_entries">
 		<item>Auto</item>
@@ -63,5 +89,41 @@
 		<item>auto</item>
 		<item>portrait</item>
 		<item>landscape</item>
+	</string-array>
+
+	<string name="pref_ent_block_style">Block Style</string>
+	<string name="pref_ent_block_style_summary">Select the style of blocks</string>
+	<string-array name="pref_ent_block_style_entries">
+		<item>Classic</item>
+		<item>Crystal</item>
+	</string-array>
+	<string-array name="pref_ent_block_style_values">
+		<item>classic</item>
+		<item>crystal</item>
+	</string-array>
+
+	<string name="pref_ent_direct_down_position">Direct Down Button Position</string>
+	<string name="pref_ent_direct_down_position_summary">Select which of the two DOWN buttons acts as
+		DIRECT-DOWN button</string>
+	<string-array name="pref_ent_direct_down_position_entries">
+		<item>Left Side</item>
+		<item>Right Side</item>
+	</string-array>
+	<string-array name="pref_ent_direct_down_position_values">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string name="pref_ent_center_button_action">Central Button Action</string>
+	<string name="pref_ent_center_button_action_summary">Select action of the central button</string>
+	<string-array name="pref_ent_center_button_action_entries">
+		<item>Direct Down</item>
+		<item>Quick Down</item>
+		<item>Rotate Block</item>
+	</string-array>
+	<string-array name="pref_ent_center_button_action_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
 	</string-array>
 </resources>

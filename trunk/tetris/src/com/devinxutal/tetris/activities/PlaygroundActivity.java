@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +42,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,9 +58,8 @@ import com.devinxutal.tetris.ui.ControlView;
 import com.devinxutal.tetris.ui.ControlView.GameControlListener;
 import com.devinxutal.tetris.ui.JoyStick.JoyStickListener;
 import com.devinxutal.tetris.util.AdUtil;
-import com.devinxutal.tetris.util.DialogUtil;
-import com.devinxutal.tetris.util.MilitaryRank;
 import com.devinxutal.tetris.util.PreferenceUtil;
+import com.devinxutal.tetris.util.ScoreUtil;
 
 public class PlaygroundActivity extends Activity {
 	public static final String TAG = "PlaygroundActivity";
@@ -103,7 +100,7 @@ public class PlaygroundActivity extends Activity {
 	private AccelerometerListener accelerometerListener = new AccelerometerListener();
 	private MyJoyStickListener joyStickListener = new MyJoyStickListener();
 
-	private Typeface buttonFont;
+	private Typeface typeface;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -216,18 +213,15 @@ public class PlaygroundActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		switch (event.getKeyCode()) {
-		case KeyEvent.KEYCODE_MENU:
-			Log.v(TAG, "menu key down");
-			pause();
-			return false;
-		case KeyEvent.KEYCODE_BACK:
+		if ((this.pausedScreen.getVisibility() == View.INVISIBLE && this.successScreen
+				.getVisibility() == View.INVISIBLE)
+				&& (event.getKeyCode() == KeyEvent.KEYCODE_MENU || event
+						.getKeyCode() == KeyEvent.KEYCODE_BACK)) {
 			Log.v(TAG, "back key down");
 			pause();
 			return false;
-		default:
-			return super.onKeyDown(keyCode, event);
 		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	private void setScreenOrientation() {
@@ -242,7 +236,6 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private void switchState(State to) {
-
 		if (to == State.PAUSED) {
 			SoundManager.get(this).pauseBackgroundMusic();
 		} else if (to == State.PLAY) {
@@ -251,7 +244,7 @@ public class PlaygroundActivity extends Activity {
 		} else if (to == State.ENDING) {
 			SoundManager.get(this).stopBackgroundMusic();
 		} else if (to == State.END) {
-
+			SoundManager.get(this).stopBackgroundMusic();
 		}
 		this.state = to;
 
@@ -387,8 +380,13 @@ public class PlaygroundActivity extends Activity {
 
 			PlaygroundActivity.this.runOnUiThread(new Runnable() {
 				public void run() {
-					switchState(State.END);
+					int score = gameController.getPlayground()
+							.getScoreAndLevel().getScore();
+					if (score > 0) {
+						ScoreUtil.saveCubeState("Player", score);
+					}
 					showSuccessScreen();
+					switchState(State.END);
 				}
 			});
 
@@ -402,62 +400,59 @@ public class PlaygroundActivity extends Activity {
 				hideSuccessScreen();
 				replay();
 			} else if (view.getId() == R.id.submit_button) {
-				if (((Button) view)
-						.getText()
-						.equals(
-								PlaygroundActivity.this
-										.getString(R.string.success_screen_submit_score))) {
-					if (Configuration.config().getDifficulty() == Configuration.DIFFICULTY_STANDARD) {
-						PlaygroundActivity.this.submitRecord();
-					} else {
-						DialogUtil
-								.showDialog(
-										PlaygroundActivity.this,
-										"Record Submission Denied",
-										"The current game difficulty setting is not STANDARD. Only records of STANDARD mode can be submitted.");
-					}
-				} else {
-					DialogUtil.showRankDialog(PlaygroundActivity.this);
+				Intent intent = new Intent(PlaygroundActivity.this,
+						HighScoreActivity.class);
+				startActivity(intent);
+				// if (((Button) view)
+				// .getText()
+				// .equals(
+				// PlaygroundActivity.this
+				// .getString(R.string.success_screen_submit_score))) {
+				//
+				//					
+				//
+				// // DialogUtil
+				// // .showDialog(
+				// // PlaygroundActivity.this,
+				// // "Record Submission Denied",
+				// //
+				// "The current game difficulty setting is not STANDARD. Only records of STANDARD mode can be submitted.");
+				//
+				// } else {
+				// DialogUtil.showRankDialog(PlaygroundActivity.this);
+				// }
+			} else if (view.getId() == R.id.back_button) {
+				PlaygroundActivity.this.finish();
+			} else if (view.getId() == R.id.quit_button) {
+				int score = gameController.getPlayground().getScoreAndLevel()
+						.getScore();
+				if (score > 0) {
+					ScoreUtil.saveCubeState("Player", score);
 				}
-			} else if (view.getId() == R.id.back_button
-					|| view.getId() == R.id.quit_button) {
 				PlaygroundActivity.this.finish();
 			} else if (view.getId() == R.id.resume_button) {
 				resume();
 			} else if (view.getId() == R.id.options_button) {
 				Intent intent = new Intent(PlaygroundActivity.this,
 						Preferences.class);
-				startActivity(intent);
+				PlaygroundActivity.this.startActivityForResult(intent,
+						PREFERENCE_REQUEST_CODE);
 			}
 		}
 	}
 
 	private void showSuccessScreen() {
 		Log.v(TAG, "showing screen");
-		long time = 10000;
-		int title = R.string.prompt_title_failed;
-		int desc = R.string.prompt_faied;
-		if (time / 1000 >= 20) {
-			title = R.string.prompt_title_succeed;
-			desc = R.string.prompt_succeed;
-		}
 		this.successScreen.setVisibility(View.VISIBLE);
-		((TextView) this.findViewById(R.id.success_screen_title))
-				.setText(title);
-		((TextView) this.findViewById(R.id.success_screen_desc)).setText(desc);
+		this.customizeView(((TextView) this
+				.findViewById(R.id.success_screen_title)));
 
-		TextView timeText = ((TextView) this.findViewById(R.id.time_text));
-		timeText.setText(time / 1000 + "." + time % 1000 + " seconds");
-
-		MilitaryRank rank = MilitaryRank.getRank(time, 0);
-
-		TextView rankText = ((TextView) this.findViewById(R.id.rank_text));
-		rankText.setText(rank.getStringID());
-		ImageView rankImage = ((ImageView) this.findViewById(R.id.rank_image));
-		rankImage.setImageResource(rank.getDrawableID());
-
-		this.successScreenSubmitButton
-				.setText(R.string.success_screen_submit_score);
+		TextView scoreText = ((TextView) this.findViewById(R.id.score_text));
+		scoreText.setText(gameController.getPlayground().getScoreAndLevel()
+				.getScore()
+				+ "");
+		// this.successScreenSubmitButton
+		// .setText(R.string.success_screen_submit_score);
 	}
 
 	private void hideSuccessScreen() {
@@ -468,6 +463,8 @@ public class PlaygroundActivity extends Activity {
 	private void showPauseScreen() {
 		Log.v(TAG, "showing pause screen");
 
+		this.customizeView(((TextView) this
+				.findViewById(R.id.paused_screen_title)));
 		this.pausedScreen.setVisibility(View.VISIBLE);
 	}
 
@@ -497,7 +494,7 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	public void replay() {
-		gameController.getPlaygroundView().reset();
+		gameController.reset();
 		play();
 	}
 
@@ -516,22 +513,11 @@ public class PlaygroundActivity extends Activity {
 
 	private void preferenceChanged() {
 		Log.v(TAG, "preference changed");
-		int control = Configuration.config().getControl();
-		if (control == Configuration.CONTROL_JOY_STICK) {
-			this.useAccelerometer = false;
-			this.useJoyStick = true;
-		} else if (control == Configuration.CONTROL_SENSOR) {
-			this.useAccelerometer = true;
-			this.useJoyStick = false;
-		} else {
-			this.useAccelerometer = true;
-			this.useJoyStick = true;
+		// /////////////
+		if (this.gameController != null) {
+			gameController.configurationChanged(Configuration.config());
 		}
-		if (this.useAccelerometer && !this.sensorRunning) {
-			this.startListening();
-		} else if (!this.useAccelerometer && this.sensorRunning) {
-			this.stopListening();
-		}
+		this.setScreenOrientation();
 	}
 
 	public void submitRecord() {
@@ -691,19 +677,28 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	public void customizeButtons() {
-		if (buttonFont == null) {
+		if (typeface == null) {
 
-			buttonFont = Typeface.createFromAsset(getAssets(),
-					Constants.FONT_PATH_SCRIPT);
+			typeface = Typeface.createFromAsset(getAssets(),
+					Constants.FONT_PATH_COMIC);
 		}
 		customizeButton((Button) this.findViewById(R.id.submit_button));
 		customizeButton((Button) this.findViewById(R.id.replay_button));
 		customizeButton((Button) this.findViewById(R.id.back_button));
 	}
 
+	public void customizeView(TextView extview) {
+		if (typeface == null) {
+
+			typeface = Typeface.createFromAsset(getAssets(),
+					Constants.FONT_PATH_COMIC);
+		}
+		extview.setTypeface(typeface);
+	}
+
 	private void customizeButton(Button button) {
-		button.setTypeface(buttonFont);
-		button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
+		button.setTypeface(typeface);
+		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
 	}
 
 }

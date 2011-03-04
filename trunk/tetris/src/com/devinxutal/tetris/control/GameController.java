@@ -6,7 +6,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
+import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.model.Playground;
 import com.devinxutal.tetris.sound.SoundManager;
 import com.devinxutal.tetris.ui.ControlView;
@@ -52,6 +54,7 @@ public class GameController {
 
 	public void pause() {
 		playing = false;
+		this.clearPendingCommand();
 	}
 
 	public void stop() {
@@ -60,6 +63,8 @@ public class GameController {
 
 	public void reset() {
 		playground.reset();
+		this.playgroundView.reset();
+		this.clearPendingCommand();
 	}
 
 	public void finishAnimation() {
@@ -103,13 +108,21 @@ public class GameController {
 		if (cmd != null) {
 			boolean success = this.letPlaygroundProcessCommand(cmd);
 			this.playgroundView.invalidate();
-			if (success) {
-				postStepDelay(INTERVAL_STEP_NORMAL);
+			if (success && (cmd == Command.DOWN || cmd == Command.DIRECT_DOWN)) {
+				postStepDelay(getStepDelay());
 			}
 		}
 		if (pendingCommand != null) {
 			postControlDelay(INTERVAL_CONTROL_INIT);
 		}
+	}
+
+	private int getStepDelay() {
+		return (int) (INTERVAL_STEP_NORMAL * playground.getSpeedScale());
+	}
+
+	public void clearPendingCommand() {
+		this.pendingCommand = null;
 	}
 
 	public PlaygroundView getPlaygroundView() {
@@ -167,13 +180,10 @@ public class GameController {
 		this.playing = false;
 	}
 
-	public void gameFinishedCalledByPlaygroundView() {
-
-		notifyGameFinished();
-	}
-
-	public void gameFinishingCalledByPlaygroundView() {
-		notifyGameFinishing();
+	public void configurationChanged(Configuration config) {
+		this.controlView.configurationChanged(config);
+		this.playgroundView.configurationChanged(config);
+		this.playground.configurationChanged(config);
 	}
 
 	private void postControlDelay(int delay) {
@@ -208,13 +218,14 @@ public class GameController {
 			}
 			if (playground.isFinished()) {
 				playing = false;
-
+				GameController.this.notifyGameFinished();
+				Log.v(TAG, "finish detected");
 			} else {
 				if (playing) {
 					if (playground.isInAnimation()) {
 						postStepDelay(INTERVAL_STEP_ANIMATION);
 					} else {
-						postStepDelay(INTERVAL_STEP_NORMAL);
+						postStepDelay(getStepDelay());
 					}
 				}
 			}
@@ -243,7 +254,7 @@ public class GameController {
 				playgroundView.invalidate();
 				postControlDelay(INTERVAL_CONTROL_STICK);
 				if (success) {
-					postStepDelay(INTERVAL_STEP_NORMAL);
+					postStepDelay(getStepDelay());
 				}
 			}
 

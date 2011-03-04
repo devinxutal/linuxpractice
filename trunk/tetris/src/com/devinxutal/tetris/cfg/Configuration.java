@@ -1,6 +1,7 @@
 package com.devinxutal.tetris.cfg;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class Configuration {
 	private static Configuration config = new Configuration();
@@ -19,26 +20,35 @@ public class Configuration {
 		this.preference = p;
 	}
 
-	public static int CONTROL_JOY_STICK = 1;
-	public static int CONTROL_SENSOR = 2;
-	public static int CONTROL_BOTH = 3;
+	public static final int POSITION_RIGHT = 2;
+	public static final int POSITION_LEFT = 1;
 
-	public int getControl() {
-		int defaultValue = CONTROL_SENSOR;
+	public int getDirectDownButtonPosition() {
+		int defaultValue = POSITION_LEFT;
 		if (preference != null) {
-			return Integer.valueOf(preference.getString("control_manner", "2"));
+			return Integer.valueOf(preference.getString("direct_down_position",
+					"1"));
 		}
 		return defaultValue;
 	}
 
-	public static int JOT_STICK_POSITION_LEFT = 2;
-	public static int JOT_STICK_POSITION_RIGHT = 1;
+	public static final int ACTION_DIRECT_DOWN = 1;
+	public static final int ACTION_QUICK_DOWN = 2;
+	public static final int ACTION_TURN = 3;
 
-	public int getJoyStickPosition() {
-		int defaultValue = JOT_STICK_POSITION_RIGHT;
+	public int getCenterButtonAction() {
+		int defaultValue = ACTION_DIRECT_DOWN;
 		if (preference != null) {
-			return Integer.valueOf(preference.getString("joystick_position",
+			return Integer.valueOf(preference.getString("center_button_action",
 					"1"));
+		}
+		return defaultValue;
+	}
+
+	public String getBlockStyle() {
+		String defaultValue = "classic";
+		if (preference != null) {
+			return preference.getString("block_style", defaultValue);
 		}
 		return defaultValue;
 	}
@@ -50,6 +60,14 @@ public class Configuration {
 		return false;
 	}
 
+	public void setBackgroundMusicOn(boolean on) {
+		if (preference != null) {
+			Editor editor = preference.edit();
+			editor.putBoolean("background_music", on);
+			editor.commit();
+		}
+	}
+
 	public boolean isSoundEffectsOn() {
 		if (preference != null) {
 			return preference.getBoolean("sound_effects", false);
@@ -57,50 +75,18 @@ public class Configuration {
 		return false;
 	}
 
-	public static final int DIFFICULTY_EASY = 1;
-	public static final int DIFFICULTY_STANDARD = 2;
-	public static final int DIFFICULTY_HARD = 3;
-
-	public int getDifficulty() {
-		int defaultValue = 2;
+	public void setSoundEffectsOn(boolean on) {
 		if (preference != null) {
-			return Integer.valueOf(preference.getString("difficulty", "2"));
+			Editor editor = preference.edit();
+			editor.putBoolean("sound_effects", on);
+			editor.commit();
 		}
-		return defaultValue;
 	}
 
-	public int getShuffleSteps() {
-		int defaultValue = 20;
-
+	public int getStartLevel() {
+		int defaultValue = 1;
 		if (preference != null) {
-			return Integer.valueOf(preference.getString("shuffle_steps", "20"));
-		}
-		return defaultValue;
-	}
-
-	public int getRotationInterval() {
-		int defaultValue = 500;
-		if (preference != null) {
-			return Integer.valueOf(preference.getString("rotation_interval",
-					"500"));
-		}
-		return defaultValue;
-	}
-
-	public int getAnimationSpeed() {
-		int defaultValue = 400;
-		if (preference != null) {
-			return Integer.valueOf(preference.getString("animation_speed",
-					"400"));
-		}
-		return defaultValue;
-	}
-
-	public int getAnimationQuality() {
-		int defaultValue = 2;
-		if (preference != null) {
-			return Integer.valueOf(preference.getString("animation_quality",
-					"2"));
+			return Integer.valueOf(preference.getString("difficulty", "1"));
 		}
 		return defaultValue;
 	}

@@ -1,17 +1,15 @@
 package com.devinxutal.tetris.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -53,7 +51,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		customizeButtons();
 		int ids[] = new int[] { R.id.main_btn_play_game,
 				R.id.main_btn_preference, R.id.main_btn_more,
-				R.id.main_btn_rank };
+				R.id.main_btn_rank, R.id.main_btn_help };
 		for (int id : ids) {
 			try {
 				this.findViewById(id).setOnClickListener(this);
@@ -105,49 +103,38 @@ public class MainActivity extends Activity implements OnClickListener {
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			break;
 		case R.id.main_btn_rank:
-			DialogUtil.showRankDialog(this);
+			i = new Intent(this, HighScoreActivity.class);
+			// DialogUtil.showRankDialog(this);
+			break;
+		case R.id.main_btn_help:
+			DialogUtil
+					.showDialogWithView(this, "Go Tetris Help", R.layout.help);
 			return;
 		}
 		startActivity(i);
-	}
-
-	private void showDontAllowDialog() {
-		Dialog alert = new AlertDialog.Builder(this).setTitle(
-				R.string.unlicensed_dialog_title).setMessage(
-				R.string.unlicensed_dialog_body).setPositiveButton(
-				R.string.buy_button, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent marketIntent = new Intent(
-								Intent.ACTION_VIEW,
-								Uri
-										.parse("http://market.android.com/details?id="
-												+ getPackageName()));
-						startActivity(marketIntent);
-					}
-				}).setNegativeButton(R.string.quit_button,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						finish();
-					}
-				}).create();
-
-		alert.show();
 	}
 
 	public void customizeButtons() {
 		if (buttonFont == null) {
 
 			buttonFont = Typeface.createFromAsset(getAssets(),
-					Constants.FONT_PATH_SCRIPT);
+					Constants.FONT_PATH_COMIC);
 		}
 		customizeButton((Button) this.findViewById(R.id.main_btn_more));
 		customizeButton((Button) this.findViewById(R.id.main_btn_play_game));
 		customizeButton((Button) this.findViewById(R.id.main_btn_preference));
 		customizeButton((Button) this.findViewById(R.id.main_btn_rank));
+		customizeButton((Button) this.findViewById(R.id.main_btn_help));
 	}
 
 	private void customizeButton(Button button) {
 		button.setTypeface(buttonFont);
-		button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+				.getDefaultDisplay();
+		int width = Math.min(display.getWidth(), display.getHeight());
+		if (width < 320) {
+			button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
+		}
+		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
 	}
 }
