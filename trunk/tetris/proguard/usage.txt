@@ -55,39 +55,56 @@ com.admob.android.ads.j:
     307:307:public final com.admob.android.ads.q a()
     2869:2873:public static float a(android.content.Context)
     2880:2880:public static float n()
-com.devinxutal.man20.R
-com.devinxutal.man20.R$array
-com.devinxutal.man20.R$attr
-com.devinxutal.man20.R$color
-com.devinxutal.man20.R$drawable
-com.devinxutal.man20.R$id
-com.devinxutal.man20.R$layout
-com.devinxutal.man20.R$string
-com.devinxutal.man20.R$style
-com.devinxutal.man20.R$styleable
-com.devinxutal.man20.R$xml
-com.devinxutal.columns.activities.MainActivity:
+com.devinxutal.tetris.R
+com.devinxutal.tetris.R$array
+com.devinxutal.tetris.R$attr
+com.devinxutal.tetris.R$color
+com.devinxutal.tetris.R$drawable
+com.devinxutal.tetris.R$id
+com.devinxutal.tetris.R$layout
+com.devinxutal.tetris.R$raw
+com.devinxutal.tetris.R$string
+com.devinxutal.tetris.R$style
+com.devinxutal.tetris.R$styleable
+com.devinxutal.tetris.R$xml
+com.devinxutal.tetris.activities.HighScoreActivity:
+    private static final java.lang.String TAG
+com.devinxutal.tetris.activities.MainActivity:
     private static final java.lang.String BASE64_PUBLIC_KEY
     private static final java.lang.String TAG
-    115:135:private void showDontAllowDialog()
-com.devinxutal.man20.activities.MainActivity$1
-com.devinxutal.man20.activities.MainActivity$2
-com.devinxutal.columns.activities.PlaygroundActivity:
+com.devinxutal.tetris.activities.PlaygroundActivity:
     public static final java.lang.String TAG
     public static final int PREFERENCE_REQUEST_CODE
-    168:174:private void initByRestoredState()
-    402:408:public void openHelpDialog()
-com.devinxutal.columns.cfg.Configuration:
-    public static final int DIFFICULTY_EASY
-    public static final int DIFFICULTY_STANDARD
-    public static final int DIFFICULTY_HARD
-    73:78:public int getShuffleSteps()
-    82:87:public int getRotationInterval()
-    91:96:public int getAnimationSpeed()
-    100:105:public int getAnimationQuality()
-    109:113:public java.lang.String getScreenOrientation()
-com.devinxutal.columns.cfg.Constants:
-    public static final java.lang.String CUBE_STATE
+    private android.app.Dialog progressDialog
+    private android.hardware.Sensor sensor
+    502:503:public void stop()
+    506:512:public void openHelpDialog()
+    524:551:public void submitRecord()
+    554:557:private void submitRecord(java.lang.String)
+    616:626:public void startListening()
+    85:85:static android.app.Dialog access$4(com.devinxutal.tetris.activities.PlaygroundActivity)
+    85:85:static void access$5(com.devinxutal.tetris.activities.PlaygroundActivity,android.app.Dialog)
+    77:77:static android.widget.Toast access$6(com.devinxutal.tetris.activities.PlaygroundActivity)
+    79:79:static android.widget.Button access$7(com.devinxutal.tetris.activities.PlaygroundActivity)
+    98:98:static boolean access$9(com.devinxutal.tetris.activities.PlaygroundActivity)
+    553:553:static void access$10(com.devinxutal.tetris.activities.PlaygroundActivity,java.lang.String)
+com.devinxutal.tetris.activities.PlaygroundActivity$1
+com.devinxutal.tetris.activities.PlaygroundActivity$2
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished:
+    371:377:public void gameFinishing()
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$1
+com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener:
+    658:675:public void joyStickMoved(float,float)
+com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread
+com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread$1
+com.devinxutal.tetris.cfg.Configuration:
+    public static final int POSITION_RIGHT
+    public static final int POSITION_LEFT
+    public static final int ACTION_DIRECT_DOWN
+    public static final int ACTION_QUICK_DOWN
+    public static final int ACTION_TURN
+com.devinxutal.tetris.cfg.Constants:
+    public static final java.lang.String PLAYGROUND_STATE
     public static final java.lang.String PREF_KEY_TRIALS_SOLVE_CUBE
     public static final int VERSION_PRO
     public static final int VERSION_LITE
@@ -96,65 +113,97 @@ com.devinxutal.columns.cfg.Constants:
     public static final int ADMOB_WIDTH
     public static final int ADMOB_HEIGHT
     public static final java.lang.String DATA_DIR
-    public static final java.lang.String CUBE_SAVING_FILE
-    public static final java.lang.String PACKAGE_NAME_LITE
-    public static final java.lang.String PACKAGE_NAME_PRO
-    public static final java.lang.String FONT_PATH
+    public static final java.lang.String SCORE_SAVING_FILE
+    public static final java.lang.String FONT_PATH_MONO
+    public static final java.lang.String FONT_PATH_COMIC
     public static final java.lang.String URL_SERVER
     public static final java.lang.String URL_COMMIT_RECORD
     public static final java.lang.String URL_QUERY_RECORD
     public static final java.lang.String URL_WORLD_RANK
-com.devinxutal.columns.control.GameController:
+com.devinxutal.tetris.control.GameController:
+    public static final int CONTROL_STICK_PERIOD
+    public static final int BASIC_INTERVAL
+    public static final int INTERVAL_CONTROL_INIT
+    public static final int INTERVAL_CONTROL_STICK
+    public static final int INTERVAL_STEP_NORMAL
+    public static final int INTERVAL_STEP_ANIMATION
+    public static final int IC_STEP
     private static final java.lang.String TAG
-    34:34:public boolean removeGameListener(com.devinxutal.man20.control.GameController$GameListener)
-    38:39:public void clearGameListeners(com.devinxutal.man20.control.GameController$GameListener)
-    54:55:public void setPlaygroundView(com.devinxutal.columns.ui.PlaygroundView)
-    62:63:public void setPlayground(com.devinxutal.columns.model.Playground)
-com.devinxutal.columns.model.Explosion:
-    private float radius
-com.devinxutal.columns.model.Movable:
-    public static final float STANDARD_HEIGHT
-    public abstract void move(int)
-com.devinxutal.columns.model.Playground:
-    45:45:public int getWidth()
-    49:49:public int getHeight()
-com.devinxutal.columns.record.TwentySecondsRecord:
-    42:42:public java.util.Date getCommitTime()
-    50:50:public java.lang.String getDescription()
-    58:59:public java.lang.String toTabbedString()
-com.devinxutal.columns.sound.SoundManager:
+    61:62:public void stop()
+    137:137:public boolean removeGameListener(com.devinxutal.tetris.control.GameController$GameListener)
+    141:142:public void clearGameListeners(com.devinxutal.tetris.control.GameController$GameListener)
+    151:154:protected void notifyGameFinishing()
+    157:158:public void setPlaygroundView(com.devinxutal.tetris.ui.PlaygroundView)
+    165:166:public void setPlayground(com.devinxutal.tetris.model.Playground)
+    180:181:public void destroy()
+com.devinxutal.tetris.control.GameController$GameListener:
+    public abstract void gameFinishing()
+com.devinxutal.tetris.model.Playground:
+    public static final int VERTICAL_BLOCKS
+    public static final int HORIZONTAL_BLOCKS
+    public static final int GAP_LEN
     private static final java.lang.String TAG
-com.devinxutal.columns.ui.GameControlView:
+    156:159:public com.devinxutal.tetris.model.Block getNextBlock()
+com.devinxutal.tetris.model.ScoreAndLevel:
+    public static final int MAX_LEVEL
+    25:25:public int getTotalLines()
+    29:30:public void setTotalLines(int)
+com.devinxutal.tetris.record.SavableLocalScore:
+    23:24:public void setPlayer(java.lang.String)
+    31:32:public void setScore(int)
+com.devinxutal.tetris.record.SavableLocalScores:
+    46:58:public java.util.List getLocalRank(int,int)
+com.devinxutal.tetris.record.TwentySecondsRecord
+com.devinxutal.tetris.sound.SoundManager:
+    private static final java.lang.String TAG
+com.devinxutal.tetris.ui.ControlView:
     public static final int BTN_PLAY
-    public static final int PLAY_BUTTON_STATUS_PLAY
-    public static final int PLAY_BUTTON_STATUS_PAUSE
-    public static final int PLAY_BUTTON_STATUS_NONE
-    201:201:public boolean removeCubeControlListener(com.devinxutal.man20.ui.GameControlView$GameControlListener)
-    205:206:public void clearCubeControlListener()
-    215:215:public boolean isCollapsed()
-com.devinxutal.columns.ui.GameTimer:
-    33:36:public void setTime(long)
-com.devinxutal.columns.ui.JoyStick:
-    129:129:public boolean removeJoyStickListener(com.devinxutal.man20.ui.JoyStick$JoyStickListener)
-    133:134:public void clearJoyStickListener()
-com.devinxutal.columns.ui.PlaygroundView:
-    89:90:public void destroy()
-com.devinxutal.man20.ui.PlaygroundView$DrawingMetrics:
-    public static final float ATTACKER_RADIUS
-    public static final int COLOR_DEFENDER
-    public static final int COLOR_ATTACKER
-com.devinxutal.columns.util.AdUtil:
-    24:28:public static void determineAd(android.app.Activity)
-com.devinxutal.columns.util.DialogUtil:
-    41:46:public static void showDialog(android.content.Context,int,int)
-com.devinxutal.columns.util.HelpInfoUtil
-com.devinxutal.man20.util.HelpInfoUtil$HelpInfo
-com.devinxutal.columns.util.MathUtil:
-    5:5:public static double distance(double,double,double,double)
+    public static final int BTN_LEFT
+    public static final int BTN_RIGHT
+    public static final int BTN_TURN
+    public static final int BTN_DOWN
+    public static final int BTN_DIRECT_DOWN
+    public static final int BTN_SOUND
+    public static final int BTN_MUSIC
+    private static final java.lang.String TAG
+    299:299:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
+    303:304:public void clearGameControlListener()
+com.devinxutal.tetris.ui.GameTimer
+com.devinxutal.tetris.ui.GameTimer$1
+com.devinxutal.tetris.ui.JoyStick
+com.devinxutal.tetris.ui.JoyStick$JoyStickListener
+com.devinxutal.tetris.ui.PlaygroundView:
+    89:89:public void destroy()
+    224:224:public void pause(boolean)
+com.devinxutal.tetris.util.AdUtil:
+    23:27:public static void determineAd(android.app.Activity)
+com.devinxutal.tetris.util.BitmapUtil:
+    77:77:public android.graphics.Bitmap getAimButtonBitmap1()
+    81:81:public android.graphics.Bitmap getAimButtonBitmap2()
+    128:145:public void drawBackgroundBitmap(android.graphics.Canvas,int,int,android.graphics.Paint)
+com.devinxutal.tetris.util.BitmapUtil$Direction
+com.devinxutal.tetris.util.DialogUtil:
+    43:48:public static void showDialog(android.content.Context,int,int)
+    51:57:public static void showDialog(android.content.Context,java.lang.String,java.lang.String)
+    60:155:public static void showRankDialog(android.app.Activity)
+    159:174:private static android.view.View createRankView(android.app.Activity,java.util.List)
+    179:192:public static android.widget.TableRow createRankEntry(android.content.Context,com.devinxutal.tetris.record.TwentySecondsRecord)
+    196:210:public static android.widget.TableRow createRankHeader(android.app.Activity)
+    214:217:public static android.widget.TextView createTableCell(android.content.Context,java.lang.String)
+    157:157:static android.view.View access$0(android.app.Activity,java.util.List)
+com.devinxutal.tetris.util.DialogUtil$1
+com.devinxutal.tetris.util.DialogUtil$1$1
+com.devinxutal.tetris.util.DialogUtil$1$1$1
+com.devinxutal.tetris.util.DialogUtil$1$1$2
+com.devinxutal.tetris.util.HelpInfoUtil
+com.devinxutal.tetris.util.HelpInfoUtil$HelpInfo
+com.devinxutal.tetris.util.MathUtil:
     14:14:public static double velocityScale(double,double,double)
-com.devinxutal.columns.util.PreferenceUtil:
-    58:66:public static java.lang.String objectToString(java.io.Serializable)
-    71:76:public static java.lang.Object stringToObject(java.lang.String)
-com.devinxutal.columns.util.VersionUtil
-com.devinxutal.man20.util.VersionUtil$1
-com.devinxutal.man20.util.VersionUtil$VersionInfo
+com.devinxutal.tetris.util.MilitaryRank
+com.devinxutal.tetris.util.PreferenceUtil
+com.devinxutal.tetris.util.TextPainter:
+    27:27:public android.graphics.Paint getTextPaint()
+    59:61:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
+com.devinxutal.tetris.util.VersionUtil
+com.devinxutal.tetris.util.VersionUtil$1
+com.devinxutal.tetris.util.VersionUtil$VersionInfo
