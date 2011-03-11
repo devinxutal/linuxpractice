@@ -51,6 +51,11 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-class>com.appspot.perfectgames.servlets.twentyseconds.WorldRankServlet
 		</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>CommitReportServlet</servlet-name>
+		<servlet-class>com.appspot.perfectgames.servlets.CommitReportServlet
+		</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Perfect_games</servlet-name>
@@ -118,7 +123,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>TwentySecondsWorldRankServlet</servlet-name>
 		<url-pattern>/twentyseconds/WorldRank</url-pattern>
 	</servlet-mapping>
-	
+
+
+	<servlet-mapping>
+		<servlet-name>CommitReportServlet</servlet-name>
+		<url-pattern>/commitReport</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
