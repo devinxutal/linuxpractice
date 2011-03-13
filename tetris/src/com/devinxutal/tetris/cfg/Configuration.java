@@ -20,18 +20,6 @@ public class Configuration {
 		this.preference = p;
 	}
 
-	public static final int POSITION_RIGHT = 2;
-	public static final int POSITION_LEFT = 1;
-
-	public int getDirectDownButtonPosition() {
-		int defaultValue = POSITION_LEFT;
-		if (preference != null) {
-			return Integer.valueOf(preference.getString("direct_down_position",
-					"1"));
-		}
-		return defaultValue;
-	}
-
 	public static final int ACTION_DIRECT_DOWN = 1;
 	public static final int ACTION_QUICK_DOWN = 2;
 	public static final int ACTION_TURN = 3;
@@ -111,6 +99,13 @@ public class Configuration {
 			return preference.getString("screen_orientation", defaultValue);
 		}
 		return defaultValue;
+	}
+
+	public boolean isDragMode() {
+		if (preference != null) {
+			return preference.getBoolean("drag_mode", true);
+		}
+		return true;
 	}
 
 }

@@ -110,18 +110,6 @@
 		<item>crystal</item>
 	</string-array>
 
-	<string name="pref_ent_direct_down_position">Direct Down Button Position</string>
-	<string name="pref_ent_direct_down_position_summary">Select which of the two DOWN buttons acts as
-		DIRECT-DOWN button</string>
-	<string-array name="pref_ent_direct_down_position_entries">
-		<item>Left Side</item>
-		<item>Right Side</item>
-	</string-array>
-	<string-array name="pref_ent_direct_down_position_values">
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-
 	<string name="pref_ent_center_button_action">Central Button Action</string>
 	<string name="pref_ent_center_button_action_summary">Select action of the central button</string>
 	<string-array name="pref_ent_center_button_action_entries">
