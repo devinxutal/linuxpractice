@@ -1,20 +1,42 @@
 package com.devinxutal.tetris.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.cfg.Configuration;
@@ -33,6 +55,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private static final String TAG = "MainActvity";
 
 	private Typeface buttonFont;
+	private Dialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +69,11 @@ public class MainActivity extends Activity implements OnClickListener {
 						PreferenceManager
 								.getDefaultSharedPreferences(getBaseContext()));
 		this.setContentView(R.layout.main);
-
 		SoundManager.init(this);
 		customizeButtons();
 		int ids[] = new int[] { R.id.main_btn_play_game,
-				R.id.main_btn_preference, R.id.main_btn_more,
-				R.id.main_btn_rank, R.id.main_btn_help };
+				R.id.main_btn_preference, R.id.main_btn_rank,
+				R.id.main_btn_help };
 		for (int id : ids) {
 			try {
 				this.findViewById(id).setOnClickListener(this);
@@ -96,12 +118,6 @@ public class MainActivity extends Activity implements OnClickListener {
 			i = new Intent(this, Preferences.class);
 			break;
 
-		case R.id.main_btn_more:
-			i = new Intent(Intent.ACTION_SEARCH);
-			i.setPackage("com.android.vending");
-			i.putExtra("query", "pub:\"Yinfei XU\"");
-			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			break;
 		case R.id.main_btn_rank:
 			i = new Intent(this, HighScoreActivity.class);
 			// DialogUtil.showRankDialog(this);
@@ -114,13 +130,22 @@ public class MainActivity extends Activity implements OnClickListener {
 		startActivity(i);
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK||event.getKeyCode() == KeyEvent.KEYCODE_HOME) {
+			Log.v(TAG, "back key down");
+			this.showQuitDialog();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 	public void customizeButtons() {
 		if (buttonFont == null) {
 
 			buttonFont = Typeface.createFromAsset(getAssets(),
 					Constants.FONT_PATH_COMIC);
 		}
-		customizeButton((Button) this.findViewById(R.id.main_btn_more));
 		customizeButton((Button) this.findViewById(R.id.main_btn_play_game));
 		customizeButton((Button) this.findViewById(R.id.main_btn_preference));
 		customizeButton((Button) this.findViewById(R.id.main_btn_rank));
@@ -136,5 +161,144 @@ public class MainActivity extends Activity implements OnClickListener {
 			button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
 		}
 		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+	}
+
+	private void showQuitDialog() {
+		final CharSequence[] items = { "Give us Feedback", "Rate Go Tetris",
+				"More Games", "Quit Game" };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Go Tetris");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				if (item == 0) {
+					MainActivity.this.submitReport();
+				} else if (item == 1) {
+					Intent i = new Intent(
+							Intent.ACTION_VIEW,
+							Uri
+									.parse("market://details?id=com.devinxutal.tetris"));
+					startActivity(i);
+				} else if (item == 2) {
+					Intent i = new Intent(Intent.ACTION_SEARCH);
+					i.setPackage("com.android.vending");
+					i.putExtra("query", "pub:\"Yinfei XU\"");
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(i);
+				} else if (item == 3) {
+
+					MainActivity.this.finish();
+				}
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	private void showCommitReportDialog() {
+
+	}
+
+	public void submitReport() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Feedback");
+		final EditText input = new EditText(this);
+		input.setText("");
+		LinearLayout layout = new LinearLayout(this);
+		layout.setPadding(20, 10, 20, 10);
+		layout.addView(input, ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		alert.setView(layout);
+
+		alert.setPositiveButton(R.string.common_ok,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+						submitReport(input.getText().toString());
+					}
+				});
+
+		alert.setNegativeButton(R.string.common_cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						return;
+					}
+				});
+		alert.show();
+	}
+
+	private void submitReport(String report) {
+		progressDialog = ProgressDialog.show(this, "", getResources()
+				.getString(R.string.record_submit_submitting_record), true);
+		new SubmitRecordThread(report).start();
+	}
+
+	class SubmitRecordThread extends Thread {
+		private String report;
+
+		public SubmitRecordThread(String report) {
+			this.report = report;
+		}
+
+		private String getInfo() {
+			String info = "";
+			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			int w = display.getWidth();
+			int h = display.getHeight();
+			info += "SCREEN[" + Math.min(w, h) + "x" + Math.max(w, h) + "]";
+			info += ", ANDROID[" + android.os.Build.VERSION.SDK + "]";
+			return info;
+		}
+
+		@Override
+		public void run() {
+			String url = Constants.URL_COMMIT_REPORT;
+
+			Map<String, String> data = new HashMap<String, String>();
+			data.put("app", "Go Tetris");
+			data.put("report", report);
+			data.put("info", getInfo());
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(url);
+			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
+			for (Map.Entry<String, String> m : data.entrySet()) {
+				postData.add(new BasicNameValuePair(m.getKey(), m.getValue()));
+			}
+			int statusCode = HttpStatus.SC_ACCEPTED;
+			try {
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+						postData, HTTP.UTF_8);
+
+				httpPost.setEntity(entity);
+				HttpResponse response = httpClient.execute(httpPost);
+				statusCode = response.getStatusLine().getStatusCode();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			final int sc = statusCode;
+			MainActivity.this.runOnUiThread(new Runnable() {
+				public void run() {
+					if (progressDialog != null) {
+						progressDialog.cancel();
+						progressDialog = null;
+					}
+					if (sc == HttpStatus.SC_OK) {
+						Toast.makeText(MainActivity.this,
+								"Your feedback has been submitted. Thankyou!",
+								1000).show();
+					} else {
+						Toast
+								.makeText(
+										MainActivity.this,
+										"Submit failed, please check your network connection.",
+										1000).show();
+					}
+				}
+
+			});
+		}
 	}
 }

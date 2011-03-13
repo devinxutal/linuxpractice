@@ -3,10 +3,10 @@
 	<PreferenceCategory android:title="@string/pref_cat_basic">
 		<CheckBoxPreference android:title="@string/pref_ent_background_music"
 			android:summary="@string/pref_ent_background_music_summary"
-			android:key="background_music" android:defaultValue="false" />
+			android:key="background_music" android:defaultValue="true" />
 		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
 			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
-			android:defaultValue="false" />
+			android:defaultValue="true" />
 		<ListPreference android:title="@string/pref_ent_difficulty"
 			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
 			android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries"
@@ -29,6 +29,17 @@
 			android:key="direct_down_position" android:defaultValue="1"
 			android:entries="@array/pref_ent_direct_down_position_entries"
 			android:entryValues="@array/pref_ent_direct_down_position_values" />
+		<CheckBoxPreference android:title="@string/pref_ent_swap_rotate_hold"
+			android:summary="@string/pref_ent_swap_rotate_hold_summary"
+			android:key="swap_rotate_hold" android:defaultValue="false" />
+		<CheckBoxPreference android:title="@string/pref_ent_swap_quick_direct"
+			android:summary="@string/pref_ent_swap_quick_direct_summary"
+			android:key="swap_quick_direct" android:defaultValue="false" />
+		<!--
+			<com.devinxutal.tetris.ui.CustomPreference android:key="flip_angle"
+			android:title="Flip Angle" android:summary="Customize the slide
+			angle" android:defaultValue="0.6" />
+		-->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_portrait_control">
 		<ListPreference android:title="@string/pref_ent_center_button_action"

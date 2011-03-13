@@ -72,6 +72,7 @@ com.devinxutal.tetris.activities.HighScoreActivity:
 com.devinxutal.tetris.activities.MainActivity:
     private static final java.lang.String BASE64_PUBLIC_KEY
     private static final java.lang.String TAG
+    200:200:private void showCommitReportDialog()
 com.devinxutal.tetris.activities.PlaygroundActivity:
     public static final java.lang.String TAG
     public static final int PREFERENCE_REQUEST_CODE
@@ -120,6 +121,7 @@ com.devinxutal.tetris.cfg.Constants:
     public static final java.lang.String URL_COMMIT_RECORD
     public static final java.lang.String URL_QUERY_RECORD
     public static final java.lang.String URL_WORLD_RANK
+    public static final java.lang.String URL_COMMIT_REPORT
 com.devinxutal.tetris.control.GameController:
     public static final int CONTROL_STICK_PERIOD
     public static final int BASIC_INTERVAL
@@ -166,21 +168,24 @@ com.devinxutal.tetris.ui.ControlView:
     public static final int BTN_SOUND
     public static final int BTN_MUSIC
     private static final java.lang.String TAG
-    299:299:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
-    303:304:public void clearGameControlListener()
+    300:300:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
+    304:305:public void clearGameControlListener()
+com.devinxutal.tetris.ui.CustomPreference
 com.devinxutal.tetris.ui.GameTimer
 com.devinxutal.tetris.ui.GameTimer$1
 com.devinxutal.tetris.ui.JoyStick
 com.devinxutal.tetris.ui.JoyStick$JoyStickListener
 com.devinxutal.tetris.ui.PlaygroundView:
-    89:89:public void destroy()
-    224:224:public void pause(boolean)
+    92:92:public void destroy()
+    227:227:public void pause(boolean)
+com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics:
+    302:302:private void setProperBackground(int,int)
+com.devinxutal.tetris.ui.SlideOptionDialog
+com.devinxutal.tetris.ui.SlideOptionDialog$1
+com.devinxutal.tetris.ui.SlideOptionDialog$ColorPickerView
+com.devinxutal.tetris.ui.SlideOptionDialog$OnSlideOptionChangedListener
 com.devinxutal.tetris.util.AdUtil:
     23:27:public static void determineAd(android.app.Activity)
-com.devinxutal.tetris.util.BitmapUtil:
-    77:77:public android.graphics.Bitmap getAimButtonBitmap1()
-    81:81:public android.graphics.Bitmap getAimButtonBitmap2()
-    128:145:public void drawBackgroundBitmap(android.graphics.Canvas,int,int,android.graphics.Paint)
 com.devinxutal.tetris.util.BitmapUtil$Direction
 com.devinxutal.tetris.util.DialogUtil:
     43:48:public static void showDialog(android.content.Context,int,int)

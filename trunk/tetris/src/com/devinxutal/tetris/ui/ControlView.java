@@ -32,6 +32,8 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	public static final int BTN_TURN = 3303;
 	public static final int BTN_DOWN = 3304;
 	public static final int BTN_DIRECT_DOWN = 3305;
+	public static final int BTN_HOLD = 3306;
+
 	public static final int BTN_SOUND = 3401;
 	public static final int BTN_MUSIC = 3402;
 
@@ -55,58 +57,13 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		SLIDE_THRESHOLD = Math.min(w, h) / 30;
+		SLIDE_THRESHOLD = Math.min(w, h) / 50;
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
 
 	public void setButtons(List<ButtonInfo> buttons) {
 		this.buttons.clear();
 		this.buttons.addAll(buttons);
-		adjustDownButton();
-	}
-
-	private void adjustDownButton() {
-		if (buttons.size() == 6) {// landscape mode;
-			// find two down button;
-			ButtonInfo leftButton = null;
-			ButtonInfo rightButton = null;
-			for (ButtonInfo b : buttons) {
-				if ((b.buttonID == BTN_DOWN || b.buttonID == BTN_DIRECT_DOWN)) {
-					if (b.x < getWidth() / 2) {
-						leftButton = b;
-					} else {
-						rightButton = b;
-					}
-				}
-			}
-			if (leftButton != null && rightButton != null) {
-				if (Configuration.config().getDirectDownButtonPosition() == Configuration.POSITION_LEFT) {
-					leftButton.buttonID = BTN_DIRECT_DOWN;
-					rightButton.buttonID = BTN_DOWN;
-				} else {
-					leftButton.buttonID = BTN_DOWN;
-					rightButton.buttonID = BTN_DIRECT_DOWN;
-				}
-			}
-		} else { // portrait mode
-			// find the down button;
-			for (ButtonInfo b : buttons) {
-				if (b.buttonID == BTN_TURN || b.buttonID == BTN_DOWN
-						|| b.buttonID == BTN_DIRECT_DOWN) {
-					switch (Configuration.config().getCenterButtonAction()) {
-					case Configuration.ACTION_DIRECT_DOWN:
-						b.buttonID = BTN_DIRECT_DOWN;
-						break;
-					case Configuration.ACTION_QUICK_DOWN:
-						b.buttonID = BTN_DOWN;
-						break;
-					case Configuration.ACTION_TURN:
-						b.buttonID = BTN_TURN;
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	public void setGameController(GameController controller) {
@@ -185,7 +142,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 				Log.v(TAG, deltaX + "\t" + deltaY);
 				if (Math.abs(deltaX) > SLIDE_THRESHOLD
 						|| Math.abs(deltaY) > SLIDE_THRESHOLD) {
-					if (Math.abs(deltaX) > 0.7 * Math.abs(deltaY)) {
+					if (Math.abs(deltaX) > 0.8 * Math.abs(deltaY)) {
 						if (deltaX > 0) {
 							this.notifyButtonClicked(BTN_RIGHT);
 						} else {
@@ -238,6 +195,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	private ImageButton makeButton(int id, int resid) {
 		ImageButton b = new ImageButton(getContext());
+		b.setFocusable(false);
 		b.setId(id);
 		b.setBackgroundResource(R.drawable.transparent_button);
 		b.setImageResource(resid);
@@ -323,7 +281,6 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	public void configurationChanged(Configuration config2) {
 		this.resetControlButtons();
-		adjustDownButton();
 	}
 
 }

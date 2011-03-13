@@ -12,10 +12,13 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.Bitmap.Config;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.cfg.Constants;
@@ -232,6 +235,7 @@ public class PlaygroundView extends View {
 		private Paint paint;
 		private BitmapUtil bitmapUtil;
 		private Bitmap bgBitmap;
+		private Canvas canvas;
 		private Bitmap gridBitmap;
 		private Rect playgroundRect;
 		private Rect next1BlockRect;
@@ -273,18 +277,24 @@ public class PlaygroundView extends View {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			Display display = ((WindowManager) getContext().getSystemService(
+					Context.WINDOW_SERVICE)).getDefaultDisplay();
+			int size = Math.max(display.getWidth(), display.getHeight());
+			bgBitmap = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+			canvas = new Canvas(bgBitmap);
 		}
 
 		public void onSizeChanged(int w, int h) {
 			determinePlaygroundLocation();
 			if (w > 0 && h > 0) {
-				if (w > h) {
-					regenerateLandscapeBackground();
-				} else {
-					regenerateLandscapeBackground();
-				}
+				regenerateBackground();
 			}
+		}
 
+		private void setProperBackground(int w, int h) {
+			if (w > h) {// horizontal
+
+			}
 		}
 
 		public void resetPaint() {
@@ -295,14 +305,13 @@ public class PlaygroundView extends View {
 			paint.setStrokeWidth(1f);
 		}
 
-		private void regenerateLandscapeBackground() {
+		private void regenerateBackground() {
 			BitmapUtil util = BitmapUtil.get(getContext());
-			if(this.bgBitmap!= null){
-				bgBitmap.recycle();
-			}
-			this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
-					getHeight());
-			Canvas canvas = new Canvas(bgBitmap);
+
+			// this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
+			// getHeight());
+			bitmapUtil.drawBackgroundBitmap(canvas, getWidth(), getHeight(),
+					paint);
 			int w = playground.getWidth();
 			int h = playground.getHeight();
 			int gap = playground.GAP_LEN;
@@ -533,47 +542,59 @@ public class PlaygroundView extends View {
 			int buttonX = 0;
 			buttons.clear();
 			float iconScale = 1.4f;
+			ButtonInfo buttonLeft = null;
+			ButtonInfo buttonRight = null;
+			ButtonInfo buttonRotate = null;
+			ButtonInfo buttonHold = null;
+			ButtonInfo buttonDown = null;
+			ButtonInfo buttonDirectDown = null;
+
 			if (getWidth() > getHeight()) {
 				int button1Radius = Math.min(playgroundRect.left * 3 / 5,
 						getHeight() * 3 / 10) / 2;
 				int button2Radius = button1Radius * 30 / 40;
 				Bitmap button1 = BitmapUtil.get(getContext())
-						.getAimButtonBitmap1(button1Radius * 2);
+						.getAimButtonBitmap1();
+				float button1Size = button1Radius * 2;
 				Bitmap button2 = BitmapUtil.get(getContext())
-						.getAimButtonBitmap2(button2Radius * 2);
+						.getAimButtonBitmap2();
+				float button2Size = button2Radius * 2;
 				Pair delta = buttonDelta(button1Radius, button2Radius, 0);
 				buttonY = getHeight() - button2Radius * 2 - 5;
 				buttonX = getWidth() - button1Radius;
-				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_RIGHT, button1, bitmapUtil
-								.getArrowBitmap(ControlView.BTN_RIGHT,
-										(int) (button1Radius * iconScale))));
-				buttons.add(new ButtonInfo(buttonX - delta.x,
+
+				buttons.add((buttonRight = new ButtonInfo(buttonX, buttonY,
+						button1Radius, ControlView.BTN_RIGHT, button1,
+						button1Size, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_RIGHT),
+						button1Radius * iconScale)));
+				buttons.add((buttonRotate = new ButtonInfo(buttonX - delta.x,
 						buttonY - delta.y, button2Radius, ControlView.BTN_TURN,
-						button2, bitmapUtil.getArrowBitmap(
-								ControlView.BTN_TURN,
-								(int) (button2Radius * iconScale))));
-				buttons.add(new ButtonInfo(buttonX - delta.x,
+						button2, button2Size, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_TURN),
+						button2Radius * iconScale)));
+				buttons.add((buttonDown = new ButtonInfo(buttonX - delta.x,
 						buttonY + delta.y, button2Radius, ControlView.BTN_DOWN,
-						button2, bitmapUtil.getArrowBitmap(
-								ControlView.BTN_DOWN,
-								(int) (button2Radius * iconScale))));
+						button2, button2Size, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DOWN),
+						button2Radius * iconScale)));
 
 				buttonX = button1Radius;
-				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_LEFT, button1, bitmapUtil
-								.getArrowBitmap(ControlView.BTN_LEFT,
-										(int) (button1Radius * iconScale))));
-				buttons.add(new ButtonInfo(buttonX + delta.x,
-						buttonY - delta.y, button2Radius, ControlView.BTN_TURN,
-						button2, bitmapUtil.getArrowBitmap(
-								ControlView.BTN_TURN,
-								(int) (button2Radius * iconScale))));
-				buttons.add(new ButtonInfo(buttonX + delta.x,
-						buttonY + delta.y, button2Radius,
-						ControlView.BTN_DIRECT_DOWN, button2, bitmapUtil
-								.getArrowBitmap(ControlView.BTN_DIRECT_DOWN,
-										(int) (button2Radius * iconScale))));
+				buttons.add((buttonLeft = new ButtonInfo(buttonX, buttonY,
+						button1Radius, ControlView.BTN_LEFT, button1,
+						button1Size, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_LEFT),
+						button1Radius * iconScale)));
+				buttons.add((buttonHold = new ButtonInfo(buttonX + delta.x,
+						buttonY - delta.y, button2Radius, ControlView.BTN_HOLD,
+						button2, button2Size, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_HOLD),
+						button2Radius * iconScale)));
+				buttons.add((buttonDirectDown = new ButtonInfo(buttonX
+						+ delta.x, buttonY + delta.y, button2Radius,
+						ControlView.BTN_DIRECT_DOWN, button2, button2Size,
+						bitmapUtil.getArrowBitmap(ControlView.BTN_DIRECT_DOWN),
+						button2Radius * iconScale)));
 			} else {
 				int button1Radius = Math.min(getHeight()
 						- playgroundRect.bottom - 10, getWidth() / 3) / 2;
@@ -584,38 +605,97 @@ public class PlaygroundView extends View {
 				}
 				int button2Radius = button1Radius * 4 / 5;
 				Bitmap button1 = BitmapUtil.get(getContext())
-						.getAimButtonBitmap1(button1Radius * 2);
+						.getAimButtonBitmap1();
 				Bitmap button2 = BitmapUtil.get(getContext())
-						.getAimButtonBitmap2(button2Radius * 2);
+						.getAimButtonBitmap2();
 				buttonY = getHeight() - button1Radius - 5;
 				buttonX = button1Radius + 5;
-				buttons.add(new ButtonInfo(buttonX, buttonY, button1Radius,
-						ControlView.BTN_LEFT, button1, bitmapUtil
-								.getArrowBitmap(ControlView.BTN_LEFT,
-										(int) (button1Radius * iconScale))));
-				buttons.add(new ButtonInfo(getWidth() - buttonX, buttonY,
-						button1Radius, ControlView.BTN_RIGHT, button1,
-						bitmapUtil.getArrowBitmap(ControlView.BTN_RIGHT,
-								(int) (button1Radius * iconScale))));
+				buttons.add((buttonLeft = new ButtonInfo(buttonX, buttonY,
+						button1Radius, ControlView.BTN_LEFT, button1,
+						button1Radius * 2, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_LEFT),
+						button1Radius * iconScale)));
+				buttons.add((buttonRight = new ButtonInfo(getWidth() - buttonX,
+						buttonY, button1Radius, ControlView.BTN_RIGHT, button1,
+						button1Radius * 2, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_RIGHT),
+						button1Radius * iconScale)));
 
 				buttonX = getWidth() / 2;
 				buttonY = getHeight() - button2Radius - 5;
 
-				buttons.add(new ButtonInfo(buttonX, buttonY, button2Radius,
-						ControlView.BTN_DOWN, button2, bitmapUtil
-								.getArrowBitmap(ControlView.BTN_DOWN,
-										(int) (button2Radius * iconScale))));
+				buttons.add((buttonDown = new ButtonInfo(buttonX, buttonY,
+						button2Radius, ControlView.BTN_DOWN, button2,
+						button2Radius * 2, bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DOWN),
+						button2Radius * iconScale)));
+			}
+			// config buttons by configuration
+			Configuration config = Configuration.config();
+			if (getWidth() > getHeight()) {
+				if (config.isSwapRotateHold()
+						&& (buttonRotate != null && buttonHold != null)) {
+					buttonRotate.buttonID = ControlView.BTN_HOLD;
+					buttonHold.buttonID = ControlView.BTN_TURN;
+
+					buttonRotate.buttonIcon = bitmapUtil
+							.getArrowBitmap(ControlView.BTN_HOLD);
+					buttonHold.buttonIcon = bitmapUtil
+							.getArrowBitmap(ControlView.BTN_TURN);
+				}
+				if (config.isSwapQuickDirect()
+						&& (buttonDown != null && buttonDirectDown != null)) {
+					buttonDown.buttonID = ControlView.BTN_DIRECT_DOWN;
+					buttonDirectDown.buttonID = ControlView.BTN_DOWN;
+
+					buttonDown.buttonIcon = bitmapUtil
+							.getArrowBitmap(ControlView.BTN_DIRECT_DOWN);
+					buttonDirectDown.buttonIcon = bitmapUtil
+							.getArrowBitmap(ControlView.BTN_DOWN);
+				}
+			} else {
+				if (buttonDown != null) {
+					switch (config.getCenterButtonAction()) {
+					case Configuration.ACTION_DIRECT_DOWN:
+						buttonDown.buttonID = ControlView.BTN_DIRECT_DOWN;
+						buttonDown.buttonIcon = bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DIRECT_DOWN);
+						break;
+					case Configuration.ACTION_QUICK_DOWN:
+						buttonDown.buttonID = ControlView.BTN_DOWN;
+						buttonDown.buttonIcon = bitmapUtil
+								.getArrowBitmap(ControlView.BTN_DOWN);
+						break;
+					case Configuration.ACTION_TURN:
+						buttonDown.buttonID = ControlView.BTN_TURN;
+						buttonDown.buttonIcon = bitmapUtil
+								.getArrowBitmap(ControlView.BTN_TURN);
+						break;
+					}
+				}
 			}
 
+			// end config
+
 			paint.setAlpha(255);
+			paint.setAntiAlias(true);
+			paint.setFilterBitmap(true);
 			for (ButtonInfo button : buttons) {
 				paint.setAlpha(255);
-				canvas.drawBitmap(button.buttonBG, button.x - button.radius,
-						button.y - button.radius, paint);
+
+				Rect from = new Rect(0, 0, button.buttonBG.getWidth(),
+						button.buttonBG.getHeight());
+				RectF to = new RectF(button.x - button.bgSize / 2, button.y
+						- button.bgSize / 2, button.x + button.bgSize / 2,
+						button.y + button.bgSize / 2);
+				canvas.drawBitmap(button.buttonBG, from, to, paint);
 				paint.setAlpha(150);
-				canvas.drawBitmap(button.buttonIcon, button.x
-						- button.buttonIcon.getWidth() / 2, button.y
-						- button.buttonIcon.getHeight() / 2, paint);
+				from = new Rect(0, 0, button.buttonIcon.getWidth(),
+						button.buttonIcon.getHeight());
+				to = new RectF(button.x - button.iconSize / 2, button.y
+						- button.iconSize / 2, button.x + button.iconSize / 2,
+						button.y + button.iconSize / 2);
+				canvas.drawBitmap(button.buttonIcon, from, to, paint);
 			}
 			if (controlView != null) {
 				controlView.setButtons(buttons);
@@ -700,8 +780,9 @@ public class PlaygroundView extends View {
 	}
 
 	public void configurationChanged(Configuration config) {
-		// TODO Auto-generated method stub
-
+		if (dm != null && dm.playgroundRect != null) {
+			this.dm.regenerateBackground();
+		}
 	}
 
 }

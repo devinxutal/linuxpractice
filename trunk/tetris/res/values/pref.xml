@@ -77,7 +77,15 @@
 	<string name="pref_ent_sound_effects">Sound Effects</string>
 	<string name="pref_ent_sound_effects_summary">Sound effects such as button-click and crash
 	</string>
+	
+	<string name="pref_ent_swap_rotate_hold">Swap HOLD and ROTATE</string>
+	<string name="pref_ent_swap_rotate_hold_summary">Swap HOLD and ROTATE buttons
+	</string>
 
+	<string name="pref_ent_swap_quick_direct">Swap QUICK and DIRECT</string>
+	<string name="pref_ent_swap_quick_direct_summary">Swap Quick Down and Direct Down buttons
+	</string>
+	
 	<string name="pref_ent_screen_orientation">Screen Orientation</string>
 	<string name="pref_ent_screen_orientation_summary">Set screen orientation while playing</string>
 	<string-array name="pref_ent_screen_orientation_entries">

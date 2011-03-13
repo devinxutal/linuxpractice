@@ -4,6 +4,7 @@
 	<string name="common_cancel">Cancel</string>
 	<string name="common_yes">Yes</string>
 	<string name="common_no">No</string>
+	<string name="common_reset">Reset</string>
 	<string name="common_save">Save</string>
 	<string name="common_load">Load</string>
 	<string name="common_next">Next</string>
@@ -42,7 +43,7 @@
 	<string name="main_btn_play_game">Play Game</string>
 	<string name="main_btn_about">About</string>
 	<string name="main_btn_more">More</string>
-	<string name="main_btn_preference">Preferences</string>
+	<string name="main_btn_preference">Options</string>
 	<string name="main_btn_world_rank">High Scores</string>
 
 	<string name="app_name">Go Tetris</string>

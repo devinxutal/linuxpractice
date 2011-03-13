@@ -30,5 +30,6 @@ public class Constants {
 			+ "/twentyseconds/queryRecords";
 	public static final String URL_WORLD_RANK = URL_SERVER
 			+ "/twentyseconds/worldRank";
+	public static final String URL_COMMIT_REPORT = URL_SERVER + "/commitReport";
 
 }

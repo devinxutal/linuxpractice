@@ -10,9 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.Bitmap.Config;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.ui.ControlView;
@@ -23,7 +21,9 @@ public class BitmapUtil {
 	private Bitmap aimButton1;
 	private Bitmap aimButton2;
 	private Bitmap arrowDown;
-	private Bitmap arrowUp;
+	private Bitmap arrowDirectDown;
+	private Bitmap arrowRotate;
+	private Bitmap arrowHold;
 	private Bitmap arrowLeft;
 	private Bitmap arrowRight;
 	private Paint paint;
@@ -50,8 +50,12 @@ public class BitmapUtil {
 
 			arrowDown = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.arrow_down);
-			arrowUp = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_up);
+			arrowDirectDown = BitmapFactory.decodeResource(context
+					.getResources(), R.drawable.arrow_direct_down);
+			arrowRotate = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.arrow_rotate);
+			arrowHold = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.arrow_hold);
 			arrowLeft = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.arrow_left);
 			arrowRight = BitmapFactory.decodeResource(context.getResources(),
@@ -81,13 +85,13 @@ public class BitmapUtil {
 		return aimButton2;
 	}
 
-	public Bitmap getAimButtonBitmap1(int size) {
-		return Bitmap.createScaledBitmap(aimButton1, size, size, true);
-	}
-
-	public Bitmap getAimButtonBitmap2(int size) {
-		return Bitmap.createScaledBitmap(aimButton2, size, size, true);
-	}
+	// public Bitmap getAimButtonBitmap1(int size) {
+	// return Bitmap.createScaledBitmap(aimButton1, size, size, true);
+	// }
+	//
+	// public Bitmap getAimButtonBitmap2(int size) {
+	// return Bitmap.createScaledBitmap(aimButton2, size, size, true);
+	// }
 
 	public Drawable getVerticalInfoBar() {
 		return vInfoBar;
@@ -97,36 +101,35 @@ public class BitmapUtil {
 		return hInfoBar;
 	}
 
-	public Bitmap getBackgroundBitmap(int width, int height) {
-		int w = background.getWidth();
-		int h = background.getWidth();
-		float scale = Math.min(w / (float) width, h / (float) height);
-		int ww = (int) (width * scale);
-		int hh = (int) (height * scale);
-		int x = (w - ww) / 2;
-		int y = (h - hh) / 2;
-		Log.v("BitmapUtil", "width height: " + width + "," + height + ". w h: "
-				+ w + "," + h);
-		Bitmap bg = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-		Canvas canvas = new Canvas(bg);
-		paint.reset();
-		paint.setAntiAlias(true);
-		canvas.drawBitmap(background, new Rect(x, y, x + ww, y + hh), new Rect(
-				0, 0, width, height), paint);
-		paint.setAntiAlias(false);
-		paint.setColor(Color.argb(50, 255, 255, 255));
-
-		for (int i = 0; i < height; i += 2) {
-			canvas.drawLine(0, i, width, i, paint);
-		}
-
-		return bg;
-	}
+	// public Bitmap getBackgroundBitmap(int width, int height) {
+	// int w = background.getWidth();
+	// int h = background.getWidth();
+	// float scale = Math.min(w / (float) width, h / (float) height);
+	// int ww = (int) (width * scale);
+	// int hh = (int) (height * scale);
+	// int x = (w - ww) / 2;
+	// int y = (h - hh) / 2;
+	// Log.v("BitmapUtil", "getBackgroundBitmap called, width height: "
+	// + width + "," + height + ". w h: " + w + "," + h);
+	// Bitmap bg = Bitmap.createBitmap(width, height, Config.ARGB_8888);
+	// Canvas canvas = new Canvas(bg);
+	// paint.reset();
+	// paint.setAntiAlias(true);
+	// canvas.drawBitmap(background, new Rect(x, y, x + ww, y + hh), new Rect(
+	// 0, 0, width, height), paint);
+	// paint.setAntiAlias(false);
+	// paint.setColor(Color.argb(50, 255, 255, 255));
+	//
+	// for (int i = 0; i < height; i += 2) {
+	// canvas.drawLine(0, i, width, i, paint);
+	// }
+	// return bg;
+	// }
 
 	public void drawBackgroundBitmap(Canvas canvas, int width, int height,
 			Paint paint) {
 		int w = background.getWidth();
-		int h = background.getWidth();
+		int h = background.getHeight();
 		float scale = Math.min(w / (float) width, h / (float) height);
 		int ww = (int) (width * scale);
 		int hh = (int) (height * scale);
@@ -148,14 +151,20 @@ public class BitmapUtil {
 		UP, DOWN, LEFT, RIGHT;
 	}
 
-	public Bitmap getArrowBitmap(int id, int size) {
+	public Bitmap getArrowBitmap(int id) {
 		Bitmap arrowBitmap = null;
 		switch (id) {
 		case ControlView.BTN_TURN:
-			arrowBitmap = arrowUp;
+			arrowBitmap = arrowRotate;
+			break;
+		case ControlView.BTN_HOLD:
+			arrowBitmap = arrowHold;
 			break;
 		case ControlView.BTN_DOWN:
 			arrowBitmap = arrowDown;
+			break;
+		case ControlView.BTN_DIRECT_DOWN:
+			arrowBitmap = arrowDirectDown;
 			break;
 		case ControlView.BTN_LEFT:
 			arrowBitmap = arrowLeft;
@@ -166,6 +175,6 @@ public class BitmapUtil {
 		default:
 			arrowBitmap = arrowDown;
 		}
-		return Bitmap.createScaledBitmap(arrowBitmap, size, size, true);
+		return arrowBitmap;
 	}
 }
