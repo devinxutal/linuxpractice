@@ -39,7 +39,7 @@ public class ScoreUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new SavableLocalScores();
 	}
 
 	public static void saveCubeState(String player, int score) {

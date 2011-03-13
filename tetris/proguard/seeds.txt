@@ -2,6 +2,8 @@ com.devinxutal.tetris.ui.PlaygroundView
 com.devinxutal.tetris.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet)
 com.admob.android.ads.AdView
 com.admob.android.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
+com.devinxutal.tetris.ui.CustomPreference
+com.devinxutal.tetris.ui.CustomPreference: CustomPreference(android.content.Context,android.util.AttributeSet)
 com.devinxutal.tetris.ui.PlaygroundView
 com.devinxutal.tetris.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet,int)
 com.admob.android.ads.AdView

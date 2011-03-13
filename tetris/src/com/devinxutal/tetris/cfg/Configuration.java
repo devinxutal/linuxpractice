@@ -83,6 +83,20 @@ public class Configuration {
 		}
 	}
 
+	public boolean isSwapRotateHold() {
+		if (preference != null) {
+			return preference.getBoolean("swap_rotate_hold", false);
+		}
+		return false;
+	}
+
+	public boolean isSwapQuickDirect() {
+		if (preference != null) {
+			return preference.getBoolean("swap_quick_direct", false);
+		}
+		return false;
+	}
+
 	public int getStartLevel() {
 		int defaultValue = 1;
 		if (preference != null) {

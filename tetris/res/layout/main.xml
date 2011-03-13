@@ -31,8 +31,6 @@
 					android:layout_height="wrap_content" android:text="@string/common_high_score" />
 				<Button android:id="@+id/main_btn_help" android:layout_width="fill_parent"
 					android:layout_height="wrap_content" android:text="@string/common_help" />
-				<Button android:id="@+id/main_btn_more" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/main_btn_more" />
 			</LinearLayout>
 			<LinearLayout android:orientation="horizontal"
 				android:layout_width="0dip" android:layout_height="fill_parent"
