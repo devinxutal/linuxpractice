@@ -320,6 +320,9 @@ public class PlaygroundActivity extends Activity {
 			case ControlView.BTN_DIRECT_DOWN:
 				gameController.processCommand(Command.DIRECT_DOWN);
 				break;
+			case ControlView.BTN_HOLD:
+				gameController.processCommand(Command.HOLD);
+				break;
 			}
 		}
 
@@ -359,6 +362,9 @@ public class PlaygroundActivity extends Activity {
 				break;
 			case ControlView.BTN_DOWN:
 				gameController.processCommand(Command.DOWN_UP);
+				break;
+			case ControlView.BTN_HOLD:
+				gameController.processCommand(Command.HOLD);
 				break;
 			}
 		}
