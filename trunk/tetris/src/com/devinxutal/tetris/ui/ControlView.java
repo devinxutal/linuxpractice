@@ -140,23 +140,29 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 				float deltaX = x - oldX;
 				float deltaY = y - oldY;
 				Log.v(TAG, deltaX + "\t" + deltaY);
-				if (Math.abs(deltaX) > SLIDE_THRESHOLD
-						|| Math.abs(deltaY) > SLIDE_THRESHOLD) {
-					if (Math.abs(deltaX) > 0.8 * Math.abs(deltaY)) {
+				if (Math.abs(deltaX) > 0.8 * Math.abs(deltaY)) { // left and
+					// right
+					if (Math.abs(deltaX) > SLIDE_THRESHOLD
+							|| Math.abs(deltaY) > SLIDE_THRESHOLD) {
 						if (deltaX > 0) {
 							this.notifyButtonClicked(BTN_RIGHT);
 						} else {
 							this.notifyButtonClicked(BTN_LEFT);
 						}
 					} else {
+						this.notifyButtonClicked(BTN_TURN);
+					}
+
+				} else {
+					if (Math.abs(deltaY) > 2 * SLIDE_THRESHOLD) {
 						if (deltaY > 0) {
 							this.notifyButtonClicked(BTN_DIRECT_DOWN);
 						} else {
 							this.notifyButtonClicked(BTN_TURN);
 						}
+					} else {
+						this.notifyButtonClicked(BTN_TURN);
 					}
-				} else {
-					this.notifyButtonClicked(BTN_TURN);
 				}
 
 			}

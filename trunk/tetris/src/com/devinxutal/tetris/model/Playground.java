@@ -46,6 +46,9 @@ public class Playground {
 	private LinkedList<Block> blockQueue = new LinkedList<Block>();
 	private int blockQueueLen = 3;
 
+	private Block hold = null;
+	private boolean holdUsed = false;
+
 	//
 	private ScoreAndLevel scoreLevel = new ScoreAndLevel();
 
@@ -144,6 +147,8 @@ public class Playground {
 			return succeed;
 		case DIRECT_DOWN:
 			return moveBlockDirectDown();
+		case HOLD:
+			return holdBlock();
 		}
 		return false;
 	}
@@ -190,6 +195,12 @@ public class Playground {
 			if (blockQueue.size() >= 3) {
 				this.drawBlock(canvas, blockQueue.get(2), rect3);
 			}
+		}
+	}
+
+	public void drawHoldBlock(Canvas canvas, Rect rect) {
+		if (this.hold != null) {
+			this.drawBlock(canvas, hold, rect);
 		}
 	}
 
@@ -483,6 +494,21 @@ public class Playground {
 		return false;
 	}
 
+	private boolean holdBlock() {
+		if (activeBlock == null || holdUsed) {
+			return false;
+		}
+		Block temp = activeBlock;
+		if (hold == null) {
+			allocateBlock();
+		} else {
+			allocateBlock(hold);
+		}
+		hold = temp;
+		holdUsed = true;
+		return true;
+	}
+
 	private boolean tryTurn(int xOffset, Block block) {
 		if (activeBlock == null) {
 			return false;
@@ -506,9 +532,13 @@ public class Playground {
 	}
 
 	private void allocateBlock() {
-		this.activeBlock = blockQueue.poll();
-		rowsFallDown = 0;
+		allocateBlock(blockQueue.poll());
 		blockQueue.addLast(new Block());
+	}
+
+	private void allocateBlock(Block block) {
+		this.activeBlock = block;
+		rowsFallDown = 0;
 		if (this.activeBlock == null) {
 			return;
 		}
@@ -552,6 +582,7 @@ public class Playground {
 			}
 		}
 		this.activeBlock = null;
+		this.holdUsed = false;
 		scoreLevel.rowsFallDown(rowsFallDown);
 	}
 

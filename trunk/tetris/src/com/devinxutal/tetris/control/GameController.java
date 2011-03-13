@@ -20,7 +20,7 @@ public class GameController {
 
 	public static final int INTERVAL_CONTROL_INIT = 400;
 	public static final int INTERVAL_CONTROL_STICK = 100;
-	public static final int INTERVAL_STEP_NORMAL = 600;
+	public static final int INTERVAL_STEP_NORMAL = 800;
 	public static final int INTERVAL_STEP_ANIMATION = 150;
 
 	public static final int IC_STEP = 5;
@@ -279,6 +279,9 @@ public class GameController {
 				soundManager.playMoveEffect();
 				break;
 			case DIRECT_DOWN:
+				soundManager.playDownEffect();
+				break;
+			case HOLD:
 				soundManager.playDownEffect();
 				break;
 			}
