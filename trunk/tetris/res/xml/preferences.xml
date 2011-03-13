@@ -24,11 +24,6 @@
 			android:entryValues="@array/pref_ent_block_style_values" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_landscape_control">
-		<ListPreference android:title="@string/pref_ent_direct_down_position"
-			android:summary="@string/pref_ent_direct_down_position_summary"
-			android:key="direct_down_position" android:defaultValue="1"
-			android:entries="@array/pref_ent_direct_down_position_entries"
-			android:entryValues="@array/pref_ent_direct_down_position_values" />
 		<CheckBoxPreference android:title="@string/pref_ent_swap_rotate_hold"
 			android:summary="@string/pref_ent_swap_rotate_hold_summary"
 			android:key="swap_rotate_hold" android:defaultValue="false" />
