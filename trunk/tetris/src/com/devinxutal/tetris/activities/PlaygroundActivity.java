@@ -220,6 +220,8 @@ public class PlaygroundActivity extends Activity {
 			Log.v(TAG, "back key down");
 			pause();
 			return false;
+		} else if (this.successScreen.getVisibility() == View.INVISIBLE) {
+			return false;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

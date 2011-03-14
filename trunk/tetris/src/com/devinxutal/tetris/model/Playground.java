@@ -240,10 +240,17 @@ public class Playground {
 		sp.offsetX = this.blockOffsetX;
 		sp.offsetY = this.blockOffsetY;
 		sp.blockQueue = new LinkedList<SavableBlock>();
+
 		for (Block b : this.blockQueue) {
 			sp.blockQueue.add(sp.create(b));
 		}
-		sp.scoreLevel = this.scoreLevel;
+		if (hold != null) {
+			sp.holdBlock = sp.create(this.hold);
+		} else {
+			sp.holdBlock = null;
+		}
+		sp.holdUsed = holdUsed;
+		sp.scoreLevel = this.scoreLevel; 
 		return sp;
 	}
 
@@ -260,6 +267,11 @@ public class Playground {
 		for (SavableBlock sb : sp.blockQueue) {
 			this.blockQueue.add(new Block(sb.blockType, sb.current));
 		}
+		if (sp.holdBlock != null) {
+			this.hold = new Block(sp.holdBlock.blockType, sp.holdBlock.current);
+		}
+		this.holdUsed = sp.holdUsed;
+
 		this.scoreLevel = sp.scoreLevel;
 		this.calculateProjectedY();
 	}

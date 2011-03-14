@@ -11,6 +11,8 @@ public class SavablePlayground implements Serializable {
 	public int offsetX = 0;
 	public int offsetY = 0;
 	public List<SavableBlock> blockQueue;
+	public SavableBlock holdBlock;
+	public boolean holdUsed = false;
 	public ScoreAndLevel scoreLevel;
 
 	public class SavableBlock implements Serializable {
@@ -28,5 +30,5 @@ public class SavablePlayground implements Serializable {
 		sb.current = b.getCurrent();
 		return sb;
 	}
-	
+
 }

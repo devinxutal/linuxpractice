@@ -282,7 +282,7 @@ public class GameController {
 				soundManager.playDownEffect();
 				break;
 			case HOLD:
-				soundManager.playDownEffect();
+				soundManager.playTurnEffect();
 				break;
 			}
 		}
