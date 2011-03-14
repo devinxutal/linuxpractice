@@ -25,10 +25,10 @@ public class Configuration {
 	public static final int ACTION_TURN = 3;
 
 	public int getCenterButtonAction() {
-		int defaultValue = ACTION_DIRECT_DOWN;
+		int defaultValue = ACTION_QUICK_DOWN;
 		if (preference != null) {
 			return Integer.valueOf(preference.getString("center_button_action",
-					"1"));
+					ACTION_QUICK_DOWN+""));
 		}
 		return defaultValue;
 	}
@@ -43,9 +43,9 @@ public class Configuration {
 
 	public boolean isBackgroundMusicOn() {
 		if (preference != null) {
-			return preference.getBoolean("background_music", false);
+			return preference.getBoolean("background_music", true);
 		}
-		return false;
+		return true;
 	}
 
 	public void setBackgroundMusicOn(boolean on) {
@@ -58,9 +58,9 @@ public class Configuration {
 
 	public boolean isSoundEffectsOn() {
 		if (preference != null) {
-			return preference.getBoolean("sound_effects", false);
+			return preference.getBoolean("sound_effects", true);
 		}
-		return false;
+		return true;
 	}
 
 	public void setSoundEffectsOn(boolean on) {
@@ -103,7 +103,7 @@ public class Configuration {
 
 	public boolean isDragMode() {
 		if (preference != null) {
-			return preference.getBoolean("drag_mode", true);
+			return preference.getBoolean("enable_drag_mode", true);
 		}
 		return true;
 	}

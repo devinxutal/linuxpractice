@@ -3,8 +3,12 @@ package com.devinxutal.tetris.util;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
+import android.util.Log;
+
+import com.devinxutal.tetris.cfg.Constants;
 
 public class TextPainter {
 	Paint textPaint = null;
@@ -51,6 +55,24 @@ public class TextPainter {
 	public void setTypeface(Typeface typeface) {
 		textPaint.setTypeface(typeface);
 		strokePaint.setTypeface(typeface);
+	}
+
+	public void drawFittedText(Canvas canvas, String text, RectF rect,
+			float scale) {
+		Log.v("TextPainter", "draw fitted text: " + rect);
+		this.determineLabelSize(text, rect);
+		this.setTextSize(scale * this.textPaint.getTextSize());
+
+		this.setStrokeWidth(textPaint.getTextSize() * 0.15f);
+		float width = textPaint.measureText(text);
+		float height = textPaint.descent() - textPaint.ascent();
+		this.drawText(canvas, text, rect.left + (rect.width() - width) / 2 - 1,
+				rect.top + (rect.height() - height) / 2, 0);
+		if (Constants.TEST) {
+			textPaint.setStyle(Style.STROKE);
+			canvas.drawRect(rect, textPaint);
+			textPaint.setStyle(Style.FILL);
+		}
 	}
 
 	public void drawMonoText(Canvas canvas, String text, float x, float y,
@@ -104,4 +126,18 @@ public class TextPainter {
 				/ 2;
 		drawCharacter(canvas, string, x, y);
 	}
+
+	private void determineLabelSize(String text, RectF rect) {
+		float labelSize = 1f;
+		float gapScale = 0.1f;
+		for (; labelSize <= rect.height(); labelSize += 0.5f) {
+			this.setTextSize(labelSize);
+			if (this.measureTextWidth(text, 0) > rect.width()) {
+				break;
+			}
+		}
+		labelSize -= 0.5f;
+		this.setTextSize(labelSize);
+	}
+
 }

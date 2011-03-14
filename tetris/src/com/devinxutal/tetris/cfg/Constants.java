@@ -10,7 +10,7 @@ public class Constants {
 
 	public static int VERSION = VERSION_LITE;
 
-	public static final boolean TEST = true;
+	public static final boolean TEST = false;
 
 	public static final int TRIAL_TIMES = 5;
 

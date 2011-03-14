@@ -176,7 +176,7 @@ public class PlaygroundView extends View {
 		//
 		playground.drawPendingBlocks(canvas, dm.next1BlockRect,
 				dm.next2BlockRect, dm.next3BlockRect);
-
+		playground.drawHoldBlock(canvas, dm.holdBlockRect);
 		TextPainter painter = new TextPainter();
 		painter.setStrokeColor(Color.DKGRAY);
 		painter.setTextColor(Color.WHITE);
@@ -195,7 +195,7 @@ public class PlaygroundView extends View {
 					+ "", dm.levelRect.left, dm.levelRect.top, dm.labelGap);
 			painter.drawMonoScore(canvas, playground.getScoreAndLevel()
 					.getGoalRemained()
-					+ "", dm.linesRect.left, dm.linesRect.top, dm.labelGap);
+					+ "", dm.goalRect.left, dm.goalRect.top, dm.labelGap);
 		} else {
 			painter.setTextSize(dm.scoreSize);
 			painter.setTypeface(dm.scoreFont);
@@ -206,12 +206,12 @@ public class PlaygroundView extends View {
 			painter.setTextSize(dm.statSize);
 			painter.setTypeface(dm.statFont);
 			painter.setStrokeWidth(dm.statSize * dm.textStrokeScale);
-			painter.drawCenteredText(canvas, playground.getScoreAndLevel()
+			painter.drawFittedText(canvas, playground.getScoreAndLevel()
 					.getLevel()
-					+ "", dm.levelRect);
-			painter.drawCenteredText(canvas, playground.getScoreAndLevel()
+					+ "", dm.levelRect, 1.0f);
+			painter.drawFittedText(canvas, playground.getScoreAndLevel()
 					.getGoalRemained()
-					+ "", dm.linesRect);
+					+ "", dm.goalRect, 1.0f);
 		}
 
 	}
@@ -241,9 +241,11 @@ public class PlaygroundView extends View {
 		private Rect next1BlockRect;
 		private Rect next2BlockRect;
 		private Rect next3BlockRect;
-		private Rect scoreRect;
-		private Rect levelRect;
-		private Rect linesRect;
+		private Rect holdBlockRect;
+		private ButtonInfo holdButtonInfo;
+		private RectF scoreRect;
+		private RectF levelRect;
+		private RectF goalRect;
 		private Typeface font;
 		private Typeface scoreFont;
 		private Typeface labelFont;
@@ -355,25 +357,26 @@ public class PlaygroundView extends View {
 			}
 			bg.recycle();
 
-			// draw score and level
+			// draw nextBlock bar
+			determinAndDrawNextBar(canvas);
+			// draw score and level, must behind determinAndDrawNextBar;
 			determinAndDrawStatistics(canvas);
 			determinAndDrawControlButtons(canvas);
-			// draw nextBlock bar, must behind determinAndDrawStatistics;
-			determinAndDrawNextBar(canvas);
 
 		}
 
 		private void determinAndDrawNextBar(Canvas canvas) {
 			int width = getWidth();
 			int height = getHeight();
-
+			Bitmap holdButton = bitmapUtil.getAimButtonBitmap2();
+			RectF holdRect = null;
+			RectF nextRect = null;
 			if (width > height) {
-
 				Drawable nextBar = bitmapUtil.getHorizontalInfoBar();
 				int barHeight = nextBar.getIntrinsicHeight();
-				int barWidth = (width - playground.getWidth() - 13) / 2;
+				int barWidth = (width - playground.getWidth() - 12) / 2;
 				int barStartX = width - barWidth - 4;
-				int barStartY = levelRect.top;
+				int barStartY = barHeight;
 				int bs1 = (int) (barHeight * 0.6f);
 				int bs2 = Math.min((int) (bs1 * 0.8),
 						(int) ((barWidth - barHeight) / 2 * 0.8));
@@ -398,6 +401,18 @@ public class PlaygroundView extends View {
 				nextBar.setBounds(new Rect(barStartX, barStartY, barStartX
 						+ barWidth, barStartY + barHeight));
 				nextBar.draw(canvas);
+
+				// hold button
+				int holdButtonSize = barHeight;
+				int cx = (width - playground.getWidth() - 12) / 2 + 4
+						- holdButtonSize / 2;
+				int cy = barStartY + holdButtonSize / 2;
+				this.holdButtonInfo = new ButtonInfo(cx, cy,
+						holdButtonSize / 2, ControlView.BTN_HOLD, holdButton,
+						holdButtonSize, null, 0);
+				this.holdBlockRect = new Rect(cx - bs1 / 2, cy - bs1 / 2, cx
+						+ bs1 / 2, cy + bs1 / 2);
+
 			} else {
 				Drawable nextBar = bitmapUtil.getVerticalInfoBar();
 				int barWidth = nextBar.getIntrinsicWidth();
@@ -405,7 +420,7 @@ public class PlaygroundView extends View {
 				int rightSide = (width - playgroundRect.width() - 6) / 2;
 				int barStartX = playgroundRect.right + 3
 						+ (rightSide - barWidth) / 2;
-				int barStartY = playgroundRect.top;
+				int barStartY = playgroundRect.top + barWidth * 2 / 5;
 				int bs1 = (int) (barWidth * 0.6f);
 				int bs2 = Math.min((int) (bs1 * 0.8),
 						(int) ((barHeight - barWidth) / 2 * 0.8));
@@ -432,7 +447,37 @@ public class PlaygroundView extends View {
 						+ barWidth, barStartY + barHeight));
 				nextBar.draw(canvas);
 
+				// hold button
+				int holdButtonSize = barWidth;
+				int cx = width - barStartX - holdButtonSize / 2;
+				int cy = barStartY + holdButtonSize / 2;
+				this.holdButtonInfo = new ButtonInfo(cx, cy,
+						holdButtonSize / 2, ControlView.BTN_HOLD, holdButton,
+						holdButtonSize, null, 0);
+				this.holdBlockRect = new Rect(cx - bs1 / 2, cy - bs1 / 2, cx
+						+ bs1 / 2, cy + bs1 / 2);
+
 			}
+			// label positions
+
+			float labelW = this.holdButtonInfo.bgSize;
+			float labelH = labelW / 3;
+			float labelY = this.holdButtonInfo.y - this.holdButtonInfo.bgSize
+					/ 2 - labelH;
+			float labelX = this.holdButtonInfo.x - this.holdButtonInfo.bgSize
+					/ 2;
+			holdRect = new RectF(labelX, labelY, labelX + labelW, labelY
+					+ labelH);
+			labelX = width - labelX - labelW;
+			nextRect = new RectF(labelX, labelY, labelX + labelW, labelY
+					+ labelH);
+			//
+			TextPainter painter = new TextPainter();
+			painter.setStrokeColor(Color.DKGRAY);
+			painter.setTextColor(Color.WHITE);
+			painter.setTypeface(dm.labelFont);
+			painter.drawFittedText(canvas, "NEXT", nextRect, 0.8f);
+			painter.drawFittedText(canvas, "HOLD", holdRect, 0.8f);
 
 		}
 
@@ -440,15 +485,17 @@ public class PlaygroundView extends View {
 			int width = getWidth();
 			int height = getHeight();
 			if (getWidth() > getHeight()) {
-				int scorePadding = 10;
+				int leftWidth = playgroundRect.left - 3;
+				int scorePadding = leftWidth / 15;
 				int textGap = 10;
 				int scoreWidth = Math.min((width - playground.getWidth() - 12)
 						/ 2 - 2 * scorePadding, playground.getWidth() * 4 / 5);
 				int scoreStartX = scorePadding;
 				int scoreStartY = scorePadding;
-				determineScoreSize(scoreWidth, scoreWidth);
-				determineLabelSize(scoreWidth / 2, scoreWidth);
-				scoreRect = new Rect(scoreStartX, scoreStartY, scoreStartX
+				determineScoreSize(scoreWidth, holdButtonInfo.bgSize * 3 / 5);
+				float labelMaxWidth = (leftWidth - holdButtonInfo.bgSize - scorePadding) * 5 / 9;
+				determineLabelSize(labelMaxWidth, holdButtonInfo.bgSize / 3);
+				scoreRect = new RectF(scoreStartX, scoreStartY, scoreStartX
 						+ scoreWidth, (int) (scoreStartY + lineHeight + 1));
 				TextPainter painter = new TextPainter();
 				painter.setTypeface(labelFont);
@@ -456,19 +503,23 @@ public class PlaygroundView extends View {
 				painter.setStrokeWidth(labelSize * dm.textStrokeScale);
 				painter.setStrokeColor(Color.DKGRAY);
 				painter.setTextColor(Color.WHITE);
-				painter.drawText(canvas, "LEVEL", scoreStartX, scoreStartY
-						+ lineHeight + textGap, labelGap);
-				painter.drawText(canvas, "GOAL", scoreStartX, scoreStartY
-						+ lineHeight * 2 + textGap, labelGap);
-				levelRect = new Rect(scoreStartX + scoreWidth / 2 + textGap,
-						(int) (scoreStartY + lineHeight + textGap), scoreStartX
-								+ scoreWidth / 2 + textGap, (int) (scoreStartY
-								+ lineHeight + textGap + lineHeight));
-				linesRect = new Rect(
-						scoreStartX + scoreWidth / 2 + textGap,
-						(int) (scoreStartY + 2 * lineHeight + textGap),
-						scoreStartX + scoreWidth / 2 + textGap,
-						(int) (scoreStartY + 2 * lineHeight + textGap + lineHeight));
+
+				float labelStartX = scoreStartX;
+				float labelStartY = holdButtonInfo.y - holdButtonInfo.bgSize
+						/ 2;
+				painter.drawText(canvas, "LEVEL", labelStartX, labelStartY,
+						labelGap);
+				float statStartX = labelStartX + labelMaxWidth * 6 / 5;
+				levelRect = new RectF(statStartX, labelStartY, leftWidth
+						- holdButtonInfo.bgSize, (int) (labelStartY + lineHeight));
+				
+				
+				labelStartY = holdButtonInfo.y - holdButtonInfo.bgSize
+				/ 2+ holdButtonInfo.bgSize*2/3;
+				painter.drawText(canvas, "GOAL", labelStartX, labelStartY,
+						labelGap);
+				goalRect = new RectF(statStartX, labelStartY, leftWidth
+						- holdButtonInfo.bgSize, labelStartY + lineHeight);
 			} else {
 				int scoreMaxWidth = playgroundRect.right
 						- playgroundRect.width() / 2;
@@ -476,13 +527,17 @@ public class PlaygroundView extends View {
 				determineScoreSize(scoreMaxWidth, scoreMaxHeight);
 				int scoreStartX = 5;
 				int scoreStartY = 5;
-				scoreRect = new Rect(scoreStartX, scoreStartY, scoreStartX
+				scoreRect = new RectF(scoreStartX, scoreStartY, scoreStartX
 						+ scoreMaxWidth, (int) (scoreStartY + lineHeight + 1));
 
 				int leftWidth = playgroundRect.left;
-				int labelMaxWidth = (leftWidth - 2 * 5) * 9 / 10;
+				int labelMaxWidth = (leftWidth - 2 * 5) * 4 / 5;
 				determineLabelSize(labelMaxWidth, height);
-				int labelStartY = playgroundRect.top;
+
+				determineStatSize(labelMaxWidth, labelSize * 1.5f);
+
+				int labelStartY = (int) (holdButtonInfo.y
+						+ holdButtonInfo.bgSize / 2 + labelSize / 2);
 				int labelStartX = 5;
 
 				TextPainter painter = new TextPainter();
@@ -492,20 +547,23 @@ public class PlaygroundView extends View {
 				painter.setStrokeColor(Color.DKGRAY);
 				painter.setTextColor(Color.WHITE);
 
-				painter.drawText(canvas, "LEVEL", labelStartX, labelStartY,
-						labelGap);
+				painter.drawFittedText(canvas, "LEVEL", new RectF(0,
+						labelStartY, leftWidth - 4, labelStartY + labelSize),
+						1.0f);
+
 				labelStartY = (int) (labelStartY + labelLineHeight);
-				levelRect = new Rect(labelStartX, labelStartY, labelStartX
-						+ labelMaxWidth,
-						(int) (labelStartY + labelLineHeight * 1.5));
+				levelRect = new RectF(0, labelStartY, leftWidth - 4,
+						labelStartY + statSize);
 
 				labelStartY = (int) (levelRect.bottom + labelLineHeight * 0.5);
-				painter.drawText(canvas, "GOAL", labelStartX, labelStartY,
-						labelGap);
+				painter.drawFittedText(canvas, "GOAL", new RectF(0,
+						labelStartY, leftWidth - 4, labelStartY + labelSize),
+						1.0f);
+				// painter.drawText(canvas, "GOAL", labelStartX, labelStartY,
+				// labelGap);
 				labelStartY = (int) (labelStartY + labelLineHeight);
-				linesRect = new Rect(labelStartX, labelStartY, labelStartX
-						+ labelMaxWidth,
-						(int) (labelStartY + labelLineHeight * 1.5));
+				goalRect = new RectF(0, labelStartY, leftWidth - 4, labelStartY
+						+ statSize);
 				determineStatSize(levelRect.width(), levelRect.height());
 			}
 
@@ -676,7 +734,9 @@ public class PlaygroundView extends View {
 			}
 
 			// end config
-
+			// add holdButton
+			buttons.add(holdButtonInfo);
+			// draw
 			paint.setAlpha(255);
 			paint.setAntiAlias(true);
 			paint.setFilterBitmap(true);
@@ -689,14 +749,17 @@ public class PlaygroundView extends View {
 						- button.bgSize / 2, button.x + button.bgSize / 2,
 						button.y + button.bgSize / 2);
 				canvas.drawBitmap(button.buttonBG, from, to, paint);
-				paint.setAlpha(150);
-				from = new Rect(0, 0, button.buttonIcon.getWidth(),
-						button.buttonIcon.getHeight());
-				to = new RectF(button.x - button.iconSize / 2, button.y
-						- button.iconSize / 2, button.x + button.iconSize / 2,
-						button.y + button.iconSize / 2);
-				canvas.drawBitmap(button.buttonIcon, from, to, paint);
+				if (button.buttonIcon != null) {
+					paint.setAlpha(150);
+					from = new Rect(0, 0, button.buttonIcon.getWidth(),
+							button.buttonIcon.getHeight());
+					to = new RectF(button.x - button.iconSize / 2, button.y
+							- button.iconSize / 2, button.x + button.iconSize
+							/ 2, button.y + button.iconSize / 2);
+					canvas.drawBitmap(button.buttonIcon, from, to, paint);
+				}
 			}
+
 			if (controlView != null) {
 				controlView.setButtons(buttons);
 			}
@@ -710,7 +773,7 @@ public class PlaygroundView extends View {
 			return new Pair(edge3, edge2);
 		}
 
-		private void determineScoreSize(float maxWidth, float maxHeight) {
+		private float determineScoreSize(float maxWidth, float maxHeight) {
 			TextPainter painter = new TextPainter();
 			painter.setTypeface(scoreFont);
 			scoreSize = 1f;
@@ -733,10 +796,11 @@ public class PlaygroundView extends View {
 					* paint.getStrokeWidth();
 			scoreLineHeight = paint.descent() - paint.ascent() + 2
 					* paint.getStrokeWidth();
+			return scoreSize;
 
 		}
 
-		private void determineLabelSize(float maxWidth, float maxHeight) {
+		private float determineLabelSize(float maxWidth, float maxHeight) {
 			TextPainter painter = new TextPainter();
 			painter.setTypeface(labelFont);
 			labelSize = 1f;
@@ -754,9 +818,10 @@ public class PlaygroundView extends View {
 			Paint paint = painter.getStrokePaint();
 			labelLineHeight = paint.descent() - paint.ascent() + 2
 					* paint.getStrokeWidth();
+			return labelSize;
 		}
 
-		private void determineStatSize(float maxWidth, float maxHeight) {
+		private float determineStatSize(float maxWidth, float maxHeight) {
 			TextPainter painter = new TextPainter();
 			painter.setTypeface(labelFont);
 			statSize = 1f;
@@ -772,6 +837,7 @@ public class PlaygroundView extends View {
 			Paint paint = painter.getStrokePaint();
 			statLineHeight = paint.descent() - paint.ascent() + 2
 					* paint.getStrokeWidth();
+			return statSize;
 		}
 	}
 

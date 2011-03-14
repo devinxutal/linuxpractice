@@ -10,6 +10,7 @@ import java.io.Serializable;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 
 public class PreferenceUtil {
@@ -30,16 +31,45 @@ public class PreferenceUtil {
 		editor.putString("player_name", name);
 		editor.commit();
 	}
-//
-//	public static CubeState readCubeState(Activity activity, boolean timed) {
-//		SharedPreferences p = PreferenceManager
-//				.getDefaultSharedPreferences(activity.getBaseContext());
-//		Log.v("PreferenceUtil", "get cube state: "
-//				+ p.getString("saved_cube_state_" + timed, "no").length() + " "
-//				+ p.getString("saved_cube_state_" + timed, "no"));
-//		String object = p.getString("saved_cube_state_" + timed, null);
-//		return (CubeState) stringToObject(object);
-//	}
+
+	public static String getShowUpgradeNoticeStr(Activity activity) {
+		int versionCode = 0;
+		try {
+
+			versionCode = activity.getPackageManager().getPackageInfo(
+					activity.getPackageName(), 0).versionCode;
+
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "show_upgrade_notice_" + versionCode;
+	}
+
+	public static boolean canShowUpgradeNotice(Activity activity) {
+
+		SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(activity.getBaseContext());
+		return p.getBoolean(getShowUpgradeNoticeStr(activity), true);
+	}
+
+	public static void setShowUpgradeNotice(Activity activity, boolean can) {
+		SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(activity.getBaseContext());
+		Editor editor = p.edit();
+		editor.putBoolean(getShowUpgradeNoticeStr(activity), can);
+		editor.commit();
+	}
+
+	//
+	// public static CubeState readCubeState(Activity activity, boolean timed) {
+	// SharedPreferences p = PreferenceManager
+	// .getDefaultSharedPreferences(activity.getBaseContext());
+	// Log.v("PreferenceUtil", "get cube state: "
+	// + p.getString("saved_cube_state_" + timed, "no").length() + " "
+	// + p.getString("saved_cube_state_" + timed, "no"));
+	// String object = p.getString("saved_cube_state_" + timed, null);
+	// return (CubeState) stringToObject(object);
+	// }
 
 	// public static void writeCubeState(Activity activity, CubeState state,
 	// boolean timed) {

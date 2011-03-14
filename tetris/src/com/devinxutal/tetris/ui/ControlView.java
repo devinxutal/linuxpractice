@@ -65,9 +65,8 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		SLIDE_THRESHOLD = Math.min(w, h) / 50;
-		this.slotGap = (float)(Math.min(w,
-				this.controller.getPlayground().getWidth() * 1.4)
-				/ this.controller.getPlayground().HORIZONTAL_BLOCKS);
+		this.slotGap = (float) (Math.min(w, this.controller.getPlayground()
+				.getWidth() * 1.4) / this.controller.getPlayground().HORIZONTAL_BLOCKS);
 		super.onSizeChanged(w, h, oldw, oldh);
 
 	}
@@ -106,8 +105,10 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	public boolean onTouch(View arg0, MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			// for dragMode
-			this.dragDeltaX = 0;
-			this.dragDeltaY = 0;
+			if (dragMode) {
+				this.dragDeltaX = 0;
+				this.dragDeltaY = 0;
+			}
 			// end for dragMode
 			float x = event.getX();
 			float y = event.getY();
@@ -139,8 +140,10 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 				Log.v(TAG, "not touch on button");
 				oldX = x;
 				oldY = y;
-				oldXforDrag = x;
-				oldYforDrag = y;
+				if (dragMode) {
+					oldXforDrag = x;
+					oldYforDrag = y;
+				}
 			}
 
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -202,7 +205,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			oldXforDrag = -1;
 			oldYforDrag = -1;
 		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			if (oldXforDrag < 0 || oldYforDrag < 0) {
+			if (oldXforDrag < 0 || oldYforDrag < 0 || !dragMode) {
 				return true;
 			}
 			float deltaX = event.getX() - oldXforDrag;
@@ -219,12 +222,12 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 				}
 			}
 			if (inDrag) {
-				while (dragDeltaX > 1.2*slotGap) {
+				while (dragDeltaX > 1.1 * slotGap) {
 					dragDeltaX -= slotGap;
 					this.notifyButtonClicked(BTN_RIGHT);
 				}
 
-				while (dragDeltaX < 1.2*-slotGap) {
+				while (dragDeltaX < 1.1 * -slotGap) {
 					dragDeltaX += slotGap;
 					this.notifyButtonClicked(BTN_LEFT);
 				}
@@ -349,7 +352,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	public void configurationChanged(Configuration config) {
 		this.resetControlButtons();
 		this.dragMode = config.isDragMode();
-
+		Log.v(TAG, "drag mode : " + dragMode);
 	}
 
 }
