@@ -28,6 +28,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -44,6 +45,7 @@ import com.devinxutal.tetris.cfg.Constants;
 import com.devinxutal.tetris.sound.SoundManager;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.DialogUtil;
+import com.devinxutal.tetris.util.PreferenceUtil;
 
 public class MainActivity extends Activity implements OnClickListener {
 	private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAit2OZ8OaxRwh8B9Du45ejqWe4XaWVp4RwD4Du0j1S7ZokOAJqYlu4rEQwdz9mGLqLV3I9fJhmgryXjqMpxl5+wODxS7FNvy6uRNzVLTbXdD/vvIt5CucAXRs9xFHj1gT212m59q2dw6iAT4E6dRhnzWIT48v9YYVW4iWymgnQYW7WMxTuk56bBp37VW0qZ9V+D+PrYlRkklSezBe2fVsOVuv09nLkD2sRTQVyvm0fW4P6Q9/7yUx2HJ5p1TQvtHe2ZaRUJuRG5+ZR3/gdGcaEfRXopB59S0DWhNyzMkw2RZRzUtg0N6H9PIbodHab04/qZCM86jTtRUDmQFFnp4/ZQIDAQAB";
@@ -87,6 +89,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Try to use more data here. ANDROID_ID is a single point of attack.
 		String deviceId = Secure.getString(getContentResolver(),
 				Secure.ANDROID_ID);
+		
+		//
+		showNoticeDialog();
 	}
 
 	@Override
@@ -132,7 +137,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK||event.getKeyCode() == KeyEvent.KEYCODE_HOME) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+				|| event.getKeyCode() == KeyEvent.KEYCODE_HOME) {
 			Log.v(TAG, "back key down");
 			this.showQuitDialog();
 			return false;
@@ -174,10 +180,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				if (item == 0) {
 					MainActivity.this.submitReport();
 				} else if (item == 1) {
-					Intent i = new Intent(
-							Intent.ACTION_VIEW,
-							Uri
-									.parse("market://details?id=com.devinxutal.tetris"));
+					Intent i = new Intent(Intent.ACTION_VIEW, Uri
+							.parse("market://details?id=com.devinxutal.tetris"));
 					startActivity(i);
 				} else if (item == 2) {
 					Intent i = new Intent(Intent.ACTION_SEARCH);
@@ -299,6 +303,31 @@ public class MainActivity extends Activity implements OnClickListener {
 				}
 
 			});
+		}
+	}
+
+	private void showNoticeDialog() {
+		if (PreferenceUtil.canShowUpgradeNotice(MainActivity.this)) {
+			LayoutInflater inflater = (LayoutInflater) this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LinearLayout l = new LinearLayout(this);
+			inflater.inflate(R.layout.whats_new, l);
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("What's New").setCancelable(false)
+					.setPositiveButton(R.string.common_ok, null)
+					.setPositiveButton("OK", null).setNegativeButton(
+							"Never Show Again",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int which) {
+									PreferenceUtil.setShowUpgradeNotice(
+											MainActivity.this, false);
+								}
+							}).setView(l);
+			AlertDialog alert = builder.create();
+
+			// alert.setContentView(view_id);
+			alert.show();
 		}
 	}
 }

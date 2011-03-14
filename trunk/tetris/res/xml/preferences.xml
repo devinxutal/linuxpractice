@@ -23,6 +23,11 @@
 			android:defaultValue="classic" android:entries="@array/pref_ent_block_style_entries"
 			android:entryValues="@array/pref_ent_block_style_values" />
 	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_control">
+		<CheckBoxPreference android:title="@string/pref_ent_enable_drag_mode"
+			android:summary="@string/pref_ent_enable_drag_mode_summary"
+			android:key="enable_drag_mode" android:defaultValue="true" />
+	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_landscape_control">
 		<CheckBoxPreference android:title="@string/pref_ent_swap_rotate_hold"
 			android:summary="@string/pref_ent_swap_rotate_hold_summary"

@@ -5,6 +5,7 @@
 	<string name="pref_cat_appearence">Appearence</string>
 	<string name="pref_cat_portrait_control">Control in Portrait Mode</string>
 	<string name="pref_cat_landscape_control">Control in Landscape Mode</string>
+	<string name="pref_cat_control">Control Settings</string>
 
 
 	<string name="preferences_title">Preferences</string>
@@ -84,6 +85,10 @@
 
 	<string name="pref_ent_swap_quick_direct">Swap QUICK and DIRECT</string>
 	<string name="pref_ent_swap_quick_direct_summary">Swap Quick Down and Direct Down buttons
+	</string>
+	
+	<string name="pref_ent_enable_drag_mode">Enable Drag Mode</string>
+	<string name="pref_ent_enable_drag_mode_summary">In Drag Mode, block will move left/right multiple slots following your finger flip, not just one slot
 	</string>
 	
 	<string name="pref_ent_screen_orientation">Screen Orientation</string>
