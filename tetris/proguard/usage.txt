@@ -72,35 +72,33 @@ com.devinxutal.tetris.activities.HighScoreActivity:
 com.devinxutal.tetris.activities.MainActivity:
     private static final java.lang.String BASE64_PUBLIC_KEY
     private static final java.lang.String TAG
-    200:200:private void showCommitReportDialog()
+    204:204:private void showCommitReportDialog()
 com.devinxutal.tetris.activities.PlaygroundActivity:
     public static final java.lang.String TAG
     public static final int PREFERENCE_REQUEST_CODE
     private android.app.Dialog progressDialog
     private android.hardware.Sensor sensor
-    502:503:public void stop()
-    506:512:public void openHelpDialog()
-    524:551:public void submitRecord()
-    554:557:private void submitRecord(java.lang.String)
-    616:626:public void startListening()
+    510:511:public void stop()
+    514:520:public void openHelpDialog()
+    532:559:public void submitRecord()
+    562:565:private void submitRecord(java.lang.String)
+    624:634:public void startListening()
     85:85:static android.app.Dialog access$4(com.devinxutal.tetris.activities.PlaygroundActivity)
     85:85:static void access$5(com.devinxutal.tetris.activities.PlaygroundActivity,android.app.Dialog)
     77:77:static android.widget.Toast access$6(com.devinxutal.tetris.activities.PlaygroundActivity)
     79:79:static android.widget.Button access$7(com.devinxutal.tetris.activities.PlaygroundActivity)
     98:98:static boolean access$9(com.devinxutal.tetris.activities.PlaygroundActivity)
-    553:553:static void access$10(com.devinxutal.tetris.activities.PlaygroundActivity,java.lang.String)
+    561:561:static void access$10(com.devinxutal.tetris.activities.PlaygroundActivity,java.lang.String)
 com.devinxutal.tetris.activities.PlaygroundActivity$1
 com.devinxutal.tetris.activities.PlaygroundActivity$2
 com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished:
-    371:377:public void gameFinishing()
+    379:385:public void gameFinishing()
 com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$1
 com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener:
-    658:675:public void joyStickMoved(float,float)
+    666:683:public void joyStickMoved(float,float)
 com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread
 com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread$1
 com.devinxutal.tetris.cfg.Configuration:
-    public static final int POSITION_RIGHT
-    public static final int POSITION_LEFT
     public static final int ACTION_DIRECT_DOWN
     public static final int ACTION_QUICK_DOWN
     public static final int ACTION_TURN
@@ -145,7 +143,7 @@ com.devinxutal.tetris.model.Playground:
     public static final int HORIZONTAL_BLOCKS
     public static final int GAP_LEN
     private static final java.lang.String TAG
-    156:159:public com.devinxutal.tetris.model.Block getNextBlock()
+    161:164:public com.devinxutal.tetris.model.Block getNextBlock()
 com.devinxutal.tetris.model.ScoreAndLevel:
     public static final int MAX_LEVEL
     25:25:public int getTotalLines()
@@ -165,11 +163,12 @@ com.devinxutal.tetris.ui.ControlView:
     public static final int BTN_TURN
     public static final int BTN_DOWN
     public static final int BTN_DIRECT_DOWN
+    public static final int BTN_HOLD
     public static final int BTN_SOUND
     public static final int BTN_MUSIC
     private static final java.lang.String TAG
-    300:300:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
-    304:305:public void clearGameControlListener()
+    327:327:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
+    331:332:public void clearGameControlListener()
 com.devinxutal.tetris.ui.CustomPreference
 com.devinxutal.tetris.ui.GameTimer
 com.devinxutal.tetris.ui.GameTimer$1
@@ -179,7 +178,7 @@ com.devinxutal.tetris.ui.PlaygroundView:
     92:92:public void destroy()
     227:227:public void pause(boolean)
 com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics:
-    302:302:private void setProperBackground(int,int)
+    300:300:private void setProperBackground(int,int)
 com.devinxutal.tetris.ui.SlideOptionDialog
 com.devinxutal.tetris.ui.SlideOptionDialog$1
 com.devinxutal.tetris.ui.SlideOptionDialog$ColorPickerView
@@ -205,10 +204,15 @@ com.devinxutal.tetris.util.HelpInfoUtil$HelpInfo
 com.devinxutal.tetris.util.MathUtil:
     14:14:public static double velocityScale(double,double,double)
 com.devinxutal.tetris.util.MilitaryRank
-com.devinxutal.tetris.util.PreferenceUtil
+com.devinxutal.tetris.util.PreferenceUtil:
+    20:21:public static java.lang.String readPlayerName(android.app.Activity)
+    26:33:public static void writePlayerName(android.app.Activity,java.lang.String)
+    88:96:public static java.lang.String objectToString(java.io.Serializable)
+    101:106:public static java.lang.Object stringToObject(java.lang.String)
 com.devinxutal.tetris.util.TextPainter:
-    27:27:public android.graphics.Paint getTextPaint()
-    59:61:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
+    31:31:public android.graphics.Paint getTextPaint()
+    81:83:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
+    122:128:public void drawCenteredText(android.graphics.Canvas,java.lang.String,android.graphics.Rect)
 com.devinxutal.tetris.util.VersionUtil
 com.devinxutal.tetris.util.VersionUtil$1
 com.devinxutal.tetris.util.VersionUtil$VersionInfo
