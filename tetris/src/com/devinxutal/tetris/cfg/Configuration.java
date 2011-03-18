@@ -71,6 +71,22 @@ public class Configuration {
 		}
 	}
 
+
+	public boolean isBlockShadowOn() {
+		if (preference != null) {
+			return preference.getBoolean("block_shadow", true);
+		}
+		return true;
+	}
+
+	public void setBlockShadowOn(boolean on) {
+		if (preference != null) {
+			Editor editor = preference.edit();
+			editor.putBoolean("block_shadow", on);
+			editor.commit();
+		}
+	}
+
 	public boolean isSwapRotateHold() {
 		if (preference != null) {
 			return preference.getBoolean("swap_rotate_hold", false);

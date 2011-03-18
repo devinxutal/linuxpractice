@@ -52,8 +52,12 @@ public class Playground {
 	//
 	private ScoreAndLevel scoreLevel = new ScoreAndLevel();
 
+	// for game options;
+	private boolean option_block_shadow_on = true;
+
 	public Playground() {
 		this.reset();
+		option_block_shadow_on = Configuration.config().isBlockShadowOn();
 	}
 
 	public int getWidth() {
@@ -78,6 +82,8 @@ public class Playground {
 		inAnimation = false;
 		finished = false;
 		this.scoreLevel.reset();
+		this.hold = null;
+		this.holdUsed = false;
 
 		for (int i = 0; i < VERTICAL_BLOCKS; i++) {
 			for (int j = 0; j < HORIZONTAL_BLOCKS; j++) {
@@ -250,7 +256,7 @@ public class Playground {
 			sp.holdBlock = null;
 		}
 		sp.holdUsed = holdUsed;
-		sp.scoreLevel = this.scoreLevel; 
+		sp.scoreLevel = this.scoreLevel;
 		return sp;
 	}
 
@@ -312,19 +318,24 @@ public class Playground {
 											y + yy * (blockSize + GAP_LEN)
 													+ GAP_LEN, dm.paint);
 						}
+
 						// draw projected;
-						yy = (projectedY + i);
-						if (xx >= 0 && xx < HORIZONTAL_BLOCKS && yy >= 0
-								&& yy < VERTICAL_BLOCKS) {
-							if (blockOffsetY != projectedY) {
-								dm.paint.setAlpha(80);
-								canvas.drawBitmap(dm.sized_blocks[activeBlock
-										.getBlockType().ordinal()], x + xx
-										* (blockSize + GAP_LEN) + GAP_LEN, y
-										+ (projectedY + i)
-										* (blockSize + GAP_LEN) + GAP_LEN,
-										dm.paint);
-								dm.paint.setAlpha(255);
+						if (option_block_shadow_on) {
+							yy = (projectedY + i);
+							if (xx >= 0 && xx < HORIZONTAL_BLOCKS && yy >= 0
+									&& yy < VERTICAL_BLOCKS) {
+								if (blockOffsetY != projectedY) {
+									dm.paint.setAlpha(80);
+									canvas.drawBitmap(
+											dm.sized_blocks[activeBlock
+													.getBlockType().ordinal()],
+											x + xx * (blockSize + GAP_LEN)
+													+ GAP_LEN, y
+													+ (projectedY + i)
+													* (blockSize + GAP_LEN)
+													+ GAP_LEN, dm.paint);
+									dm.paint.setAlpha(255);
+								}
 							}
 						}
 					}
@@ -689,6 +700,7 @@ public class Playground {
 		if (this.dm != null) {
 			this.dm.configurationChanged(config);
 		}
+		option_block_shadow_on = config.isBlockShadowOn();
 	}
 
 }

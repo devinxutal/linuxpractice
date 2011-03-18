@@ -7,6 +7,9 @@
 		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
 			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
 			android:defaultValue="true" />
+		<CheckBoxPreference android:title="@string/pref_ent_block_shadow"
+			android:summary="@string/pref_ent_block_shadow_summary" android:key="block_shadow"
+			android:defaultValue="true" />
 		<ListPreference android:title="@string/pref_ent_difficulty"
 			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
 			android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries"

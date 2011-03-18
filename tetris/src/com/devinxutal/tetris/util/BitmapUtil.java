@@ -10,12 +10,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.Bitmap.Config;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.ui.ControlView;
 
 public class BitmapUtil {
+	public static final String TAG = "BitmapUtil";
 	private Context context;
 	private Bitmap background;
 	private Bitmap aimButton1;
@@ -26,9 +31,13 @@ public class BitmapUtil {
 	private Bitmap arrowHold;
 	private Bitmap arrowLeft;
 	private Bitmap arrowRight;
+
 	private Paint paint;
 	private Drawable hInfoBar;
 	private Drawable vInfoBar;
+
+	private Bitmap screen;
+
 	private static BitmapUtil util;
 
 	public synchronized static BitmapUtil get(Context context) {
@@ -40,6 +49,7 @@ public class BitmapUtil {
 
 	private BitmapUtil(Context context) {
 		this.context = context;
+		Log.v(TAG, "recreating resources");
 		try {
 			background = BitmapFactory.decodeStream(context.getAssets().open(
 					"images/bg.jpg"));
@@ -75,6 +85,17 @@ public class BitmapUtil {
 		paint.setTypeface(Typeface.DEFAULT_BOLD);
 		paint.setStrokeWidth(1f);
 		paint.setAlpha(255);
+	}
+
+	public Bitmap getScreenBitmap(Context context) {
+		if (screen == null) {
+			Display display = ((WindowManager) context
+					.getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
+			int size = Math.max(display.getWidth(), display.getHeight());
+			screen = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+		}
+		return screen;
 	}
 
 	public Bitmap getAimButtonBitmap1() {
