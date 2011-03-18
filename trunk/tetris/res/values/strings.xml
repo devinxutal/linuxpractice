@@ -26,6 +26,9 @@
 	<string name="common_help">Help</string>
 
 	<string name="common_high_score">High Scores</string>
+	
+	<string name="game_init_continue">Continue</string>
+	<string name="game_init_new">New Game</string>
 
 	<string name="rank_a_recruit">Recruit</string>
 	<string name="rank_b_private">Private</string>

@@ -1,5 +1,10 @@
 package com.devinxutal.tetris.activities;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +33,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -67,7 +73,7 @@ public class PlaygroundActivity extends Activity {
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
 	public enum State {
-		PLAY, PAUSED, ENDING, END
+		INIT, PLAY, PAUSED, ENDING, END
 	}
 
 	private GameController gameController;
@@ -84,7 +90,7 @@ public class PlaygroundActivity extends Activity {
 
 	private Dialog progressDialog;
 
-	private State state = State.END;
+	private State state = State.INIT;
 
 	// used only when restore state;
 	private long elapsedTime = 0;
@@ -164,15 +170,16 @@ public class PlaygroundActivity extends Activity {
 		AdUtil.determineAd(this, R.id.ps_ad_area);
 		hidePauseScreen();
 		//
-		switchState(State.END);
 		preferenceChanged();
 		this.customizeButtons();
-		if (savedInstanceState == null) {
-			this.play();
-		} else {
-			this.pause();
-		}
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+		Log.v(TAG, "Sequence Test: onCreate");
+		if (savedInstanceState == null) {
+
+			Log.v(TAG, "Saved Instance is null");
+			switchState(State.INIT);
+		}
 	}
 
 	@Override
@@ -238,11 +245,17 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private void switchState(State to) {
-		if (to == State.PAUSED) {
+		if (to == State.INIT) {
+			continueConfirm();
+		} else if (to == State.PAUSED) {
+			gameController.pause();
 			SoundManager.get(this).pauseBackgroundMusic();
+			showPauseScreen();
 		} else if (to == State.PLAY) {
-
+			gameController.start();
 			SoundManager.get(this).playBackgroundMusic();
+			hidePauseScreen();
+			hideSuccessScreen();
 		} else if (to == State.ENDING) {
 			SoundManager.get(this).stopBackgroundMusic();
 		} else if (to == State.END) {
@@ -265,17 +278,24 @@ public class PlaygroundActivity extends Activity {
 		this.gameController.finishAnimation();
 		outState.putSerializable(Constants.PLAYGROUND_STATE, gameController
 				.getPlayground().getSavablePlayground());
+		outState.putSerializable("state", state);
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		Log.v(TAG, "onRestoreInstanceState");
+
+		Log.v(TAG, "Sequence Test: onRestoreInstanseState");
 		SavablePlayground sp = (SavablePlayground) (savedInstanceState
 				.getSerializable(Constants.PLAYGROUND_STATE));
 
 		if (sp != null) {
 			this.gameController.getPlayground().restoreSavablePlayground(sp);
+		}
+		this.state = (State) savedInstanceState.getSerializable("state");
+		if (this.state == null) {
+			this.state = State.INIT;
 		}
 		initByRestoredState();
 		super.onRestoreInstanceState(savedInstanceState);
@@ -393,6 +413,7 @@ public class PlaygroundActivity extends Activity {
 					if (score > 0) {
 						ScoreUtil.saveCubeState("Player", score);
 					}
+					deleteSavedGame();
 					showSuccessScreen();
 					switchState(State.END);
 				}
@@ -411,27 +432,14 @@ public class PlaygroundActivity extends Activity {
 				Intent intent = new Intent(PlaygroundActivity.this,
 						HighScoreActivity.class);
 				startActivity(intent);
-				// if (((Button) view)
-				// .getText()
-				// .equals(
-				// PlaygroundActivity.this
-				// .getString(R.string.success_screen_submit_score))) {
-				//
-				//					
-				//
-				// // DialogUtil
-				// // .showDialog(
-				// // PlaygroundActivity.this,
-				// // "Record Submission Denied",
-				// //
-				// "The current game difficulty setting is not STANDARD. Only records of STANDARD mode can be submitted.");
-				//
-				// } else {
-				// DialogUtil.showRankDialog(PlaygroundActivity.this);
-				// }
+
 			} else if (view.getId() == R.id.back_button) {
 				PlaygroundActivity.this.finish();
 			} else if (view.getId() == R.id.quit_button) {
+				if (state == State.PAUSED
+						&& !gameController.getPlayground().isFinished()) {
+					saveGame();
+				}
 				int score = gameController.getPlayground().getScoreAndLevel()
 						.getScore();
 				if (score > 0) {
@@ -481,24 +489,44 @@ public class PlaygroundActivity extends Activity {
 		this.pausedScreen.setVisibility(View.INVISIBLE);
 	}
 
-	public void play() {
-		if (this.state != State.PAUSED && this.state != State.END) {
+	public void continueConfirm() {
+		if (!tryLoadGame()) {
+			replay();
 			return;
 		}
-		gameController.start();
+		final CharSequence[] items = {
+				this.getResources().getString(R.string.game_init_continue),
+				this.getResources().getString(R.string.game_init_new) };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Go Tetris");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				if (item == 0) {
+					loadGame();
+				} else if (item == 1) {
+					replay();
+				}
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	public void play() {
+		if (this.state != State.PAUSED && this.state != State.END
+				&& this.state != State.INIT) {
+			return;
+		}
 		switchState(State.PLAY);
 	}
 
 	public void pause() {
-		gameController.pause();
 		switchState(State.PAUSED);
-		showPauseScreen();
 	}
 
 	public void resume() {
-		gameController.start();
 		switchState(State.PLAY);
-		hidePauseScreen();
 	}
 
 	public void replay() {
@@ -508,6 +536,93 @@ public class PlaygroundActivity extends Activity {
 
 	public void stop() {
 		switchState(State.ENDING);
+	}
+
+	public boolean tryLoadGame() {
+		File file = Environment.getExternalStorageDirectory();
+		SavablePlayground game = null;
+		ObjectInputStream in = null;
+		try {
+			File dataFile = new File(file, Constants.DATA_DIR + "/"
+					+ Constants.GAME_SAVING_FILE);
+			if (dataFile.exists()) {
+				in = new ObjectInputStream(new FileInputStream(dataFile));
+				game = (SavablePlayground) in.readObject();
+				if (game != null) {
+					return true;
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+
+	public void deleteSavedGame() {
+		File file = Environment.getExternalStorageDirectory();
+		SavablePlayground game = null;
+		try {
+			File dataFile = new File(file, Constants.DATA_DIR + "/"
+					+ Constants.GAME_SAVING_FILE);
+			if (dataFile.exists()) {
+				dataFile.delete();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void loadGame() {
+		File file = Environment.getExternalStorageDirectory();
+		SavablePlayground game = null;
+		try {
+			File dataFile = new File(file, Constants.DATA_DIR + "/"
+					+ Constants.GAME_SAVING_FILE);
+			if (dataFile.exists()) {
+				ObjectInputStream in = new ObjectInputStream(
+						new FileInputStream(dataFile));
+				game = (SavablePlayground) in.readObject();
+				in.close();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (game != null) {
+			this.gameController.getPlayground().restoreSavablePlayground(game);
+			play();
+		} else {
+			replay();
+		}
+	}
+
+	public void saveGame() {
+		File file = Environment.getExternalStorageDirectory();
+		try {
+			File dir = new File(file, Constants.DATA_DIR);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			File dataFile = new File(dir, Constants.GAME_SAVING_FILE);
+
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(dataFile));
+			out.writeObject(this.gameController.getPlayground()
+					.getSavablePlayground());
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void openHelpDialog() {

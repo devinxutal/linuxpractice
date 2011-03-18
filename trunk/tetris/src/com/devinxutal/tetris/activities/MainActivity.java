@@ -59,6 +59,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Typeface buttonFont;
 	private Dialog progressDialog;
 
+	public static final int PLAYGROUND_ACTIVITY_ID = 1151;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,7 +91,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Try to use more data here. ANDROID_ID is a single point of attack.
 		String deviceId = Secure.getString(getContentResolver(),
 				Secure.ANDROID_ID);
-		
+
 		//
 		showNoticeDialog();
 	}
@@ -111,12 +113,15 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	public void onClick(View view) {
 		Intent i = null;
+		int startID = -1;
 		Log.v(TAG, "before play effect");
 		SoundManager.get(this).playButtonClickEffect();
 		Log.v(TAG, "after play effect");
 		switch (view.getId()) {
 		case R.id.main_btn_play_game:
 			i = new Intent(this, PlaygroundActivity.class);
+			startID = PLAYGROUND_ACTIVITY_ID;
+			
 			break;
 
 		case R.id.main_btn_preference:
@@ -132,9 +137,17 @@ public class MainActivity extends Activity implements OnClickListener {
 					.showDialogWithView(this, "Go Tetris Help", R.layout.help);
 			return;
 		}
-		startActivity(i);
+		if (startID >= 0) {
+			this.startActivityForResult(i, startID);
+		} else {
+			startActivity(i);
+		}
 	}
-
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK

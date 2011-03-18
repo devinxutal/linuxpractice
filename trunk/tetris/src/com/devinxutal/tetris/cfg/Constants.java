@@ -19,6 +19,7 @@ public class Constants {
 
 	public static final String DATA_DIR = "data/com.devinxutal.tetris/files";
 	public static final String SCORE_SAVING_FILE = "scores.dat";
+	public static final String GAME_SAVING_FILE = "game.dat";
 
 	public static final String FONT_PATH_MONO = "fonts/ProFontWindows.ttf";
 	public static final String FONT_PATH_COMIC = "fonts/KOMIKAX.ttf";

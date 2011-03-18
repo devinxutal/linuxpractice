@@ -71,12 +71,15 @@
 
 
 	<string name="pref_ent_background_music">Background Music</string>
-	<string name="pref_ent_background_music_summary">this may disturb the gravity sensor. UNCHECK is
-		suggested
+	<string name="pref_ent_background_music_summary">
 	</string>
 
 	<string name="pref_ent_sound_effects">Sound Effects</string>
-	<string name="pref_ent_sound_effects_summary">Sound effects such as button-click and crash
+	<string name="pref_ent_sound_effects_summary">
+	</string>
+	
+	<string name="pref_ent_block_shadow">Block Shadow</string>
+	<string name="pref_ent_block_shadow_summary">Show a shadow of current block where it will drop. 
 	</string>
 	
 	<string name="pref_ent_swap_rotate_hold">Swap HOLD and ROTATE</string>

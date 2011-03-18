@@ -12,13 +12,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.Bitmap.Config;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.cfg.Constants;
@@ -279,10 +276,8 @@ public class PlaygroundView extends View {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Display display = ((WindowManager) getContext().getSystemService(
-					Context.WINDOW_SERVICE)).getDefaultDisplay();
-			int size = Math.max(display.getWidth(), display.getHeight());
-			bgBitmap = Bitmap.createBitmap(size, size, Config.ARGB_8888);
+
+			bgBitmap = bitmapUtil.getScreenBitmap(getContext());
 			canvas = new Canvas(bgBitmap);
 		}
 
@@ -511,11 +506,11 @@ public class PlaygroundView extends View {
 						labelGap);
 				float statStartX = labelStartX + labelMaxWidth * 6 / 5;
 				levelRect = new RectF(statStartX, labelStartY, leftWidth
-						- holdButtonInfo.bgSize, (int) (labelStartY + lineHeight));
-				
-				
-				labelStartY = holdButtonInfo.y - holdButtonInfo.bgSize
-				/ 2+ holdButtonInfo.bgSize*2/3;
+						- holdButtonInfo.bgSize,
+						(int) (labelStartY + lineHeight));
+
+				labelStartY = holdButtonInfo.y - holdButtonInfo.bgSize / 2
+						+ holdButtonInfo.bgSize * 2 / 3;
 				painter.drawText(canvas, "GOAL", labelStartX, labelStartY,
 						labelGap);
 				goalRect = new RectF(statStartX, labelStartY, leftWidth
