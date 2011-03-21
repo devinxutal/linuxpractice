@@ -131,13 +131,11 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 				}
 			}
 			if (touchOnButton) {
-				Log.v(TAG, "touch on button");
 				oldX = -1;
 				oldY = -1;
 				oldXforDrag = -1;
 				oldYforDrag = -1;
 			} else {
-				Log.v(TAG, "not touch on button");
 				oldX = x;
 				oldY = y;
 				if (dragMode) {

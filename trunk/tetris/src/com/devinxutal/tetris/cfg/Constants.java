@@ -33,4 +33,9 @@ public class Constants {
 			+ "/twentyseconds/worldRank";
 	public static final String URL_COMMIT_REPORT = URL_SERVER + "/commitReport";
 
+	public static final int ADVIEW_ID = 11111;
+
+	public static final String ADMOB_PUBLISHER_ID = "a14d70b38c4cc74";
+	// public static final String ADMOB_PUBLISHER_ID = "a14d5bb6038850d";
+
 }
