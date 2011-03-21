@@ -34,6 +34,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -63,6 +64,7 @@ import com.devinxutal.tetris.sound.SoundManager;
 import com.devinxutal.tetris.ui.ControlView;
 import com.devinxutal.tetris.ui.ControlView.GameControlListener;
 import com.devinxutal.tetris.ui.JoyStick.JoyStickListener;
+import com.devinxutal.tetris.util.AdDaemon;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.PreferenceUtil;
 import com.devinxutal.tetris.util.ScoreUtil;
@@ -107,6 +109,11 @@ public class PlaygroundActivity extends Activity {
 	private MyJoyStickListener joyStickListener = new MyJoyStickListener();
 
 	private Typeface typeface;
+
+	// for ad animation
+	private Handler adHandler = new Handler();
+	private AdDaemon adDaemonPause;
+	private AdDaemon adDaemonSuccess;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -180,10 +187,30 @@ public class PlaygroundActivity extends Activity {
 			Log.v(TAG, "Saved Instance is null");
 			switchState(State.INIT);
 		}
+		//
+
+		View view = (View) PlaygroundActivity.this
+				.findViewById(R.id.ss_ad_area);
+		View ad = null;
+		if (view != null) {
+			ad = view.findViewById(Constants.ADVIEW_ID);
+		}
+		adDaemonSuccess = new AdDaemon(this, ad, adHandler);
+		view = (View) PlaygroundActivity.this.findViewById(R.id.ps_ad_area);
+		if (view != null) {
+			ad = view.findViewById(Constants.ADVIEW_ID);
+		}
+		adDaemonPause = new AdDaemon(this, ad, adHandler);
+
+		adDaemonSuccess.run();
+		adDaemonPause.run();
 	}
 
 	@Override
 	protected void onDestroy() {
+
+		adDaemonSuccess.stop();
+		adDaemonPause.stop();
 		super.onDestroy();
 	}
 
@@ -245,12 +272,18 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private void switchState(State to) {
+		switchState(to, true);
+	}
+
+	private void switchState(State to, boolean showPauseScreen) {
 		if (to == State.INIT) {
 			continueConfirm();
 		} else if (to == State.PAUSED) {
 			gameController.pause();
 			SoundManager.get(this).pauseBackgroundMusic();
-			showPauseScreen();
+			if (showPauseScreen) {
+				showPauseScreen();
+			}
 		} else if (to == State.PLAY) {
 			gameController.start();
 			SoundManager.get(this).playBackgroundMusic();
@@ -305,7 +338,9 @@ public class PlaygroundActivity extends Activity {
 	@Override
 	protected void onPause() {
 		Log.v(TAG, "pause");
-		pause();
+		adDaemonSuccess.stop();
+		adDaemonPause.stop();
+		switchState(State.PAUSED, false);
 		SoundManager.get(this).stopBackgroundMusic();
 		this.stopListening();
 		super.onPause();
@@ -313,6 +348,9 @@ public class PlaygroundActivity extends Activity {
 
 	@Override
 	protected void onResume() {
+
+		adDaemonSuccess.run();
+		adDaemonPause.run();
 		super.onResume();
 	}
 

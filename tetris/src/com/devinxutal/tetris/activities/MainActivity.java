@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -39,10 +40,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.admob.android.ads.AdManager;
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.cfg.Constants;
 import com.devinxutal.tetris.sound.SoundManager;
+import com.devinxutal.tetris.util.AdDaemon;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.DialogUtil;
 import com.devinxutal.tetris.util.PreferenceUtil;
@@ -60,6 +63,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Dialog progressDialog;
 
 	public static final int PLAYGROUND_ACTIVITY_ID = 1151;
+
+	private Handler adHandler;
+
+	private AdDaemon adDaemon;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,23 +98,32 @@ public class MainActivity extends Activity implements OnClickListener {
 		// Try to use more data here. ANDROID_ID is a single point of attack.
 		String deviceId = Secure.getString(getContentResolver(),
 				Secure.ANDROID_ID);
-
 		//
 		showNoticeDialog();
+		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR,
+				"7037AF0B100BC4F3CC9F4B5401F96685" });
+		adHandler = new Handler();
+		this.adDaemon = new AdDaemon(this, this
+				.findViewById(Constants.ADVIEW_ID), adHandler);
+		adDaemon.run();
+
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		adDaemon.stop();
 		SoundManager.release();
 	}
 
 	@Override
 	protected void onPause() {
+		adDaemon.stop();
 		super.onPause();
 	}
 
 	protected void onResume() {
+		adDaemon.run();
 		super.onResume();
 	}
 
@@ -121,7 +137,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.main_btn_play_game:
 			i = new Intent(this, PlaygroundActivity.class);
 			startID = PLAYGROUND_ACTIVITY_ID;
-			
+
 			break;
 
 		case R.id.main_btn_preference:
@@ -143,11 +159,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(i);
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
@@ -183,8 +200,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	private void showQuitDialog() {
-		final CharSequence[] items = { "Give us Feedback", "Rate Go Tetris",
-				"More Games", "Quit Game" };
+		final CharSequence[] items = { "Give us feedback", "Rate Go Tetris",
+				"More games", "Quit game" };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Go Tetris");

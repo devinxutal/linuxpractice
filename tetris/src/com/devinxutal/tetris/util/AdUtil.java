@@ -3,16 +3,19 @@ package com.devinxutal.tetris.util;
 import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 
-import com.admob.android.ads.AdListener;
-import com.admob.android.ads.AdView;
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.cfg.Constants;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
 
 public class AdUtil {
-	public static AdView createAdView(Activity activity) {
-		AdView adView = new AdView(activity);
+	public static com.admob.android.ads.AdView createAdViewOldSDK(
+			Activity activity) {
+		com.admob.android.ads.AdView adView = new com.admob.android.ads.AdView(
+				activity);
 		adView.setBackgroundColor(Color.rgb(0, 0, 0));
 		// adView.setRequestInterval(12);
 		// for test
@@ -21,32 +24,42 @@ public class AdUtil {
 
 		// end for test
 		Log.v("AdUtil", "Request Interval :" + adView.getRequestInterval());
-		adView.setAdListener(new AdListener() {
-
-			public void onFailedToReceiveAd(AdView view) {
-
-				Log.v("AdUtil", "Failed To Receive Ad");
-			}
-
-			public void onFailedToReceiveRefreshedAd(AdView view) {
-
-				Log.v("AdUtil", "Failed To Receive Refresh Ad");
-			}
-
-			public void onReceiveAd(AdView view) {
-
-				Log.v("AdUtil", "Receive Ad");
-			}
-
-			public void onReceiveRefreshedAd(AdView view) {
-
-				Log.v("AdUtil", "Receive Refresh Ad");
-			}
-		});
 		adView.setPrimaryTextColor(Color.rgb(255, 255, 255));
 		adView.setSecondaryTextColor(Color.rgb(180, 180, 180));
 		adView.setMinimumHeight(Constants.ADMOB_HEIGHT);
+		adView.setId(Constants.ADVIEW_ID);
+
 		return adView;
+
+	}
+
+	public static com.google.ads.AdView createAdViewNewSDK(
+			final Activity activity) {
+		final com.google.ads.AdView adView = new com.google.ads.AdView(
+				activity, AdSize.BANNER, Constants.ADMOB_PUBLISHER_ID);
+
+		adView.setMinimumHeight(Constants.ADMOB_HEIGHT);
+		adView.setId(Constants.ADVIEW_ID);
+		return adView;
+
+	}
+
+	public static AdRequest getAdRequest() {
+		AdRequest req = new AdRequest();
+		req.setTesting(true);
+		return req;
+	}
+
+	private static View createAdView(Activity activity) {
+		View adview = null;
+		boolean newsdk = false;
+		if (newsdk) {
+			adview = createAdViewNewSDK(activity);
+
+		} else {
+			adview = createAdViewOldSDK(activity);
+		}
+		return adview;
 
 	}
 

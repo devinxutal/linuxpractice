@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
-import android.util.Log;
 
 import com.devinxutal.tetris.cfg.Constants;
 
@@ -59,7 +58,6 @@ public class TextPainter {
 
 	public void drawFittedText(Canvas canvas, String text, RectF rect,
 			float scale) {
-		Log.v("TextPainter", "draw fitted text: " + rect);
 		this.determineLabelSize(text, rect);
 		this.setTextSize(scale * this.textPaint.getTextSize());
 
