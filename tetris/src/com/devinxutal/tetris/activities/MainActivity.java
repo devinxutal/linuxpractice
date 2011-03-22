@@ -103,7 +103,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR,
 				"7037AF0B100BC4F3CC9F4B5401F96685" });
 		adHandler = new Handler();
-		this.adDaemon = new AdDaemon(this, this
+		this.adDaemon = new AdDaemon("main",this, this
 				.findViewById(Constants.ADVIEW_ID), adHandler);
 		adDaemon.run();
 

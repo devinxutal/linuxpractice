@@ -33,8 +33,8 @@ public class HighScoreActivity extends TabActivity implements OnClickListener {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.highscore);
 		AdUtil.determineAd(this, R.id.ad_area);
-		adDaemon = new AdDaemon(this, this.findViewById(Constants.ADVIEW_ID),
-				adHandler);
+		adDaemon = new AdDaemon("highscore", this, this
+				.findViewById(Constants.ADVIEW_ID), adHandler);
 		Resources res = getResources(); // Resource object to get Drawables
 		TabHost tabHost = getTabHost(); // The activity TabHost
 		TabHost.TabSpec spec; // Resusable TabSpec for each tab
@@ -56,7 +56,7 @@ public class HighScoreActivity extends TabActivity implements OnClickListener {
 				.setContent(intent);
 		tabHost.addTab(spec);
 		tabHost.setCurrentTab(0);
-		
+
 		adDaemon.run();
 
 	}
