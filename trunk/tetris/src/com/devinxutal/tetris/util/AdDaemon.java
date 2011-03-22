@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.Animation.AnimationListener;
@@ -14,6 +15,7 @@ public class AdDaemon {
 	private Activity activity;
 	private View adView;
 	private Handler handler;
+	private String name;
 
 	private boolean run = false;
 
@@ -21,6 +23,7 @@ public class AdDaemon {
 	private long requestSerial = 0;
 	private boolean requestSucceed = false;
 	private boolean nofill = false;
+	private boolean adClicked = false;
 
 	public void run() {
 		if (!run) {
@@ -34,12 +37,20 @@ public class AdDaemon {
 		this.run = false;
 	}
 
-	public AdDaemon(Activity activity, View adView, Handler handler) {
+	public AdDaemon(String name, Activity activity, View adView, Handler handler) {
 		super();
 		this.activity = activity;
 		this.adView = adView;
 		this.handler = handler;
-
+		this.name = name;
+		if (this.adView == null) {
+			return;
+		}
+		this.adView.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				adClicked = true;
+			}
+		});
 		if (this.adView instanceof com.google.ads.AdView) {
 			final com.google.ads.AdView v = (com.google.ads.AdView) adView;
 			v.setAdListener(new com.google.ads.AdListener() {
@@ -114,10 +125,11 @@ public class AdDaemon {
 
 	}
 
-	private long requestInterval = 5000;
+	private long requestInterval = 10000;
 	private long requestCount = 0;
 
 	private void postRequest() {
+		requestCount++;
 		if (requestCount > 3) {
 			requestCount = 0;
 			requestInterval = requestInterval * 3 / 2;
@@ -132,6 +144,10 @@ public class AdDaemon {
 
 	}
 
+	private String getName() {
+		return "[ AdDaemon " + name + " ]";
+	}
+
 	class RequestRunnable implements Runnable {
 		private long serialID = 0;
 
@@ -140,6 +156,7 @@ public class AdDaemon {
 		}
 
 		public void run() {
+			Log.v(TAG, getName() + "requestRunnable running");
 			if (activity.isFinishing()) {
 				return;
 			}
@@ -147,6 +164,10 @@ public class AdDaemon {
 				return;
 			}
 			if (!requestSucceed) {
+
+				Log
+						.v(TAG, getName()
+								+ "requestRunnable: no ad, request for ad");
 				if (adView != null) {
 					if (adView instanceof com.google.ads.AdView) {
 						((com.google.ads.AdView) adView).loadAd(AdUtil
@@ -161,6 +182,16 @@ public class AdDaemon {
 						postRequest();
 					}
 				}
+			} else if (requestSucceed && adClicked) {
+				Log.v(TAG, getName()
+						+ "requestRunnable: click detected, change ad");
+				requestSucceed = false;
+				nofill = false;
+				postRequest(1000);
+			} else {
+				Log.v(TAG, getName()
+						+ "requestRunnable: ad showed but no click, wait");
+				postRequest(1000 * 60);
 			}
 		}
 	}

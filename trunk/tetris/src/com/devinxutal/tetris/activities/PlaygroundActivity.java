@@ -195,12 +195,12 @@ public class PlaygroundActivity extends Activity {
 		if (view != null) {
 			ad = view.findViewById(Constants.ADVIEW_ID);
 		}
-		adDaemonSuccess = new AdDaemon(this, ad, adHandler);
+		adDaemonSuccess = new AdDaemon("success",this, ad, adHandler);
 		view = (View) PlaygroundActivity.this.findViewById(R.id.ps_ad_area);
 		if (view != null) {
 			ad = view.findViewById(Constants.ADVIEW_ID);
 		}
-		adDaemonPause = new AdDaemon(this, ad, adHandler);
+		adDaemonPause = new AdDaemon("pause",this, ad, adHandler);
 
 		adDaemonSuccess.run();
 		adDaemonPause.run();

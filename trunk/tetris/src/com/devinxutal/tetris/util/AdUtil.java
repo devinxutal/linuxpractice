@@ -26,7 +26,6 @@ public class AdUtil {
 		Log.v("AdUtil", "Request Interval :" + adView.getRequestInterval());
 		adView.setPrimaryTextColor(Color.rgb(255, 255, 255));
 		adView.setSecondaryTextColor(Color.rgb(180, 180, 180));
-		adView.setMinimumHeight(Constants.ADMOB_HEIGHT);
 		adView.setId(Constants.ADVIEW_ID);
 
 		return adView;
@@ -38,7 +37,6 @@ public class AdUtil {
 		final com.google.ads.AdView adView = new com.google.ads.AdView(
 				activity, AdSize.BANNER, Constants.ADMOB_PUBLISHER_ID);
 
-		adView.setMinimumHeight(Constants.ADMOB_HEIGHT);
 		adView.setId(Constants.ADVIEW_ID);
 		return adView;
 
@@ -52,7 +50,7 @@ public class AdUtil {
 
 	private static View createAdView(Activity activity) {
 		View adview = null;
-		boolean newsdk = false;
+		boolean newsdk = true;
 		if (newsdk) {
 			adview = createAdViewNewSDK(activity);
 
