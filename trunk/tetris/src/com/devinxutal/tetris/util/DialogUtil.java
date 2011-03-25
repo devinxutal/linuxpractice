@@ -184,8 +184,7 @@ public class DialogUtil {
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		row.addView(createTableCell(context, record.getTimeString() + ""),
 				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		String mr = context.getString(MilitaryRank.getRank(record.getTime(), 2)
-				.getStringID());
+		String mr = "General";
 		row.addView(createTableCell(context, mr), LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 

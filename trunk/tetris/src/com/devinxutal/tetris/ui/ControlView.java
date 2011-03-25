@@ -66,7 +66,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		SLIDE_THRESHOLD = Math.min(w, h) / 50;
 		this.slotGap = (float) (Math.min(w, this.controller.getPlayground()
-				.getWidth() * 1.4) / this.controller.getPlayground().HORIZONTAL_BLOCKS);
+				.getWidth() * 1.6) / this.controller.getPlayground().HORIZONTAL_BLOCKS);
 		super.onSizeChanged(w, h, oldw, oldh);
 
 	}

@@ -68,6 +68,7 @@ import com.devinxutal.tetris.util.AdDaemon;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.PreferenceUtil;
 import com.devinxutal.tetris.util.ScoreUtil;
+import com.heyzap.sdk.HeyzapLib;
 
 public class PlaygroundActivity extends Activity {
 	public static final String TAG = "PlaygroundActivity";
@@ -86,9 +87,11 @@ public class PlaygroundActivity extends Activity {
 	private Button successScreenBackButton;
 	private Button successScreenSubmitButton;
 	private Button successScreenReplayButton;
+	private Button successScreenCheckinButton;
 	private Button pauseScreenOptionButton;
 	private Button pauseScreenQuitButton;
 	private Button pauseScreenResumeButton;
+	private Button pauseScreenCheckinButton;
 
 	private Dialog progressDialog;
 
@@ -157,12 +160,14 @@ public class PlaygroundActivity extends Activity {
 				.findViewById(R.id.submit_button);
 		successScreenReplayButton = (Button) this
 				.findViewById(R.id.replay_button);
+		successScreenCheckinButton = (Button) this
+				.findViewById(R.id.heyzap_button_2);
 		OnClickListener l = new ButtonsOnClick();
 		successScreenBackButton.setOnClickListener(l);
 		successScreenSubmitButton.setOnClickListener(l);
 		successScreenReplayButton.setOnClickListener(l);
+		successScreenCheckinButton.setOnClickListener(l);
 		AdUtil.determineAd(this, R.id.ss_ad_area);
-		hideSuccessScreen();
 
 		// add pauseScreen
 		inflater.inflate(R.layout.pausescreen, pausedScreen);
@@ -171,19 +176,24 @@ public class PlaygroundActivity extends Activity {
 		pauseScreenQuitButton = (Button) this.findViewById(R.id.quit_button);
 		pauseScreenResumeButton = (Button) this
 				.findViewById(R.id.resume_button);
+		pauseScreenCheckinButton = (Button) this
+				.findViewById(R.id.heyzap_button_1);
 		pauseScreenOptionButton.setOnClickListener(l);
 		pauseScreenQuitButton.setOnClickListener(l);
 		pauseScreenResumeButton.setOnClickListener(l);
+		pauseScreenCheckinButton.setOnClickListener(l);
 		AdUtil.determineAd(this, R.id.ps_ad_area);
-		hidePauseScreen();
+
 		//
 		preferenceChanged();
-		this.customizeButtons();
+		// this.customizeButtons();
 		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+		hideSuccessScreen();
+		hidePauseScreen();
 
 		Log.v(TAG, "Sequence Test: onCreate");
 		if (savedInstanceState == null) {
-
 			Log.v(TAG, "Saved Instance is null");
 			switchState(State.INIT);
 		}
@@ -195,12 +205,12 @@ public class PlaygroundActivity extends Activity {
 		if (view != null) {
 			ad = view.findViewById(Constants.ADVIEW_ID);
 		}
-		adDaemonSuccess = new AdDaemon("success",this, ad, adHandler);
+		adDaemonSuccess = new AdDaemon("success", this, ad, adHandler);
 		view = (View) PlaygroundActivity.this.findViewById(R.id.ps_ad_area);
 		if (view != null) {
 			ad = view.findViewById(Constants.ADVIEW_ID);
 		}
-		adDaemonPause = new AdDaemon("pause",this, ad, adHandler);
+		adDaemonPause = new AdDaemon("pause", this, ad, adHandler);
 
 		adDaemonSuccess.run();
 		adDaemonPause.run();
@@ -276,8 +286,12 @@ public class PlaygroundActivity extends Activity {
 	}
 
 	private void switchState(State to, boolean showPauseScreen) {
+		boolean needAssignState = true;
 		if (to == State.INIT) {
+			hideSuccessScreen();
+			hidePauseScreen();
 			continueConfirm();
+			needAssignState = false;
 		} else if (to == State.PAUSED) {
 			gameController.pause();
 			SoundManager.get(this).pauseBackgroundMusic();
@@ -292,10 +306,13 @@ public class PlaygroundActivity extends Activity {
 		} else if (to == State.ENDING) {
 			SoundManager.get(this).stopBackgroundMusic();
 		} else if (to == State.END) {
+			showSuccessScreen();
+			hidePauseScreen();
 			SoundManager.get(this).stopBackgroundMusic();
 		}
-		this.state = to;
-
+		if (needAssignState) {
+			this.state = to;
+		}
 		this.controlView.invalidate();
 	}
 
@@ -348,9 +365,14 @@ public class PlaygroundActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-
 		adDaemonSuccess.run();
 		adDaemonPause.run();
+		Log.v(TAG, "on Resume , current state: " + state);
+		if (this.state == State.PAUSED) {
+			showPauseScreen();
+		} else {
+			hidePauseScreen();
+		}
 		super.onResume();
 	}
 
@@ -491,6 +513,20 @@ public class PlaygroundActivity extends Activity {
 						Preferences.class);
 				PlaygroundActivity.this.startActivityForResult(intent,
 						PREFERENCE_REQUEST_CODE);
+			} else if (view.getId() == R.id.heyzap_button_1
+					|| view.getId() == R.id.heyzap_button_2) {
+				try {
+					HeyzapLib.checkin(PlaygroundActivity.this,
+							"I just stepped into level "
+									+ gameController.getPlayground()
+											.getScoreAndLevel().getLevel()
+									+ " with a score of "
+									+ gameController.getPlayground()
+											.getScoreAndLevel().getScore()
+									+ "!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -537,7 +573,7 @@ public class PlaygroundActivity extends Activity {
 				this.getResources().getString(R.string.game_init_new) };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Go Tetris");
+		builder.setTitle("Go Tetris").setCancelable(false);
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 0) {

@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>com_heyzap_sdk_src</name>
+			<type>2</type>
+			<locationURI>_android_com_heyzap_sdk_2f00406/src</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
