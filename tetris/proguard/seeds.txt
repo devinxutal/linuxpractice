@@ -1,34 +1,59 @@
+com.devinxutal.tetris.record.SavableLocalScore
+com.devinxutal.tetris.record.SavableLocalScores
+com.devinxutal.tetris.model.SavablePlayground
+com.devinxutal.tetris.model.ScoreAndLevel
+com.heyzap.sdk.R$styleable
+com.heyzap.sdk.R$xml
+com.heyzap.sdk.R$attr
+com.heyzap.sdk.R$id
+com.heyzap.sdk.R$style
+com.heyzap.sdk.R$color
+com.heyzap.sdk.R$drawable
+com.heyzap.sdk.HeyzapButton
+com.heyzap.sdk.R
+com.heyzap.sdk.R$raw
+com.heyzap.sdk.R$layout
+com.heyzap.sdk.R$array
+com.heyzap.sdk.R$string
+com.heyzap.sdk.HeyzapLib
+com.heyzap.sdk.HeyzapAnalytics
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
 com.devinxutal.tetris.ui.PlaygroundView
 com.devinxutal.tetris.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet)
-com.admob.android.ads.AdView
-com.admob.android.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
+com.heyzap.sdk.HeyzapButton
+com.heyzap.sdk.HeyzapButton: HeyzapButton(android.content.Context,android.util.AttributeSet)
 com.devinxutal.tetris.ui.CustomPreference
 com.devinxutal.tetris.ui.CustomPreference: CustomPreference(android.content.Context,android.util.AttributeSet)
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
 com.devinxutal.tetris.ui.PlaygroundView
 com.devinxutal.tetris.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet,int)
-com.admob.android.ads.AdView
-com.admob.android.ads.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
-com.admob.android.ads.a: com.admob.android.ads.a[] values()
-com.admob.android.ads.a: com.admob.android.ads.a valueOf(java.lang.String)
-com.admob.android.ads.q$a: com.admob.android.ads.q$a[] values()
-com.admob.android.ads.q$a: com.admob.android.ads.q$a valueOf(java.lang.String)
-com.admob.android.ads.AdManager$Gender: com.admob.android.ads.AdManager$Gender[] values()
-com.admob.android.ads.AdManager$Gender: com.admob.android.ads.AdManager$Gender valueOf(java.lang.String)
-com.devinxutal.tetris.control.Command: com.devinxutal.tetris.control.Command[] values()
-com.devinxutal.tetris.control.Command: com.devinxutal.tetris.control.Command valueOf(java.lang.String)
+com.heyzap.sdk.HeyzapButton
+com.heyzap.sdk.HeyzapButton: HeyzapButton(android.content.Context,android.util.AttributeSet,int)
+com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy[] values()
+com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy valueOf(java.lang.String)
 com.devinxutal.tetris.util.BitmapUtil$Direction: com.devinxutal.tetris.util.BitmapUtil$Direction[] values()
 com.devinxutal.tetris.util.BitmapUtil$Direction: com.devinxutal.tetris.util.BitmapUtil$Direction valueOf(java.lang.String)
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier[] values()
+com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier valueOf(java.lang.String)
+u$a: u$a[] values()
+u$a: u$a valueOf(java.lang.String)
+a$a: a$a[] values()
+a$a: a$a valueOf(java.lang.String)
+com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy[] values()
+com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy valueOf(java.lang.String)
+com.devinxutal.tetris.control.Command: com.devinxutal.tetris.control.Command[] values()
+com.devinxutal.tetris.control.Command: com.devinxutal.tetris.control.Command valueOf(java.lang.String)
 com.devinxutal.tetris.activities.PlaygroundActivity$State: com.devinxutal.tetris.activities.PlaygroundActivity$State[] values()
 com.devinxutal.tetris.activities.PlaygroundActivity$State: com.devinxutal.tetris.activities.PlaygroundActivity$State valueOf(java.lang.String)
 com.devinxutal.tetris.model.Block$BlockType: com.devinxutal.tetris.model.Block$BlockType[] values()
 com.devinxutal.tetris.model.Block$BlockType: com.devinxutal.tetris.model.Block$BlockType valueOf(java.lang.String)
-com.admob.android.ads.InterstitialAd$Event: com.admob.android.ads.InterstitialAd$Event[] values()
-com.admob.android.ads.InterstitialAd$Event: com.admob.android.ads.InterstitialAd$Event valueOf(java.lang.String)
-com.admob.android.ads.j$b: com.admob.android.ads.j$b[] values()
-com.admob.android.ads.j$b: com.admob.android.ads.j$b valueOf(java.lang.String)
-com.admob.android.ads.j$a: com.admob.android.ads.j$a[] values()
-com.admob.android.ads.j$a: com.admob.android.ads.j$a valueOf(java.lang.String)
-com.admob.android.ads.AdMobActivity
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender[] values()
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender valueOf(java.lang.String)
+com.google.ads.AdActivity
 com.devinxutal.tetris.activities.AboutActivity
 com.devinxutal.tetris.activities.MainActivity
 com.devinxutal.tetris.activities.WorldRankActivity
@@ -36,4 +61,4 @@ com.devinxutal.tetris.activities.PlaygroundActivity
 com.devinxutal.tetris.activities.HighScoreActivity
 com.devinxutal.tetris.activities.LocalRankActivity
 com.devinxutal.tetris.activities.Preferences
-com.admob.android.ads.analytics.InstallReceiver
+com.google.ads.InstallReceiver

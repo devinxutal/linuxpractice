@@ -48,6 +48,7 @@ public class AdDaemon {
 		}
 		this.adView.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
+				Log.v(TAG, "Ad Clicked");
 				adClicked = true;
 			}
 		});
@@ -84,38 +85,41 @@ public class AdDaemon {
 					Log.v(TAG, "onReceiveAd");
 				}
 			});
-		} else if (this.adView instanceof com.admob.android.ads.AdView) {
-
-			com.admob.android.ads.AdView v = (com.admob.android.ads.AdView) adView;
-
-			com.admob.android.ads.AdListener l = new com.admob.android.ads.AdListener() {
-
-				public void onFailedToReceiveAd(com.admob.android.ads.AdView ad) {
-
-					Log.v(TAG, "onFailedToReceiveAd");
-				}
-
-				public void onFailedToReceiveRefreshedAd(
-						com.admob.android.ads.AdView ad) {
-
-					Log.v(TAG, "onFailedToReceiveRefreshedAd");
-				}
-
-				public void onReceiveAd(com.admob.android.ads.AdView ad) {
-
-					requestSucceed = true;
-					Log.v(TAG, "onReceiveAd");
-				}
-
-				public void onReceiveRefreshedAd(com.admob.android.ads.AdView ad) {
-
-					requestSucceed = true;
-					Log.v(TAG, "onReceiveRefreshedAd");
-
-				}
-			};
-			v.setAdListener(l);
 		}
+		// else if (this.adView instanceof com.admob.android.ads.AdView) {
+		//
+		// com.admob.android.ads.AdView v = (com.admob.android.ads.AdView)
+		// adView;
+		//
+		// com.admob.android.ads.AdListener l = new
+		// com.admob.android.ads.AdListener() {
+		//
+		// public void onFailedToReceiveAd(com.admob.android.ads.AdView ad) {
+		//
+		// Log.v(TAG, "onFailedToReceiveAd");
+		// }
+		//
+		// public void onFailedToReceiveRefreshedAd(
+		// com.admob.android.ads.AdView ad) {
+		//
+		// Log.v(TAG, "onFailedToReceiveRefreshedAd");
+		// }
+		//
+		// public void onReceiveAd(com.admob.android.ads.AdView ad) {
+		//
+		// requestSucceed = true;
+		// Log.v(TAG, "onReceiveAd");
+		// }
+		//
+		// public void onReceiveRefreshedAd(com.admob.android.ads.AdView ad) {
+		//
+		// requestSucceed = true;
+		// Log.v(TAG, "onReceiveRefreshedAd");
+		//
+		// }
+		// };
+		// v.setAdListener(l);
+		// }
 	}
 
 	private void postAnimation() {
@@ -157,7 +161,7 @@ public class AdDaemon {
 
 		public void run() {
 			Log.v(TAG, getName() + "requestRunnable running");
-			if (activity.isFinishing()) {
+			if (activity.isFinishing() || !run) {
 				return;
 			}
 			if (this.serialID != AdDaemon.this.requestSerial) {
@@ -168,20 +172,25 @@ public class AdDaemon {
 				Log
 						.v(TAG, getName()
 								+ "requestRunnable: no ad, request for ad");
-				if (adView != null) {
-					if (adView instanceof com.google.ads.AdView) {
-						((com.google.ads.AdView) adView).loadAd(AdUtil
-								.getAdRequest());
-					} else if (adView instanceof com.admob.android.ads.AdView) {
-						((com.admob.android.ads.AdView) adView)
-								.requestFreshAd();
+				if (nofill) {
+					nofill = false;
+					postRequest(120000);
+				} else {
+					if (adView != null) {
+						if (adView instanceof com.google.ads.AdView) {
+							((com.google.ads.AdView) adView).loadAd(AdUtil
+									.getAdRequest());
+						}
+						// else if (adView instanceof
+						// com.admob.android.ads.AdView) {
+						// ((com.admob.android.ads.AdView) adView)
+						// .requestFreshAd();
+						// }
+
 					}
-					if (nofill) {
-						postRequest(120000);
-					} else {
-						postRequest();
-					}
+					postRequest();
 				}
+
 			} else if (requestSucceed && adClicked) {
 				Log.v(TAG, getName()
 						+ "requestRunnable: click detected, change ad");

@@ -53,7 +53,7 @@ public class ScoreAndLevel implements Serializable {
 		return Math.max(getGoal() - getCurrentLines(), 0);
 	}
 
-	public void eliminateLines(int lineNum) {
+	public void eliminateLines(int lineNum, boolean combo) {
 		int addScore = 0;
 		switch (lineNum) {
 		case 1:
@@ -68,6 +68,9 @@ public class ScoreAndLevel implements Serializable {
 		case 4:
 			addScore = 200;
 			break;
+		}
+		if (combo) {
+			addScore = addScore * 5;
 		}
 		addScore(addScore);
 		currentLines += lineNum;

@@ -1,8 +1,6 @@
 package com.devinxutal.tetris.util;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -12,25 +10,25 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 
 public class AdUtil {
-	public static com.admob.android.ads.AdView createAdViewOldSDK(
-			Activity activity) {
-		com.admob.android.ads.AdView adView = new com.admob.android.ads.AdView(
-				activity);
-		adView.setBackgroundColor(Color.rgb(0, 0, 0));
-		// adView.setRequestInterval(12);
-		// for test
-		// AdRequest request = new AdRequest();
-		// AdManager manager = new AdManager();
-
-		// end for test
-		Log.v("AdUtil", "Request Interval :" + adView.getRequestInterval());
-		adView.setPrimaryTextColor(Color.rgb(255, 255, 255));
-		adView.setSecondaryTextColor(Color.rgb(180, 180, 180));
-		adView.setId(Constants.ADVIEW_ID);
-
-		return adView;
-
-	}
+	// public static com.admob.android.ads.AdView createAdViewOldSDK(
+	// Activity activity) {
+	// com.admob.android.ads.AdView adView = new com.admob.android.ads.AdView(
+	// activity);
+	// adView.setBackgroundColor(Color.rgb(0, 0, 0));
+	// // adView.setRequestInterval(12);
+	// // for test
+	// // AdRequest request = new AdRequest();
+	// // AdManager manager = new AdManager();
+	//
+	// // end for test
+	// Log.v("AdUtil", "Request Interval :" + adView.getRequestInterval());
+	// adView.setPrimaryTextColor(Color.rgb(255, 255, 255));
+	// adView.setSecondaryTextColor(Color.rgb(180, 180, 180));
+	// adView.setId(Constants.ADVIEW_ID);
+	//
+	// return adView;
+	//
+	// }
 
 	public static com.google.ads.AdView createAdViewNewSDK(
 			final Activity activity) {
@@ -54,9 +52,10 @@ public class AdUtil {
 		if (newsdk) {
 			adview = createAdViewNewSDK(activity);
 
-		} else {
-			adview = createAdViewOldSDK(activity);
 		}
+		// else {
+		// adview = createAdViewOldSDK(activity);
+		// }
 		return adview;
 
 	}

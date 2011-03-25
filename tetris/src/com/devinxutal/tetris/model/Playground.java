@@ -1,7 +1,11 @@
 package com.devinxutal.tetris.model;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,7 +18,9 @@ import android.graphics.Typeface;
 import android.util.Log;
 
 import com.devinxutal.tetris.cfg.Configuration;
+import com.devinxutal.tetris.cfg.Constants;
 import com.devinxutal.tetris.control.Command;
+import com.devinxutal.tetris.model.Block.BlockType;
 import com.devinxutal.tetris.model.SavablePlayground.SavableBlock;
 
 public class Playground {
@@ -43,9 +49,15 @@ public class Playground {
 
 	private int playground[][] = new int[VERTICAL_BLOCKS][HORIZONTAL_BLOCKS];
 
+	// for floating blocks;
+	private Set<Integer> floatingBlocks = null;
+	private boolean floatingBlocksJustSettled = false;
+	// next blocks
 	private LinkedList<Block> blockQueue = new LinkedList<Block>();
 	private int blockQueueLen = 3;
+	private boolean combo = false;
 
+	// hold blocks
 	private Block hold = null;
 	private boolean holdUsed = false;
 
@@ -90,6 +102,7 @@ public class Playground {
 				playground[i][j] = -1;
 			}
 		}
+
 		for (int i = 0; i < eliminating.length; i++) {
 			eliminating[i] = false;
 		}
@@ -100,6 +113,43 @@ public class Playground {
 			blockQueue.addLast(new Block());
 		}
 
+		// for test
+		if (Constants.TEST) {
+			initPlaygroundWidthFloating();
+		}
+		// for test
+
+	}
+
+	private void initPlaygroundWidthFloating() {
+		playground[19][0] = 1;
+		playground[18][0] = 1;
+		playground[17][0] = 1;
+		playground[16][0] = 1;
+
+		playground[19][9] = 1;
+		playground[18][9] = 1;
+		playground[17][9] = 1;
+		playground[16][9] = 1;
+
+		playground[15][0] = 2;
+		playground[15][1] = 2;
+		playground[15][2] = 2;
+		playground[15][3] = 2;
+		playground[15][4] = 2;
+		playground[15][6] = 2;
+		playground[15][7] = 2;
+		playground[15][8] = 2;
+		playground[15][9] = 2;
+
+		playground[16][7] = 3;
+
+		playground[19][1] = 4;
+		playground[19][2] = 4;
+		playground[19][6] = 4;
+		playground[19][8] = 4;
+
+		blockQueue.addFirst(new Block(BlockType.J));
 	}
 
 	public boolean isFinished() {
@@ -117,6 +167,13 @@ public class Playground {
 			if (eliminatingCurrentStep > eliminatingTotalSteps) {
 				finishElimination();
 			}
+		} else if (floatingBlocks != null) {
+			this.dealWithFloatingBlocks(floatingBlocks);
+			this.floatingBlocks = null;
+			this.floatingBlocksJustSettled = true;
+		} else if (floatingBlocksJustSettled) {
+			checkElimination();
+			floatingBlocksJustSettled = false;
 		} else if (activeBlock == null) {
 			allocateBlock();
 			checkFinish();
@@ -612,6 +669,10 @@ public class Playground {
 	private boolean checkElimination() {
 		inAnimation = false;
 		eliminationLines = 0;
+		for (int i = 0; i < VERTICAL_BLOCKS; i++) {
+			eliminating[i] = false;
+		}
+		eliminatingCurrentStep = -1;
 		for (int row = VERTICAL_BLOCKS - 1; row >= 0; row--) {
 			boolean eli = true;
 			for (int i = 0; i < HORIZONTAL_BLOCKS; i++) {
@@ -621,16 +682,17 @@ public class Playground {
 				}
 			}
 			if (eli) {
-				if (!inAnimation) {
-					inAnimation = true;
-					for (int i = 0; i < VERTICAL_BLOCKS; i++) {
-						eliminating[i] = false;
-					}
-					eliminatingCurrentStep = -1;
-				}
+
+				inAnimation = true;
 				eliminating[row] = true;
 				eliminationLines++;
 			}
+		}
+
+		if (inAnimation && floatingBlocksJustSettled) {
+			combo = true;
+		} else {
+			combo = false;
 		}
 		return inAnimation;
 	}
@@ -659,9 +721,94 @@ public class Playground {
 				}
 			}
 		}
-
 		inAnimation = false;
-		scoreLevel.eliminateLines(eliminationLines);
+		scoreLevel.eliminateLines(eliminationLines, combo);
+		floatingBlocks = checkFloatingBlock();
+	}
+
+	private static final int radix = 10;
+
+	private Set<Integer> checkFloatingBlock() {
+
+		Set<Integer> allBlocks = new HashSet<Integer>();
+		for (int i = 0; i < VERTICAL_BLOCKS; i++) {
+			for (int j = 0; j < HORIZONTAL_BLOCKS; j++) {
+				if (playground[i][j] >= 0) {
+					allBlocks.add(i * radix + j);
+				}
+			}
+		}
+
+		// get rid of all bottom-connected blocks;
+		LinkedList<Integer> bottomedBlocks = new LinkedList<Integer>();
+		for (int j = 0; j < HORIZONTAL_BLOCKS; j++) {
+			if (playground[VERTICAL_BLOCKS - 1][j] >= 0) {
+				bottomedBlocks.addLast((VERTICAL_BLOCKS - 1) * radix + j);
+			}
+		}
+		int[][] m = new int[][] { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+		while (!bottomedBlocks.isEmpty()) {
+			int block = bottomedBlocks.poll();
+			allBlocks.remove(block);
+			for (int[] offset : m) {
+				int blk = block + offset[0] * radix + offset[1];
+				if (allBlocks.contains(blk)) {
+					bottomedBlocks.addLast(blk);
+				}
+			}
+		}
+
+		// check if there is floating blocks;
+		if (allBlocks.isEmpty()) {
+			return null;
+		} else {
+			return allBlocks;
+		}
+
+	}
+
+	private void dealWithFloatingBlocks(Set<Integer> floating) {
+		// clear and remenber floating blocks
+		Map<Integer, Integer> colorMap = new HashMap<Integer, Integer>();
+		for (int block : floating) {
+			int i = block / radix;
+			int j = block % radix;
+			colorMap.put(block, playground[i][j]);
+			playground[i][j] = -1;
+		}
+		int dropLines = 1;
+		// test max lines can drop
+		for (dropLines = 1; dropLines <= VERTICAL_BLOCKS; dropLines++) {
+			boolean succeed = true;
+			for (int block : floating) {
+				int i = block / radix + dropLines;
+				int j = block % radix;
+				if (i >= VERTICAL_BLOCKS || playground[i][j] >= 0) {
+					succeed = false;
+					break;
+				}
+			}
+			if (!succeed) {
+				dropLines -= 1;
+				break;
+			}
+		}
+		Log.v(TAG, "dealWithFloating: max lines can drop:" + dropLines);
+		if (dropLines == 0) {
+			return;
+		}
+		// move all floating blocks down;
+		for (int block : floating) {
+			int i = block / radix + dropLines;
+			int j = block % radix;
+			playground[i][j] = colorMap.get(block);
+		}
+
+		// check floating again;
+		Set<Integer> fbs = checkFloatingBlock();
+		if (fbs != null) {
+			dealWithFloatingBlocks(fbs);
+		}
 	}
 
 	private void checkFinish() {

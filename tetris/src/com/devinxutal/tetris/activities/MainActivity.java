@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -40,7 +39,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.admob.android.ads.AdManager;
 import com.devinxutal.tetris.R;
 import com.devinxutal.tetris.cfg.Configuration;
 import com.devinxutal.tetris.cfg.Constants;
@@ -48,6 +46,7 @@ import com.devinxutal.tetris.sound.SoundManager;
 import com.devinxutal.tetris.util.AdDaemon;
 import com.devinxutal.tetris.util.AdUtil;
 import com.devinxutal.tetris.util.DialogUtil;
+import com.devinxutal.tetris.util.MarketUtil;
 import com.devinxutal.tetris.util.PreferenceUtil;
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -100,10 +99,10 @@ public class MainActivity extends Activity implements OnClickListener {
 				Secure.ANDROID_ID);
 		//
 		showNoticeDialog();
-		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR,
-				"7037AF0B100BC4F3CC9F4B5401F96685" });
+		// AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR,
+		// "7037AF0B100BC4F3CC9F4B5401F96685" });
 		adHandler = new Handler();
-		this.adDaemon = new AdDaemon("main",this, this
+		this.adDaemon = new AdDaemon("main", this, this
 				.findViewById(Constants.ADVIEW_ID), adHandler);
 		adDaemon.run();
 
@@ -210,15 +209,22 @@ public class MainActivity extends Activity implements OnClickListener {
 				if (item == 0) {
 					MainActivity.this.submitReport();
 				} else if (item == 1) {
-					Intent i = new Intent(Intent.ACTION_VIEW, Uri
-							.parse("market://details?id=com.devinxutal.tetris"));
-					startActivity(i);
+					MarketUtil.openMarketForApp(MainActivity.this,
+							"com.devinxutal.tetris");
+
+					// TODO check this
+					// Intent i = new Intent(Intent.ACTION_VIEW, Uri
+					// .parse("market://details?id=com.devinxutal.tetris"));
+					// startActivity(i);
 				} else if (item == 2) {
-					Intent i = new Intent(Intent.ACTION_SEARCH);
-					i.setPackage("com.android.vending");
-					i.putExtra("query", "pub:\"Yinfei XU\"");
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(i);
+					MarketUtil.openMarketForAuthor(MainActivity.this,
+							"Yinfei XU");
+					// TODO check this
+					// Intent i = new Intent(Intent.ACTION_SEARCH);
+					// i.setPackage("com.android.vending");
+					// i.putExtra("query", "pub:\"Yinfei XU\"");
+					// i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					// startActivity(i);
 				} else if (item == 3) {
 
 					MainActivity.this.finish();

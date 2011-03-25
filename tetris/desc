@@ -2,7 +2,13 @@ Description
 
 Recent changes:
 
+v 1.2.0
+	- Integration with Heyzap
+	- Fix crash on start problem
+	- Fix some pause screen problem
+	
 v 1.1.2
 	- Option to turn block shadow on and off.
 	- Auto save & continue prompt at next play
 	- Fix memory leak bug
+	
