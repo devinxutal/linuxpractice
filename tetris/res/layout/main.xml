@@ -38,15 +38,21 @@
 		</LinearLayout>
 	</LinearLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:gravity="bottom|center_horizontal">
+		android:orientation="vertical" android:layout_height="fill_parent"
+		android:gravity="bottom|center_horizontal">
 		<LinearLayout android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:gravity="bottom|right">
-			<com.heyzap.sdk.HeyzapButton android:id="@+id/hzbutton"
-				android:src="@drawable/heyzap_button" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:layout_margin="0dp"/>
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:gravity="bottom|right"
+				android:padding="0px">
+				<com.heyzap.sdk.HeyzapButton android:id="@+id/hzbutton"
+					android:src="@drawable/heyzap_button" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_margin="0dp"
+					android:padding="5dip" />
+			</LinearLayout>
 		</LinearLayout>
 		<LinearLayout android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:id="@+id/ad_area" android:gravity="bottom|center_horizontal">
 		</LinearLayout>
 	</LinearLayout>
