@@ -22,26 +22,26 @@ com.devinxutal.tetris.activities.PlaygroundActivity:
     public static final int PREFERENCE_REQUEST_CODE
     private android.app.Dialog progressDialog
     private android.hardware.Sensor sensor
-    612:613:public void stop()
-    703:709:public void openHelpDialog()
-    721:748:public void submitRecord()
-    751:754:private void submitRecord(java.lang.String)
-    813:823:public void startListening()
-    877:885:public void customizeButtons()
-    897:899:private void customizeButton(android.widget.Button)
+    614:615:public void stop()
+    705:711:public void openHelpDialog()
+    723:750:public void submitRecord()
+    753:756:private void submitRecord(java.lang.String)
+    815:825:public void startListening()
+    879:887:public void customizeButtons()
+    899:901:private void customizeButton(android.widget.Button)
     96:96:static android.app.Dialog access$5(com.devinxutal.tetris.activities.PlaygroundActivity)
     96:96:static void access$6(com.devinxutal.tetris.activities.PlaygroundActivity,android.app.Dialog)
     86:86:static android.widget.Toast access$7(com.devinxutal.tetris.activities.PlaygroundActivity)
     88:88:static android.widget.Button access$8(com.devinxutal.tetris.activities.PlaygroundActivity)
     109:109:static boolean access$10(com.devinxutal.tetris.activities.PlaygroundActivity)
-    750:750:static void access$11(com.devinxutal.tetris.activities.PlaygroundActivity,java.lang.String)
+    752:752:static void access$11(com.devinxutal.tetris.activities.PlaygroundActivity,java.lang.String)
 com.devinxutal.tetris.activities.PlaygroundActivity$2
 com.devinxutal.tetris.activities.PlaygroundActivity$3
 com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished:
-    459:465:public void gameFinishing()
+    461:467:public void gameFinishing()
 com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$1
 com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener:
-    855:872:public void joyStickMoved(float,float)
+    857:874:public void joyStickMoved(float,float)
 com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread
 com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread$1
 com.devinxutal.tetris.cfg.Configuration:

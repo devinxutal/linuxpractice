@@ -303,7 +303,7 @@ public class Playground {
 		sp.offsetX = this.blockOffsetX;
 		sp.offsetY = this.blockOffsetY;
 		sp.blockQueue = new LinkedList<SavableBlock>();
-
+		sp.finished = finished;
 		for (Block b : this.blockQueue) {
 			sp.blockQueue.add(sp.create(b));
 		}
@@ -324,6 +324,7 @@ public class Playground {
 			this.activeBlock = new Block(sp.activeBlock.blockType,
 					sp.activeBlock.current);
 		}
+		this.finished = sp.finished;
 		this.blockOffsetX = sp.offsetX;
 		this.blockOffsetY = sp.offsetY;
 		this.blockQueue.clear();
