@@ -14,6 +14,7 @@ public class SavablePlayground implements Serializable {
 	public SavableBlock holdBlock;
 	public boolean holdUsed = false;
 	public ScoreAndLevel scoreLevel;
+	public boolean finished = false;
 
 	public class SavableBlock implements Serializable {
 		public BlockType blockType;

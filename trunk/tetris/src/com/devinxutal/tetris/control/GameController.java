@@ -74,7 +74,7 @@ public class GameController {
 	}
 
 	public void processCommand(Command cmd) {
-		if (!this.playing) {
+		if (!this.playing || playground.isFinished()) {
 			return;
 		}
 		switch (cmd) {

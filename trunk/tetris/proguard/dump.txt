@@ -8577,7 +8577,8 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 205):
+Constant Pool (count = 213):
+  - Float [1000.0]
   - String [
 ]
   - String [Bad request]
@@ -8591,6 +8592,7 @@ Constant Pool (count = 205):
   - String [User-Agent]
   - String [X-Afma-Orientation]
   - String [X-Afma-Refresh-Rate]
+  - String [X-Afma-Timeout]
   - String [X-Afma-Tracking-Urls]
   - String [landscape]
   - String [portrait]
@@ -8629,6 +8631,8 @@ Constant Pool (count = 205):
   - Methodref [e.a ([Ljava/lang/String;)Ljava/lang/Void;]
   - Methodref [e.b (Ljava/net/HttpURLConnection;)V]
   - Methodref [e.c (Ljava/net/HttpURLConnection;)V]
+  - Methodref [e.d (Ljava/net/HttpURLConnection;)V]
+  - Methodref [f.a (J)V]
   - Methodref [f.a (Lcom/google/ads/b;)V]
   - Methodref [f.a (Ljava/lang/String;Ljava/lang/String;)V]
   - Methodref [java/io/BufferedReader.<init> (Ljava/io/Reader;)V]
@@ -8663,6 +8667,7 @@ Constant Pool (count = 205):
   + NameAndType [<init> (Ljava/lang/String;)V]
   + NameAndType [a (F)V]
   + NameAndType [a (I)V]
+  + NameAndType [a (J)V]
   + NameAndType [a (Lcom/google/ads/b;)V]
   + NameAndType [a (Ljava/lang/String;)V]
   + NameAndType [a (Ljava/lang/String;Ljava/lang/String;)V]
@@ -8683,6 +8688,7 @@ Constant Pool (count = 205):
   + NameAndType [c Lcom/google/ads/b;]
   + NameAndType [c Ljava/lang/String;]
   + NameAndType [connect ()V]
+  + NameAndType [d (Ljava/net/HttpURLConnection;)V]
   + NameAndType [d Lcom/google/ads/b;]
   + NameAndType [equals (Ljava/lang/Object;)Z]
   + NameAndType [getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
@@ -8710,6 +8716,7 @@ Constant Pool (count = 205):
   + Utf8 [(F)V]
   + Utf8 [(I)Ljava/lang/StringBuilder;]
   + Utf8 [(I)V]
+  + Utf8 [(J)V]
   + Utf8 [(Lcom/google/ads/b;)V]
   + Utf8 [(Lf;Lc;Ljava/lang/String;)V]
   + Utf8 [(Ljava/io/InputStream;)V]
@@ -8742,6 +8749,7 @@ Constant Pool (count = 205):
   + Utf8 [User-Agent]
   + Utf8 [X-Afma-Orientation]
   + Utf8 [X-Afma-Refresh-Rate]
+  + Utf8 [X-Afma-Timeout]
   + Utf8 [X-Afma-Tracking-Urls]
   + Utf8 [[Ljava/lang/String;]
   + Utf8 [a]
@@ -8796,142 +8804,167 @@ Fields (count = 3):
     Access flags: 0x2
       = private java.lang.String c
 
-Methods (count = 6):
+Methods (count = 7):
   - Method:       <init>(Lf;Lc;Ljava/lang/String;)V
     Access flags: 0x0
       = e(f,c,java.lang.String)
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 20, locals = 4, stack = 2):
       [0] aload_0 v0
-      [1] invokespecial #41
+      [1] invokespecial #43
         - Methodref [android/os/AsyncTask.<init> ()V]
       [4] aload_0 v0
       [5] aload_1 v1
-      [6] putfield #38
+      [6] putfield #40
         - Fieldref [e.a Lf;]
       [9] aload_0 v0
       [10] aload_2 v2
-      [11] putfield #39
+      [11] putfield #41
         - Fieldref [e.b Lc;]
       [14] aload_0 v0
       [15] aload_3 v3
-      [16] putfield #40
+      [16] putfield #42
         - Fieldref [e.c Ljava/lang/String;]
       [19] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       a(Ljava/net/HttpURLConnection;)V
-    Access flags: 0x2
-      = private void a(java.net.HttpURLConnection)
+    Access flags: 0xa
+      = private static void a(java.net.HttpURLConnection)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 44, locals = 3, stack = 3):
-      [0] aload_1 v1
-      [1] ldc #13
-        - String [X-Afma-Tracking-Urls]
-      [3] invokevirtual #65
+    + Code attribute instructions (code length = 23, locals = 1, stack = 2):
+      [0] aload_0 v0
+      [1] ldc #14
+        - String [X-Afma-Timeout]
+      [3] invokevirtual #69
         - Methodref [java/net/HttpURLConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
       [6] dup
-      [7] astore_1 v1
-      [8] ifnull +35 (target=43)
-      [11] new #32
-        - Class [java/util/StringTokenizer]
-      [14] dup
-      [15] aload_1 v1
-      [16] invokespecial #72
-        - Methodref [java/util/StringTokenizer.<init> (Ljava/lang/String;)V]
-      [19] astore_1 v1
-      [20] aload_1 v1
-      [21] invokevirtual #73
-        - Methodref [java/util/StringTokenizer.hasMoreTokens ()Z]
-      [24] ifeq +19 (target=43)
-      [27] aload_1 v1
-      [28] invokevirtual #74
-        - Methodref [java/util/StringTokenizer.nextToken ()Ljava/lang/String;]
-      [31] astore_2 v2
-      [32] aload_0 v0
-      [33] getfield #39
-        - Fieldref [e.b Lc;]
-      [36] aload_2 v2
-      [37] invokevirtual #44
-        - Methodref [c.a (Ljava/lang/String;)V]
-      [40] goto -20 (target=20)
-      [43] return
+      [7] astore_0 v0
+      [8] ifnull +14 (target=22)
+      [11] aload_0 v0
+      [12] invokestatic #60
+        - Methodref [java/lang/Float.parseFloat (Ljava/lang/String;)F]
+      [15] ldc #1
+        - Float [1000.0]
+      [17] fmul
+      [18] f2l
+      [19] invokestatic #54
+        - Methodref [f.a (J)V]
+      [22] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       b(Ljava/net/HttpURLConnection;)V
     Access flags: 0x2
       = private void b(java.net.HttpURLConnection)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 42, locals = 2, stack = 2):
+    + Code attribute instructions (code length = 44, locals = 3, stack = 3):
       [0] aload_1 v1
-      [1] ldc #12
-        - String [X-Afma-Refresh-Rate]
-      [3] invokevirtual #65
+      [1] ldc #15
+        - String [X-Afma-Tracking-Urls]
+      [3] invokevirtual #69
         - Methodref [java/net/HttpURLConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
       [6] dup
       [7] astore_1 v1
-      [8] ifnull +33 (target=41)
-      [11] aload_1 v1
-      [12] invokestatic #56
-        - Methodref [java/lang/Float.parseFloat (Ljava/lang/String;)F]
-      [15] fstore_1 v1
-      [16] aload_0 v0
-      [17] getfield #39
+      [8] ifnull +35 (target=43)
+      [11] new #34
+        - Class [java/util/StringTokenizer]
+      [14] dup
+      [15] aload_1 v1
+      [16] invokespecial #76
+        - Methodref [java/util/StringTokenizer.<init> (Ljava/lang/String;)V]
+      [19] astore_1 v1
+      [20] aload_1 v1
+      [21] invokevirtual #77
+        - Methodref [java/util/StringTokenizer.hasMoreTokens ()Z]
+      [24] ifeq +19 (target=43)
+      [27] aload_1 v1
+      [28] invokevirtual #78
+        - Methodref [java/util/StringTokenizer.nextToken ()Ljava/lang/String;]
+      [31] astore_2 v2
+      [32] aload_0 v0
+      [33] getfield #41
         - Fieldref [e.b Lc;]
-      [20] fload_1 v1
-      [21] invokevirtual #42
-        - Methodref [c.a (F)V]
-      [24] aload_0 v0
-      [25] getfield #39
-        - Fieldref [e.b Lc;]
-      [28] invokevirtual #46
-        - Methodref [c.l ()Z]
-      [31] ifne +10 (target=41)
-      [34] aload_0 v0
-      [35] getfield #39
-        - Fieldref [e.b Lc;]
-      [38] invokevirtual #45
-        - Methodref [c.b ()V]
-      [41] return
+      [36] aload_2 v2
+      [37] invokevirtual #46
+        - Methodref [c.a (Ljava/lang/String;)V]
+      [40] goto -20 (target=20)
+      [43] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       c(Ljava/net/HttpURLConnection;)V
     Access flags: 0x2
       = private void c(java.net.HttpURLConnection)
     Class member attributes (count = 1):
+    + Code attribute instructions (code length = 42, locals = 2, stack = 2):
+      [0] aload_1 v1
+      [1] ldc #13
+        - String [X-Afma-Refresh-Rate]
+      [3] invokevirtual #69
+        - Methodref [java/net/HttpURLConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
+      [6] dup
+      [7] astore_1 v1
+      [8] ifnull +33 (target=41)
+      [11] aload_1 v1
+      [12] invokestatic #60
+        - Methodref [java/lang/Float.parseFloat (Ljava/lang/String;)F]
+      [15] fstore_1 v1
+      [16] aload_0 v0
+      [17] getfield #41
+        - Fieldref [e.b Lc;]
+      [20] fload_1 v1
+      [21] invokevirtual #44
+        - Methodref [c.a (F)V]
+      [24] aload_0 v0
+      [25] getfield #41
+        - Fieldref [e.b Lc;]
+      [28] invokevirtual #48
+        - Methodref [c.l ()Z]
+      [31] ifne +10 (target=41)
+      [34] aload_0 v0
+      [35] getfield #41
+        - Fieldref [e.b Lc;]
+      [38] invokevirtual #47
+        - Methodref [c.b ()V]
+      [41] return
+      Code attribute exceptions (count = 0):
+      Code attribute attributes (attribute count = 0):
+  + Method:       d(Ljava/net/HttpURLConnection;)V
+    Access flags: 0x2
+      = private void d(java.net.HttpURLConnection)
+    Class member attributes (count = 1):
     + Code attribute instructions (code length = 47, locals = 2, stack = 2):
       [0] aload_1 v1
-      [1] ldc #11
+      [1] ldc #12
         - String [X-Afma-Orientation]
-      [3] invokevirtual #65
+      [3] invokevirtual #69
         - Methodref [java/net/HttpURLConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
       [6] dup
       [7] astore_1 v1
       [8] ifnull +38 (target=46)
       [11] aload_1 v1
-      [12] ldc #15
+      [12] ldc #17
         - String [portrait]
-      [14] invokevirtual #57
+      [14] invokevirtual #61
         - Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
       [17] ifeq +12 (target=29)
       [20] aload_0 v0
-      [21] getfield #39
+      [21] getfield #41
         - Fieldref [e.b Lc;]
       [24] iconst_1
-      [25] invokevirtual #43
+      [25] invokevirtual #45
         - Methodref [c.a (I)V]
       [28] return
       [29] aload_1 v1
-      [30] ldc #14
+      [30] ldc #16
         - String [landscape]
-      [32] invokevirtual #57
+      [32] invokevirtual #61
         - Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
       [35] ifeq +11 (target=46)
       [38] aload_0 v0
-      [39] getfield #39
+      [39] getfield #41
         - Fieldref [e.b Lc;]
       [42] iconst_0
-      [43] invokevirtual #43
+      [43] invokevirtual #45
         - Methodref [c.a (I)V]
       [46] return
       Code attribute exceptions (count = 0):
@@ -8940,289 +8973,295 @@ Methods (count = 6):
     Access flags: 0x82
       = private java.lang.Void a(java.lang.String[])
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 358, locals = 5, stack = 5):
+    + Code attribute instructions (code length = 366, locals = 5, stack = 5):
       [0] aload_1 v1
       [1] iconst_0
       [2] aaload
       [3] astore_1 v1
-      [4] new #31
+      [4] new #33
         - Class [java/net/URL]
       [7] dup
       [8] aload_1 v1
-      [9] invokespecial #70
+      [9] invokespecial #74
         - Methodref [java/net/URL.<init> (Ljava/lang/String;)V]
-      [12] invokevirtual #71
+      [12] invokevirtual #75
         - Methodref [java/net/URL.openConnection ()Ljava/net/URLConnection;]
-      [15] checkcast #29
+      [15] checkcast #31
         - Class [java/net/HttpURLConnection]
       [18] dup
       [19] astore_2 v2
-      [20] ldc #10
+      [20] ldc #11
         - String [User-Agent]
       [22] aload_0 v0
-      [23] getfield #40
+      [23] getfield #42
         - Fieldref [e.c Ljava/lang/String;]
-      [26] invokevirtual #69
+      [26] invokevirtual #73
         - Methodref [java/net/HttpURLConnection.setRequestProperty (Ljava/lang/String;Ljava/lang/String;)V]
       [29] aload_2 v2
       [30] iconst_0
-      [31] invokevirtual #68
+      [31] invokevirtual #72
         - Methodref [java/net/HttpURLConnection.setInstanceFollowRedirects (Z)V]
       [34] aload_2 v2
-      [35] invokevirtual #64
+      [35] invokevirtual #68
         - Methodref [java/net/HttpURLConnection.connect ()V]
       [38] aload_2 v2
-      [39] invokevirtual #67
+      [39] invokevirtual #71
         - Methodref [java/net/HttpURLConnection.getResponseCode ()I]
       [42] dup
       [43] istore_3 v3
       [44] sipush 302
-      [47] ificmpne +51 (target=98)
+      [47] ificmpne +55 (target=102)
       [50] aload_2 v2
-      [51] ldc #6
+      [51] ldc #7
         - String [Location]
-      [53] invokevirtual #65
+      [53] invokevirtual #69
         - Methodref [java/net/HttpURLConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String;]
       [56] dup
       [57] astore_3 v3
       [58] ifnonnull +20 (target=78)
-      [61] ldc #3
+      [61] ldc #4
         - String [Could not get redirect location from a 302 redirect.]
-      [63] invokestatic #78
+      [63] invokestatic #82
         - Methodref [s.c (Ljava/lang/String;)V]
       [66] aload_0 v0
-      [67] getfield #38
+      [67] getfield #40
         - Fieldref [e.a Lf;]
-      [70] getstatic #37
+      [70] getstatic #39
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
-      [73] invokevirtual #51
+      [73] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
       [76] aconst_null
       [77] areturn
       [78] aload_0 v0
       [79] aload_2 v2
-      [80] invokespecial #47
-        - Methodref [e.a (Ljava/net/HttpURLConnection;)V]
+      [80] invokespecial #51
+        - Methodref [e.b (Ljava/net/HttpURLConnection;)V]
       [83] aload_0 v0
       [84] aload_2 v2
-      [85] invokespecial #49
-        - Methodref [e.b (Ljava/net/HttpURLConnection;)V]
-      [88] aload_0 v0
-      [89] aload_2 v2
-      [90] invokespecial #50
+      [85] invokespecial #52
         - Methodref [e.c (Ljava/net/HttpURLConnection;)V]
-      [93] aload_3 v3
-      [94] astore_1 v1
-      [95] goto -91 (target=4)
-      [98] iload_3 v3
-      [99] sipush 200
-      [102] ificmpne +160 (target=262)
-      [105] aload_0 v0
-      [106] aload_2 v2
-      [107] invokespecial #47
+      [88] aload_2 v2
+      [89] invokestatic #49
         - Methodref [e.a (Ljava/net/HttpURLConnection;)V]
-      [110] aload_0 v0
-      [111] aload_2 v2
-      [112] invokespecial #49
+      [92] aload_0 v0
+      [93] aload_2 v2
+      [94] invokespecial #53
+        - Methodref [e.d (Ljava/net/HttpURLConnection;)V]
+      [97] aload_3 v3
+      [98] astore_1 v1
+      [99] goto -95 (target=4)
+      [102] iload_3 v3
+      [103] sipush 200
+      [106] ificmpne +164 (target=270)
+      [109] aload_0 v0
+      [110] aload_2 v2
+      [111] invokespecial #51
         - Methodref [e.b (Ljava/net/HttpURLConnection;)V]
-      [115] aload_0 v0
-      [116] aload_2 v2
-      [117] invokespecial #50
+      [114] aload_0 v0
+      [115] aload_2 v2
+      [116] invokespecial #52
         - Methodref [e.c (Ljava/net/HttpURLConnection;)V]
-      [120] aload_2 v2
-      [121] invokevirtual #66
+      [119] aload_2 v2
+      [120] invokestatic #49
+        - Methodref [e.a (Ljava/net/HttpURLConnection;)V]
+      [123] aload_0 v0
+      [124] aload_2 v2
+      [125] invokespecial #53
+        - Methodref [e.d (Ljava/net/HttpURLConnection;)V]
+      [128] aload_2 v2
+      [129] invokevirtual #70
         - Methodref [java/net/HttpURLConnection.getInputStream ()Ljava/io/InputStream;]
-      [124] astore_3 v3
-      [125] new #23
+      [132] astore_3 v3
+      [133] new #25
         - Class [java/io/BufferedReader]
-      [128] dup
-      [129] new #25
+      [136] dup
+      [137] new #27
         - Class [java/io/InputStreamReader]
-      [132] dup
-      [133] aload_3 v3
-      [134] invokespecial #55
+      [140] dup
+      [141] aload_3 v3
+      [142] invokespecial #59
         - Methodref [java/io/InputStreamReader.<init> (Ljava/io/InputStream;)V]
-      [137] invokespecial #53
+      [145] invokespecial #57
         - Methodref [java/io/BufferedReader.<init> (Ljava/io/Reader;)V]
-      [140] astore_2 v2
-      [141] new #28
+      [148] astore_2 v2
+      [149] new #30
         - Class [java/lang/StringBuilder]
-      [144] dup
-      [145] invokespecial #60
+      [152] dup
+      [153] invokespecial #64
         - Methodref [java/lang/StringBuilder.<init> ()V]
-      [148] astore_3 v3
-      [149] aload_2 v2
-      [150] invokevirtual #54
+      [156] astore_3 v3
+      [157] aload_2 v2
+      [158] invokevirtual #58
         - Methodref [java/io/BufferedReader.readLine ()Ljava/lang/String;]
-      [153] dup
-      [154] astore v4
-      [156] ifnull +20 (target=176)
-      [159] aload_3 v3
-      [160] aload v4
-      [162] invokevirtual #62
+      [161] dup
+      [162] astore v4
+      [164] ifnull +20 (target=184)
+      [167] aload_3 v3
+      [168] aload v4
+      [170] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [165] pop
-      [166] aload_3 v3
-      [167] ldc #1
+      [173] pop
+      [174] aload_3 v3
+      [175] ldc #2
         - String [
 ]
-      [169] invokevirtual #62
+      [177] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [172] pop
-      [173] goto -24 (target=149)
-      [176] aload_3 v3
-      [177] invokevirtual #63
+      [180] pop
+      [181] goto -24 (target=157)
+      [184] aload_3 v3
+      [185] invokevirtual #67
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [180] astore_2 v2
-      [181] new #28
+      [188] astore_2 v2
+      [189] new #30
         - Class [java/lang/StringBuilder]
-      [184] dup
-      [185] invokespecial #60
+      [192] dup
+      [193] invokespecial #64
         - Methodref [java/lang/StringBuilder.<init> ()V]
-      [188] ldc #8
+      [196] ldc #9
         - String [Response content is: ]
-      [190] invokevirtual #62
+      [198] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [193] aload_2 v2
-      [194] invokevirtual #62
+      [201] aload_2 v2
+      [202] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [197] invokevirtual #63
+      [205] invokevirtual #67
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [200] invokestatic #75
+      [208] invokestatic #79
         - Methodref [s.a (Ljava/lang/String;)V]
-      [203] aload_2 v2
-      [204] ifnull +13 (target=217)
-      [207] aload_2 v2
-      [208] invokevirtual #59
+      [211] aload_2 v2
+      [212] ifnull +13 (target=225)
+      [215] aload_2 v2
+      [216] invokevirtual #63
         - Methodref [java/lang/String.trim ()Ljava/lang/String;]
-      [211] invokevirtual #58
+      [219] invokevirtual #62
         - Methodref [java/lang/String.length ()I]
-      [214] ifgt +37 (target=251)
-      [217] new #28
+      [222] ifgt +37 (target=259)
+      [225] new #30
         - Class [java/lang/StringBuilder]
-      [220] dup
-      [221] invokespecial #60
+      [228] dup
+      [229] invokespecial #64
         - Methodref [java/lang/StringBuilder.<init> ()V]
-      [224] ldc #9
+      [232] ldc #10
         - String [Response message is null or zero length: ]
-      [226] invokevirtual #62
+      [234] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [229] aload_2 v2
-      [230] invokevirtual #62
+      [237] aload_2 v2
+      [238] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [233] invokevirtual #63
+      [241] invokevirtual #67
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [236] invokestatic #75
+      [244] invokestatic #79
         - Methodref [s.a (Ljava/lang/String;)V]
-      [239] aload_0 v0
-      [240] getfield #38
+      [247] aload_0 v0
+      [248] getfield #40
         - Fieldref [e.a Lf;]
-      [243] getstatic #35
+      [251] getstatic #37
         - Fieldref [com/google/ads/b.b Lcom/google/ads/b;]
-      [246] invokevirtual #51
+      [254] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
-      [249] aconst_null
-      [250] areturn
-      [251] aload_0 v0
-      [252] getfield #38
+      [257] aconst_null
+      [258] areturn
+      [259] aload_0 v0
+      [260] getfield #40
         - Fieldref [e.a Lf;]
-      [255] aload_2 v2
-      [256] aload_1 v1
-      [257] invokevirtual #52
+      [263] aload_2 v2
+      [264] aload_1 v1
+      [265] invokevirtual #56
         - Methodref [f.a (Ljava/lang/String;Ljava/lang/String;)V]
-      [260] aconst_null
-      [261] areturn
-      [262] iload_3 v3
-      [263] sipush 400
-      [266] ificmpne +20 (target=286)
-      [269] ldc #2
+      [268] aconst_null
+      [269] areturn
+      [270] iload_3 v3
+      [271] sipush 400
+      [274] ificmpne +20 (target=294)
+      [277] ldc #3
         - String [Bad request]
-      [271] invokestatic #78
+      [279] invokestatic #82
         - Methodref [s.c (Ljava/lang/String;)V]
-      [274] aload_0 v0
-      [275] getfield #38
+      [282] aload_0 v0
+      [283] getfield #40
         - Fieldref [e.a Lf;]
-      [278] getstatic #34
+      [286] getstatic #36
         - Fieldref [com/google/ads/b.a Lcom/google/ads/b;]
-      [281] invokevirtual #51
+      [289] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
-      [284] aconst_null
-      [285] areturn
-      [286] new #28
+      [292] aconst_null
+      [293] areturn
+      [294] new #30
         - Class [java/lang/StringBuilder]
-      [289] dup
-      [290] invokespecial #60
+      [297] dup
+      [298] invokespecial #64
         - Methodref [java/lang/StringBuilder.<init> ()V]
-      [293] ldc #5
+      [301] ldc #6
         - String [Invalid response code: ]
-      [295] invokevirtual #62
+      [303] invokevirtual #66
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [298] iload_3 v3
-      [299] invokevirtual #61
+      [306] iload_3 v3
+      [307] invokevirtual #65
         - Methodref [java/lang/StringBuilder.append (I)Ljava/lang/StringBuilder;]
-      [302] invokevirtual #63
+      [310] invokevirtual #67
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [305] invokestatic #78
+      [313] invokestatic #82
         - Methodref [s.c (Ljava/lang/String;)V]
-      [308] aload_0 v0
-      [309] getfield #38
+      [316] aload_0 v0
+      [317] getfield #40
         - Fieldref [e.a Lf;]
-      [312] getstatic #37
+      [320] getstatic #39
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
-      [315] invokevirtual #51
+      [323] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
-      [318] aconst_null
-      [319] areturn
-      [320] astore_2 v2
-      [321] ldc #7
+      [326] aconst_null
+      [327] areturn
+      [328] astore_2 v2
+      [329] ldc #8
         - String [Received malformed ad url from javascript.]
-      [323] aload_2 v2
-      [324] invokestatic #76
+      [331] aload_2 v2
+      [332] invokestatic #80
         - Methodref [s.a (Ljava/lang/String;Ljava/lang/Throwable;)V]
-      [327] aload_0 v0
-      [328] getfield #38
+      [335] aload_0 v0
+      [336] getfield #40
         - Fieldref [e.a Lf;]
-      [331] getstatic #37
+      [339] getstatic #39
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
-      [334] invokevirtual #51
+      [342] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
-      [337] aconst_null
-      [338] areturn
-      [339] astore_2 v2
-      [340] ldc #4
+      [345] aconst_null
+      [346] areturn
+      [347] astore_2 v2
+      [348] ldc #5
         - String [IOException connecting to ad url.]
-      [342] aload_2 v2
-      [343] invokestatic #77
+      [350] aload_2 v2
+      [351] invokestatic #81
         - Methodref [s.b (Ljava/lang/String;Ljava/lang/Throwable;)V]
-      [346] aload_0 v0
-      [347] getfield #38
+      [354] aload_0 v0
+      [355] getfield #40
         - Fieldref [e.a Lf;]
-      [350] getstatic #36
+      [358] getstatic #38
         - Fieldref [com/google/ads/b.c Lcom/google/ads/b;]
-      [353] invokevirtual #51
+      [361] invokevirtual #55
         - Methodref [f.a (Lcom/google/ads/b;)V]
-      [356] aconst_null
-      [357] areturn
+      [364] aconst_null
+      [365] areturn
       Code attribute exceptions (count = 10):
-      - ExceptionInfo (4 -> 77: 320):
+      - ExceptionInfo (4 -> 77: 328):
       - Class [java/net/MalformedURLException]
-      - ExceptionInfo (78 -> 250: 320):
+      - ExceptionInfo (78 -> 258: 328):
       - Class [java/net/MalformedURLException]
-      - ExceptionInfo (251 -> 261: 320):
+      - ExceptionInfo (259 -> 269: 328):
       - Class [java/net/MalformedURLException]
-      - ExceptionInfo (262 -> 285: 320):
+      - ExceptionInfo (270 -> 293: 328):
       - Class [java/net/MalformedURLException]
-      - ExceptionInfo (286 -> 319: 320):
+      - ExceptionInfo (294 -> 327: 328):
       - Class [java/net/MalformedURLException]
-      - ExceptionInfo (4 -> 77: 339):
+      - ExceptionInfo (4 -> 77: 347):
       - Class [java/io/IOException]
-      - ExceptionInfo (78 -> 250: 339):
+      - ExceptionInfo (78 -> 258: 347):
       - Class [java/io/IOException]
-      - ExceptionInfo (251 -> 261: 339):
+      - ExceptionInfo (259 -> 269: 347):
       - Class [java/io/IOException]
-      - ExceptionInfo (262 -> 285: 339):
+      - ExceptionInfo (270 -> 293: 347):
       - Class [java/io/IOException]
-      - ExceptionInfo (286 -> 319: 339):
+      - ExceptionInfo (294 -> 327: 347):
       - Class [java/io/IOException]
       Code attribute attributes (attribute count = 0):
   + Method:       doInBackground([Ljava/lang/Object;)Ljava/lang/Object;
@@ -9232,9 +9271,9 @@ Methods (count = 6):
     + Code attribute instructions (code length = 9, locals = 2, stack = 2):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] checkcast #16
+      [2] checkcast #18
         - Class [[Ljava/lang/String;]
-      [5] invokespecial #48
+      [5] invokespecial #50
         - Methodref [e.a ([Ljava/lang/String;)Ljava/lang/Void;]
       [8] areturn
       Code attribute exceptions (count = 0):
@@ -9252,13 +9291,13 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 465):
+Constant Pool (count = 467):
   - String ["></script><script>]
   - String [(]
   - String [);]
   - String [.js]
-  - String [4.0.3]
-  - String [4.0.3.android.]
+  - String [4.0.4]
+  - String [4.0.4.android.]
   - String [</script></head><body></body></html>]
   - String [<html><head><script src="]
   - String [AFMA_buildAdURL]
@@ -9277,7 +9316,7 @@ Constant Pool (count = 465):
   - String [adRequestUrlHtml: ]
   - String [adRequestWebView was null while trying to load an ad.]
   - String [ad_frame]
-  - String [afma-sdk-a-v4.0.3]
+  - String [afma-sdk-a-v4.0.4]
   - String [aoi_nofill]
   - String [aoi_timeout]
   - String [app_name]
@@ -9365,6 +9404,7 @@ Constant Pool (count = 465):
   - Fieldref [f.j Ljava/lang/String;]
   - Fieldref [f.k Lcom/google/ads/b;]
   - Fieldref [f.l Z]
+  - Fieldref [f.m Z]
   - Methodref [a.a ()V]
   - Methodref [a.d ()V]
   - Methodref [a.e ()J]
@@ -9510,6 +9550,7 @@ Constant Pool (count = 465):
   + NameAndType [loadDataWithBaseURL (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V]
   + NameAndType [m ()V]
   + NameAndType [m ()Z]
+  + NameAndType [m Z]
   + NameAndType [notify ()V]
   + NameAndType [ordinal ()I]
   + NameAndType [p ()Ljava/lang/String;]
@@ -9576,8 +9617,8 @@ Constant Pool (count = 465):
   + Utf8 [([Ljava/lang/Object;)V]
   + Utf8 [);]
   + Utf8 [.js]
-  + Utf8 [4.0.3]
-  + Utf8 [4.0.3.android.]
+  + Utf8 [4.0.4]
+  + Utf8 [4.0.4.android.]
   + Utf8 [</script></head><body></body></html>]
   + Utf8 [<clinit>]
   + Utf8 [<html><head><script src="]
@@ -9615,7 +9656,7 @@ Constant Pool (count = 465):
   + Utf8 [adRequestUrlHtml: ]
   + Utf8 [adRequestWebView was null while trying to load an ad.]
   + Utf8 [ad_frame]
-  + Utf8 [afma-sdk-a-v4.0.3]
+  + Utf8 [afma-sdk-a-v4.0.4]
   + Utf8 [android/app/Activity]
   + Utf8 [android/content/Context]
   + Utf8 [android/os/AsyncTask]
@@ -9716,7 +9757,7 @@ Constant Pool (count = 465):
   + Utf8 [widthPixels]
   + Utf8 [z]
 
-Fields (count = 12):
+Fields (count = 13):
   + Field:        a Ljava/lang/String;
     Access flags: 0x1a
       = private static final java.lang.String a
@@ -9753,6 +9794,9 @@ Fields (count = 12):
   + Field:        l Z
     Access flags: 0x2
       = private boolean l
+  + Field:        m Z
+    Access flags: 0x2
+      = private boolean m
 
 Methods (count = 13):
   + Method:       a(J)V
@@ -9783,9 +9827,9 @@ Methods (count = 13):
     Access flags: 0x0
       = f(c)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 120, locals = 3, stack = 6):
+    + Code attribute instructions (code length = 125, locals = 3, stack = 6):
       [0] aload_0 v0
-      [1] invokespecial #129
+      [1] invokespecial #130
         - Methodref [android/os/AsyncTask.<init> ()V]
       [4] aload_0 v0
       [5] aload_1 v1
@@ -9807,81 +9851,85 @@ Methods (count = 13):
       [25] iconst_0
       [26] putfield #114
         - Fieldref [f.l Z]
-      [29] aload_1 v1
-      [30] invokevirtual #141
+      [29] aload_0 v0
+      [30] iconst_0
+      [31] putfield #115
+        - Fieldref [f.m Z]
+      [34] aload_1 v1
+      [35] invokevirtual #142
         - Methodref [c.c ()Landroid/app/Activity;]
-      [33] dup
-      [34] astore_2 v2
-      [35] ifnull +69 (target=104)
-      [38] aload_0 v0
-      [39] new #68
+      [38] dup
+      [39] astore_2 v2
+      [40] ifnull +69 (target=109)
+      [43] aload_0 v0
+      [44] new #68
         - Class [android/webkit/WebView]
-      [42] dup
-      [43] aload_2 v2
-      [44] invokevirtual #127
+      [47] dup
+      [48] aload_2 v2
+      [49] invokevirtual #128
         - Methodref [android/app/Activity.getApplicationContext ()Landroid/content/Context;]
-      [47] invokespecial #132
+      [52] invokespecial #133
         - Methodref [android/webkit/WebView.<init> (Landroid/content/Context;)V]
-      [50] putfield #111
+      [55] putfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [53] aload_0 v0
-      [54] getfield #111
+      [58] aload_0 v0
+      [59] getfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [57] invokevirtual #133
+      [62] invokevirtual #134
         - Methodref [android/webkit/WebView.getSettings ()Landroid/webkit/WebSettings;]
-      [60] iconst_1
-      [61] invokevirtual #131
+      [65] iconst_1
+      [66] invokevirtual #132
         - Methodref [android/webkit/WebSettings.setJavaScriptEnabled (Z)V]
-      [64] aload_0 v0
-      [65] getfield #111
+      [69] aload_0 v0
+      [70] getfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [68] new #89
+      [73] new #89
         - Class [n]
-      [71] dup
-      [72] aload_1 v1
-      [73] getstatic #97
+      [76] dup
+      [77] aload_1 v1
+      [78] getstatic #97
         - Fieldref [ac.a Lac;]
-      [76] iconst_0
-      [77] invokespecial #176
+      [81] iconst_0
+      [82] invokespecial #177
         - Methodref [n.<init> (Lc;Lac;Z)V]
-      [80] invokevirtual #135
+      [85] invokevirtual #136
         - Methodref [android/webkit/WebView.setWebViewClient (Landroid/webkit/WebViewClient;)V]
-      [83] aload_0 v0
-      [84] new #76
-        - Class [e]
-      [87] dup
       [88] aload_0 v0
-      [89] aload_1 v1
-      [90] aload_0 v0
-      [91] getfield #111
+      [89] new #76
+        - Class [e]
+      [92] dup
+      [93] aload_0 v0
+      [94] aload_1 v1
+      [95] aload_0 v0
+      [96] getfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [94] invokestatic #181
+      [99] invokestatic #182
         - Methodref [r.a (Landroid/webkit/WebView;)Ljava/lang/String;]
-      [97] invokespecial #155
+      [102] invokespecial #156
         - Methodref [e.<init> (Lf;Lc;Ljava/lang/String;)V]
-      [100] putfield #109
+      [105] putfield #109
         - Fieldref [f.g Le;]
-      [103] return
-      [104] aload_0 v0
-      [105] aconst_null
-      [106] putfield #111
-        - Fieldref [f.i Landroid/webkit/WebView;]
+      [108] return
       [109] aload_0 v0
       [110] aconst_null
-      [111] putfield #109
+      [111] putfield #111
+        - Fieldref [f.i Landroid/webkit/WebView;]
+      [114] aload_0 v0
+      [115] aconst_null
+      [116] putfield #109
         - Fieldref [f.g Le;]
-      [114] ldc #21
+      [119] ldc #21
         - String [activity was null while trying to create an AdLoader.]
-      [116] invokestatic #188
+      [121] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
-      [119] return
+      [124] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       a([Lcom/google/ads/c;)Lcom/google/ads/b;
     Access flags: 0x82
       = private com.google.ads.b a(com.google.ads.c[])
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 1102, locals = 16, stack = 6):
+    + Code attribute instructions (code length = 1105, locals = 16, stack = 6):
       [0] aload_0 v0
       [1] dup
       [2] astore_2 v2
@@ -9896,7 +9944,7 @@ Methods (count = 13):
       [15] ifnonnull +14 (target=29)
       [18] ldc #23
         - String [adRequestWebView was null while trying to load an ad.]
-      [20] invokestatic #188
+      [20] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
       [23] getstatic #102
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
@@ -9910,14 +9958,14 @@ Methods (count = 13):
       [33] aload_0 v0
       [34] getfield #110
         - Fieldref [f.h Lc;]
-      [37] invokevirtual #141
+      [37] invokevirtual #142
         - Methodref [c.c ()Landroid/app/Activity;]
       [40] dup
       [41] astore_3 v3
       [42] ifnonnull +14 (target=56)
       [45] ldc #20
         - String [activity was null while forming an ad request.]
-      [47] invokestatic #188
+      [47] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
       [50] getstatic #102
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
@@ -9931,21 +9979,21 @@ Methods (count = 13):
       [61] astore_3 v3
       [62] astore_1 v1
       [63] aload v4
-      [65] invokevirtual #127
+      [65] invokevirtual #128
         - Methodref [android/app/Activity.getApplicationContext ()Landroid/content/Context;]
       [68] astore v5
       [70] aload_3 v3
-      [71] invokevirtual #151
+      [71] invokevirtual #152
         - Methodref [com/google/ads/c.b ()Ljava/util/Map;]
       [74] astore_3 v3
       [75] aload_1 v1
       [76] getfield #110
         - Fieldref [f.h Lc;]
-      [79] invokevirtual #147
+      [79] invokevirtual #148
         - Methodref [c.j ()La;]
       [82] dup
       [83] astore v6
-      [85] invokevirtual #120
+      [85] invokevirtual #121
         - Methodref [a.h ()J]
       [88] dup2
       [89] lstore v12
@@ -9956,13 +10004,13 @@ Methods (count = 13):
       [97] ldc #45
         - String [prl]
       [99] lload v12
-      [101] invokestatic #163
+      [101] invokestatic #164
         - Methodref [java/lang/Long.valueOf (J)Ljava/lang/Long;]
-      [104] invokeinterface #190
+      [104] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [109] pop
       [110] aload v6
-      [112] invokevirtual #119
+      [112] invokevirtual #120
         - Methodref [a.g ()Ljava/lang/String;]
       [115] dup
       [116] astore v7
@@ -9971,11 +10019,11 @@ Methods (count = 13):
       [122] ldc #43
         - String [ppcl]
       [124] aload v7
-      [126] invokeinterface #190
+      [126] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [131] pop
       [132] aload v6
-      [134] invokevirtual #118
+      [134] invokevirtual #119
         - Methodref [a.f ()Ljava/lang/String;]
       [137] dup
       [138] astore v7
@@ -9984,11 +10032,11 @@ Methods (count = 13):
       [144] ldc #41
         - String [pcl]
       [146] aload v7
-      [148] invokeinterface #190
+      [148] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [153] pop
       [154] aload v6
-      [156] invokevirtual #117
+      [156] invokevirtual #118
         - Methodref [a.e ()J]
       [159] dup2
       [160] lstore v14
@@ -9999,23 +10047,23 @@ Methods (count = 13):
       [168] ldc #40
         - String [pcc]
       [170] lload v14
-      [172] invokestatic #163
+      [172] invokestatic #164
         - Methodref [java/lang/Long.valueOf (J)Ljava/lang/Long;]
-      [175] invokeinterface #190
+      [175] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [180] pop
       [181] aload_3 v3
       [182] ldc #44
         - String [preqs]
-      [184] invokestatic #121
+      [184] invokestatic #122
         - Methodref [a.i ()J]
-      [187] invokestatic #163
+      [187] invokestatic #164
         - Methodref [java/lang/Long.valueOf (J)Ljava/lang/Long;]
-      [190] invokeinterface #190
+      [190] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [195] pop
       [196] aload v6
-      [198] invokevirtual #122
+      [198] invokevirtual #123
         - Methodref [a.j ()Ljava/lang/String;]
       [201] dup
       [202] astore v7
@@ -10024,11 +10072,11 @@ Methods (count = 13):
       [208] ldc #39
         - String [pai]
       [210] aload v7
-      [212] invokeinterface #190
+      [212] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [217] pop
       [218] aload v6
-      [220] invokevirtual #123
+      [220] invokevirtual #124
         - Methodref [a.k ()Z]
       [223] ifeq +14 (target=237)
       [226] aload_3 v3
@@ -10036,11 +10084,11 @@ Methods (count = 13):
         - String [aoi_timeout]
       [229] ldc #49
         - String [true]
-      [231] invokeinterface #190
+      [231] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [236] pop
       [237] aload v6
-      [239] invokevirtual #124
+      [239] invokevirtual #125
         - Methodref [a.m ()Z]
       [242] ifeq +14 (target=256)
       [245] aload_3 v3
@@ -10048,11 +10096,11 @@ Methods (count = 13):
         - String [aoi_nofill]
       [248] ldc #49
         - String [true]
-      [250] invokeinterface #190
+      [250] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [255] pop
       [256] aload v6
-      [258] invokevirtual #125
+      [258] invokevirtual #126
         - Methodref [a.p ()Ljava/lang/String;]
       [261] dup
       [262] astore v7
@@ -10061,19 +10109,19 @@ Methods (count = 13):
       [268] ldc #42
         - String [pit]
       [270] aload v7
-      [272] invokeinterface #190
+      [272] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [277] pop
       [278] aload v6
-      [280] invokevirtual #115
+      [280] invokevirtual #116
         - Methodref [a.a ()V]
       [283] aload v6
-      [285] invokevirtual #116
+      [285] invokevirtual #117
         - Methodref [a.d ()V]
       [288] aload_1 v1
       [289] getfield #110
         - Fieldref [f.h Lc;]
-      [292] invokevirtual #142
+      [292] invokevirtual #143
         - Methodref [c.d ()Lcom/google/ads/a;]
       [295] instanceof #74
         - Class [com/google/ads/e]
@@ -10083,18 +10131,18 @@ Methods (count = 13):
         - String [format]
       [304] ldc #34
         - String [interstitial_mb]
-      [306] invokeinterface #190
+      [306] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [311] pop
       [312] goto +91 (target=403)
       [315] aload_1 v1
       [316] getfield #110
         - Fieldref [f.h Lc;]
-      [319] invokevirtual #146
+      [319] invokevirtual #147
         - Methodref [c.i ()Lcom/google/ads/f;]
       [322] dup
       [323] astore v6
-      [325] invokevirtual #154
+      [325] invokevirtual #155
         - Methodref [com/google/ads/f.toString ()Ljava/lang/String;]
       [328] dup
       [329] astore v7
@@ -10103,43 +10151,43 @@ Methods (count = 13):
       [335] ldc #30
         - String [format]
       [337] aload v7
-      [339] invokeinterface #190
+      [339] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [344] pop
       [345] goto +58 (target=403)
       [348] new #86
         - Class [java/util/HashMap]
       [351] dup
-      [352] invokespecial #173
+      [352] invokespecial #174
         - Methodref [java/util/HashMap.<init> ()V]
       [355] dup
       [356] astore v7
       [358] ldc #56
         - String [w]
       [360] aload v6
-      [362] invokevirtual #152
+      [362] invokevirtual #153
         - Methodref [com/google/ads/f.a ()I]
-      [365] invokestatic #162
+      [365] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [368] invokeinterface #190
+      [368] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [373] pop
       [374] aload v7
       [376] ldc #31
         - String [h]
       [378] aload v6
-      [380] invokevirtual #153
+      [380] invokevirtual #154
         - Methodref [com/google/ads/f.b ()I]
-      [383] invokestatic #162
+      [383] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [386] invokeinterface #190
+      [386] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [391] pop
       [392] aload_3 v3
       [393] ldc #24
         - String [ad_frame]
       [395] aload v7
-      [397] invokeinterface #190
+      [397] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [402] pop
       [403] aload_3 v3
@@ -10148,26 +10196,26 @@ Methods (count = 13):
       [406] aload_1 v1
       [407] getfield #110
         - Fieldref [f.h Lc;]
-      [410] invokevirtual #143
+      [410] invokevirtual #144
         - Methodref [c.f ()Ljava/lang/String;]
-      [413] invokeinterface #190
+      [413] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [418] pop
       [419] aload_3 v3
       [420] ldc #36
         - String [js]
       [422] ldc #25
-        - String [afma-sdk-a-v4.0.3]
-      [424] invokeinterface #190
+        - String [afma-sdk-a-v4.0.4]
+      [424] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [429] pop
       [430] aload_3 v3
       [431] ldc #37
         - String [msid]
       [433] aload v5
-      [435] invokevirtual #128
+      [435] invokevirtual #129
         - Methodref [android/content/Context.getPackageName ()Ljava/lang/String;]
-      [438] invokeinterface #190
+      [438] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [443] pop
       [444] aload_3 v3
@@ -10176,33 +10224,33 @@ Methods (count = 13):
       [447] new #85
         - Class [java/lang/StringBuilder]
       [450] dup
-      [451] invokespecial #169
+      [451] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [454] ldc #6
-        - String [4.0.3.android.]
-      [456] invokevirtual #171
+        - String [4.0.4.android.]
+      [456] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [459] aload v5
-      [461] invokevirtual #128
+      [461] invokevirtual #129
         - Methodref [android/content/Context.getPackageName ()Ljava/lang/String;]
-      [464] invokevirtual #171
+      [464] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [467] invokevirtual #172
+      [467] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [470] invokeinterface #190
+      [470] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [475] pop
       [476] aload_3 v3
       [477] ldc #35
         - String [isu]
       [479] aload v5
-      [481] invokestatic #180
+      [481] invokestatic #181
         - Methodref [r.a (Landroid/content/Context;)Ljava/lang/String;]
-      [484] invokeinterface #190
+      [484] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [489] pop
       [490] aload v5
-      [492] invokestatic #182
+      [492] invokestatic #183
         - Methodref [r.c (Landroid/content/Context;)Ljava/lang/String;]
       [495] dup
       [496] astore v6
@@ -10213,57 +10261,57 @@ Methods (count = 13):
       [505] aload_1 v1
       [506] ldc #17
         - String [NETWORK_ERROR]
-      [508] invokespecial #189
+      [508] invokespecial #190
         - Methodref [z.<init> (Lf;Ljava/lang/String;)V]
       [511] athrow
       [512] aload_3 v3
       [513] ldc #38
         - String [net]
       [515] aload v6
-      [517] invokeinterface #190
+      [517] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [522] pop
       [523] aload v5
-      [525] invokestatic #183
+      [525] invokestatic #184
         - Methodref [r.d (Landroid/content/Context;)Ljava/lang/String;]
       [528] dup
       [529] astore v7
       [531] ifnull +22 (target=553)
       [534] aload v7
-      [536] invokevirtual #167
+      [536] invokevirtual #168
         - Methodref [java/lang/String.length ()I]
       [539] ifeq +14 (target=553)
       [542] aload_3 v3
       [543] ldc #29
         - String [cap]
       [545] aload v7
-      [547] invokeinterface #190
+      [547] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [552] pop
       [553] aload_3 v3
       [554] ldc #50
         - String [u_audio]
       [556] aload v5
-      [558] invokestatic #184
+      [558] invokestatic #185
         - Methodref [r.e (Landroid/content/Context;)Laa;]
-      [561] invokevirtual #126
+      [561] invokevirtual #127
         - Methodref [aa.ordinal ()I]
-      [564] invokestatic #162
+      [564] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [567] invokeinterface #190
+      [567] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [572] pop
       [573] aload_3 v3
       [574] ldc #53
         - String [u_so]
       [576] aload v5
-      [578] invokestatic #185
+      [578] invokestatic #186
         - Methodref [r.f (Landroid/content/Context;)Ljava/lang/String;]
-      [581] invokeinterface #190
+      [581] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [586] pop
       [587] aload v4
-      [589] invokestatic #179
+      [589] invokestatic #180
         - Methodref [r.a (Landroid/app/Activity;)Landroid/util/DisplayMetrics;]
       [592] astore v7
       [594] aload_3 v3
@@ -10272,9 +10320,9 @@ Methods (count = 13):
       [597] aload v7
       [599] getfield #98
         - Fieldref [android/util/DisplayMetrics.density F]
-      [602] invokestatic #161
+      [602] invokestatic #162
         - Methodref [java/lang/Float.valueOf (F)Ljava/lang/Float;]
-      [605] invokeinterface #190
+      [605] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [610] pop
       [611] aload_3 v3
@@ -10283,9 +10331,9 @@ Methods (count = 13):
       [614] aload v7
       [616] getfield #99
         - Fieldref [android/util/DisplayMetrics.heightPixels I]
-      [619] invokestatic #162
+      [619] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [622] invokeinterface #190
+      [622] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [627] pop
       [628] aload_3 v3
@@ -10294,94 +10342,94 @@ Methods (count = 13):
       [631] aload v7
       [633] getfield #100
         - Fieldref [android/util/DisplayMetrics.widthPixels I]
-      [636] invokestatic #162
+      [636] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [639] invokeinterface #190
+      [639] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [644] pop
       [645] aload_3 v3
       [646] ldc #32
         - String [hl]
-      [648] invokestatic #174
+      [648] invokestatic #175
         - Methodref [java/util/Locale.getDefault ()Ljava/util/Locale;]
-      [651] invokevirtual #175
+      [651] invokevirtual #176
         - Methodref [java/util/Locale.getLanguage ()Ljava/lang/String;]
-      [654] invokeinterface #190
+      [654] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [659] pop
-      [660] invokestatic #178
+      [660] invokestatic #179
         - Methodref [r.a ()Z]
       [663] ifeq +16 (target=679)
       [666] aload_3 v3
       [667] ldc #46
         - String [simulator]
       [669] iconst_1
-      [670] invokestatic #162
+      [670] invokestatic #163
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [673] invokeinterface #190
+      [673] invokeinterface #191
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [678] pop
       [679] new #71
         - Class [com/google/a/al]
       [682] dup
-      [683] invokespecial #149
+      [683] invokespecial #150
         - Methodref [com/google/a/al.<init> ()V]
       [686] aload_3 v3
-      [687] invokevirtual #150
+      [687] invokevirtual #151
         - Methodref [com/google/a/al.a (Ljava/lang/Object;)Ljava/lang/String;]
       [690] astore_1 v1
       [691] new #85
         - Class [java/lang/StringBuilder]
       [694] dup
-      [695] invokespecial #169
+      [695] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [698] getstatic #104
         - Fieldref [f.b Ljava/lang/String;]
-      [701] invokevirtual #171
+      [701] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [704] ldc #9
         - String [AFMA_buildAdURL]
-      [706] invokevirtual #171
+      [706] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [709] ldc #2
         - String [(]
-      [711] invokevirtual #171
+      [711] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [714] aload_1 v1
-      [715] invokevirtual #171
+      [715] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [718] ldc #3
         - String [);]
-      [720] invokevirtual #171
+      [720] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [723] ldc #7
         - String [</script></head><body></body></html>]
-      [725] invokevirtual #171
+      [725] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [728] invokevirtual #172
+      [728] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
       [731] astore_1 v1
       [732] new #85
         - Class [java/lang/StringBuilder]
       [735] dup
-      [736] invokespecial #169
+      [736] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [739] ldc #22
         - String [adRequestUrlHtml: ]
-      [741] invokevirtual #171
+      [741] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [744] aload_1 v1
-      [745] invokevirtual #171
+      [745] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [748] invokevirtual #172
+      [748] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [751] invokestatic #187
+      [751] invokestatic #188
         - Methodref [s.c (Ljava/lang/String;)V]
       [754] goto +15 (target=769)
       [757] pop
       [758] ldc #18
         - String [Unable to connect to network.]
-      [760] invokestatic #187
+      [760] invokestatic #188
         - Methodref [s.c (Ljava/lang/String;)V]
       [763] getstatic #101
         - Fieldref [com/google/ads/b.c Lcom/google/ads/b;]
@@ -10398,13 +10446,13 @@ Methods (count = 13):
       [777] ldc #55
         - String [utf-8]
       [779] aconst_null
-      [780] invokevirtual #134
+      [780] invokevirtual #135
         - Methodref [android/webkit/WebView.loadDataWithBaseURL (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V]
       [783] aload_0 v0
-      [784] invokespecial #159
+      [784] invokespecial #160
         - Methodref [f.b ()J]
       [787] lstore v6
-      [789] invokestatic #130
+      [789] invokestatic #131
         - Methodref [android/os/SystemClock.elapsedRealtime ()J]
       [792] lstore v10
       [794] lload v6
@@ -10413,25 +10461,25 @@ Methods (count = 13):
       [798] ifle +9 (target=807)
       [801] aload_0 v0
       [802] lload v6
-      [804] invokevirtual #166
+      [804] invokevirtual #167
         - Methodref [java/lang/Object.wait (J)V]
       [807] goto +32 (target=839)
       [810] astore_1 v1
       [811] new #85
         - Class [java/lang/StringBuilder]
       [814] dup
-      [815] invokespecial #169
+      [815] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [818] ldc #11
         - String [AdLoader InterruptedException while getting the URL: ]
-      [820] invokevirtual #171
+      [820] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [823] aload_1 v1
-      [824] invokevirtual #170
+      [824] invokevirtual #171
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [827] invokevirtual #172
+      [827] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [830] invokestatic #188
+      [830] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
       [833] getstatic #102
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
@@ -10454,7 +10502,7 @@ Methods (count = 13):
       [857] ifnonnull +14 (target=871)
       [860] ldc #15
         - String [AdLoader timed out while getting the URL.]
-      [862] invokestatic #187
+      [862] invokestatic #188
         - Methodref [s.c (Ljava/lang/String;)V]
       [865] getstatic #101
         - Fieldref [com/google/ads/b.c Lcom/google/ads/b;]
@@ -10471,10 +10519,10 @@ Methods (count = 13):
       [879] getfield #112
         - Fieldref [f.j Ljava/lang/String;]
       [882] aastore
-      [883] invokevirtual #160
+      [883] invokevirtual #161
         - Methodref [f.publishProgress ([Ljava/lang/Object;)V]
       [886] lload v6
-      [888] invokestatic #130
+      [888] invokestatic #131
         - Methodref [android/os/SystemClock.elapsedRealtime ()J]
       [891] lload v10
       [893] lsub
@@ -10486,25 +10534,25 @@ Methods (count = 13):
       [901] ifle +9 (target=910)
       [904] aload_0 v0
       [905] lload v8
-      [907] invokevirtual #166
+      [907] invokevirtual #167
         - Methodref [java/lang/Object.wait (J)V]
       [910] goto +32 (target=942)
       [913] astore_1 v1
       [914] new #85
         - Class [java/lang/StringBuilder]
       [917] dup
-      [918] invokespecial #169
+      [918] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [921] ldc #10
         - String [AdLoader InterruptedException while getting the HTML: ]
-      [923] invokevirtual #171
+      [923] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [926] aload_1 v1
-      [927] invokevirtual #170
+      [927] invokevirtual #171
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [930] invokevirtual #172
+      [930] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [933] invokestatic #188
+      [933] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
       [936] getstatic #102
         - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
@@ -10527,7 +10575,7 @@ Methods (count = 13):
       [960] ifnonnull +14 (target=974)
       [963] ldc #14
         - String [AdLoader timed out while getting the HTML.]
-      [965] invokestatic #187
+      [965] invokestatic #188
         - Methodref [s.c (Ljava/lang/String;)V]
       [968] getstatic #101
         - Fieldref [com/google/ads/b.c Lcom/google/ads/b;]
@@ -10537,15 +10585,15 @@ Methods (count = 13):
       [974] aload_0 v0
       [975] getfield #110
         - Fieldref [f.h Lc;]
-      [978] invokevirtual #144
+      [978] invokevirtual #145
         - Methodref [c.g ()Lb;]
       [981] astore_1 v1
       [982] aload_0 v0
       [983] getfield #110
         - Fieldref [f.h Lc;]
-      [986] invokevirtual #145
+      [986] invokevirtual #146
         - Methodref [c.h ()Ln;]
-      [989] invokevirtual #177
+      [989] invokevirtual #178
         - Methodref [n.a ()V]
       [992] aload_1 v1
       [993] aload_0 v0
@@ -10559,10 +10607,10 @@ Methods (count = 13):
       [1003] ldc #55
         - String [utf-8]
       [1005] aconst_null
-      [1006] invokevirtual #137
+      [1006] invokevirtual #138
         - Methodref [b.loadDataWithBaseURL (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V]
       [1009] lload v6
-      [1011] invokestatic #130
+      [1011] invokestatic #131
         - Methodref [android/os/SystemClock.elapsedRealtime ()J]
       [1014] lload v10
       [1016] lsub
@@ -10574,60 +10622,63 @@ Methods (count = 13):
       [1024] ifle +9 (target=1033)
       [1027] aload_0 v0
       [1028] lload v8
-      [1030] invokevirtual #166
+      [1030] invokevirtual #167
         - Methodref [java/lang/Object.wait (J)V]
-      [1033] goto +32 (target=1065)
-      [1036] astore_1 v1
+      [1033] goto +36 (target=1069)
+      [1036] astore_3 v3
       [1037] new #85
         - Class [java/lang/StringBuilder]
       [1040] dup
-      [1041] invokespecial #169
+      [1041] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [1044] ldc #12
         - String [AdLoader InterruptedException while loading the HTML: ]
-      [1046] invokevirtual #171
+      [1046] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [1049] aload_1 v1
-      [1050] invokevirtual #170
+      [1049] aload_3 v3
+      [1050] invokevirtual #171
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [1053] invokevirtual #172
+      [1053] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [1056] invokestatic #188
+      [1056] invokestatic #189
         - Methodref [s.e (Ljava/lang/String;)V]
-      [1059] getstatic #102
-        - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
-      [1062] aload_2 v2
-      [1063] monitorexit
-      [1064] areturn
-      [1065] aload_0 v0
-      [1066] getfield #114
-        - Fieldref [f.l Z]
-      [1069] ifeq +7 (target=1076)
-      [1072] aconst_null
-      [1073] aload_2 v2
-      [1074] monitorexit
-      [1075] areturn
-      [1076] aload_1 v1
-      [1077] invokevirtual #139
+      [1059] aload_1 v1
+      [1060] invokevirtual #140
         - Methodref [b.stopLoading ()V]
+      [1063] getstatic #102
+        - Fieldref [com/google/ads/b.d Lcom/google/ads/b;]
+      [1066] aload_2 v2
+      [1067] monitorexit
+      [1068] areturn
+      [1069] aload_0 v0
+      [1070] getfield #115
+        - Fieldref [f.m Z]
+      [1073] ifeq +7 (target=1080)
+      [1076] aconst_null
+      [1077] aload_2 v2
+      [1078] monitorexit
+      [1079] areturn
       [1080] aload_1 v1
-      [1081] bipush 8
-      [1083] invokevirtual #138
-        - Methodref [b.setVisibility (I)V]
-      [1086] ldc #16
+      [1081] invokevirtual #140
+        - Methodref [b.stopLoading ()V]
+      [1084] aload_0 v0
+      [1085] iconst_1
+      [1086] putfield #114
+        - Fieldref [f.l Z]
+      [1089] ldc #16
         - String [AdLoader timed out while loading the HTML.]
-      [1088] invokestatic #187
+      [1091] invokestatic #188
         - Methodref [s.c (Ljava/lang/String;)V]
-      [1091] getstatic #101
+      [1094] getstatic #101
         - Fieldref [com/google/ads/b.c Lcom/google/ads/b;]
-      [1094] aload_2 v2
-      [1095] monitorexit
-      [1096] areturn
-      [1097] astore_1 v1
-      [1098] aload_2 v2
-      [1099] monitorexit
-      [1100] aload_1 v1
-      [1101] athrow
+      [1097] aload_2 v2
+      [1098] monitorexit
+      [1099] areturn
+      [1100] astore_1 v1
+      [1101] aload_2 v2
+      [1102] monitorexit
+      [1103] aload_1 v1
+      [1104] athrow
       Code attribute exceptions (count = 16):
       - ExceptionInfo (56 -> 754: 757):
       - Class [z]
@@ -10637,18 +10688,18 @@ Methods (count = 13):
       - Class [java/lang/InterruptedException]
       - ExceptionInfo (1020 -> 1033: 1036):
       - Class [java/lang/InterruptedException]
-      - ExceptionInfo (4 -> 28: 1097):
-      - ExceptionInfo (29 -> 55: 1097):
-      - ExceptionInfo (56 -> 768: 1097):
-      - ExceptionInfo (769 -> 838: 1097):
-      - ExceptionInfo (839 -> 852: 1097):
-      - ExceptionInfo (853 -> 870: 1097):
-      - ExceptionInfo (871 -> 941: 1097):
-      - ExceptionInfo (942 -> 955: 1097):
-      - ExceptionInfo (956 -> 973: 1097):
-      - ExceptionInfo (974 -> 1064: 1097):
-      - ExceptionInfo (1065 -> 1075: 1097):
-      - ExceptionInfo (1076 -> 1096: 1097):
+      - ExceptionInfo (4 -> 28: 1100):
+      - ExceptionInfo (29 -> 55: 1100):
+      - ExceptionInfo (56 -> 768: 1100):
+      - ExceptionInfo (769 -> 838: 1100):
+      - ExceptionInfo (839 -> 852: 1100):
+      - ExceptionInfo (853 -> 870: 1100):
+      - ExceptionInfo (871 -> 941: 1100):
+      - ExceptionInfo (942 -> 955: 1100):
+      - ExceptionInfo (956 -> 973: 1100):
+      - ExceptionInfo (974 -> 1068: 1100):
+      - ExceptionInfo (1069 -> 1079: 1100):
+      - ExceptionInfo (1080 -> 1099: 1100):
       Code attribute attributes (attribute count = 0):
   + Method:       b()J
     Access flags: 0x2
@@ -10658,7 +10709,7 @@ Methods (count = 13):
       [0] aload_0 v0
       [1] getfield #110
         - Fieldref [f.h Lc;]
-      [4] invokevirtual #142
+      [4] invokevirtual #143
         - Methodref [c.d ()Lcom/google/ads/a;]
       [7] instanceof #74
         - Class [com/google/ads/e]
@@ -10691,18 +10742,18 @@ Methods (count = 13):
     + Code attribute instructions (code length = 22, locals = 1, stack = 2):
       [0] ldc #13
         - String [AdLoader cancelled.]
-      [2] invokestatic #186
+      [2] invokestatic #187
         - Methodref [s.a (Ljava/lang/String;)V]
       [5] aload_0 v0
       [6] getfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [9] invokevirtual #136
+      [9] invokevirtual #137
         - Methodref [android/webkit/WebView.stopLoading ()V]
       [12] aload_0 v0
       [13] getfield #109
         - Fieldref [f.g Le;]
       [16] iconst_0
-      [17] invokevirtual #156
+      [17] invokevirtual #157
         - Methodref [e.cancel (Z)Z]
       [20] pop
       [21] return
@@ -10722,7 +10773,7 @@ Methods (count = 13):
       [7] putfield #108
         - Fieldref [f.f Ljava/lang/String;]
       [10] aload_0 v0
-      [11] invokevirtual #165
+      [11] invokevirtual #166
         - Methodref [java/lang/Object.notify ()V]
       [14] return
       Code attribute exceptions (count = 0):
@@ -10737,7 +10788,7 @@ Methods (count = 13):
       [2] putfield #112
         - Fieldref [f.j Ljava/lang/String;]
       [5] aload_0 v0
-      [6] invokevirtual #165
+      [6] invokevirtual #166
         - Methodref [java/lang/Object.notify ()V]
       [9] return
       Code attribute exceptions (count = 0):
@@ -10752,7 +10803,7 @@ Methods (count = 13):
       [2] putfield #113
         - Fieldref [f.k Lcom/google/ads/b;]
       [5] aload_0 v0
-      [6] invokevirtual #165
+      [6] invokevirtual #166
         - Methodref [java/lang/Object.notify ()V]
       [9] return
       Code attribute exceptions (count = 0):
@@ -10764,10 +10815,10 @@ Methods (count = 13):
     + Code attribute instructions (code length = 10, locals = 1, stack = 2):
       [0] aload_0 v0
       [1] iconst_1
-      [2] putfield #114
-        - Fieldref [f.l Z]
+      [2] putfield #115
+        - Fieldref [f.m Z]
       [5] aload_0 v0
-      [6] invokevirtual #165
+      [6] invokevirtual #166
         - Methodref [java/lang/Object.notify ()V]
       [9] return
       Code attribute exceptions (count = 0):
@@ -10793,7 +10844,7 @@ Methods (count = 13):
       [16] iconst_0
       [17] aaload
       [18] aastore
-      [19] invokevirtual #157
+      [19] invokevirtual #158
         - Methodref [e.execute ([Ljava/lang/Object;)Landroid/os/AsyncTask;]
       [22] pop
       [23] return
@@ -10803,41 +10854,65 @@ Methods (count = 13):
     Access flags: 0x1014
       = protected final void onPostExecute(java.lang.Object)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 44, locals = 3, stack = 2):
+    + Code attribute instructions (code length = 76, locals = 4, stack = 2):
       [0] aload_0 v0
       [1] aload_1 v1
       [2] checkcast #72
         - Class [com/google/ads/b]
       [5] astore_2 v2
-      [6] astore_1 v1
-      [7] aload_2 v2
-      [8] ifnonnull +11 (target=19)
-      [11] aload_1 v1
-      [12] getfield #110
+      [6] dup
+      [7] astore_1 v1
+      [8] dup
+      [9] astore_3 v3
+      [10] monitorenter
+      [11] aload_2 v2
+      [12] ifnonnull +13 (target=25)
+      [15] aload_1 v1
+      [16] getfield #110
         - Fieldref [f.h Lc;]
-      [15] invokevirtual #148
+      [19] invokevirtual #149
         - Methodref [c.m ()V]
-      [18] return
-      [19] aload_1 v1
-      [20] getfield #111
+      [22] goto +46 (target=68)
+      [25] aload_1 v1
+      [26] getfield #111
         - Fieldref [f.i Landroid/webkit/WebView;]
-      [23] invokevirtual #136
+      [29] invokevirtual #137
         - Methodref [android/webkit/WebView.stopLoading ()V]
-      [26] aload_1 v1
-      [27] getfield #109
+      [32] aload_1 v1
+      [33] getfield #109
         - Fieldref [f.g Le;]
-      [30] iconst_0
-      [31] invokevirtual #156
+      [36] iconst_0
+      [37] invokevirtual #157
         - Methodref [e.cancel (Z)Z]
-      [34] pop
-      [35] aload_1 v1
-      [36] getfield #110
+      [40] pop
+      [41] aload_1 v1
+      [42] getfield #114
+        - Fieldref [f.l Z]
+      [45] ifeq +15 (target=60)
+      [48] aload_1 v1
+      [49] getfield #110
         - Fieldref [f.h Lc;]
-      [39] aload_2 v2
-      [40] invokevirtual #140
+      [52] invokevirtual #145
+        - Methodref [c.g ()Lb;]
+      [55] bipush 8
+      [57] invokevirtual #139
+        - Methodref [b.setVisibility (I)V]
+      [60] aload_1 v1
+      [61] getfield #110
+        - Fieldref [f.h Lc;]
+      [64] aload_2 v2
+      [65] invokevirtual #141
         - Methodref [c.a (Lcom/google/ads/b;)V]
-      [43] return
-      Code attribute exceptions (count = 0):
+      [68] aload_3 v3
+      [69] monitorexit
+      [70] return
+      [71] astore_1 v1
+      [72] aload_3 v3
+      [73] monitorexit
+      [74] aload_1 v1
+      [75] athrow
+      Code attribute exceptions (count = 1):
+      - ExceptionInfo (11 -> 70: 71):
       Code attribute attributes (attribute count = 0):
   + Method:       doInBackground([Ljava/lang/Object;)Ljava/lang/Object;
     Access flags: 0x1014
@@ -10848,7 +10923,7 @@ Methods (count = 13):
       [1] aload_1 v1
       [2] checkcast #57
         - Class [[Lcom/google/ads/c;]
-      [5] invokespecial #158
+      [5] invokespecial #159
         - Methodref [f.a ([Lcom/google/ads/c;)Lcom/google/ads/b;]
       [8] areturn
       Code attribute exceptions (count = 0):
@@ -10859,10 +10934,10 @@ Methods (count = 13):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 93, locals = 2, stack = 2):
       [0] ldc #5
-        - String [4.0.3]
+        - String [4.0.4]
       [2] ldc #19
         - String [\.]
-      [4] invokevirtual #168
+      [4] invokevirtual #169
         - Methodref [java/lang/String.split (Ljava/lang/String;)[Ljava/lang/String;]
       [7] dup
       [8] astore_0 v0
@@ -10876,51 +10951,51 @@ Methods (count = 13):
       [16] new #85
         - Class [java/lang/StringBuilder]
       [19] dup
-      [20] invokespecial #169
+      [20] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [23] ldc #33
         - String [http://www.gstatic.com/afma/sdk-core-v]
-      [25] invokevirtual #171
+      [25] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [28] aload_1 v1
-      [29] invokevirtual #171
+      [29] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [32] aload_0 v0
-      [33] invokevirtual #171
+      [33] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [36] ldc #4
         - String [.js]
-      [38] invokevirtual #171
+      [38] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [41] invokevirtual #172
+      [41] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
       [44] putstatic #103
         - Fieldref [f.a Ljava/lang/String;]
       [47] new #85
         - Class [java/lang/StringBuilder]
       [50] dup
-      [51] invokespecial #169
+      [51] invokespecial #170
         - Methodref [java/lang/StringBuilder.<init> ()V]
       [54] ldc #8
         - String [<html><head><script src="]
-      [56] invokevirtual #171
+      [56] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [59] getstatic #103
         - Fieldref [f.a Ljava/lang/String;]
-      [62] invokevirtual #171
+      [62] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [65] ldc #1
         - String ["></script><script>]
-      [67] invokevirtual #171
+      [67] invokevirtual #172
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [70] invokevirtual #172
+      [70] invokevirtual #173
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
       [73] putstatic #104
         - Fieldref [f.b Ljava/lang/String;]
       [76] new #83
         - Class [java/lang/Object]
       [79] dup
-      [80] invokespecial #164
+      [80] invokespecial #165
         - Methodref [java/lang/Object.<init> ()V]
       [83] putstatic #105
         - Fieldref [f.c Ljava/lang/Object;]
@@ -10969,7 +11044,7 @@ Constant Pool (count = 209):
   - String [gmsg]
   - String [intent]
   - String [javascript:AFMA_ReceiveMessage('onhide');]
-  - String [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.3'});]
+  - String [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.4'});]
   - String [launch]
   - String [log]
   - String [mobileads.google.com]
@@ -11132,7 +11207,7 @@ Constant Pool (count = 209):
   + Utf8 [java/util/HashMap]
   + Utf8 [java/util/Map]
   + Utf8 [javascript:AFMA_ReceiveMessage('onhide');]
-  + Utf8 [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.3'});]
+  + Utf8 [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.4'});]
   + Utf8 [k]
   + Utf8 [l]
   + Utf8 [launch]
@@ -11449,7 +11524,7 @@ Methods (count = 8):
         - Methodref [s.d (Ljava/lang/String;)V]
       [5] aload_0 v0
       [6] ldc #25
-        - String [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.3'});]
+        - String [javascript:AFMA_ReceiveMessage('onshow', {'version': 'afma-sdk-a-v4.0.4'});]
       [8] invokevirtual #65
         - Methodref [android/webkit/WebView.loadUrl (Ljava/lang/String;)V]
       [11] return
@@ -13191,7 +13266,7 @@ Constant Pool (count = 490):
   - String [,]
   - String [/]
   - String [1.1.0]
-  - String [4.0.3]
+  - String [4.0.4]
   - String [; ]
   - String [; U; Android ]
   - String [AES]
@@ -13510,7 +13585,7 @@ Constant Pool (count = 490):
   + Utf8 [,]
   + Utf8 [/]
   + Utf8 [1.1.0]
-  + Utf8 [4.0.3]
+  + Utf8 [4.0.4]
   + Utf8 [; ]
   + Utf8 [; U; Android ]
   + Utf8 [<clinit>]
@@ -14718,7 +14793,7 @@ Methods (count = 19):
       [140] invokevirtual #161
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [143] ldc #12
-        - String [4.0.3]
+        - String [4.0.4]
       [145] invokevirtual #161
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [148] ldc #8
@@ -26462,7 +26537,7 @@ Methods (count = 31):
     Access flags: 0x4
       = protected void onPause()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 78, locals = 2, stack = 3):
+    + Code attribute instructions (code length = 88, locals = 2, stack = 3):
       [0] ldc #20
         - String [PlaygroundActivity]
       [2] ldc #40
@@ -26481,46 +26556,52 @@ Methods (count = 31):
       [19] invokevirtual #216
         - Methodref [com/devinxutal/tetris/b/j.b ()V]
       [22] aload_0 v0
-      [23] getstatic #134
+      [23] getfield #119
+        - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.n Lcom/devinxutal/tetris/activities/m;]
+      [26] getstatic #136
+        - Fieldref [com/devinxutal/tetris/activities/m.e Lcom/devinxutal/tetris/activities/m;]
+      [29] ifacmpeq +11 (target=40)
+      [32] aload_0 v0
+      [33] getstatic #134
         - Fieldref [com/devinxutal/tetris/activities/m.c Lcom/devinxutal/tetris/activities/m;]
-      [26] iconst_0
-      [27] invokespecial #188
+      [36] iconst_0
+      [37] invokespecial #188
         - Methodref [com/devinxutal/tetris/activities/PlaygroundActivity.a (Lcom/devinxutal/tetris/activities/m;Z)V]
-      [30] aload_0 v0
-      [31] invokestatic #221
+      [40] aload_0 v0
+      [41] invokestatic #221
         - Methodref [com/devinxutal/tetris/d/a.a (Landroid/app/Activity;)Lcom/devinxutal/tetris/d/a;]
-      [34] invokevirtual #223
+      [44] invokevirtual #223
         - Methodref [com/devinxutal/tetris/d/a.c ()V]
-      [37] aload_0 v0
-      [38] dup
-      [39] astore_1 v1
-      [40] iconst_0
-      [41] putfield #123
+      [47] aload_0 v0
+      [48] dup
+      [49] astore_1 v1
+      [50] iconst_0
+      [51] putfield #123
         - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.r Z]
-      [44] aload_1 v1
-      [45] getfield #122
+      [54] aload_1 v1
+      [55] getfield #122
         - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.q Landroid/hardware/SensorManager;]
-      [48] ifnull +25 (target=73)
-      [51] aload_1 v1
-      [52] getfield #126
+      [58] ifnull +25 (target=83)
+      [61] aload_1 v1
+      [62] getfield #126
         - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.u Lcom/devinxutal/tetris/activities/b;]
-      [55] ifnull +18 (target=73)
-      [58] aload_1 v1
-      [59] getfield #122
+      [65] ifnull +18 (target=83)
+      [68] aload_1 v1
+      [69] getfield #122
         - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.q Landroid/hardware/SensorManager;]
-      [62] aload_1 v1
-      [63] getfield #126
+      [72] aload_1 v1
+      [73] getfield #126
         - Fieldref [com/devinxutal/tetris/activities/PlaygroundActivity.u Lcom/devinxutal/tetris/activities/b;]
-      [66] invokevirtual #156
+      [76] invokevirtual #156
         - Methodref [android/hardware/SensorManager.unregisterListener (Landroid/hardware/SensorEventListener;)V]
-      [69] goto +4 (target=73)
-      [72] pop
-      [73] aload_0 v0
-      [74] invokespecial #144
+      [79] goto +4 (target=83)
+      [82] pop
+      [83] aload_0 v0
+      [84] invokespecial #144
         - Methodref [android/app/Activity.onPause ()V]
-      [77] return
+      [87] return
       Code attribute exceptions (count = 1):
-      - ExceptionInfo (44 -> 69: 72):
+      - ExceptionInfo (54 -> 79: 82):
       - Class [java/lang/Exception]
       Code attribute attributes (attribute count = 0):
   + Method:       onResume()V
@@ -39652,7 +39733,7 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 220):
+Constant Pool (count = 222):
   - Float [700.0]
   - Class [android/app/Activity]
   - Class [android/os/Handler]
@@ -39717,6 +39798,7 @@ Constant Pool (count = 220):
   - Methodref [com/devinxutal/tetris/model/d.a (Lcom/devinxutal/tetris/c/b;)V]
   - Methodref [com/devinxutal/tetris/model/d.d ()F]
   - Methodref [com/devinxutal/tetris/model/d.e ()V]
+  - Methodref [com/devinxutal/tetris/model/d.f ()Z]
   - Methodref [com/devinxutal/tetris/model/d.h ()V]
   - Methodref [com/devinxutal/tetris/model/d.i ()Z]
   - Methodref [com/devinxutal/tetris/ui/PlaygroundView.<init> (Landroid/content/Context;)V]
@@ -39764,6 +39846,7 @@ Constant Pool (count = 220):
   + NameAndType [e Lcom/devinxutal/tetris/a/c;]
   + NameAndType [e Ljava/util/List;]
   + NameAndType [f ()V]
+  + NameAndType [f ()Z]
   + NameAndType [f Landroid/os/Handler;]
   + NameAndType [f Lcom/devinxutal/tetris/a/c;]
   + NameAndType [g ()V]
@@ -39954,7 +40037,7 @@ Methods (count = 27):
       [7] aload_0 v0
       [8] getfield #33
         - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
-      [11] invokevirtual #71
+      [11] invokevirtual #72
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.b ()V]
       [14] aload_0 v0
       [15] aconst_null
@@ -39972,12 +40055,12 @@ Methods (count = 27):
       [3] aload_0 v0
       [4] getfield #35
         - Fieldref [com/devinxutal/tetris/a/d.d Lcom/devinxutal/tetris/model/d;]
-      [7] invokevirtual #65
+      [7] invokevirtual #66
         - Methodref [com/devinxutal/tetris/model/d.h ()V]
       [10] aload_0 v0
       [11] getfield #35
         - Fieldref [com/devinxutal/tetris/a/d.d Lcom/devinxutal/tetris/model/d;]
-      [14] invokevirtual #66
+      [14] invokevirtual #67
         - Methodref [com/devinxutal/tetris/model/d.i ()Z]
       [17] ifne -14 (target=3)
       [20] return
@@ -39987,129 +40070,135 @@ Methods (count = 27):
     Access flags: 0x11
       = public final void a(com.devinxutal.tetris.a.c)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 215, locals = 3, stack = 3):
+    + Code attribute instructions (code length = 223, locals = 3, stack = 3):
       [0] aload_0 v0
       [1] getfield #38
         - Fieldref [com/devinxutal/tetris/a/d.g Z]
-      [4] ifne +4 (target=8)
-      [7] return
-      [8] invokestatic #53
+      [4] ifeq +13 (target=17)
+      [7] aload_0 v0
+      [8] getfield #35
+        - Fieldref [com/devinxutal/tetris/a/d.d Lcom/devinxutal/tetris/model/d;]
+      [11] invokevirtual #65
+        - Methodref [com/devinxutal/tetris/model/d.f ()Z]
+      [14] ifeq +4 (target=18)
+      [17] return
+      [18] invokestatic #53
         - Methodref [com/devinxutal/tetris/a/d.j ()[I]
-      [11] aload_1 v1
-      [12] invokevirtual #47
+      [21] aload_1 v1
+      [22] invokevirtual #47
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
-      [15] iaload
-      [16] tableswitch (8 offsets, default=136) (target=152)
-        7: offset = 100, target = 116
-        8: offset = 58, target = 74
-        9: offset = 112, target = 128
-        10: offset = 68, target = 84
-        11: offset = 124, target = 140
-        12: offset = 78, target = 94
-        13: offset = 88, target = 104
-        14: offset = 48, target = 64
-        default: offset = 136, target = 152
-      [64] aload_0 v0
-      [65] aconst_null
-      [66] dup
-      [67] astore_1 v1
-      [68] putfield #41
+      [25] iaload
+      [26] tableswitch (8 offsets, default=134) (target=160)
+        7: offset = 98, target = 124
+        8: offset = 56, target = 82
+        9: offset = 110, target = 136
+        10: offset = 66, target = 92
+        11: offset = 122, target = 148
+        12: offset = 76, target = 102
+        13: offset = 86, target = 112
+        14: offset = 46, target = 72
+        default: offset = 134, target = 160
+      [72] aload_0 v0
+      [73] aconst_null
+      [74] dup
+      [75] astore_1 v1
+      [76] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [71] goto +86 (target=157)
-      [74] aload_0 v0
-      [75] aconst_null
-      [76] dup
-      [77] astore_1 v1
-      [78] putfield #41
+      [79] goto +86 (target=165)
+      [82] aload_0 v0
+      [83] aconst_null
+      [84] dup
+      [85] astore_1 v1
+      [86] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [81] goto +76 (target=157)
-      [84] aload_0 v0
-      [85] aconst_null
-      [86] dup
-      [87] astore_1 v1
-      [88] putfield #41
+      [89] goto +76 (target=165)
+      [92] aload_0 v0
+      [93] aconst_null
+      [94] dup
+      [95] astore_1 v1
+      [96] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [91] goto +66 (target=157)
-      [94] aload_0 v0
-      [95] aconst_null
-      [96] dup
-      [97] astore_1 v1
-      [98] putfield #41
+      [99] goto +66 (target=165)
+      [102] aload_0 v0
+      [103] aconst_null
+      [104] dup
+      [105] astore_1 v1
+      [106] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [101] goto +56 (target=157)
-      [104] aload_0 v0
-      [105] getstatic #21
+      [109] goto +56 (target=165)
+      [112] aload_0 v0
+      [113] getstatic #21
         - Fieldref [com/devinxutal/tetris/a/c.d Lcom/devinxutal/tetris/a/c;]
-      [108] dup
-      [109] astore_1 v1
-      [110] putfield #41
+      [116] dup
+      [117] astore_1 v1
+      [118] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [113] goto +44 (target=157)
-      [116] aload_0 v0
-      [117] getstatic #18
+      [121] goto +44 (target=165)
+      [124] aload_0 v0
+      [125] getstatic #18
         - Fieldref [com/devinxutal/tetris/a/c.a Lcom/devinxutal/tetris/a/c;]
-      [120] dup
-      [121] astore_1 v1
-      [122] putfield #41
+      [128] dup
+      [129] astore_1 v1
+      [130] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [125] goto +32 (target=157)
-      [128] aload_0 v0
-      [129] getstatic #19
+      [133] goto +32 (target=165)
+      [136] aload_0 v0
+      [137] getstatic #19
         - Fieldref [com/devinxutal/tetris/a/c.b Lcom/devinxutal/tetris/a/c;]
-      [132] dup
-      [133] astore_1 v1
-      [134] putfield #41
+      [140] dup
+      [141] astore_1 v1
+      [142] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [137] goto +20 (target=157)
-      [140] aload_0 v0
-      [141] getstatic #20
+      [145] goto +20 (target=165)
+      [148] aload_0 v0
+      [149] getstatic #20
         - Fieldref [com/devinxutal/tetris/a/c.c Lcom/devinxutal/tetris/a/c;]
-      [144] dup
-      [145] astore_1 v1
-      [146] putfield #41
-        - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [149] goto +8 (target=157)
-      [152] aload_0 v0
-      [153] aconst_null
+      [152] dup
+      [153] astore_1 v1
       [154] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [157] aload_1 v1
-      [158] ifnull +42 (target=200)
-      [161] aload_0 v0
-      [162] aload_1 v1
-      [163] invokespecial #51
-        - Methodref [com/devinxutal/tetris/a/d.b (Lcom/devinxutal/tetris/a/c;)Z]
-      [166] istore_2 v2
-      [167] aload_0 v0
-      [168] getfield #33
-        - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
-      [171] invokevirtual #73
-        - Methodref [com/devinxutal/tetris/ui/PlaygroundView.invalidate ()V]
-      [174] iload_2 v2
-      [175] ifeq +25 (target=200)
-      [178] aload_1 v1
-      [179] getstatic #21
-        - Fieldref [com/devinxutal/tetris/a/c.d Lcom/devinxutal/tetris/a/c;]
-      [182] ifacmpeq +10 (target=192)
-      [185] aload_1 v1
-      [186] getstatic #22
-        - Fieldref [com/devinxutal/tetris/a/c.e Lcom/devinxutal/tetris/a/c;]
-      [189] ifacmpne +11 (target=200)
-      [192] aload_0 v0
-      [193] aload_0 v0
-      [194] invokespecial #52
-        - Methodref [com/devinxutal/tetris/a/d.i ()I]
-      [197] invokespecial #50
-        - Methodref [com/devinxutal/tetris/a/d.b (I)V]
-      [200] aload_0 v0
-      [201] getfield #41
+      [157] goto +8 (target=165)
+      [160] aload_0 v0
+      [161] aconst_null
+      [162] putfield #41
         - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
-      [204] ifnull +10 (target=214)
-      [207] aload_0 v0
-      [208] sipush 400
-      [211] invokespecial #49
+      [165] aload_1 v1
+      [166] ifnull +42 (target=208)
+      [169] aload_0 v0
+      [170] aload_1 v1
+      [171] invokespecial #51
+        - Methodref [com/devinxutal/tetris/a/d.b (Lcom/devinxutal/tetris/a/c;)Z]
+      [174] istore_2 v2
+      [175] aload_0 v0
+      [176] getfield #33
+        - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
+      [179] invokevirtual #74
+        - Methodref [com/devinxutal/tetris/ui/PlaygroundView.invalidate ()V]
+      [182] iload_2 v2
+      [183] ifeq +25 (target=208)
+      [186] aload_1 v1
+      [187] getstatic #21
+        - Fieldref [com/devinxutal/tetris/a/c.d Lcom/devinxutal/tetris/a/c;]
+      [190] ifacmpeq +10 (target=200)
+      [193] aload_1 v1
+      [194] getstatic #22
+        - Fieldref [com/devinxutal/tetris/a/c.e Lcom/devinxutal/tetris/a/c;]
+      [197] ifacmpne +11 (target=208)
+      [200] aload_0 v0
+      [201] aload_0 v0
+      [202] invokespecial #52
+        - Methodref [com/devinxutal/tetris/a/d.i ()I]
+      [205] invokespecial #50
+        - Methodref [com/devinxutal/tetris/a/d.b (I)V]
+      [208] aload_0 v0
+      [209] getfield #41
+        - Fieldref [com/devinxutal/tetris/a/d.j Lcom/devinxutal/tetris/a/c;]
+      [212] ifnull +10 (target=222)
+      [215] aload_0 v0
+      [216] sipush 400
+      [219] invokespecial #49
         - Methodref [com/devinxutal/tetris/a/d.a (I)V]
-      [214] return
+      [222] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       i()I
@@ -40149,7 +40238,7 @@ Methods (count = 27):
       [1] getfield #36
         - Fieldref [com/devinxutal/tetris/a/d.e Ljava/util/List;]
       [4] aload_1 v1
-      [5] invokeinterface #81
+      [5] invokeinterface #82
         - InterfaceMethodref [java/util/List.add (Ljava/lang/Object;)Z]
       [10] ireturn
       Code attribute exceptions (count = 0):
@@ -40162,19 +40251,19 @@ Methods (count = 27):
       [0] aload_0 v0
       [1] getfield #36
         - Fieldref [com/devinxutal/tetris/a/d.e Ljava/util/List;]
-      [4] invokeinterface #82
+      [4] invokeinterface #83
         - InterfaceMethodref [java/util/List.iterator ()Ljava/util/Iterator;]
       [9] astore_1 v1
       [10] goto +17 (target=27)
       [13] aload_1 v1
-      [14] invokeinterface #80
+      [14] invokeinterface #81
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
       [19] checkcast #4
         - Class [com/devinxutal/tetris/a/a]
-      [22] invokeinterface #78
+      [22] invokeinterface #79
         - InterfaceMethodref [com/devinxutal/tetris/a/a.a ()V]
       [27] aload_1 v1
-      [28] invokeinterface #79
+      [28] invokeinterface #80
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
       [33] ifne -20 (target=13)
       [36] return
@@ -40197,13 +40286,13 @@ Methods (count = 27):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 137, locals = 2, stack = 4):
       [0] aload_0 v0
-      [1] invokespecial #76
+      [1] invokespecial #77
         - Methodref [java/lang/Object.<init> ()V]
       [4] aload_0 v0
       [5] new #16
         - Class [java/util/LinkedList]
       [8] dup
-      [9] invokespecial #77
+      [9] invokespecial #78
         - Methodref [java/util/LinkedList.<init> ()V]
       [12] putfield #36
         - Fieldref [com/devinxutal/tetris/a/d.e Ljava/util/List;]
@@ -40246,7 +40335,7 @@ Methods (count = 27):
         - Class [com/devinxutal/tetris/ui/PlaygroundView]
       [64] dup
       [65] aload_1 v1
-      [66] invokespecial #67
+      [66] invokespecial #68
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.<init> (Landroid/content/Context;)V]
       [69] putfield #33
         - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
@@ -40256,20 +40345,20 @@ Methods (count = 27):
       [76] aload_0 v0
       [77] getfield #35
         - Fieldref [com/devinxutal/tetris/a/d.d Lcom/devinxutal/tetris/model/d;]
-      [80] invokevirtual #69
+      [80] invokevirtual #70
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.a (Lcom/devinxutal/tetris/model/d;)V]
       [83] aload_0 v0
       [84] getfield #33
         - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
       [87] aload_0 v0
-      [88] invokevirtual #68
+      [88] invokevirtual #69
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.a (Lcom/devinxutal/tetris/a/d;)V]
       [91] aload_0 v0
       [92] new #12
         - Class [com/devinxutal/tetris/ui/b]
       [95] dup
       [96] aload_1 v1
-      [97] invokespecial #74
+      [97] invokespecial #75
         - Methodref [com/devinxutal/tetris/ui/b.<init> (Landroid/content/Context;)V]
       [100] putfield #34
         - Fieldref [com/devinxutal/tetris/a/d.c Lcom/devinxutal/tetris/ui/b;]
@@ -40279,7 +40368,7 @@ Methods (count = 27):
       [107] aload_0 v0
       [108] getfield #34
         - Fieldref [com/devinxutal/tetris/a/d.c Lcom/devinxutal/tetris/ui/b;]
-      [111] invokevirtual #70
+      [111] invokevirtual #71
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.a (Lcom/devinxutal/tetris/ui/b;)V]
       [114] aload_0 v0
       [115] new #3
@@ -40309,12 +40398,12 @@ Methods (count = 27):
       [1] getfield #34
         - Fieldref [com/devinxutal/tetris/a/d.c Lcom/devinxutal/tetris/ui/b;]
       [4] aload_1 v1
-      [5] invokevirtual #75
+      [5] invokevirtual #76
         - Methodref [com/devinxutal/tetris/ui/b.a (Lcom/devinxutal/tetris/c/b;)V]
       [8] aload_0 v0
       [9] getfield #33
         - Fieldref [com/devinxutal/tetris/a/d.b Lcom/devinxutal/tetris/ui/PlaygroundView;]
-      [12] invokevirtual #72
+      [12] invokevirtual #73
         - Methodref [com/devinxutal/tetris/ui/PlaygroundView.c ()V]
       [15] aload_0 v0
       [16] getfield #35
@@ -41445,7 +41534,7 @@ _____________________________________________________________________
 Interfaces (count = 1):
   - Class [java/io/Serializable]
 
-Constant Pool (count = 54):
+Constant Pool (count = 56):
   - Class [com/devinxutal/tetris/model/SavablePlayground]
   - Class [com/devinxutal/tetris/model/a]
   - Class [com/devinxutal/tetris/model/c]
@@ -41455,6 +41544,7 @@ Constant Pool (count = 54):
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.c I]
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.d I]
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
+  - Fieldref [com/devinxutal/tetris/model/SavablePlayground.i Z]
   - Fieldref [com/devinxutal/tetris/model/c.a Lcom/devinxutal/tetris/model/e;]
   - Fieldref [com/devinxutal/tetris/model/c.b I]
   - Methodref [com/devinxutal/tetris/model/a.a ()I]
@@ -41470,6 +41560,7 @@ Constant Pool (count = 54):
   + NameAndType [d I]
   + NameAndType [g Z]
   + NameAndType [i ()Lcom/devinxutal/tetris/model/e;]
+  + NameAndType [i Z]
   + Utf8 [()I]
   + Utf8 [()Lcom/devinxutal/tetris/model/e;]
   + Utf8 [()V]
@@ -41500,7 +41591,7 @@ Constant Pool (count = 54):
   + Utf8 [java/io/Serializable]
   + Utf8 [java/lang/Object]
 
-Fields (count = 8):
+Fields (count = 9):
   + Field:        a [[I
     Access flags: 0x1
       = public int[][] a
@@ -41525,15 +41616,18 @@ Fields (count = 8):
   + Field:        h Lcom/devinxutal/tetris/model/ScoreAndLevel;
     Access flags: 0x1
       = public com.devinxutal.tetris.model.ScoreAndLevel h
+  + Field:        i Z
+    Access flags: 0x1
+      = public boolean i
 
 Methods (count = 2):
   - Method:       <init>()V
     Access flags: 0x1
       = public SavablePlayground()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 20, locals = 1, stack = 2):
+    + Code attribute instructions (code length = 25, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] invokespecial #15
+      [1] invokespecial #16
         - Methodref [java/lang/Object.<init> ()V]
       [4] aload_0 v0
       [5] iconst_0
@@ -41547,7 +41641,11 @@ Methods (count = 2):
       [15] iconst_0
       [16] putfield #9
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
-      [19] return
+      [19] aload_0 v0
+      [20] iconst_0
+      [21] putfield #10
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.i Z]
+      [24] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       a(Lcom/devinxutal/tetris/model/a;)Lcom/devinxutal/tetris/model/c;
@@ -41563,20 +41661,20 @@ Methods (count = 2):
         - Class [com/devinxutal/tetris/model/c]
       [9] dup
       [10] aload_0 v0
-      [11] invokespecial #14
+      [11] invokespecial #15
         - Methodref [com/devinxutal/tetris/model/c.<init> (Lcom/devinxutal/tetris/model/SavablePlayground;)V]
       [14] dup
       [15] astore_2 v2
       [16] aload_1 v1
-      [17] invokevirtual #13
+      [17] invokevirtual #14
         - Methodref [com/devinxutal/tetris/model/a.i ()Lcom/devinxutal/tetris/model/e;]
-      [20] putfield #10
+      [20] putfield #11
         - Fieldref [com/devinxutal/tetris/model/c.a Lcom/devinxutal/tetris/model/e;]
       [23] aload_2 v2
       [24] aload_1 v1
-      [25] invokevirtual #12
+      [25] invokevirtual #13
         - Methodref [com/devinxutal/tetris/model/a.a ()I]
-      [28] putfield #11
+      [28] putfield #12
         - Fieldref [com/devinxutal/tetris/model/c.b I]
       [31] aload_2 v2
       [32] areturn
@@ -41790,7 +41888,7 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 445):
+Constant Pool (count = 446):
   - Integer [-16777216]
   - Float [0.9]
   - Float [15.0]
@@ -41852,6 +41950,7 @@ Constant Pool (count = 445):
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
   - Fieldref [com/devinxutal/tetris/model/SavablePlayground.h Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+  - Fieldref [com/devinxutal/tetris/model/SavablePlayground.i Z]
   - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
   - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.b I]
   - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.c I]
@@ -42329,130 +42428,130 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 168, locals = 1, stack = 4):
       [0] aload_0 v0
-      [1] invokespecial #147
+      [1] invokespecial #148
         - Methodref [java/lang/Object.<init> ()V]
       [4] aload_0 v0
       [5] iconst_0
-      [6] putfield #74
+      [6] putfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [9] aload_0 v0
       [10] bipush 20
       [12] newarray 4
-      [14] putfield #75
+      [14] putfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [17] aload_0 v0
       [18] iconst_0
-      [19] putfield #76
+      [19] putfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [22] aload_0 v0
       [23] iconst_3
-      [24] putfield #77
+      [24] putfield #78
         - Fieldref [com/devinxutal/tetris/model/d.g I]
       [27] aload_0 v0
       [28] iconst_0
-      [29] putfield #78
+      [29] putfield #79
         - Fieldref [com/devinxutal/tetris/model/d.h I]
       [32] aload_0 v0
       [33] iconst_0
-      [34] putfield #79
+      [34] putfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [37] aload_0 v0
       [38] aconst_null
-      [39] putfield #80
+      [39] putfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [42] aload_0 v0
       [43] iconst_0
-      [44] putfield #81
+      [44] putfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [47] aload_0 v0
       [48] iconst_0
-      [49] putfield #82
+      [49] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [52] aload_0 v0
       [53] iconst_0
-      [54] putfield #83
+      [54] putfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [57] aload_0 v0
       [58] iconst_0
-      [59] putfield #84
+      [59] putfield #85
         - Fieldref [com/devinxutal/tetris/model/d.n I]
       [62] aload_0 v0
       [63] iconst_0
-      [64] putfield #85
+      [64] putfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [67] aload_0 v0
       [68] bipush 20
       [70] bipush 10
       [72] multianewarray #9
         - Class [[[I]
-      [76] putfield #86
+      [76] putfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [79] aload_0 v0
       [80] aconst_null
-      [81] putfield #87
+      [81] putfield #88
         - Fieldref [com/devinxutal/tetris/model/d.q Ljava/util/Set;]
       [84] aload_0 v0
       [85] iconst_0
-      [86] putfield #88
+      [86] putfield #89
         - Fieldref [com/devinxutal/tetris/model/d.r Z]
       [89] aload_0 v0
       [90] new #32
         - Class [java/util/LinkedList]
       [93] dup
-      [94] invokespecial #153
+      [94] invokespecial #154
         - Methodref [java/util/LinkedList.<init> ()V]
-      [97] putfield #89
+      [97] putfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [100] aload_0 v0
       [101] iconst_3
-      [102] putfield #90
+      [102] putfield #91
         - Fieldref [com/devinxutal/tetris/model/d.t I]
       [105] aload_0 v0
       [106] iconst_0
-      [107] putfield #91
+      [107] putfield #92
         - Fieldref [com/devinxutal/tetris/model/d.u Z]
       [110] aload_0 v0
       [111] aconst_null
-      [112] putfield #92
+      [112] putfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [115] aload_0 v0
       [116] iconst_0
-      [117] putfield #93
+      [117] putfield #94
         - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [120] aload_0 v0
       [121] new #18
         - Class [com/devinxutal/tetris/model/ScoreAndLevel]
       [124] dup
-      [125] invokespecial #117
+      [125] invokespecial #118
         - Methodref [com/devinxutal/tetris/model/ScoreAndLevel.<init> ()V]
-      [128] putfield #94
+      [128] putfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
       [131] aload_0 v0
       [132] iconst_1
-      [133] putfield #95
+      [133] putfield #96
         - Fieldref [com/devinxutal/tetris/model/d.y Z]
       [136] aload_0 v0
       [137] new #20
         - Class [com/devinxutal/tetris/model/b]
       [140] dup
       [141] aload_0 v0
-      [142] invokespecial #129
+      [142] invokespecial #130
         - Methodref [com/devinxutal/tetris/model/b.<init> (Lcom/devinxutal/tetris/model/d;)V]
-      [145] putfield #96
+      [145] putfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
       [148] aload_0 v0
       [149] iconst_0
-      [150] putfield #69
+      [150] putfield #70
         - Fieldref [com/devinxutal/tetris/model/d.A Z]
       [153] aload_0 v0
-      [154] invokevirtual #136
+      [154] invokevirtual #137
         - Methodref [com/devinxutal/tetris/model/d.e ()V]
       [157] aload_0 v0
-      [158] invokestatic #112
+      [158] invokestatic #113
         - Methodref [com/devinxutal/tetris/c/b.a ()Lcom/devinxutal/tetris/c/b;]
-      [161] invokevirtual #113
+      [161] invokevirtual #114
         - Methodref [com/devinxutal/tetris/c/b.f ()Z]
-      [164] putfield #95
+      [164] putfield #96
         - Fieldref [com/devinxutal/tetris/model/d.y Z]
       [167] return
       Code attribute exceptions (count = 0):
@@ -42463,7 +42562,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #71
+      [1] getfield #72
         - Fieldref [com/devinxutal/tetris/model/d.a I]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -42474,7 +42573,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #72
+      [1] getfield #73
         - Fieldref [com/devinxutal/tetris/model/d.b I]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -42485,7 +42584,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #73
+      [1] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -42499,9 +42598,9 @@ Methods (count = 29):
       [1] ldc #2
         - Float [0.9]
       [3] aload_0 v0
-      [4] getfield #94
+      [4] getfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
-      [7] getfield #62
+      [7] getfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [10] i2f
       [11] fmul
@@ -42519,49 +42618,49 @@ Methods (count = 29):
     + Code attribute instructions (code length = 165, locals = 3, stack = 3):
       [0] aload_0 v0
       [1] iconst_0
-      [2] putfield #74
+      [2] putfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [5] aload_0 v0
       [6] iconst_0
-      [7] putfield #79
+      [7] putfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [10] aload_0 v0
-      [11] getfield #94
+      [11] getfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
       [14] dup
       [15] astore_1 v1
       [16] iconst_1
-      [17] putfield #62
+      [17] putfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [20] aload_1 v1
       [21] iconst_0
-      [22] putfield #63
+      [22] putfield #64
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.b I]
       [25] aload_1 v1
       [26] iconst_0
-      [27] putfield #64
+      [27] putfield #65
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.c I]
       [30] aload_1 v1
       [31] iconst_0
-      [32] putfield #65
+      [32] putfield #66
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.d I]
-      [35] invokestatic #112
+      [35] invokestatic #113
         - Methodref [com/devinxutal/tetris/c/b.a ()Lcom/devinxutal/tetris/c/b;]
       [38] ifnull +13 (target=51)
       [41] aload_1 v1
-      [42] invokestatic #112
+      [42] invokestatic #113
         - Methodref [com/devinxutal/tetris/c/b.a ()Lcom/devinxutal/tetris/c/b;]
-      [45] invokevirtual #114
+      [45] invokevirtual #115
         - Methodref [com/devinxutal/tetris/c/b.i ()I]
-      [48] putfield #62
+      [48] putfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [51] aload_0 v0
       [52] aconst_null
-      [53] putfield #92
+      [53] putfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [56] aload_0 v0
       [57] iconst_0
-      [58] putfield #93
+      [58] putfield #94
         - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [61] iconst_0
       [62] istore_1 v1
@@ -42570,7 +42669,7 @@ Methods (count = 29):
       [67] istore_2 v2
       [68] goto +15 (target=83)
       [71] aload_0 v0
-      [72] getfield #86
+      [72] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [75] iload_1 v1
       [76] aaload
@@ -42589,7 +42688,7 @@ Methods (count = 29):
       [99] istore_1 v1
       [100] goto +13 (target=113)
       [103] aload_0 v0
-      [104] getfield #75
+      [104] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [107] iload_1 v1
       [108] iconst_0
@@ -42597,36 +42696,36 @@ Methods (count = 29):
       [110] iinc v1, 1
       [113] iload_1 v1
       [114] aload_0 v0
-      [115] getfield #75
+      [115] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [118] arraylength
       [119] ificmplt -16 (target=103)
       [122] aload_0 v0
       [123] iconst_0
-      [124] putfield #76
+      [124] putfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [127] aload_0 v0
-      [128] getfield #89
+      [128] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [131] invokevirtual #156
+      [131] invokevirtual #157
         - Methodref [java/util/LinkedList.clear ()V]
       [134] iconst_0
       [135] istore_1 v1
       [136] goto +20 (target=156)
       [139] aload_0 v0
-      [140] getfield #89
+      [140] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [143] new #19
         - Class [com/devinxutal/tetris/model/a]
       [146] dup
-      [147] invokespecial #119
+      [147] invokespecial #120
         - Methodref [com/devinxutal/tetris/model/a.<init> ()V]
-      [150] invokevirtual #155
+      [150] invokevirtual #156
         - Methodref [java/util/LinkedList.addLast (Ljava/lang/Object;)V]
       [153] iinc v1, 1
       [156] iload_1 v1
       [157] aload_0 v0
-      [158] getfield #90
+      [158] getfield #91
         - Fieldref [com/devinxutal/tetris/model/d.t I]
       [161] ificmplt -22 (target=139)
       [164] return
@@ -42638,7 +42737,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #79
+      [1] getfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -42649,7 +42748,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #94
+      [1] getfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -42661,32 +42760,32 @@ Methods (count = 29):
     + Code attribute instructions (code length = 948, locals = 9, stack = 4):
       [0] aload_0 v0
       [1] iconst_0
-      [2] putfield #69
+      [2] putfield #70
         - Fieldref [com/devinxutal/tetris/model/d.A Z]
       [5] aload_0 v0
-      [6] getfield #74
+      [6] getfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [9] ifeq +275 (target=284)
       [12] aload_0 v0
       [13] dup
-      [14] getfield #76
+      [14] getfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [17] iconst_1
       [18] iadd
-      [19] putfield #76
+      [19] putfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [22] aload_0 v0
-      [23] getfield #76
+      [23] getfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [26] aload_0 v0
-      [27] getfield #77
+      [27] getfield #78
         - Fieldref [com/devinxutal/tetris/model/d.g I]
       [30] ificmple +917 (target=947)
       [33] aload_0 v0
       [34] dup
       [35] astore_1 v1
       [36] iconst_1
-      [37] putfield #69
+      [37] putfield #70
         - Fieldref [com/devinxutal/tetris/model/d.A Z]
       [40] bipush 19
       [42] istore_2 v2
@@ -42694,7 +42793,7 @@ Methods (count = 29):
       [45] istore_3 v3
       [46] goto +67 (target=113)
       [49] aload_1 v1
-      [50] getfield #75
+      [50] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [53] iload_3 v3
       [54] baload
@@ -42710,13 +42809,13 @@ Methods (count = 29):
       [74] istore v4
       [76] goto +24 (target=100)
       [79] aload_1 v1
-      [80] getfield #86
+      [80] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [83] iload_2 v2
       [84] aaload
       [85] iload v4
       [87] aload_1 v1
-      [88] getfield #86
+      [88] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [91] iload_3 v3
       [92] aaload
@@ -42733,16 +42832,16 @@ Methods (count = 29):
       [114] ifge -65 (target=49)
       [117] aload_1 v1
       [118] iconst_0
-      [119] putfield #74
+      [119] putfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [122] aload_1 v1
-      [123] getfield #94
+      [123] getfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
       [126] aload_1 v1
-      [127] getfield #78
+      [127] getfield #79
         - Fieldref [com/devinxutal/tetris/model/d.h I]
       [130] aload_1 v1
-      [131] getfield #91
+      [131] getfield #92
         - Fieldref [com/devinxutal/tetris/model/d.u Z]
       [134] istore_2 v2
       [135] istore v6
@@ -42775,85 +42874,85 @@ Methods (count = 29):
       [201] istore_3 v3
       [202] aload v5
       [204] iload_3 v3
-      [205] invokevirtual #118
+      [205] invokevirtual #119
         - Methodref [com/devinxutal/tetris/model/ScoreAndLevel.a (I)I]
       [208] pop
       [209] aload v5
       [211] dup
-      [212] getfield #65
+      [212] getfield #66
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.d I]
       [215] iload v6
       [217] iadd
-      [218] putfield #65
+      [218] putfield #66
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.d I]
       [221] aload v5
       [223] dup
-      [224] getfield #64
+      [224] getfield #65
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.c I]
       [227] iload v6
       [229] iadd
-      [230] putfield #64
+      [230] putfield #65
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.c I]
       [233] aload v5
-      [235] getfield #65
+      [235] getfield #66
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.d I]
       [238] aload v5
-      [240] getfield #62
+      [240] getfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [243] iconst_5
       [244] imul
       [245] ificmplt +30 (target=275)
       [248] aload v5
-      [250] getfield #62
+      [250] getfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [253] bipush 15
       [255] ificmpge +20 (target=275)
       [258] aload v5
       [260] dup
-      [261] getfield #62
+      [261] getfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [264] iconst_1
       [265] iadd
-      [266] putfield #62
+      [266] putfield #63
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.a I]
       [269] aload v5
       [271] iconst_0
-      [272] putfield #65
+      [272] putfield #66
         - Fieldref [com/devinxutal/tetris/model/ScoreAndLevel.d I]
       [275] aload_1 v1
       [276] aload_1 v1
-      [277] invokespecial #140
+      [277] invokespecial #141
         - Methodref [com/devinxutal/tetris/model/d.o ()Ljava/util/Set;]
-      [280] putfield #87
+      [280] putfield #88
         - Fieldref [com/devinxutal/tetris/model/d.q Ljava/util/Set;]
       [283] return
       [284] aload_0 v0
-      [285] getfield #87
+      [285] getfield #88
         - Fieldref [com/devinxutal/tetris/model/d.q Ljava/util/Set;]
       [288] ifnull +347 (target=635)
       [291] aload_0 v0
       [292] aload_0 v0
-      [293] getfield #87
+      [293] getfield #88
         - Fieldref [com/devinxutal/tetris/model/d.q Ljava/util/Set;]
       [296] astore_2 v2
       [297] astore_1 v1
       [298] new #29
         - Class [java/util/HashMap]
       [301] dup
-      [302] invokespecial #151
+      [302] invokespecial #152
         - Methodref [java/util/HashMap.<init> ()V]
       [305] astore_3 v3
       [306] aload_2 v2
-      [307] invokeinterface #171
+      [307] invokeinterface #172
         - InterfaceMethodref [java/util/Set.iterator ()Ljava/util/Iterator;]
       [312] astore v5
       [314] goto +67 (target=381)
       [317] aload v5
-      [319] invokeinterface #163
+      [319] invokeinterface #164
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
       [324] checkcast #24
         - Class [java/lang/Integer]
-      [327] invokevirtual #144
+      [327] invokevirtual #145
         - Methodref [java/lang/Integer.intValue ()I]
       [330] dup
       [331] istore v4
@@ -42866,22 +42965,22 @@ Methods (count = 29):
       [343] istore v7
       [345] aload_3 v3
       [346] iload v4
-      [348] invokestatic #145
+      [348] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
       [351] aload_1 v1
-      [352] getfield #86
+      [352] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [355] iload v6
       [357] aaload
       [358] iload v7
       [360] iaload
-      [361] invokestatic #145
+      [361] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [364] invokeinterface #167
+      [364] invokeinterface #168
         - InterfaceMethodref [java/util/Map.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;]
       [369] pop
       [370] aload_1 v1
-      [371] getfield #86
+      [371] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [374] iload v6
       [376] aaload
@@ -42889,7 +42988,7 @@ Methods (count = 29):
       [379] iconst_m1
       [380] iastore
       [381] aload v5
-      [383] invokeinterface #162
+      [383] invokeinterface #163
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
       [388] ifne -71 (target=317)
       [391] iconst_1
@@ -42898,16 +42997,16 @@ Methods (count = 29):
       [397] iconst_1
       [398] istore v5
       [400] aload_2 v2
-      [401] invokeinterface #171
+      [401] invokeinterface #172
         - InterfaceMethodref [java/util/Set.iterator ()Ljava/util/Iterator;]
       [406] astore v7
       [408] goto +60 (target=468)
       [411] aload v7
-      [413] invokeinterface #163
+      [413] invokeinterface #164
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
       [418] checkcast #24
         - Class [java/lang/Integer]
-      [421] invokevirtual #144
+      [421] invokevirtual #145
         - Methodref [java/lang/Integer.intValue ()I]
       [424] dup
       [425] istore v6
@@ -42924,7 +43023,7 @@ Methods (count = 29):
       [444] bipush 20
       [446] ificmpge +16 (target=462)
       [449] aload_1 v1
-      [450] getfield #86
+      [450] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [453] iload v8
       [455] aaload
@@ -42935,7 +43034,7 @@ Methods (count = 29):
       [463] istore v5
       [465] goto +13 (target=478)
       [468] aload v7
-      [470] invokeinterface #162
+      [470] invokeinterface #163
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
       [475] ifne -64 (target=411)
       [478] iload v5
@@ -42953,29 +43052,29 @@ Methods (count = 29):
       [504] dup
       [505] ldc #5
         - String [dealWithFloating: max lines can drop:]
-      [507] invokespecial #148
+      [507] invokespecial #149
         - Methodref [java/lang/StringBuilder.<init> (Ljava/lang/String;)V]
       [510] iload v4
-      [512] invokevirtual #149
+      [512] invokevirtual #150
         - Methodref [java/lang/StringBuilder.append (I)Ljava/lang/StringBuilder;]
-      [515] invokevirtual #150
+      [515] invokevirtual #151
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [518] invokestatic #109
+      [518] invokestatic #110
         - Methodref [android/util/Log.v (Ljava/lang/String;Ljava/lang/String;)I]
       [521] pop
       [522] iload v4
       [524] ifeq +100 (target=624)
       [527] aload_2 v2
-      [528] invokeinterface #171
+      [528] invokeinterface #172
         - InterfaceMethodref [java/util/Set.iterator ()Ljava/util/Iterator;]
       [533] astore v6
       [535] goto +61 (target=596)
       [538] aload v6
-      [540] invokeinterface #163
+      [540] invokeinterface #164
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
       [545] checkcast #24
         - Class [java/lang/Integer]
-      [548] invokevirtual #144
+      [548] invokevirtual #145
         - Methodref [java/lang/Integer.intValue ()I]
       [551] dup
       [552] istore v5
@@ -42989,28 +43088,28 @@ Methods (count = 29):
       [566] irem
       [567] istore v8
       [569] aload_1 v1
-      [570] getfield #86
+      [570] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [573] iload v7
       [575] aaload
       [576] iload v8
       [578] aload_3 v3
       [579] iload v5
-      [581] invokestatic #145
+      [581] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [584] invokeinterface #166
+      [584] invokeinterface #167
         - InterfaceMethodref [java/util/Map.get (Ljava/lang/Object;)Ljava/lang/Object;]
       [589] checkcast #24
         - Class [java/lang/Integer]
-      [592] invokevirtual #144
+      [592] invokevirtual #145
         - Methodref [java/lang/Integer.intValue ()I]
       [595] iastore
       [596] aload v6
-      [598] invokeinterface #162
+      [598] invokeinterface #163
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
       [603] ifne -65 (target=538)
       [606] aload_1 v1
-      [607] invokespecial #140
+      [607] invokespecial #141
         - Methodref [com/devinxutal/tetris/model/d.o ()Ljava/util/Set;]
       [610] dup
       [611] astore v5
@@ -43022,47 +43121,47 @@ Methods (count = 29):
       [621] goto -323 (target=298)
       [624] aload_0 v0
       [625] aconst_null
-      [626] putfield #87
+      [626] putfield #88
         - Fieldref [com/devinxutal/tetris/model/d.q Ljava/util/Set;]
       [629] aload_0 v0
       [630] iconst_1
-      [631] putfield #88
+      [631] putfield #89
         - Fieldref [com/devinxutal/tetris/model/d.r Z]
       [634] return
       [635] aload_0 v0
-      [636] getfield #88
+      [636] getfield #89
         - Fieldref [com/devinxutal/tetris/model/d.r Z]
       [639] ifeq +14 (target=653)
       [642] aload_0 v0
-      [643] invokespecial #139
+      [643] invokespecial #140
         - Methodref [com/devinxutal/tetris/model/d.n ()Z]
       [646] pop
       [647] aload_0 v0
       [648] iconst_0
-      [649] putfield #88
+      [649] putfield #89
         - Fieldref [com/devinxutal/tetris/model/d.r Z]
       [652] return
       [653] aload_0 v0
-      [654] getfield #80
+      [654] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [657] ifnonnull +133 (target=790)
       [660] aload_0 v0
-      [661] invokespecial #138
+      [661] invokespecial #139
         - Methodref [com/devinxutal/tetris/model/d.m ()V]
       [664] aload_0 v0
       [665] dup
       [666] astore_1 v1
       [667] iconst_0
-      [668] putfield #79
+      [668] putfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [671] aload_1 v1
-      [672] getfield #80
+      [672] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [675] ifnull +109 (target=784)
       [678] aload_1 v1
-      [679] getfield #80
+      [679] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [682] invokevirtual #126
+      [682] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [685] astore_2 v2
       [686] iconst_0
@@ -43078,13 +43177,13 @@ Methods (count = 29):
       [702] baload
       [703] ifeq +63 (target=766)
       [706] aload_1 v1
-      [707] getfield #81
+      [707] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [710] iload v4
       [712] iadd
       [713] istore v5
       [715] aload_1 v1
-      [716] getfield #82
+      [716] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [719] iload_3 v3
       [720] iadd
@@ -43100,7 +43199,7 @@ Methods (count = 29):
       [742] bipush 20
       [744] ificmpge +22 (target=766)
       [747] aload_1 v1
-      [748] getfield #86
+      [748] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [751] iload v6
       [753] aaload
@@ -43109,7 +43208,7 @@ Methods (count = 29):
       [757] iflt +9 (target=766)
       [760] aload_1 v1
       [761] iconst_1
-      [762] putfield #79
+      [762] putfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [765] return
       [766] iinc v4, 1
@@ -43123,23 +43222,23 @@ Methods (count = 29):
       [783] return
       [784] aload_1 v1
       [785] iconst_0
-      [786] putfield #79
+      [786] putfield #80
         - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [789] return
       [790] aload_0 v0
-      [791] invokespecial #137
+      [791] invokespecial #138
         - Methodref [com/devinxutal/tetris/model/d.l ()Z]
       [794] ifne +153 (target=947)
       [797] aload_0 v0
       [798] dup
       [799] astore_1 v1
-      [800] getfield #80
+      [800] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [803] ifnull +109 (target=912)
       [806] aload_1 v1
-      [807] getfield #80
+      [807] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [810] invokevirtual #126
+      [810] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [813] astore_2 v2
       [814] iconst_0
@@ -43155,13 +43254,13 @@ Methods (count = 29):
       [830] baload
       [831] ifeq +64 (target=895)
       [834] aload_1 v1
-      [835] getfield #81
+      [835] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [838] iload v4
       [840] iadd
       [841] istore v5
       [843] aload_1 v1
-      [844] getfield #82
+      [844] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [847] iload_3 v3
       [848] iadd
@@ -43177,17 +43276,17 @@ Methods (count = 29):
       [870] bipush 20
       [872] ificmpge +23 (target=895)
       [875] aload_1 v1
-      [876] getfield #86
+      [876] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [879] iload v6
       [881] aaload
       [882] iload v5
       [884] aload_1 v1
-      [885] getfield #80
+      [885] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [888] invokevirtual #128
+      [888] invokevirtual #129
         - Methodref [com/devinxutal/tetris/model/a.i ()Lcom/devinxutal/tetris/model/e;]
-      [891] invokevirtual #143
+      [891] invokevirtual #144
         - Methodref [com/devinxutal/tetris/model/e.ordinal ()I]
       [894] iastore
       [895] iinc v4, 1
@@ -43200,17 +43299,17 @@ Methods (count = 29):
       [909] ificmplt -90 (target=819)
       [912] aload_1 v1
       [913] aconst_null
-      [914] putfield #80
+      [914] putfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [917] aload_1 v1
       [918] iconst_0
-      [919] putfield #93
+      [919] putfield #94
         - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [922] aload_1 v1
-      [923] getfield #94
+      [923] getfield #95
         - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
       [926] aload_1 v1
-      [927] getfield #85
+      [927] getfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [930] istore_3 v3
       [931] astore_2 v2
@@ -43220,11 +43319,11 @@ Methods (count = 29):
       [935] istore_1 v1
       [936] aload_2 v2
       [937] iload_1 v1
-      [938] invokevirtual #118
+      [938] invokevirtual #119
         - Methodref [com/devinxutal/tetris/model/ScoreAndLevel.a (I)I]
       [941] pop
       [942] aload_0 v0
-      [943] invokespecial #139
+      [943] invokespecial #140
         - Methodref [com/devinxutal/tetris/model/d.n ()Z]
       [946] pop
       [947] return
@@ -43239,11 +43338,11 @@ Methods (count = 29):
         - String [Playground]
       [2] ldc #6
         - String [processCommand 1]
-      [4] invokestatic #109
+      [4] invokestatic #110
         - Methodref [android/util/Log.v (Ljava/lang/String;Ljava/lang/String;)I]
       [7] pop
       [8] aload_0 v0
-      [9] getfield #80
+      [9] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [12] ifnonnull +5 (target=17)
       [15] iconst_0
@@ -43252,13 +43351,13 @@ Methods (count = 29):
         - String [Playground]
       [19] ldc #7
         - String [processCommand 2]
-      [21] invokestatic #109
+      [21] invokestatic #110
         - Methodref [android/util/Log.v (Ljava/lang/String;Ljava/lang/String;)I]
       [24] pop
-      [25] invokestatic #142
+      [25] invokestatic #143
         - Methodref [com/devinxutal/tetris/model/d.q ()[I]
       [28] aload_1 v1
-      [29] invokevirtual #110
+      [29] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [32] iaload
       [33] tableswitch (6 offsets, default=663) (target=696)
@@ -43272,7 +43371,7 @@ Methods (count = 29):
       [72] aload_0 v0
       [73] dup
       [74] astore_1 v1
-      [75] getfield #80
+      [75] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [78] ifnonnull +5 (target=83)
       [81] iconst_0
@@ -43311,15 +43410,15 @@ Methods (count = 29):
       [123] istore v7
       [125] dup
       [126] astore_2 v2
-      [127] getfield #80
+      [127] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [130] ifnonnull +7 (target=137)
       [133] iconst_0
       [134] goto +120 (target=254)
       [137] aload_2 v2
-      [138] getfield #80
+      [138] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [141] invokevirtual #127
+      [141] invokevirtual #128
         - Methodref [com/devinxutal/tetris/model/a.h ()[[Z]
       [144] astore v8
       [146] iconst_0
@@ -43335,7 +43434,7 @@ Methods (count = 29):
       [165] baload
       [166] ifeq +69 (target=235)
       [169] aload_2 v2
-      [170] getfield #81
+      [170] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [173] iload v10
       [175] iadd
@@ -43343,7 +43442,7 @@ Methods (count = 29):
       [178] iadd
       [179] istore v11
       [181] aload_2 v2
-      [182] getfield #82
+      [182] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [185] iload v9
       [187] iadd
@@ -43361,7 +43460,7 @@ Methods (count = 29):
       [213] iload v12
       [215] iflt +20 (target=235)
       [218] aload_2 v2
-      [219] getfield #86
+      [219] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [222] iload v12
       [224] aaload
@@ -43381,20 +43480,20 @@ Methods (count = 29):
       [253] iconst_1
       [254] ifeq +26 (target=280)
       [257] aload_1 v1
-      [258] getfield #80
+      [258] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [261] invokevirtual #121
+      [261] invokevirtual #122
         - Methodref [com/devinxutal/tetris/model/a.b ()V]
       [264] aload_1 v1
       [265] dup
-      [266] getfield #81
+      [266] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [269] iload_3 v3
       [270] iadd
-      [271] putfield #81
+      [271] putfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [274] aload_1 v1
-      [275] invokespecial #141
+      [275] invokespecial #142
         - Methodref [com/devinxutal/tetris/model/d.p ()V]
       [278] iconst_1
       [279] ireturn
@@ -43407,15 +43506,15 @@ Methods (count = 29):
       [292] aload_0 v0
       [293] dup
       [294] astore_1 v1
-      [295] getfield #80
+      [295] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [298] ifnonnull +5 (target=303)
       [301] iconst_0
       [302] ireturn
       [303] aload_1 v1
-      [304] getfield #80
+      [304] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [307] invokevirtual #126
+      [307] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [310] astore_2 v2
       [311] iconst_0
@@ -43431,7 +43530,7 @@ Methods (count = 29):
       [327] baload
       [328] ifeq +68 (target=396)
       [331] aload_1 v1
-      [332] getfield #81
+      [332] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [335] iload v4
       [337] iadd
@@ -43439,7 +43538,7 @@ Methods (count = 29):
       [339] isub
       [340] istore v5
       [342] aload_1 v1
-      [343] getfield #82
+      [343] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [346] iload_3 v3
       [347] iadd
@@ -43459,7 +43558,7 @@ Methods (count = 29):
       [376] bipush 20
       [378] ificmpge +18 (target=396)
       [381] aload_1 v1
-      [382] getfield #86
+      [382] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [385] iload v6
       [387] aaload
@@ -43478,29 +43577,29 @@ Methods (count = 29):
       [410] ificmplt -94 (target=316)
       [413] aload_1 v1
       [414] dup
-      [415] getfield #81
+      [415] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [418] iconst_1
       [419] isub
-      [420] putfield #81
+      [420] putfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [423] aload_1 v1
-      [424] invokespecial #141
+      [424] invokespecial #142
         - Methodref [com/devinxutal/tetris/model/d.p ()V]
       [427] iconst_1
       [428] ireturn
       [429] aload_0 v0
       [430] dup
       [431] astore_1 v1
-      [432] getfield #80
+      [432] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [435] ifnonnull +5 (target=440)
       [438] iconst_0
       [439] ireturn
       [440] aload_1 v1
-      [441] getfield #80
+      [441] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [444] invokevirtual #126
+      [444] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [447] astore_2 v2
       [448] iconst_0
@@ -43516,7 +43615,7 @@ Methods (count = 29):
       [464] baload
       [465] ifeq +70 (target=535)
       [468] aload_1 v1
-      [469] getfield #81
+      [469] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [472] iload v4
       [474] iadd
@@ -43524,7 +43623,7 @@ Methods (count = 29):
       [476] iadd
       [477] istore v5
       [479] aload_1 v1
-      [480] getfield #82
+      [480] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [483] iload_3 v3
       [484] iadd
@@ -43545,7 +43644,7 @@ Methods (count = 29):
       [515] bipush 20
       [517] ificmpge +18 (target=535)
       [520] aload_1 v1
-      [521] getfield #86
+      [521] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [524] iload v6
       [526] aaload
@@ -43564,107 +43663,107 @@ Methods (count = 29):
       [549] ificmplt -96 (target=453)
       [552] aload_1 v1
       [553] dup
-      [554] getfield #81
+      [554] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [557] iconst_1
       [558] iadd
-      [559] putfield #81
+      [559] putfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [562] aload_1 v1
-      [563] invokespecial #141
+      [563] invokespecial #142
         - Methodref [com/devinxutal/tetris/model/d.p ()V]
       [566] iconst_1
       [567] ireturn
       [568] aload_0 v0
-      [569] invokespecial #137
+      [569] invokespecial #138
         - Methodref [com/devinxutal/tetris/model/d.l ()Z]
       [572] dup
       [573] istore_1 v1
       [574] ifeq +13 (target=587)
       [577] aload_0 v0
       [578] dup
-      [579] getfield #85
+      [579] getfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [582] iconst_1
       [583] iadd
-      [584] putfield #85
+      [584] putfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [587] iload_1 v1
       [588] ireturn
       [589] aload_0 v0
       [590] dup
       [591] astore_1 v1
-      [592] getfield #80
+      [592] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [595] ifnonnull +5 (target=600)
       [598] iconst_0
       [599] ireturn
       [600] aload_1 v1
-      [601] getfield #83
+      [601] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [604] aload_1 v1
-      [605] getfield #82
+      [605] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [608] ificmpeq +29 (target=637)
       [611] aload_1 v1
       [612] dup
-      [613] getfield #85
+      [613] getfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [616] aload_1 v1
-      [617] getfield #83
+      [617] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [620] aload_1 v1
-      [621] getfield #82
+      [621] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [624] isub
       [625] iadd
-      [626] putfield #85
+      [626] putfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [629] aload_1 v1
       [630] aload_1 v1
-      [631] getfield #83
+      [631] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
-      [634] putfield #82
+      [634] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [637] iconst_1
       [638] ireturn
       [639] aload_0 v0
       [640] dup
       [641] astore_1 v1
-      [642] getfield #80
+      [642] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [645] ifnull +10 (target=655)
       [648] aload_1 v1
-      [649] getfield #93
+      [649] getfield #94
         - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [652] ifeq +5 (target=657)
       [655] iconst_0
       [656] ireturn
       [657] aload_1 v1
-      [658] getfield #80
+      [658] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [661] astore_2 v2
       [662] aload_1 v1
-      [663] getfield #92
+      [663] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [666] ifnonnull +10 (target=676)
       [669] aload_1 v1
-      [670] invokespecial #138
+      [670] invokespecial #139
         - Methodref [com/devinxutal/tetris/model/d.m ()V]
       [673] goto +11 (target=684)
       [676] aload_1 v1
       [677] aload_1 v1
-      [678] getfield #92
+      [678] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
-      [681] invokespecial #135
+      [681] invokespecial #136
         - Methodref [com/devinxutal/tetris/model/d.a (Lcom/devinxutal/tetris/model/a;)V]
       [684] aload_1 v1
       [685] aload_2 v2
-      [686] putfield #92
+      [686] putfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [689] aload_1 v1
       [690] iconst_1
-      [691] putfield #93
+      [691] putfield #94
         - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [694] iconst_1
       [695] ireturn
@@ -43678,7 +43777,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #74
+      [1] getfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -43703,39 +43802,39 @@ Methods (count = 29):
       [16] aload_0 v0
       [17] iload_1 v1
       [18] iload_2 v2
-      [19] invokestatic #146
+      [19] invokestatic #147
         - Methodref [java/lang/Math.min (II)I]
-      [22] putfield #73
+      [22] putfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [25] aload_0 v0
       [26] bipush 10
       [28] iconst_1
       [29] aload_0 v0
-      [30] getfield #73
+      [30] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [33] iadd
       [34] imul
       [35] iconst_1
       [36] iadd
-      [37] putfield #71
+      [37] putfield #72
         - Fieldref [com/devinxutal/tetris/model/d.a I]
       [40] aload_0 v0
       [41] bipush 20
       [43] iconst_1
       [44] aload_0 v0
-      [45] getfield #73
+      [45] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [48] iadd
       [49] imul
       [50] iconst_1
       [51] iadd
-      [52] putfield #72
+      [52] putfield #73
         - Fieldref [com/devinxutal/tetris/model/d.b I]
       [55] aload_0 v0
-      [56] getfield #96
+      [56] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
       [59] iconst_0
-      [60] invokevirtual #133
+      [60] invokevirtual #134
         - Methodref [com/devinxutal/tetris/model/b.a (Z)V]
       [63] return
       Code attribute exceptions (count = 0):
@@ -43746,10 +43845,10 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 9, locals = 2, stack = 2):
       [0] aload_0 v0
-      [1] getfield #96
+      [1] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
       [4] aload_1 v1
-      [5] invokevirtual #130
+      [5] invokevirtual #131
         - Methodref [com/devinxutal/tetris/model/b.a (Landroid/content/Context;)V]
       [8] return
       Code attribute exceptions (count = 0):
@@ -43760,67 +43859,67 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 92, locals = 5, stack = 4):
       [0] aload_0 v0
-      [1] getfield #89
+      [1] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [4] ifnull +87 (target=91)
       [7] aload_0 v0
-      [8] getfield #89
+      [8] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [11] invokevirtual #161
+      [11] invokevirtual #162
         - Methodref [java/util/LinkedList.size ()I]
       [14] ifle +20 (target=34)
       [17] aload_0 v0
       [18] aload_1 v1
       [19] aload_0 v0
-      [20] getfield #89
+      [20] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [23] iconst_0
-      [24] invokevirtual #157
+      [24] invokevirtual #158
         - Methodref [java/util/LinkedList.get (I)Ljava/lang/Object;]
       [27] checkcast #19
         - Class [com/devinxutal/tetris/model/a]
       [30] aload_2 v2
-      [31] invokespecial #134
+      [31] invokespecial #135
         - Methodref [com/devinxutal/tetris/model/d.a (Landroid/graphics/Canvas;Lcom/devinxutal/tetris/model/a;Landroid/graphics/Rect;)V]
       [34] aload_0 v0
-      [35] getfield #89
+      [35] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [38] invokevirtual #161
+      [38] invokevirtual #162
         - Methodref [java/util/LinkedList.size ()I]
       [41] iconst_2
       [42] ificmplt +20 (target=62)
       [45] aload_0 v0
       [46] aload_1 v1
       [47] aload_0 v0
-      [48] getfield #89
+      [48] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [51] iconst_1
-      [52] invokevirtual #157
+      [52] invokevirtual #158
         - Methodref [java/util/LinkedList.get (I)Ljava/lang/Object;]
       [55] checkcast #19
         - Class [com/devinxutal/tetris/model/a]
       [58] aload_3 v3
-      [59] invokespecial #134
+      [59] invokespecial #135
         - Methodref [com/devinxutal/tetris/model/d.a (Landroid/graphics/Canvas;Lcom/devinxutal/tetris/model/a;Landroid/graphics/Rect;)V]
       [62] aload_0 v0
-      [63] getfield #89
+      [63] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [66] invokevirtual #161
+      [66] invokevirtual #162
         - Methodref [java/util/LinkedList.size ()I]
       [69] iconst_3
       [70] ificmplt +21 (target=91)
       [73] aload_0 v0
       [74] aload_1 v1
       [75] aload_0 v0
-      [76] getfield #89
+      [76] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [79] iconst_2
-      [80] invokevirtual #157
+      [80] invokevirtual #158
         - Methodref [java/util/LinkedList.get (I)Ljava/lang/Object;]
       [83] checkcast #19
         - Class [com/devinxutal/tetris/model/a]
       [86] aload v4
-      [88] invokespecial #134
+      [88] invokespecial #135
         - Methodref [com/devinxutal/tetris/model/d.a (Landroid/graphics/Canvas;Lcom/devinxutal/tetris/model/a;Landroid/graphics/Rect;)V]
       [91] return
       Code attribute exceptions (count = 0):
@@ -43831,16 +43930,16 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 18, locals = 3, stack = 4):
       [0] aload_0 v0
-      [1] getfield #92
+      [1] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [4] ifnull +13 (target=17)
       [7] aload_0 v0
       [8] aload_1 v1
       [9] aload_0 v0
-      [10] getfield #92
+      [10] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [13] aload_2 v2
-      [14] invokespecial #134
+      [14] invokespecial #135
         - Methodref [com/devinxutal/tetris/model/d.a (Landroid/graphics/Canvas;Lcom/devinxutal/tetris/model/a;Landroid/graphics/Rect;)V]
       [17] return
       Code attribute exceptions (count = 0):
@@ -43851,12 +43950,12 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 298, locals = 14, stack = 7):
       [0] aload_3 v3
-      [1] invokevirtual #108
+      [1] invokevirtual #109
         - Methodref [android/graphics/Rect.width ()I]
       [4] aload_3 v3
-      [5] invokevirtual #107
+      [5] invokevirtual #108
         - Methodref [android/graphics/Rect.height ()I]
-      [8] invokestatic #146
+      [8] invokestatic #147
         - Methodref [java/lang/Math.min (II)I]
       [11] iconst_4
       [12] idiv
@@ -43865,7 +43964,7 @@ Methods (count = 29):
       [16] getfield #37
         - Fieldref [android/graphics/Rect.left I]
       [19] aload_3 v3
-      [20] invokevirtual #108
+      [20] invokevirtual #109
         - Methodref [android/graphics/Rect.width ()I]
       [23] iload v4
       [25] iconst_4
@@ -43879,7 +43978,7 @@ Methods (count = 29):
       [34] getfield #39
         - Fieldref [android/graphics/Rect.top I]
       [37] aload_3 v3
-      [38] invokevirtual #107
+      [38] invokevirtual #108
         - Methodref [android/graphics/Rect.height ()I]
       [41] iload v4
       [43] iconst_4
@@ -43890,19 +43989,19 @@ Methods (count = 29):
       [48] iadd
       [49] istore_3 v3
       [50] aload_2 v2
-      [51] invokevirtual #125
+      [51] invokevirtual #126
         - Methodref [com/devinxutal/tetris/model/a.f ()I]
       [54] istore v6
       [56] aload_2 v2
-      [57] invokevirtual #124
+      [57] invokevirtual #125
         - Methodref [com/devinxutal/tetris/model/a.e ()I]
       [60] istore v7
       [62] aload_2 v2
-      [63] invokevirtual #122
+      [63] invokevirtual #123
         - Methodref [com/devinxutal/tetris/model/a.c ()I]
       [66] istore v8
       [68] aload_2 v2
-      [69] invokevirtual #123
+      [69] invokevirtual #124
         - Methodref [com/devinxutal/tetris/model/a.d ()I]
       [72] istore v9
       [74] iload v5
@@ -43931,46 +44030,46 @@ Methods (count = 29):
       [104] iconst_0
       [105] iconst_0
       [106] aload_0 v0
-      [107] getfield #96
+      [107] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [110] getfield #66
+      [110] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [113] iconst_0
       [114] aaload
-      [115] invokevirtual #98
+      [115] invokevirtual #99
         - Methodref [android/graphics/Bitmap.getWidth ()I]
       [118] aload_0 v0
-      [119] getfield #96
+      [119] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [122] getfield #66
+      [122] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [125] iconst_0
       [126] aaload
-      [127] invokevirtual #97
+      [127] invokevirtual #98
         - Methodref [android/graphics/Bitmap.getHeight ()I]
-      [130] invokespecial #106
+      [130] invokespecial #107
         - Methodref [android/graphics/Rect.<init> (IIII)V]
       [133] astore v10
       [135] new #13
         - Class [android/graphics/Rect]
       [138] dup
-      [139] invokespecial #105
+      [139] invokespecial #106
         - Methodref [android/graphics/Rect.<init> ()V]
       [142] astore v11
       [144] aload_0 v0
-      [145] getfield #96
+      [145] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [148] invokestatic #132
+      [148] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
-      [151] invokevirtual #101
+      [151] invokevirtual #102
         - Methodref [android/graphics/Paint.reset ()V]
       [154] aload_0 v0
-      [155] getfield #96
+      [155] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [158] invokestatic #132
+      [158] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
       [161] iconst_1
-      [162] invokevirtual #103
+      [162] invokevirtual #104
         - Methodref [android/graphics/Paint.setAntiAlias (Z)V]
       [165] iconst_0
       [166] istore v12
@@ -43979,7 +44078,7 @@ Methods (count = 29):
       [172] istore v13
       [174] goto +106 (target=280)
       [177] aload_2 v2
-      [178] invokevirtual #126
+      [178] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [181] iload v9
       [183] iload v12
@@ -44024,24 +44123,24 @@ Methods (count = 29):
         - Fieldref [android/graphics/Rect.bottom I]
       [247] aload_1 v1
       [248] aload_0 v0
-      [249] getfield #96
+      [249] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [252] getfield #66
+      [252] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [255] aload_2 v2
-      [256] invokevirtual #128
+      [256] invokevirtual #129
         - Methodref [com/devinxutal/tetris/model/a.i ()Lcom/devinxutal/tetris/model/e;]
-      [259] invokevirtual #143
+      [259] invokevirtual #144
         - Methodref [com/devinxutal/tetris/model/e.ordinal ()I]
       [262] aaload
       [263] aload v10
       [265] aload v11
       [267] aload_0 v0
-      [268] getfield #96
+      [268] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [271] invokestatic #132
+      [271] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
-      [274] invokevirtual #100
+      [274] invokevirtual #101
         - Methodref [android/graphics/Canvas.drawBitmap (Landroid/graphics/Bitmap;Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Paint;)V]
       [277] iinc v13, 1
       [280] iload v13
@@ -44058,37 +44157,37 @@ Methods (count = 29):
     Access flags: 0x11
       = public final com.devinxutal.tetris.model.SavablePlayground j()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 145, locals = 4, stack = 3):
+    + Code attribute instructions (code length = 153, locals = 4, stack = 3):
       [0] new #17
         - Class [com/devinxutal/tetris/model/SavablePlayground]
       [3] dup
-      [4] invokespecial #115
+      [4] invokespecial #116
         - Methodref [com/devinxutal/tetris/model/SavablePlayground.<init> ()V]
       [7] dup
       [8] astore_1 v1
       [9] aload_0 v0
-      [10] getfield #86
+      [10] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [13] putfield #54
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.a [[I]
       [16] aload_1 v1
       [17] aload_1 v1
       [18] aload_0 v0
-      [19] getfield #80
+      [19] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [22] invokevirtual #116
+      [22] invokevirtual #117
         - Methodref [com/devinxutal/tetris/model/SavablePlayground.a (Lcom/devinxutal/tetris/model/a;)Lcom/devinxutal/tetris/model/c;]
       [25] putfield #55
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.b Lcom/devinxutal/tetris/model/c;]
       [28] aload_1 v1
       [29] aload_0 v0
-      [30] getfield #81
+      [30] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [33] putfield #56
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.c I]
       [36] aload_1 v1
       [37] aload_0 v0
-      [38] getfield #82
+      [38] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [41] putfield #57
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.d I]
@@ -44096,85 +44195,91 @@ Methods (count = 29):
       [45] new #32
         - Class [java/util/LinkedList]
       [48] dup
-      [49] invokespecial #153
+      [49] invokespecial #154
         - Methodref [java/util/LinkedList.<init> ()V]
       [52] putfield #58
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.e Ljava/util/List;]
-      [55] aload_0 v0
-      [56] getfield #89
+      [55] aload_1 v1
+      [56] aload_0 v0
+      [57] getfield #80
+        - Fieldref [com/devinxutal/tetris/model/d.i Z]
+      [60] putfield #62
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.i Z]
+      [63] aload_0 v0
+      [64] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [59] invokevirtual #159
+      [67] invokevirtual #160
         - Methodref [java/util/LinkedList.iterator ()Ljava/util/Iterator;]
-      [62] astore_3 v3
-      [63] goto +28 (target=91)
-      [66] aload_3 v3
-      [67] invokeinterface #163
+      [70] astore_3 v3
+      [71] goto +28 (target=99)
+      [74] aload_3 v3
+      [75] invokeinterface #164
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
-      [72] checkcast #19
+      [80] checkcast #19
         - Class [com/devinxutal/tetris/model/a]
-      [75] astore_2 v2
-      [76] aload_1 v1
-      [77] getfield #58
+      [83] astore_2 v2
+      [84] aload_1 v1
+      [85] getfield #58
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.e Ljava/util/List;]
-      [80] aload_1 v1
-      [81] aload_2 v2
-      [82] invokevirtual #116
+      [88] aload_1 v1
+      [89] aload_2 v2
+      [90] invokevirtual #117
         - Methodref [com/devinxutal/tetris/model/SavablePlayground.a (Lcom/devinxutal/tetris/model/a;)Lcom/devinxutal/tetris/model/c;]
-      [85] invokeinterface #164
+      [93] invokeinterface #165
         - InterfaceMethodref [java/util/List.add (Ljava/lang/Object;)Z]
-      [90] pop
-      [91] aload_3 v3
-      [92] invokeinterface #162
+      [98] pop
+      [99] aload_3 v3
+      [100] invokeinterface #163
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
-      [97] ifne -31 (target=66)
-      [100] aload_0 v0
-      [101] getfield #92
+      [105] ifne -31 (target=74)
+      [108] aload_0 v0
+      [109] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
-      [104] ifnull +18 (target=122)
-      [107] aload_1 v1
-      [108] aload_1 v1
-      [109] aload_0 v0
-      [110] getfield #92
+      [112] ifnull +18 (target=130)
+      [115] aload_1 v1
+      [116] aload_1 v1
+      [117] aload_0 v0
+      [118] getfield #93
         - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
-      [113] invokevirtual #116
+      [121] invokevirtual #117
         - Methodref [com/devinxutal/tetris/model/SavablePlayground.a (Lcom/devinxutal/tetris/model/a;)Lcom/devinxutal/tetris/model/c;]
-      [116] putfield #59
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
-      [119] goto +8 (target=127)
-      [122] aload_1 v1
-      [123] aconst_null
       [124] putfield #59
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
-      [127] aload_1 v1
-      [128] aload_0 v0
-      [129] getfield #93
-        - Fieldref [com/devinxutal/tetris/model/d.w Z]
-      [132] putfield #60
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
+      [127] goto +8 (target=135)
+      [130] aload_1 v1
+      [131] aconst_null
+      [132] putfield #59
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
       [135] aload_1 v1
       [136] aload_0 v0
       [137] getfield #94
-        - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
-      [140] putfield #61
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.h Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+        - Fieldref [com/devinxutal/tetris/model/d.w Z]
+      [140] putfield #60
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
       [143] aload_1 v1
-      [144] areturn
+      [144] aload_0 v0
+      [145] getfield #95
+        - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+      [148] putfield #61
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.h Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+      [151] aload_1 v1
+      [152] areturn
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       a(Lcom/devinxutal/tetris/model/SavablePlayground;)V
     Access flags: 0x11
       = public final void a(com.devinxutal.tetris.model.SavablePlayground)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 176, locals = 4, stack = 5):
+    + Code attribute instructions (code length = 184, locals = 4, stack = 5):
       [0] aload_0 v0
       [1] aload_1 v1
       [2] getfield #54
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.a [[I]
-      [5] putfield #86
+      [5] putfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [8] aload_0 v0
       [9] aconst_null
-      [10] putfield #80
+      [10] putfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [13] aload_1 v1
       [14] getfield #55
@@ -44187,106 +44292,112 @@ Methods (count = 29):
       [25] aload_1 v1
       [26] getfield #55
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.b Lcom/devinxutal/tetris/model/c;]
-      [29] getfield #67
+      [29] getfield #68
         - Fieldref [com/devinxutal/tetris/model/c.a Lcom/devinxutal/tetris/model/e;]
       [32] aload_1 v1
       [33] getfield #55
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.b Lcom/devinxutal/tetris/model/c;]
-      [36] getfield #68
+      [36] getfield #69
         - Fieldref [com/devinxutal/tetris/model/c.b I]
-      [39] invokespecial #120
+      [39] invokespecial #121
         - Methodref [com/devinxutal/tetris/model/a.<init> (Lcom/devinxutal/tetris/model/e;I)V]
-      [42] putfield #80
+      [42] putfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [45] aload_0 v0
       [46] aload_1 v1
-      [47] getfield #56
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.c I]
-      [50] putfield #81
-        - Fieldref [com/devinxutal/tetris/model/d.k I]
+      [47] getfield #62
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.i Z]
+      [50] putfield #80
+        - Fieldref [com/devinxutal/tetris/model/d.i Z]
       [53] aload_0 v0
       [54] aload_1 v1
-      [55] getfield #57
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.d I]
+      [55] getfield #56
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.c I]
       [58] putfield #82
-        - Fieldref [com/devinxutal/tetris/model/d.l I]
+        - Fieldref [com/devinxutal/tetris/model/d.k I]
       [61] aload_0 v0
-      [62] getfield #89
+      [62] aload_1 v1
+      [63] getfield #57
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.d I]
+      [66] putfield #83
+        - Fieldref [com/devinxutal/tetris/model/d.l I]
+      [69] aload_0 v0
+      [70] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [65] invokevirtual #156
+      [73] invokevirtual #157
         - Methodref [java/util/LinkedList.clear ()V]
-      [68] aload_1 v1
-      [69] getfield #58
+      [76] aload_1 v1
+      [77] getfield #58
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.e Ljava/util/List;]
-      [72] invokeinterface #165
+      [80] invokeinterface #166
         - InterfaceMethodref [java/util/List.iterator ()Ljava/util/Iterator;]
-      [77] astore_3 v3
-      [78] goto +36 (target=114)
-      [81] aload_3 v3
-      [82] invokeinterface #163
+      [85] astore_3 v3
+      [86] goto +36 (target=122)
+      [89] aload_3 v3
+      [90] invokeinterface #164
         - InterfaceMethodref [java/util/Iterator.next ()Ljava/lang/Object;]
-      [87] checkcast #21
+      [95] checkcast #21
         - Class [com/devinxutal/tetris/model/c]
-      [90] astore_2 v2
-      [91] aload_0 v0
-      [92] getfield #89
+      [98] astore_2 v2
+      [99] aload_0 v0
+      [100] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [95] new #19
+      [103] new #19
         - Class [com/devinxutal/tetris/model/a]
-      [98] dup
-      [99] aload_2 v2
-      [100] getfield #67
+      [106] dup
+      [107] aload_2 v2
+      [108] getfield #68
         - Fieldref [com/devinxutal/tetris/model/c.a Lcom/devinxutal/tetris/model/e;]
-      [103] aload_2 v2
-      [104] getfield #68
+      [111] aload_2 v2
+      [112] getfield #69
         - Fieldref [com/devinxutal/tetris/model/c.b I]
-      [107] invokespecial #120
+      [115] invokespecial #121
         - Methodref [com/devinxutal/tetris/model/a.<init> (Lcom/devinxutal/tetris/model/e;I)V]
-      [110] invokevirtual #154
+      [118] invokevirtual #155
         - Methodref [java/util/LinkedList.add (Ljava/lang/Object;)Z]
-      [113] pop
-      [114] aload_3 v3
-      [115] invokeinterface #162
+      [121] pop
+      [122] aload_3 v3
+      [123] invokeinterface #163
         - InterfaceMethodref [java/util/Iterator.hasNext ()Z]
-      [120] ifne -39 (target=81)
-      [123] aload_1 v1
-      [124] getfield #59
+      [128] ifne -39 (target=89)
+      [131] aload_1 v1
+      [132] getfield #59
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
-      [127] ifnull +28 (target=155)
-      [130] aload_0 v0
-      [131] new #19
+      [135] ifnull +28 (target=163)
+      [138] aload_0 v0
+      [139] new #19
         - Class [com/devinxutal/tetris/model/a]
-      [134] dup
-      [135] aload_1 v1
-      [136] getfield #59
+      [142] dup
+      [143] aload_1 v1
+      [144] getfield #59
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
-      [139] getfield #67
+      [147] getfield #68
         - Fieldref [com/devinxutal/tetris/model/c.a Lcom/devinxutal/tetris/model/e;]
-      [142] aload_1 v1
-      [143] getfield #59
+      [150] aload_1 v1
+      [151] getfield #59
         - Fieldref [com/devinxutal/tetris/model/SavablePlayground.f Lcom/devinxutal/tetris/model/c;]
-      [146] getfield #68
+      [154] getfield #69
         - Fieldref [com/devinxutal/tetris/model/c.b I]
-      [149] invokespecial #120
+      [157] invokespecial #121
         - Methodref [com/devinxutal/tetris/model/a.<init> (Lcom/devinxutal/tetris/model/e;I)V]
-      [152] putfield #92
-        - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
-      [155] aload_0 v0
-      [156] aload_1 v1
-      [157] getfield #60
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
       [160] putfield #93
-        - Fieldref [com/devinxutal/tetris/model/d.w Z]
+        - Fieldref [com/devinxutal/tetris/model/d.v Lcom/devinxutal/tetris/model/a;]
       [163] aload_0 v0
       [164] aload_1 v1
-      [165] getfield #61
-        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.h Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+      [165] getfield #60
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.g Z]
       [168] putfield #94
-        - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+        - Fieldref [com/devinxutal/tetris/model/d.w Z]
       [171] aload_0 v0
-      [172] invokespecial #141
+      [172] aload_1 v1
+      [173] getfield #61
+        - Fieldref [com/devinxutal/tetris/model/SavablePlayground.h Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+      [176] putfield #95
+        - Fieldref [com/devinxutal/tetris/model/d.x Lcom/devinxutal/tetris/model/ScoreAndLevel;]
+      [179] aload_0 v0
+      [180] invokespecial #142
         - Methodref [com/devinxutal/tetris/model/d.p ()V]
-      [175] return
+      [183] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
   + Method:       a(Landroid/graphics/Canvas;II)V
@@ -44295,29 +44406,29 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 430, locals = 9, stack = 7):
       [0] aload_0 v0
-      [1] getfield #96
+      [1] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [4] invokestatic #132
+      [4] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
       [7] ldc #1
         - Integer [-16777216]
-      [9] invokevirtual #104
+      [9] invokevirtual #105
         - Methodref [android/graphics/Paint.setColor (I)V]
       [12] iconst_0
       [13] istore v4
       [15] goto +113 (target=128)
       [18] aload_0 v0
-      [19] getfield #74
+      [19] getfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [22] ifeq +22 (target=44)
       [25] aload_0 v0
-      [26] getfield #75
+      [26] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [29] iload v4
       [31] baload
       [32] ifeq +12 (target=44)
       [35] aload_0 v0
-      [36] getfield #76
+      [36] getfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [39] iconst_2
       [40] irem
@@ -44326,7 +44437,7 @@ Methods (count = 29):
       [45] istore v5
       [47] goto +71 (target=118)
       [50] aload_0 v0
-      [51] getfield #86
+      [51] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [54] iload v4
       [56] aaload
@@ -44337,16 +44448,16 @@ Methods (count = 29):
       [63] iflt +52 (target=115)
       [66] aload_1 v1
       [67] aload_0 v0
-      [68] getfield #96
+      [68] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [71] getfield #66
+      [71] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [74] iload v6
       [76] aaload
       [77] iload_2 v2
       [78] iload v5
       [80] aload_0 v0
-      [81] getfield #73
+      [81] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [84] iconst_1
       [85] iadd
@@ -44358,7 +44469,7 @@ Methods (count = 29):
       [91] iload_3 v3
       [92] iload v4
       [94] aload_0 v0
-      [95] getfield #73
+      [95] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [98] iconst_1
       [99] iadd
@@ -44368,11 +44479,11 @@ Methods (count = 29):
       [103] iadd
       [104] i2f
       [105] aload_0 v0
-      [106] getfield #96
+      [106] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [109] invokestatic #132
+      [109] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
-      [112] invokevirtual #99
+      [112] invokevirtual #100
         - Methodref [android/graphics/Canvas.drawBitmap (Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V]
       [115] iinc v5, 1
       [118] iload v5
@@ -44383,13 +44494,13 @@ Methods (count = 29):
       [130] bipush 20
       [132] ificmplt -114 (target=18)
       [135] aload_0 v0
-      [136] getfield #80
+      [136] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [139] ifnull +290 (target=429)
       [142] aload_0 v0
-      [143] getfield #80
+      [143] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [146] invokevirtual #126
+      [146] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [149] astore v4
       [151] iconst_0
@@ -44405,13 +44516,13 @@ Methods (count = 29):
       [170] baload
       [171] ifeq +240 (target=411)
       [174] aload_0 v0
-      [175] getfield #81
+      [175] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [178] iload v6
       [180] iadd
       [181] istore v7
       [183] aload_0 v0
-      [184] getfield #82
+      [184] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [187] iload v5
       [189] iadd
@@ -44428,22 +44539,22 @@ Methods (count = 29):
       [213] ificmpge +60 (target=273)
       [216] aload_1 v1
       [217] aload_0 v0
-      [218] getfield #96
+      [218] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [221] getfield #66
+      [221] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [224] aload_0 v0
-      [225] getfield #80
+      [225] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [228] invokevirtual #128
+      [228] invokevirtual #129
         - Methodref [com/devinxutal/tetris/model/a.i ()Lcom/devinxutal/tetris/model/e;]
-      [231] invokevirtual #143
+      [231] invokevirtual #144
         - Methodref [com/devinxutal/tetris/model/e.ordinal ()I]
       [234] aaload
       [235] iload_2 v2
       [236] iload v7
       [238] aload_0 v0
-      [239] getfield #73
+      [239] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [242] iconst_1
       [243] iadd
@@ -44455,7 +44566,7 @@ Methods (count = 29):
       [249] iload_3 v3
       [250] iload v8
       [252] aload_0 v0
-      [253] getfield #73
+      [253] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [256] iconst_1
       [257] iadd
@@ -44465,18 +44576,18 @@ Methods (count = 29):
       [261] iadd
       [262] i2f
       [263] aload_0 v0
-      [264] getfield #96
+      [264] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [267] invokestatic #132
+      [267] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
-      [270] invokevirtual #99
+      [270] invokevirtual #100
         - Methodref [android/graphics/Canvas.drawBitmap (Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V]
       [273] aload_0 v0
-      [274] getfield #95
+      [274] getfield #96
         - Fieldref [com/devinxutal/tetris/model/d.y Z]
       [277] ifeq +134 (target=411)
       [280] aload_0 v0
-      [281] getfield #83
+      [281] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [284] iload v5
       [286] iadd
@@ -44492,38 +44603,38 @@ Methods (count = 29):
       [308] bipush 20
       [310] ificmpge +101 (target=411)
       [313] aload_0 v0
-      [314] getfield #82
+      [314] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [317] aload_0 v0
-      [318] getfield #83
+      [318] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [321] ificmpeq +90 (target=411)
       [324] aload_0 v0
-      [325] getfield #96
+      [325] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [328] invokestatic #132
+      [328] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
       [331] bipush 80
-      [333] invokevirtual #102
+      [333] invokevirtual #103
         - Methodref [android/graphics/Paint.setAlpha (I)V]
       [336] aload_1 v1
       [337] aload_0 v0
-      [338] getfield #96
+      [338] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [341] getfield #66
+      [341] getfield #67
         - Fieldref [com/devinxutal/tetris/model/b.a [Landroid/graphics/Bitmap;]
       [344] aload_0 v0
-      [345] getfield #80
+      [345] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [348] invokevirtual #128
+      [348] invokevirtual #129
         - Methodref [com/devinxutal/tetris/model/a.i ()Lcom/devinxutal/tetris/model/e;]
-      [351] invokevirtual #143
+      [351] invokevirtual #144
         - Methodref [com/devinxutal/tetris/model/e.ordinal ()I]
       [354] aaload
       [355] iload_2 v2
       [356] iload v7
       [358] aload_0 v0
-      [359] getfield #73
+      [359] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [362] iconst_1
       [363] iadd
@@ -44534,12 +44645,12 @@ Methods (count = 29):
       [368] i2f
       [369] iload_3 v3
       [370] aload_0 v0
-      [371] getfield #83
+      [371] getfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [374] iload v5
       [376] iadd
       [377] aload_0 v0
-      [378] getfield #73
+      [378] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [381] iconst_1
       [382] iadd
@@ -44549,19 +44660,19 @@ Methods (count = 29):
       [386] iadd
       [387] i2f
       [388] aload_0 v0
-      [389] getfield #96
+      [389] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [392] invokestatic #132
+      [392] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
-      [395] invokevirtual #99
+      [395] invokevirtual #100
         - Methodref [android/graphics/Canvas.drawBitmap (Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V]
       [398] aload_0 v0
-      [399] getfield #96
+      [399] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
-      [402] invokestatic #132
+      [402] invokestatic #133
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/model/b;)Landroid/graphics/Paint;]
       [405] sipush 255
-      [408] invokevirtual #102
+      [408] invokevirtual #103
         - Methodref [android/graphics/Paint.setAlpha (I)V]
       [411] iinc v6, 1
       [414] iload v6
@@ -44580,15 +44691,15 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 128, locals = 6, stack = 3):
       [0] aload_0 v0
-      [1] getfield #80
+      [1] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [4] ifnonnull +5 (target=9)
       [7] iconst_0
       [8] ireturn
       [9] aload_0 v0
-      [10] getfield #80
+      [10] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [13] invokevirtual #126
+      [13] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [16] astore_1 v1
       [17] iconst_0
@@ -44604,13 +44715,13 @@ Methods (count = 29):
       [31] baload
       [32] ifeq +68 (target=100)
       [35] aload_0 v0
-      [36] getfield #81
+      [36] getfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [39] iload_3 v3
       [40] iadd
       [41] istore v4
       [43] aload_0 v0
-      [44] getfield #82
+      [44] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [47] iload_2 v2
       [48] iadd
@@ -44633,7 +44744,7 @@ Methods (count = 29):
       [80] bipush 20
       [82] ificmpge +18 (target=100)
       [85] aload_0 v0
-      [86] getfield #86
+      [86] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [89] iload v5
       [91] aaload
@@ -44652,11 +44763,11 @@ Methods (count = 29):
       [113] ificmplt -91 (target=22)
       [116] aload_0 v0
       [117] dup
-      [118] getfield #82
+      [118] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [121] iconst_1
       [122] iadd
-      [123] putfield #82
+      [123] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [126] iconst_1
       [127] ireturn
@@ -44669,23 +44780,23 @@ Methods (count = 29):
     + Code attribute instructions (code length = 29, locals = 1, stack = 3):
       [0] aload_0 v0
       [1] aload_0 v0
-      [2] getfield #89
+      [2] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
-      [5] invokevirtual #160
+      [5] invokevirtual #161
         - Methodref [java/util/LinkedList.poll ()Ljava/lang/Object;]
       [8] checkcast #19
         - Class [com/devinxutal/tetris/model/a]
-      [11] invokespecial #135
+      [11] invokespecial #136
         - Methodref [com/devinxutal/tetris/model/d.a (Lcom/devinxutal/tetris/model/a;)V]
       [14] aload_0 v0
-      [15] getfield #89
+      [15] getfield #90
         - Fieldref [com/devinxutal/tetris/model/d.s Ljava/util/LinkedList;]
       [18] new #19
         - Class [com/devinxutal/tetris/model/a]
       [21] dup
-      [22] invokespecial #119
+      [22] invokespecial #120
         - Methodref [com/devinxutal/tetris/model/a.<init> ()V]
-      [25] invokevirtual #155
+      [25] invokevirtual #156
         - Methodref [java/util/LinkedList.addLast (Ljava/lang/Object;)V]
       [28] return
       Code attribute exceptions (count = 0):
@@ -44697,31 +44808,31 @@ Methods (count = 29):
     + Code attribute instructions (code length = 106, locals = 6, stack = 3):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] putfield #80
+      [2] putfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [5] aload_0 v0
       [6] iconst_0
-      [7] putfield #85
+      [7] putfield #86
         - Fieldref [com/devinxutal/tetris/model/d.o I]
       [10] aload_0 v0
-      [11] getfield #80
+      [11] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [14] ifnonnull +4 (target=18)
       [17] return
       [18] aload_0 v0
       [19] iconst_3
-      [20] putfield #81
+      [20] putfield #82
         - Fieldref [com/devinxutal/tetris/model/d.k I]
       [23] aload_0 v0
       [24] bipush -4
-      [26] putfield #82
+      [26] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [29] iconst_0
       [30] istore_1 v1
       [31] aload_0 v0
-      [32] getfield #80
+      [32] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
-      [35] invokevirtual #126
+      [35] invokevirtual #127
         - Methodref [com/devinxutal/tetris/model/a.g ()[[Z]
       [38] astore_2 v2
       [39] iconst_3
@@ -44757,10 +44868,10 @@ Methods (count = 29):
       [95] isub
       [96] iconst_1
       [97] iadd
-      [98] putfield #82
+      [98] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [101] aload_0 v0
-      [102] invokespecial #141
+      [102] invokespecial #142
         - Methodref [com/devinxutal/tetris/model/d.p ()V]
       [105] return
       Code attribute exceptions (count = 0):
@@ -44772,17 +44883,17 @@ Methods (count = 29):
     + Code attribute instructions (code length = 139, locals = 4, stack = 3):
       [0] aload_0 v0
       [1] iconst_0
-      [2] putfield #74
+      [2] putfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [5] aload_0 v0
       [6] iconst_0
-      [7] putfield #78
+      [7] putfield #79
         - Fieldref [com/devinxutal/tetris/model/d.h I]
       [10] iconst_0
       [11] istore_1 v1
       [12] goto +13 (target=25)
       [15] aload_0 v0
-      [16] getfield #75
+      [16] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [19] iload_1 v1
       [20] iconst_0
@@ -44793,7 +44904,7 @@ Methods (count = 29):
       [28] ificmplt -13 (target=15)
       [31] aload_0 v0
       [32] iconst_m1
-      [33] putfield #76
+      [33] putfield #77
         - Fieldref [com/devinxutal/tetris/model/d.f I]
       [36] bipush 19
       [38] istore_1 v1
@@ -44804,7 +44915,7 @@ Methods (count = 29):
       [45] istore_3 v3
       [46] goto +22 (target=68)
       [49] aload_0 v0
-      [50] getfield #86
+      [50] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [53] iload_1 v1
       [54] aaload
@@ -44822,44 +44933,44 @@ Methods (count = 29):
       [75] ifeq +25 (target=100)
       [78] aload_0 v0
       [79] iconst_1
-      [80] putfield #74
+      [80] putfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [83] aload_0 v0
-      [84] getfield #75
+      [84] getfield #76
         - Fieldref [com/devinxutal/tetris/model/d.e [Z]
       [87] iload_1 v1
       [88] iconst_1
       [89] bastore
       [90] aload_0 v0
       [91] dup
-      [92] getfield #78
+      [92] getfield #79
         - Fieldref [com/devinxutal/tetris/model/d.h I]
       [95] iconst_1
       [96] iadd
-      [97] putfield #78
+      [97] putfield #79
         - Fieldref [com/devinxutal/tetris/model/d.h I]
       [100] iinc v1, -1
       [103] iload_1 v1
       [104] ifge -62 (target=42)
       [107] aload_0 v0
-      [108] getfield #74
+      [108] getfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [111] ifeq +18 (target=129)
       [114] aload_0 v0
-      [115] getfield #88
+      [115] getfield #89
         - Fieldref [com/devinxutal/tetris/model/d.r Z]
       [118] ifeq +11 (target=129)
       [121] aload_0 v0
       [122] iconst_1
-      [123] putfield #91
+      [123] putfield #92
         - Fieldref [com/devinxutal/tetris/model/d.u Z]
       [126] goto +8 (target=134)
       [129] aload_0 v0
       [130] iconst_0
-      [131] putfield #91
+      [131] putfield #92
         - Fieldref [com/devinxutal/tetris/model/d.u Z]
       [134] aload_0 v0
-      [135] getfield #74
+      [135] getfield #75
         - Fieldref [com/devinxutal/tetris/model/d.d Z]
       [138] ireturn
       Code attribute exceptions (count = 0):
@@ -44870,7 +44981,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #69
+      [1] getfield #70
         - Fieldref [com/devinxutal/tetris/model/d.A Z]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -44883,7 +44994,7 @@ Methods (count = 29):
       [0] new #30
         - Class [java/util/HashSet]
       [3] dup
-      [4] invokespecial #152
+      [4] invokespecial #153
         - Methodref [java/util/HashSet.<init> ()V]
       [7] astore_1 v1
       [8] iconst_0
@@ -44893,7 +45004,7 @@ Methods (count = 29):
       [14] istore_3 v3
       [15] goto +33 (target=48)
       [18] aload_0 v0
-      [19] getfield #86
+      [19] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [22] iload_2 v2
       [23] aaload
@@ -44906,9 +45017,9 @@ Methods (count = 29):
       [33] imul
       [34] iload_3 v3
       [35] iadd
-      [36] invokestatic #145
+      [36] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [39] invokeinterface #168
+      [39] invokeinterface #169
         - InterfaceMethodref [java/util/Set.add (Ljava/lang/Object;)Z]
       [44] pop
       [45] iinc v3, 1
@@ -44922,14 +45033,14 @@ Methods (count = 29):
       [63] new #32
         - Class [java/util/LinkedList]
       [66] dup
-      [67] invokespecial #153
+      [67] invokespecial #154
         - Methodref [java/util/LinkedList.<init> ()V]
       [70] astore_2 v2
       [71] iconst_0
       [72] istore_3 v3
       [73] goto +30 (target=103)
       [76] aload_0 v0
-      [77] getfield #86
+      [77] getfield #87
         - Fieldref [com/devinxutal/tetris/model/d.p [[I]
       [80] bipush 19
       [82] aaload
@@ -44940,9 +45051,9 @@ Methods (count = 29):
       [89] sipush 190
       [92] iload_3 v3
       [93] iadd
-      [94] invokestatic #145
+      [94] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [97] invokevirtual #155
+      [97] invokevirtual #156
         - Methodref [java/util/LinkedList.addLast (Ljava/lang/Object;)V]
       [100] iinc v3, 1
       [103] iload_3 v3
@@ -44990,18 +45101,18 @@ Methods (count = 29):
       [153] astore_3 v3
       [154] goto +97 (target=251)
       [157] aload_2 v2
-      [158] invokevirtual #160
+      [158] invokevirtual #161
         - Methodref [java/util/LinkedList.poll ()Ljava/lang/Object;]
       [161] checkcast #24
         - Class [java/lang/Integer]
-      [164] invokevirtual #144
+      [164] invokevirtual #145
         - Methodref [java/lang/Integer.intValue ()I]
       [167] istore v4
       [169] aload_1 v1
       [170] iload v4
-      [172] invokestatic #145
+      [172] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [175] invokeinterface #172
+      [175] invokeinterface #173
         - InterfaceMethodref [java/util/Set.remove (Ljava/lang/Object;)Z]
       [180] pop
       [181] aload_3 v3
@@ -45030,27 +45141,27 @@ Methods (count = 29):
       [216] istore v5
       [218] aload_1 v1
       [219] iload v5
-      [221] invokestatic #145
+      [221] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [224] invokeinterface #169
+      [224] invokeinterface #170
         - InterfaceMethodref [java/util/Set.contains (Ljava/lang/Object;)Z]
       [229] ifeq +12 (target=241)
       [232] aload_2 v2
       [233] iload v5
-      [235] invokestatic #145
+      [235] invokestatic #146
         - Methodref [java/lang/Integer.valueOf (I)Ljava/lang/Integer;]
-      [238] invokevirtual #155
+      [238] invokevirtual #156
         - Methodref [java/util/LinkedList.addLast (Ljava/lang/Object;)V]
       [241] iinc v6, 1
       [244] iload v6
       [246] iload v7
       [248] ificmplt -54 (target=194)
       [251] aload_2 v2
-      [252] invokevirtual #158
+      [252] invokevirtual #159
         - Methodref [java/util/LinkedList.isEmpty ()Z]
       [255] ifeq -98 (target=157)
       [258] aload_1 v1
-      [259] invokeinterface #170
+      [259] invokeinterface #171
         - InterfaceMethodref [java/util/Set.isEmpty ()Z]
       [264] ifeq +5 (target=269)
       [267] aconst_null
@@ -45065,26 +45176,26 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 33, locals = 2, stack = 2):
       [0] aload_0 v0
-      [1] getfield #80
+      [1] getfield #81
         - Fieldref [com/devinxutal/tetris/model/d.j Lcom/devinxutal/tetris/model/a;]
       [4] ifnull +28 (target=32)
       [7] aload_0 v0
-      [8] getfield #82
+      [8] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [11] istore_1 v1
       [12] aload_0 v0
-      [13] invokespecial #137
+      [13] invokespecial #138
         - Methodref [com/devinxutal/tetris/model/d.l ()Z]
       [16] ifne -4 (target=12)
       [19] aload_0 v0
       [20] aload_0 v0
-      [21] getfield #82
+      [21] getfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
-      [24] putfield #83
+      [24] putfield #84
         - Fieldref [com/devinxutal/tetris/model/d.m I]
       [27] aload_0 v0
       [28] iload_1 v1
-      [29] putfield #82
+      [29] putfield #83
         - Fieldref [com/devinxutal/tetris/model/d.l I]
       [32] return
       Code attribute exceptions (count = 0):
@@ -45095,20 +45206,20 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 24, locals = 2, stack = 2):
       [0] aload_0 v0
-      [1] getfield #96
+      [1] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
       [4] ifnull +11 (target=15)
       [7] aload_0 v0
-      [8] getfield #96
+      [8] getfield #97
         - Fieldref [com/devinxutal/tetris/model/d.z Lcom/devinxutal/tetris/model/b;]
       [11] aload_1 v1
-      [12] invokevirtual #131
+      [12] invokevirtual #132
         - Methodref [com/devinxutal/tetris/model/b.a (Lcom/devinxutal/tetris/c/b;)V]
       [15] aload_0 v0
       [16] aload_1 v1
-      [17] invokevirtual #113
+      [17] invokevirtual #114
         - Methodref [com/devinxutal/tetris/c/b.f ()Z]
-      [20] putfield #95
+      [20] putfield #96
         - Fieldref [com/devinxutal/tetris/model/d.y Z]
       [23] return
       Code attribute exceptions (count = 0):
@@ -45119,7 +45230,7 @@ Methods (count = 29):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #73
+      [1] getfield #74
         - Fieldref [com/devinxutal/tetris/model/d.c I]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -45129,13 +45240,13 @@ Methods (count = 29):
       = private static int[] q()
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 213, locals = 1, stack = 3):
-      [0] getstatic #70
+      [0] getstatic #71
         - Fieldref [com/devinxutal/tetris/model/d.B [I]
       [3] dup
       [4] ifnull +4 (target=8)
       [7] areturn
       [8] pop
-      [9] invokestatic #111
+      [9] invokestatic #112
         - Methodref [com/devinxutal/tetris/a/c.values ()[Lcom/devinxutal/tetris/a/c;]
       [12] arraylength
       [13] newarray 10
@@ -45143,7 +45254,7 @@ Methods (count = 29):
       [16] aload_0 v0
       [17] getstatic #44
         - Fieldref [com/devinxutal/tetris/a/c.e Lcom/devinxutal/tetris/a/c;]
-      [20] invokevirtual #110
+      [20] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [23] iconst_5
       [24] iastore
@@ -45152,7 +45263,7 @@ Methods (count = 29):
       [29] aload_0 v0
       [30] getstatic #43
         - Fieldref [com/devinxutal/tetris/a/c.d Lcom/devinxutal/tetris/a/c;]
-      [33] invokevirtual #110
+      [33] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [36] iconst_4
       [37] iastore
@@ -45161,7 +45272,7 @@ Methods (count = 29):
       [42] aload_0 v0
       [43] getstatic #52
         - Fieldref [com/devinxutal/tetris/a/c.m Lcom/devinxutal/tetris/a/c;]
-      [46] invokevirtual #110
+      [46] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [49] bipush 13
       [51] iastore
@@ -45170,7 +45281,7 @@ Methods (count = 29):
       [56] aload_0 v0
       [57] getstatic #53
         - Fieldref [com/devinxutal/tetris/a/c.n Lcom/devinxutal/tetris/a/c;]
-      [60] invokevirtual #110
+      [60] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [63] bipush 14
       [65] iastore
@@ -45179,7 +45290,7 @@ Methods (count = 29):
       [70] aload_0 v0
       [71] getstatic #45
         - Fieldref [com/devinxutal/tetris/a/c.f Lcom/devinxutal/tetris/a/c;]
-      [74] invokevirtual #110
+      [74] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [77] bipush 6
       [79] iastore
@@ -45188,7 +45299,7 @@ Methods (count = 29):
       [84] aload_0 v0
       [85] getstatic #41
         - Fieldref [com/devinxutal/tetris/a/c.b Lcom/devinxutal/tetris/a/c;]
-      [88] invokevirtual #110
+      [88] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [91] iconst_2
       [92] iastore
@@ -45197,7 +45308,7 @@ Methods (count = 29):
       [97] aload_0 v0
       [98] getstatic #48
         - Fieldref [com/devinxutal/tetris/a/c.i Lcom/devinxutal/tetris/a/c;]
-      [101] invokevirtual #110
+      [101] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [104] bipush 9
       [106] iastore
@@ -45206,7 +45317,7 @@ Methods (count = 29):
       [111] aload_0 v0
       [112] getstatic #49
         - Fieldref [com/devinxutal/tetris/a/c.j Lcom/devinxutal/tetris/a/c;]
-      [115] invokevirtual #110
+      [115] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [118] bipush 10
       [120] iastore
@@ -45215,7 +45326,7 @@ Methods (count = 29):
       [125] aload_0 v0
       [126] getstatic #42
         - Fieldref [com/devinxutal/tetris/a/c.c Lcom/devinxutal/tetris/a/c;]
-      [129] invokevirtual #110
+      [129] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [132] iconst_3
       [133] iastore
@@ -45224,7 +45335,7 @@ Methods (count = 29):
       [138] aload_0 v0
       [139] getstatic #50
         - Fieldref [com/devinxutal/tetris/a/c.k Lcom/devinxutal/tetris/a/c;]
-      [142] invokevirtual #110
+      [142] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [145] bipush 11
       [147] iastore
@@ -45233,7 +45344,7 @@ Methods (count = 29):
       [152] aload_0 v0
       [153] getstatic #51
         - Fieldref [com/devinxutal/tetris/a/c.l Lcom/devinxutal/tetris/a/c;]
-      [156] invokevirtual #110
+      [156] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [159] bipush 12
       [161] iastore
@@ -45242,7 +45353,7 @@ Methods (count = 29):
       [166] aload_0 v0
       [167] getstatic #40
         - Fieldref [com/devinxutal/tetris/a/c.a Lcom/devinxutal/tetris/a/c;]
-      [170] invokevirtual #110
+      [170] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [173] iconst_1
       [174] iastore
@@ -45251,7 +45362,7 @@ Methods (count = 29):
       [179] aload_0 v0
       [180] getstatic #46
         - Fieldref [com/devinxutal/tetris/a/c.g Lcom/devinxutal/tetris/a/c;]
-      [183] invokevirtual #110
+      [183] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [186] bipush 7
       [188] iastore
@@ -45260,7 +45371,7 @@ Methods (count = 29):
       [193] aload_0 v0
       [194] getstatic #47
         - Fieldref [com/devinxutal/tetris/a/c.h Lcom/devinxutal/tetris/a/c;]
-      [197] invokevirtual #110
+      [197] invokevirtual #111
         - Methodref [com/devinxutal/tetris/a/c.ordinal ()I]
       [200] bipush 8
       [202] iastore
@@ -45268,7 +45379,7 @@ Methods (count = 29):
       [206] pop
       [207] aload_0 v0
       [208] dup
-      [209] putstatic #70
+      [209] putstatic #71
         - Fieldref [com/devinxutal/tetris/model/d.B [I]
       [212] areturn
       Code attribute exceptions (count = 14):

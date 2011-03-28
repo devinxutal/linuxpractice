@@ -22,6 +22,7 @@ b -> e:
     void a(java.net.HttpURLConnection) -> a
     void b(java.net.HttpURLConnection) -> b
     void c(java.net.HttpURLConnection) -> c
+    void d(java.net.HttpURLConnection) -> d
     java.lang.Void a(java.lang.String[]) -> a
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 c -> f:
@@ -37,6 +38,7 @@ c -> f:
     java.lang.String j -> j
     com.google.ads.AdRequest$ErrorCode k -> k
     boolean l -> l
+    boolean m -> m
     void a(long) -> a
     com.google.ads.AdRequest$ErrorCode a(com.google.ads.AdRequest[]) -> a
     long b() -> b
@@ -408,6 +410,7 @@ com.devinxutal.tetris.model.SavablePlayground -> com.devinxutal.tetris.model.Sav
     com.devinxutal.tetris.model.SavablePlayground$SavableBlock holdBlock -> f
     boolean holdUsed -> g
     com.devinxutal.tetris.model.ScoreAndLevel scoreLevel -> h
+    boolean finished -> i
     com.devinxutal.tetris.model.SavablePlayground$SavableBlock create(com.devinxutal.tetris.model.Block) -> a
 com.devinxutal.tetris.model.SavablePlayground$SavableBlock -> com.devinxutal.tetris.model.c:
     com.devinxutal.tetris.model.Block$BlockType blockType -> a

@@ -37,7 +37,7 @@
 			<Button android:text="@string/common_high_score" android:id="@+id/submit_button"
 				android:layout_width="230dip" android:layout_height="wrap_content"
 				android:textAppearance="@style/Button"></Button>
-			<Button android:text="Check In" android:id="@+id/heyzap_button_2"
+			<Button android:text="Tell Friends" android:id="@+id/heyzap_button_2"
 				android:layout_width="230dip" android:layout_height="wrap_content"
 				android:textAppearance="@style/Button"></Button>
 			<Button android:text="@string/common_quit_game" android:id="@+id/back_button"

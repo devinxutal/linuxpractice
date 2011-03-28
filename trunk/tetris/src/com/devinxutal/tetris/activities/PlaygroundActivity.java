@@ -357,7 +357,9 @@ public class PlaygroundActivity extends Activity {
 		Log.v(TAG, "pause");
 		adDaemonSuccess.stop();
 		adDaemonPause.stop();
-		switchState(State.PAUSED, false);
+		if (this.state != State.END) {
+			switchState(State.PAUSED, false);
+		}
 		SoundManager.get(this).stopBackgroundMusic();
 		this.stopListening();
 		super.onPause();
