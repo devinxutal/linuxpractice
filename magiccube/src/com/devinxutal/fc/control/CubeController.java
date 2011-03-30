@@ -229,6 +229,7 @@ public class CubeController {
 			}
 			switch (evt.getAction()) {
 			case MotionEvent.ACTION_DOWN:
+				Log.v("colortest", "down: "+evt.getX()+","+evt.getY());
 				startX = (int) evt.getX();
 				startY = (int) evt.getY();
 				break;

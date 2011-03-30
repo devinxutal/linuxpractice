@@ -3,18 +3,22 @@ package com.devinxutal.fc.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.devinxutal.fc.R;
 import com.devinxutal.fc.cfg.Configuration;
+import com.devinxutal.fc.cfg.Constants;
 import com.devinxutal.fc.model.CubeState;
 import com.devinxutal.fc.ui.CubeDemonstrator;
+import com.devinxutal.fc.util.AdDaemon;
 import com.devinxutal.fc.util.AdUtil;
 import com.devinxutal.fc.util.SymbolMoveUtil;
 
@@ -22,6 +26,10 @@ public class CubeDemonstratorActivity extends Activity {
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
 	private CubeDemonstrator demonstrator;
+
+	// for ad animation
+	private Handler adHandler = new Handler();
+	private AdDaemon adDaemon;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -47,11 +55,21 @@ public class CubeDemonstratorActivity extends Activity {
 		AdUtil.determineAd(this);
 		((LinearLayout) this.findViewById(R.id.content_area))
 				.addView(demonstrator);
+		//
+		View view = (View) this.findViewById(R.id.ad_area);
+		View ad = null;
+		if (view != null) {
+			ad = view.findViewById(Constants.ADVIEW_ID);
+		}
+		adDaemon = new AdDaemon("cube", this, ad, adHandler);
+
+		adDaemon.run();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		adDaemon.stop();
 		this.demonstrator.onDestroy();
 	}
 
@@ -96,12 +114,14 @@ public class CubeDemonstratorActivity extends Activity {
 	@Override
 	protected void onPause() {
 		this.demonstrator.getCubeController().getCubeView().onPause();
+		this.adDaemon.stop();
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		this.demonstrator.getCubeController().getCubeView().onResume();
+		this.adDaemon.run();
 		super.onResume();
 	}
 

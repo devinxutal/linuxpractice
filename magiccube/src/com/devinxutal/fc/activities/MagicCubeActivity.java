@@ -102,6 +102,8 @@ public class MagicCubeActivity extends Activity {
 	private Handler adHandler = new Handler();
 	private AdDaemon adDaemon;
 
+	private AdDaemon adDaemonSS;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -167,7 +169,13 @@ public class MagicCubeActivity extends Activity {
 		}
 		adDaemon = new AdDaemon("cube", this, ad, adHandler);
 
-		adDaemon.run();
+		view = (View) this.findViewById(R.id.ss_ad_area);
+		ad = null;
+		if (view != null) {
+			ad = view.findViewById(Constants.ADVIEW_ID);
+		}
+		adDaemonSS = new AdDaemon("ss", this, ad, adHandler);
+		adDaemonSS.run();
 	}
 
 	@Override
@@ -179,6 +187,7 @@ public class MagicCubeActivity extends Activity {
 			moveController.stopMove();
 		}
 		adDaemon.stop();
+		adDaemonSS.stop();
 		super.onDestroy();
 	}
 
@@ -284,6 +293,7 @@ public class MagicCubeActivity extends Activity {
 			this.controlView.getCubeTimer().stop();
 		}
 		adDaemon.stop();
+		adDaemonSS.stop();
 		super.onPause();
 
 	}
@@ -297,6 +307,7 @@ public class MagicCubeActivity extends Activity {
 			this.controlView.getCubeTimer().start();
 		}
 		adDaemon.run();
+		adDaemonSS.run();
 		super.onResume();
 	}
 

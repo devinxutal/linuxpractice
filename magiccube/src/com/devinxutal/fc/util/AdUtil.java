@@ -36,6 +36,7 @@ public class AdUtil {
 		// else {
 		// adview = createAdViewOldSDK(activity);
 		// }
+		adview.setMinimumHeight(50);
 		return adview;
 
 	}
