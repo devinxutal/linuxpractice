@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
@@ -64,6 +65,7 @@ import com.devinxutal.fc.model.MagicCube;
 import com.devinxutal.fc.solver.CfopSolver;
 import com.devinxutal.fc.ui.CubeControlView;
 import com.devinxutal.fc.ui.CubeControlView.CubeControlListener;
+import com.devinxutal.fc.util.AdDaemon;
 import com.devinxutal.fc.util.AdUtil;
 import com.devinxutal.fc.util.DialogUtil;
 import com.devinxutal.fc.util.PreferenceUtil;
@@ -96,6 +98,9 @@ public class MagicCubeActivity extends Activity {
 	// used only when restore state;
 	private long elapsedTime = 0;
 	private boolean collapsed = true;
+	// for ad animation
+	private Handler adHandler = new Handler();
+	private AdDaemon adDaemon;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -154,6 +159,15 @@ public class MagicCubeActivity extends Activity {
 		if (savedInstanceState == null && timedMode) {
 			wrappedShuffle();
 		}
+		//
+		View view = (View) this.findViewById(R.id.ad_area);
+		View ad = null;
+		if (view != null) {
+			ad = view.findViewById(Constants.ADVIEW_ID);
+		}
+		adDaemon = new AdDaemon("cube", this, ad, adHandler);
+
+		adDaemon.run();
 	}
 
 	@Override
@@ -164,6 +178,7 @@ public class MagicCubeActivity extends Activity {
 		if (moveController.getState() == MoveController.State.RUNNING_MULTPLE_STEP) {
 			moveController.stopMove();
 		}
+		adDaemon.stop();
 		super.onDestroy();
 	}
 
@@ -268,7 +283,9 @@ public class MagicCubeActivity extends Activity {
 		if (this.timedMode) {
 			this.controlView.getCubeTimer().stop();
 		}
+		adDaemon.stop();
 		super.onPause();
+
 	}
 
 	@Override
@@ -279,6 +296,7 @@ public class MagicCubeActivity extends Activity {
 
 			this.controlView.getCubeTimer().start();
 		}
+		adDaemon.run();
 		super.onResume();
 	}
 

@@ -33,4 +33,6 @@ public class Constants {
 	public static final String URL_WORLD_RANK = URL_SERVER
 			+ "/fancycube/worldRank";
 
+	public static final int ADVIEW_ID = 1111;
+	public static final String ADMOB_PUBLISHER_ID = "a14d3973e260f0f";
 }
