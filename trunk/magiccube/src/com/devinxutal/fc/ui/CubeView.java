@@ -82,8 +82,12 @@ public class CubeView extends GLSurfaceView {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		Log.v("colortest", "[onSizeChanged]: " + w + ", " + h);
-		resetPicker(true);
-
+		//resetPicker(true);
+		this.cubeRenderer.setViewHeight(h);
+		this.cubeRenderer.setViewWidth(w);
+		//this.cubeRenderer.zoomIn();
+		//this.cubeRenderer.zoomOut();
+		//this.requestRender();
 		super.onSizeChanged(w, h, oldw, oldh);
 	}
 

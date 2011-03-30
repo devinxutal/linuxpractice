@@ -124,6 +124,20 @@ public class CubeRenderer implements Renderer {
 
 	}
 
+	private void drawColorPicker(GL10 gl) {
+		// Clears the screen and depth buffer.
+		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
+				GL10.GL_DEPTH_BUFFER_BIT);
+
+		gl.glLoadIdentity();
+		gl.glTranslatef(0, 0, translate / scale);
+		gl.glRotatef(rx, 1, 0, 0);
+		gl.glRotatef(ry, 0, 1, 0);
+		gl.glRotatef(rz, 0, 0, 1);
+
+		magicCube.getCubie().drawPickingArea(gl);
+	}
+
 	public void fitCube(GL10 gl) {
 		scale = 1;
 		translate = -5;
@@ -186,20 +200,6 @@ public class CubeRenderer implements Renderer {
 		return false;
 	}
 
-	private void drawColorPicker(GL10 gl) {
-		// Clears the screen and depth buffer.
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | // OpenGL docs.
-				GL10.GL_DEPTH_BUFFER_BIT);
-
-		gl.glLoadIdentity();
-		gl.glTranslatef(0, 0, translate / scale);
-		gl.glRotatef(rx, 1, 0, 0);
-		gl.glRotatef(ry, 0, 1, 0);
-		gl.glRotatef(rz, 0, 0, 1);
-
-		magicCube.getCubie().drawPickingArea(gl);
-	}
-
 	public void checkColorPicker(GL10 gl) {
 		if (!this.resetColorPicker) {
 			return;
@@ -256,6 +256,7 @@ public class CubeRenderer implements Renderer {
 	 * microedition.khronos.opengles.GL10, int, int)
 	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		Log.v("colortest", "surface changed... " + width + "," + height);
 		// Sets the current view port to the new size.
 		gl.glViewport(0, 0, width, height);// OpenGL
 		// docs.
@@ -273,6 +274,9 @@ public class CubeRenderer implements Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);// OpenGL docs.
 		// Reset the modelview matrix
 		gl.glLoadIdentity();// OpenGL docs.
+
+		//
+		this.resetColorPicker = true;
 
 	}
 
