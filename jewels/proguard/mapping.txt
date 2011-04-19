@@ -1,0 +1,1488 @@
+a -> g:
+    java.util.Map a -> a
+    java.util.Map b -> b
+    void a(d,a$a,android.net.Uri,android.webkit.WebView) -> a
+    boolean a(android.net.Uri) -> a
+    boolean b(android.net.Uri) -> b
+    boolean c(android.net.Uri) -> c
+    void a(android.webkit.WebView) -> a
+    void b(android.webkit.WebView) -> b
+a$1 -> af:
+    int[] a -> a
+a$a -> ac:
+    a$a a -> a
+    a$a b -> b
+    a$a[] c -> c
+    a$a[] values() -> values
+    a$a valueOf(java.lang.String) -> valueOf
+b -> e:
+    c a -> a
+    d b -> b
+    java.lang.String c -> c
+    void a(java.net.HttpURLConnection) -> a
+    void b(java.net.HttpURLConnection) -> b
+    void c(java.net.HttpURLConnection) -> c
+    void d(java.net.HttpURLConnection) -> d
+    java.lang.Void a(java.lang.String[]) -> a
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+c -> f:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.Object c -> c
+    long d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    b g -> g
+    d h -> h
+    android.webkit.WebView i -> i
+    java.lang.String j -> j
+    com.google.ads.AdRequest$ErrorCode k -> k
+    boolean l -> l
+    boolean m -> m
+    void a(long) -> a
+    com.google.ads.AdRequest$ErrorCode a(com.google.ads.AdRequest[]) -> a
+    long b() -> b
+    void onCancelled() -> onCancelled
+    void a(java.lang.String,java.lang.String) -> a
+    void a(java.lang.String) -> a
+    void a(com.google.ads.AdRequest$ErrorCode) -> a
+    void a() -> a
+    void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+c$a -> z:
+    c a -> a
+cn.perfectgames.jewels.activities.AboutActivity -> cn.perfectgames.jewels.activities.AboutActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+cn.perfectgames.jewels.activities.HighScoreActivity -> cn.perfectgames.jewels.activities.HighScoreActivity:
+    android.os.Handler adHandler -> a
+    cn.perfectgames.jewels.util.AdDaemon adDaemon -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onClick(android.view.View) -> onClick
+cn.perfectgames.jewels.activities.LocalRankActivity -> cn.perfectgames.jewels.activities.LocalRankActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+com.devinxutal.tetris.activities.LocalRankActivity$1 -> com.devinxutal.tetris.activities.c:
+    cn.perfectgames.jewels.activities.LocalRankActivity this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+cn.perfectgames.jewels.activities.MainActivity -> cn.perfectgames.jewels.activities.MainActivity:
+    byte[] SALT -> a
+    android.graphics.Typeface buttonFont -> b
+    android.app.Dialog progressDialog -> c
+    android.os.Handler adHandler -> d
+    cn.perfectgames.jewels.util.AdDaemon adDaemon -> e
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onClick(android.view.View) -> onClick
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void customizeButton(android.widget.Button) -> a
+    void submitReport() -> a
+    android.app.Dialog access$0(cn.perfectgames.jewels.activities.MainActivity) -> a
+    void access$1$7e4e6108(cn.perfectgames.jewels.activities.MainActivity) -> b
+    void access$2(cn.perfectgames.jewels.activities.MainActivity,java.lang.String) -> a
+com.devinxutal.tetris.activities.MainActivity$1 -> com.devinxutal.tetris.activities.f:
+    cn.perfectgames.jewels.activities.MainActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.tetris.activities.MainActivity$2 -> com.devinxutal.tetris.activities.g:
+    cn.perfectgames.jewels.activities.MainActivity this$0 -> a
+    android.widget.EditText val$input -> b
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.tetris.activities.MainActivity$3 -> com.devinxutal.tetris.activities.h:
+    cn.perfectgames.jewels.activities.MainActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.tetris.activities.MainActivity$4 -> com.devinxutal.tetris.activities.i:
+    cn.perfectgames.jewels.activities.MainActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread -> com.devinxutal.tetris.activities.e:
+    java.lang.String report -> b
+    cn.perfectgames.jewels.activities.MainActivity this$0 -> a
+    void run() -> run
+com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread$1 -> com.devinxutal.tetris.activities.d:
+    com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread this$1 -> a
+    int val$sc -> b
+    void run() -> run
+cn.perfectgames.jewels.activities.PlaygroundActivity -> cn.perfectgames.jewels.activities.PlaygroundActivity:
+    cn.perfectgames.jewels.control.GameController gameController -> a
+    cn.perfectgames.jewels.ui.ControlView controlView -> b
+    android.view.ViewGroup successScreen -> c
+    android.view.ViewGroup pausedScreen -> d
+    android.widget.Toast toast -> e
+    android.widget.Button successScreenBackButton -> f
+    android.widget.Button successScreenSubmitButton -> g
+    android.widget.Button successScreenReplayButton -> h
+    android.widget.Button successScreenCheckinButton -> i
+    android.widget.Button pauseScreenOptionButton -> j
+    android.widget.Button pauseScreenQuitButton -> k
+    android.widget.Button pauseScreenResumeButton -> l
+    android.widget.Button pauseScreenCheckinButton -> m
+    com.devinxutal.tetris.activities.PlaygroundActivity$State state -> n
+    long elapsedTime -> o
+    boolean collapsed -> p
+    android.hardware.SensorManager sensorManager -> q
+    boolean sensorRunning -> r
+    boolean useJoyStick -> s
+    boolean useAccelerometer -> t
+    com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> u
+    com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> v
+    android.graphics.Typeface typeface -> w
+    android.os.Handler adHandler -> x
+    cn.perfectgames.jewels.util.AdDaemon adDaemonPause -> y
+    cn.perfectgames.jewels.util.AdDaemon adDaemonSuccess -> z
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void setScreenOrientation() -> e
+    void switchState(com.devinxutal.tetris.activities.PlaygroundActivity$State,boolean) -> a
+    void onOptionsMenuClosed(android.view.Menu) -> onOptionsMenuClosed
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void showSuccessScreen() -> f
+    void hideSuccessScreen() -> g
+    void showPauseScreen() -> h
+    void hidePauseScreen() -> i
+    void play() -> j
+    void resume() -> a
+    void replay() -> b
+    boolean tryLoadGame() -> k
+    void loadGame() -> c
+    void saveGame() -> d
+    void preferenceChanged() -> l
+    void customizeView(android.widget.TextView) -> a
+    cn.perfectgames.jewels.control.GameController access$0(cn.perfectgames.jewels.activities.PlaygroundActivity) -> a
+    void access$1(cn.perfectgames.jewels.activities.PlaygroundActivity) -> b
+    void access$2(cn.perfectgames.jewels.activities.PlaygroundActivity,com.devinxutal.tetris.activities.PlaygroundActivity$State) -> a
+    void access$3(cn.perfectgames.jewels.activities.PlaygroundActivity) -> c
+    com.devinxutal.tetris.activities.PlaygroundActivity$State access$4(cn.perfectgames.jewels.activities.PlaygroundActivity) -> d
+    boolean access$9(cn.perfectgames.jewels.activities.PlaygroundActivity) -> e
+com.devinxutal.tetris.activities.PlaygroundActivity$1 -> com.devinxutal.tetris.activities.a:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener -> com.devinxutal.tetris.activities.b:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+    void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+com.devinxutal.tetris.activities.PlaygroundActivity$ButtonsOnClick -> com.devinxutal.tetris.activities.o:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.devinxutal.tetris.activities.PlaygroundActivity$ControlButtonClicked -> com.devinxutal.tetris.activities.l:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+    void buttonClickced(int) -> a
+    void buttonPressed(int) -> b
+    void buttonReleased(int) -> c
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished -> com.devinxutal.tetris.activities.k:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+    void gameFinished() -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$2 -> com.devinxutal.tetris.activities.n:
+    com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished this$1 -> a
+    void run() -> run
+com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener -> com.devinxutal.tetris.activities.j:
+    cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
+com.devinxutal.tetris.activities.PlaygroundActivity$State -> com.devinxutal.tetris.activities.m:
+    com.devinxutal.tetris.activities.PlaygroundActivity$State INIT -> a
+    com.devinxutal.tetris.activities.PlaygroundActivity$State PLAY -> b
+    com.devinxutal.tetris.activities.PlaygroundActivity$State PAUSED -> c
+    com.devinxutal.tetris.activities.PlaygroundActivity$State ENDING -> d
+    com.devinxutal.tetris.activities.PlaygroundActivity$State END -> e
+    com.devinxutal.tetris.activities.PlaygroundActivity$State[] ENUM$VALUES -> f
+    com.devinxutal.tetris.activities.PlaygroundActivity$State[] values() -> values
+    com.devinxutal.tetris.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
+cn.perfectgames.jewels.activities.Preferences -> cn.perfectgames.jewels.activities.Preferences:
+    void onCreate(android.os.Bundle) -> onCreate
+cn.perfectgames.jewels.activities.WorldRankActivity -> cn.perfectgames.jewels.activities.WorldRankActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+cn.perfectgames.jewels.cfg.Configuration -> com.devinxutal.tetris.c.b:
+    cn.perfectgames.jewels.cfg.Configuration config -> a
+    android.content.SharedPreferences preference -> b
+    cn.perfectgames.jewels.cfg.Configuration config() -> a
+    void setSharedPreferences(android.content.SharedPreferences) -> a
+    int getCenterButtonAction() -> b
+    java.lang.String getBlockStyle() -> c
+    boolean isBackgroundMusicOn() -> d
+    void setBackgroundMusicOn(boolean) -> a
+    boolean isSoundEffectsOn() -> e
+    void setSoundEffectsOn(boolean) -> b
+    boolean isBlockShadowOn() -> f
+    boolean isSwapRotateHold() -> g
+    boolean isSwapQuickDirect() -> h
+    int getStartLevel() -> i
+    java.lang.String getScreenOrientation() -> j
+    boolean isDragMode() -> k
+cn.perfectgames.jewels.cfg.Constants -> com.devinxutal.tetris.c.a:
+    int VERSION -> a
+cn.perfectgames.jewels.control.ButtonInfo -> com.devinxutal.tetris.a.e:
+    int x -> a
+    int y -> b
+    int radius -> c
+    int buttonID -> d
+    android.graphics.Bitmap buttonBG -> e
+    float bgSize -> f
+    android.graphics.Bitmap buttonIcon -> g
+    float iconSize -> h
+    boolean pressed -> i
+cn.perfectgames.jewels.control.Command -> com.devinxutal.tetris.a.c:
+    cn.perfectgames.jewels.control.Command TURN -> a
+    cn.perfectgames.jewels.control.Command LEFT -> b
+    cn.perfectgames.jewels.control.Command RIGHT -> c
+    cn.perfectgames.jewels.control.Command DOWN -> d
+    cn.perfectgames.jewels.control.Command DIRECT_DOWN -> e
+    cn.perfectgames.jewels.control.Command HOLD -> f
+    cn.perfectgames.jewels.control.Command TURN_DOWN -> g
+    cn.perfectgames.jewels.control.Command TURN_UP -> h
+    cn.perfectgames.jewels.control.Command LEFT_DOWN -> i
+    cn.perfectgames.jewels.control.Command LEFT_UP -> j
+    cn.perfectgames.jewels.control.Command RIGHT_DOWN -> k
+    cn.perfectgames.jewels.control.Command RIGHT_UP -> l
+    cn.perfectgames.jewels.control.Command DOWN_DOWN -> m
+    cn.perfectgames.jewels.control.Command DOWN_UP -> n
+    cn.perfectgames.jewels.control.Command[] ENUM$VALUES -> o
+    cn.perfectgames.jewels.control.Command[] values() -> values
+    cn.perfectgames.jewels.control.Command valueOf(java.lang.String) -> valueOf
+cn.perfectgames.jewels.control.GameController -> com.devinxutal.tetris.a.d:
+    cn.perfectgames.jewels.sound.SoundManager soundManager -> a
+    cn.perfectgames.jewels.ui.PlaygroundView playgroundView -> b
+    cn.perfectgames.jewels.ui.ControlView controlView -> c
+    cn.perfectgames.jewels.model.Playground playground -> d
+    java.util.List listeners -> e
+    android.os.Handler handler -> f
+    boolean playing -> g
+    com.devinxutal.tetris.control.GameController$StepRunnable stepRunnable -> h
+    com.devinxutal.tetris.control.GameController$ControlRunnable controlRunnable -> i
+    cn.perfectgames.jewels.control.Command pendingCommand -> j
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> k
+    void start() -> a
+    void pause() -> b
+    void reset() -> c
+    void finishAnimation() -> d
+    void processCommand(cn.perfectgames.jewels.control.Command) -> a
+    int getStepDelay() -> i
+    cn.perfectgames.jewels.ui.PlaygroundView getPlaygroundView() -> e
+    boolean addGameListener(com.devinxutal.tetris.control.GameController$GameListener) -> a
+    void notifyGameFinished() -> f
+    cn.perfectgames.jewels.model.Playground getPlayground() -> g
+    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
+    void postControlDelay(int) -> a
+    void postStepDelay(int) -> b
+    boolean letPlaygroundProcessCommand(cn.perfectgames.jewels.control.Command) -> b
+    cn.perfectgames.jewels.ui.ControlView getControlView() -> h
+    cn.perfectgames.jewels.model.Playground access$0(cn.perfectgames.jewels.control.GameController) -> a
+    cn.perfectgames.jewels.ui.PlaygroundView access$1(cn.perfectgames.jewels.control.GameController) -> b
+    cn.perfectgames.jewels.sound.SoundManager access$2(cn.perfectgames.jewels.control.GameController) -> c
+    void access$3$62c8496d(cn.perfectgames.jewels.control.GameController) -> d
+    boolean access$4(cn.perfectgames.jewels.control.GameController) -> e
+    void access$5(cn.perfectgames.jewels.control.GameController,int) -> a
+    int access$6(cn.perfectgames.jewels.control.GameController) -> f
+    cn.perfectgames.jewels.control.Command access$7(cn.perfectgames.jewels.control.GameController) -> g
+    boolean access$8(cn.perfectgames.jewels.control.GameController,cn.perfectgames.jewels.control.Command) -> a
+    void access$9$62c8099c(cn.perfectgames.jewels.control.GameController) -> h
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> j
+com.devinxutal.tetris.control.GameController$ControlRunnable -> com.devinxutal.tetris.a.f:
+    long idToProcess -> a
+    long idProcessed -> b
+    cn.perfectgames.jewels.control.GameController this$0 -> c
+    void increaseIDToProcess() -> a
+    void run() -> run
+com.devinxutal.tetris.control.GameController$GameListener -> com.devinxutal.tetris.a.a:
+    void gameFinished() -> a
+com.devinxutal.tetris.control.GameController$StepRunnable -> com.devinxutal.tetris.a.b:
+    long idToProcess -> a
+    long idProcessed -> b
+    cn.perfectgames.jewels.control.GameController this$0 -> c
+    void increaseIDToProcess() -> a
+    void run() -> run
+cn.perfectgames.jewels.model.Block -> com.devinxutal.tetris.model.a:
+    boolean[][][] matrix -> a
+    int current -> b
+    int numStatus -> c
+    com.devinxutal.tetris.model.Block$BlockType blockType -> d
+    boolean recalculated -> e
+    int fc -> f
+    int fr -> g
+    int rc -> h
+    int cc -> i
+    int getCurrent() -> a
+    void turn() -> b
+    void recalc() -> j
+    int firstValidColumn() -> c
+    int firstValidRow() -> d
+    int columnCount() -> e
+    int rowCount() -> f
+    boolean[][] getMatrix() -> g
+    boolean[][] getTurnedMatrix() -> h
+    com.devinxutal.tetris.model.Block$BlockType getBlockType() -> i
+com.devinxutal.tetris.model.Block$BlockType -> com.devinxutal.tetris.model.e:
+    com.devinxutal.tetris.model.Block$BlockType I -> a
+    com.devinxutal.tetris.model.Block$BlockType J -> b
+    com.devinxutal.tetris.model.Block$BlockType L -> c
+    com.devinxutal.tetris.model.Block$BlockType O -> d
+    com.devinxutal.tetris.model.Block$BlockType S -> e
+    com.devinxutal.tetris.model.Block$BlockType T -> f
+    com.devinxutal.tetris.model.Block$BlockType Z -> g
+    boolean[][][][] matrix_array -> h
+    com.devinxutal.tetris.model.Block$BlockType[] ENUM$VALUES -> i
+    boolean[][][] getMatrix(com.devinxutal.tetris.model.Block$BlockType) -> a
+    com.devinxutal.tetris.model.Block$BlockType random() -> a
+    com.devinxutal.tetris.model.Block$BlockType[] values() -> values
+    com.devinxutal.tetris.model.Block$BlockType valueOf(java.lang.String) -> valueOf
+cn.perfectgames.jewels.model.Playground -> com.devinxutal.tetris.model.d:
+    int width -> a
+    int height -> b
+    int blockSize -> c
+    boolean inAnimation -> d
+    boolean[] eliminating -> e
+    int eliminatingCurrentStep -> f
+    int eliminatingTotalSteps -> g
+    int eliminationLines -> h
+    boolean finished -> i
+    cn.perfectgames.jewels.model.Block activeBlock -> j
+    int blockOffsetX -> k
+    int blockOffsetY -> l
+    int projectedY -> m
+    int originalOffsetY -> n
+    int rowsFallDown -> o
+    int[][] playground -> p
+    java.util.Set floatingBlocks -> q
+    boolean floatingBlocksJustSettled -> r
+    java.util.LinkedList blockQueue -> s
+    int blockQueueLen -> t
+    boolean combo -> u
+    cn.perfectgames.jewels.model.Block hold -> v
+    boolean holdUsed -> w
+    cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel -> x
+    boolean option_block_shadow_on -> y
+    com.devinxutal.tetris.model.Playground$DrawingMetrics dm -> z
+    boolean isFinishingElimination -> A
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> B
+    int getWidth() -> a
+    int getHeight() -> b
+    int getBlockSize() -> c
+    float getSpeedScale() -> d
+    void reset() -> e
+    boolean isFinished() -> f
+    cn.perfectgames.jewels.model.ScoreAndLevel getScoreAndLevel() -> g
+    void moveOn() -> h
+    boolean processCommand(cn.perfectgames.jewels.control.Command) -> a
+    boolean isInAnimation() -> i
+    void determinSize(int,int) -> a
+    void initDrawingMetrics(android.content.Context) -> a
+    void drawPendingBlocks(android.graphics.Canvas,android.graphics.Rect,android.graphics.Rect,android.graphics.Rect) -> a
+    void drawHoldBlock(android.graphics.Canvas,android.graphics.Rect) -> a
+    void drawBlock(android.graphics.Canvas,cn.perfectgames.jewels.model.Block,android.graphics.Rect) -> a
+    cn.perfectgames.jewels.model.SavablePlayground getSavablePlayground() -> j
+    void restoreSavablePlayground(cn.perfectgames.jewels.model.SavablePlayground) -> a
+    void draw(android.graphics.Canvas,int,int) -> a
+    boolean moveBlockDown() -> l
+    void allocateBlock() -> m
+    void allocateBlock(cn.perfectgames.jewels.model.Block) -> a
+    boolean checkElimination() -> n
+    boolean isFinishingElimination() -> k
+    java.util.Set checkFloatingBlock() -> o
+    void calculateProjectedY() -> p
+    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
+    int access$0(cn.perfectgames.jewels.model.Playground) -> a
+    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> q
+com.devinxutal.tetris.model.Playground$DrawingMetrics -> com.devinxutal.tetris.model.b:
+    int[] COLORS -> b
+    android.graphics.Bitmap[] original_blocks -> c
+    android.graphics.Bitmap[] sized_blocks -> a
+    android.graphics.Paint paint -> d
+    java.lang.String blockStyle -> e
+    android.content.Context context -> f
+    cn.perfectgames.jewels.model.Playground this$0 -> g
+    void init(android.content.Context) -> a
+    void onSizeChanged(boolean) -> a
+    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
+    android.graphics.Paint access$0(com.devinxutal.tetris.model.Playground$DrawingMetrics) -> a
+cn.perfectgames.jewels.model.SavablePlayground -> cn.perfectgames.jewels.model.SavablePlayground:
+    int[][] playground -> a
+    com.devinxutal.tetris.model.SavablePlayground$SavableBlock activeBlock -> b
+    int offsetX -> c
+    int offsetY -> d
+    java.util.List blockQueue -> e
+    com.devinxutal.tetris.model.SavablePlayground$SavableBlock holdBlock -> f
+    boolean holdUsed -> g
+    cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel -> h
+    boolean finished -> i
+    com.devinxutal.tetris.model.SavablePlayground$SavableBlock create(cn.perfectgames.jewels.model.Block) -> a
+com.devinxutal.tetris.model.SavablePlayground$SavableBlock -> com.devinxutal.tetris.model.c:
+    com.devinxutal.tetris.model.Block$BlockType blockType -> a
+    int current -> b
+    cn.perfectgames.jewels.model.SavablePlayground this$0 -> c
+cn.perfectgames.jewels.model.ScoreAndLevel -> cn.perfectgames.jewels.model.ScoreAndLevel:
+    int level -> a
+    int score -> b
+    int totalLines -> c
+    int currentLines -> d
+    int addScore(int) -> a
+    int getScore() -> a
+    int getLevel() -> b
+    int getGoalRemained() -> c
+    java.lang.String getScroreString(int) -> b
+cn.perfectgames.jewels.record.SavableLocalScore -> cn.perfectgames.jewels.record.SavableLocalScore:
+    java.lang.String player -> a
+    int score -> b
+    java.lang.String getPlayer() -> a
+    int getScore() -> b
+    int compareTo(java.lang.Object) -> compareTo
+cn.perfectgames.jewels.record.SavableLocalScores -> cn.perfectgames.jewels.record.SavableLocalScores:
+    java.util.LinkedList robotScores -> a
+    java.util.List scores -> b
+    void trim() -> a
+    java.util.List getLocalRankForList$28cc3cee() -> b
+    void addScore(java.lang.String,int) -> a
+cn.perfectgames.jewels.sound.SoundManager -> com.devinxutal.tetris.d.a:
+    android.media.SoundPool soundpool -> a
+    android.app.Activity activity -> b
+    android.media.MediaPlayer mediaPlayer -> c
+    android.media.AudioManager audioManager -> d
+    int btnMusicID -> e
+    int turnMusicID -> f
+    int moveMusicID -> g
+    int downMusicID -> h
+    int eliminationMusicID -> i
+    float streamVolume -> j
+    boolean initialized -> k
+    cn.perfectgames.jewels.sound.SoundManager soundManager -> l
+    float BACKGROUND_SOUND_VOLUME -> m
+    cn.perfectgames.jewels.sound.SoundManager get(android.app.Activity) -> a
+    void init(android.app.Activity) -> b
+    void release() -> a
+    void playBackgroundMusic() -> b
+    void stopBackgroundMusic() -> c
+    void pauseBackgroundMusic() -> d
+    void playButtonClickEffect() -> e
+    void playMoveEffect() -> f
+    void playTurnEffect() -> g
+    void playDownEffect() -> h
+    void playEliminationEffect() -> i
+cn.perfectgames.jewels.ui.ControlView -> com.devinxutal.tetris.ui.b:
+    cn.perfectgames.jewels.control.GameController controller -> a
+    java.util.List listeners -> b
+    float SLIDE_THRESHOLD -> c
+    java.util.List buttons -> d
+    java.util.List controlButtons -> e
+    android.widget.ImageButton soundButton -> f
+    android.widget.ImageButton musicButton -> g
+    cn.perfectgames.jewels.cfg.Configuration config -> h
+    boolean dragMode -> i
+    float slotGap -> j
+    float dragDeltaX -> k
+    boolean inDrag -> l
+    float oldX -> m
+    float oldY -> n
+    float oldXforDrag -> o
+    float oldYforDrag -> p
+    float dragDeltaY -> q
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void setButtons(java.util.List) -> a
+    void setGameController(cn.perfectgames.jewels.control.GameController) -> a
+    void init() -> a
+    void onDraw(android.graphics.Canvas) -> onDraw
+    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    android.widget.ImageButton makeButton(int,int) -> a
+    void onClick(android.view.View) -> onClick
+    void resetControlButtons() -> b
+    boolean addGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener) -> a
+    void notifyButtonClicked(int) -> a
+    void notifyButtonReleased(int) -> b
+    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
+com.devinxutal.tetris.ui.ControlView$GameControlListener -> com.devinxutal.tetris.ui.c:
+    void buttonClickced(int) -> a
+    void buttonPressed(int) -> b
+    void buttonReleased(int) -> c
+cn.perfectgames.jewels.ui.Pair -> com.devinxutal.tetris.ui.a:
+    int x -> a
+    int y -> b
+cn.perfectgames.jewels.ui.PlaygroundView -> cn.perfectgames.jewels.ui.PlaygroundView:
+    java.lang.String TAG -> a
+    cn.perfectgames.jewels.control.GameController gameController -> b
+    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics dm -> c
+    cn.perfectgames.jewels.model.Playground playground -> d
+    boolean finishedAlreadyNotified -> e
+    boolean finishingAlreadyNotified -> f
+    boolean notifyFinished -> g
+    cn.perfectgames.jewels.ui.ControlView controlView -> h
+    void setGameController(cn.perfectgames.jewels.control.GameController) -> a
+    cn.perfectgames.jewels.model.Playground getPlayground() -> a
+    void setPlayground(cn.perfectgames.jewels.model.Playground) -> a
+    void init() -> d
+    void onMeasure(int,int) -> onMeasure
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void onWindowVisibilityChanged(int) -> onWindowVisibilityChanged
+    void reset() -> b
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void setControlView(cn.perfectgames.jewels.ui.ControlView) -> a
+    void configurationChanged$8fc215e() -> c
+    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics access$0(cn.perfectgames.jewels.ui.PlaygroundView) -> a
+    cn.perfectgames.jewels.model.Playground access$1(cn.perfectgames.jewels.ui.PlaygroundView) -> b
+    cn.perfectgames.jewels.ui.ControlView access$2(cn.perfectgames.jewels.ui.PlaygroundView) -> c
+com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics -> com.devinxutal.tetris.ui.d:
+    int[] STAR_COLORS -> a
+    android.graphics.Paint paint -> b
+    cn.perfectgames.jewels.util.BitmapUtil bitmapUtil -> c
+    android.graphics.Bitmap bgBitmap -> d
+    android.graphics.Canvas canvas -> e
+    android.graphics.Bitmap gridBitmap -> f
+    android.graphics.Rect playgroundRect -> g
+    android.graphics.Rect next1BlockRect -> h
+    android.graphics.Rect next2BlockRect -> i
+    android.graphics.Rect next3BlockRect -> j
+    android.graphics.Rect holdBlockRect -> k
+    cn.perfectgames.jewels.control.ButtonInfo holdButtonInfo -> l
+    android.graphics.RectF scoreRect -> m
+    android.graphics.RectF levelRect -> n
+    android.graphics.RectF goalRect -> o
+    android.graphics.Typeface font -> p
+    android.graphics.Typeface scoreFont -> q
+    android.graphics.Typeface labelFont -> r
+    android.graphics.Typeface statFont -> s
+    float lineHeight -> t
+    float scoreLineHeight -> u
+    float labelLineHeight -> v
+    float statLineHeight -> w
+    float scoreSize -> x
+    int scoreDigits -> y
+    float scoreGap -> z
+    float labelSize -> A
+    float labelGap -> B
+    float statSize -> C
+    int statDigits -> D
+    float textStrokeScale -> E
+    cn.perfectgames.jewels.ui.PlaygroundView this$0 -> F
+    void onSizeChanged(int,int) -> a
+    void resetPaint() -> a
+    void regenerateBackground() -> b
+    void determinAndDrawControlButtons(android.graphics.Canvas) -> a
+    float determineScoreSize(float,float) -> a
+    float determineLabelSize(float,float) -> b
+    float determineStatSize(float,float) -> c
+    android.graphics.Paint access$0(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> a
+    android.graphics.Bitmap access$1(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> b
+    android.graphics.Rect access$2(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> c
+    android.graphics.Rect access$3(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> d
+    android.graphics.Rect access$4(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> e
+    android.graphics.Rect access$5(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> f
+    android.graphics.Rect access$6(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> g
+    float access$7(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> h
+    android.graphics.Typeface access$8(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> i
+    float access$9(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> j
+    int access$10(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> k
+    android.graphics.RectF access$11(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> l
+    float access$12(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> m
+    float access$13(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> n
+    android.graphics.Typeface access$14(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> o
+    android.graphics.RectF access$15(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> p
+    float access$16(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> q
+    android.graphics.RectF access$17(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> r
+    float access$18(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> s
+    android.graphics.Typeface access$19(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> t
+    void access$20(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> u
+cn.perfectgames.jewels.util.AdDaemon -> com.devinxutal.tetris.b.j:
+    android.app.Activity activity -> a
+    android.view.View adView -> b
+    android.os.Handler handler -> c
+    java.lang.String name -> d
+    boolean run -> e
+    long animationSerial -> f
+    long requestSerial -> g
+    boolean requestSucceed -> h
+    boolean nofill -> i
+    boolean adClicked -> j
+    long requestInterval -> k
+    long requestCount -> l
+    java.lang.Runnable partialAnimationRunnable -> m
+    void run() -> a
+    void stop() -> b
+    void postAnimation() -> c
+    void postRequest(long) -> a
+    android.view.View access$0(cn.perfectgames.jewels.util.AdDaemon) -> a
+    java.lang.String access$1(cn.perfectgames.jewels.util.AdDaemon) -> b
+    android.app.Activity access$2(cn.perfectgames.jewels.util.AdDaemon) -> c
+    boolean access$3(cn.perfectgames.jewels.util.AdDaemon) -> d
+    long access$4(cn.perfectgames.jewels.util.AdDaemon) -> e
+    boolean access$5(cn.perfectgames.jewels.util.AdDaemon) -> f
+    boolean access$6(cn.perfectgames.jewels.util.AdDaemon) -> g
+    void access$7(cn.perfectgames.jewels.util.AdDaemon,boolean) -> a
+    void access$8(cn.perfectgames.jewels.util.AdDaemon,long) -> a
+    void access$9(cn.perfectgames.jewels.util.AdDaemon) -> h
+    boolean access$10(cn.perfectgames.jewels.util.AdDaemon) -> i
+    void access$11(cn.perfectgames.jewels.util.AdDaemon,boolean) -> b
+    long access$12(cn.perfectgames.jewels.util.AdDaemon) -> j
+    java.lang.Runnable access$13(cn.perfectgames.jewels.util.AdDaemon) -> k
+    void access$14(cn.perfectgames.jewels.util.AdDaemon) -> l
+    void access$15$53949221(cn.perfectgames.jewels.util.AdDaemon) -> m
+com.devinxutal.tetris.util.AdDaemon$1 -> com.devinxutal.tetris.b.e:
+    cn.perfectgames.jewels.util.AdDaemon this$0 -> a
+    void run() -> run
+com.devinxutal.tetris.util.AdDaemon$1$1 -> com.devinxutal.tetris.b.a:
+    com.devinxutal.tetris.util.AdDaemon$1 this$1 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.devinxutal.tetris.util.AdDaemon$2 -> com.devinxutal.tetris.b.d:
+    cn.perfectgames.jewels.util.AdDaemon this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.devinxutal.tetris.util.AdDaemon$3 -> com.devinxutal.tetris.b.c:
+    cn.perfectgames.jewels.util.AdDaemon this$0 -> a
+    void onDismissScreen$51b51722() -> a
+    void onFailedToReceiveAd$7b642d25(com.google.ads.AdRequest$ErrorCode) -> a
+    void onLeaveApplication$51b51722() -> b
+    void onPresentScreen$51b51722() -> c
+    void onReceiveAd$51b51722() -> d
+com.devinxutal.tetris.util.AdDaemon$AnimationRunnable -> com.devinxutal.tetris.b.l:
+    long serialID -> a
+    cn.perfectgames.jewels.util.AdDaemon this$0 -> b
+    void run() -> run
+com.devinxutal.tetris.util.AdDaemon$RequestRunnable -> com.devinxutal.tetris.b.g:
+    long serialID -> a
+    cn.perfectgames.jewels.util.AdDaemon this$0 -> b
+    void run() -> run
+cn.perfectgames.jewels.util.AdUtil -> com.devinxutal.tetris.b.k:
+    void determineAd(android.app.Activity,int) -> a
+cn.perfectgames.jewels.util.BitmapUtil -> com.devinxutal.tetris.b.n:
+    android.content.Context context -> a
+    android.graphics.Bitmap background -> b
+    android.graphics.Bitmap aimButton1 -> c
+    android.graphics.Bitmap aimButton2 -> d
+    android.graphics.Bitmap arrowDown -> e
+    android.graphics.Bitmap arrowDirectDown -> f
+    android.graphics.Bitmap arrowRotate -> g
+    android.graphics.Bitmap arrowHold -> h
+    android.graphics.Bitmap arrowLeft -> i
+    android.graphics.Bitmap arrowRight -> j
+    android.graphics.Paint paint -> k
+    android.graphics.drawable.Drawable hInfoBar -> l
+    android.graphics.drawable.Drawable vInfoBar -> m
+    android.graphics.Bitmap screen -> n
+    cn.perfectgames.jewels.util.BitmapUtil util -> o
+    cn.perfectgames.jewels.util.BitmapUtil get(android.content.Context) -> a
+    android.graphics.Bitmap getScreenBitmap(android.content.Context) -> b
+    android.graphics.Bitmap getAimButtonBitmap1() -> a
+    android.graphics.Bitmap getAimButtonBitmap2() -> b
+    android.graphics.drawable.Drawable getVerticalInfoBar() -> c
+    android.graphics.drawable.Drawable getHorizontalInfoBar() -> d
+    void drawBackgroundBitmap(android.graphics.Canvas,int,int,android.graphics.Paint) -> a
+    android.graphics.Bitmap getArrowBitmap(int) -> a
+cn.perfectgames.jewels.util.MarketUtil -> com.devinxutal.tetris.b.o:
+    int TARGET_MARKET -> a
+    void openMarketForApp(android.app.Activity,java.lang.String) -> a
+    void openMarketForAuthor(android.app.Activity,java.lang.String) -> b
+cn.perfectgames.jewels.util.MathUtil -> com.devinxutal.tetris.b.f:
+    double distance(double,double,double,double) -> a
+cn.perfectgames.jewels.util.PreferenceUtil -> com.devinxutal.tetris.b.i:
+    java.lang.String getShowUpgradeNoticeStr(android.app.Activity) -> a
+cn.perfectgames.jewels.util.RandomUtil -> com.devinxutal.tetris.b.b:
+    java.util.Random r -> a
+cn.perfectgames.jewels.util.ScoreUtil -> com.devinxutal.tetris.b.m:
+    cn.perfectgames.jewels.record.SavableLocalScores loadLocalScores() -> a
+    void saveCubeState(java.lang.String,int) -> a
+cn.perfectgames.jewels.util.TextPainter -> com.devinxutal.tetris.b.h:
+    android.graphics.Paint textPaint -> a
+    android.graphics.Paint strokePaint -> b
+    android.graphics.Paint getStrokePaint() -> a
+    void setStrokeWidth(float) -> a
+    void setStrokeColor$13462e() -> b
+    void setTextColor$13462e() -> c
+    void setTextSize(float) -> b
+    void setTypeface(android.graphics.Typeface) -> a
+    void drawFittedText(android.graphics.Canvas,java.lang.String,android.graphics.RectF,float) -> a
+    void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float) -> a
+    void drawText(android.graphics.Canvas,java.lang.String,float,float,float) -> b
+    void drawCharacter(android.graphics.Canvas,java.lang.String,float,float) -> a
+    float measureTextWidth(java.lang.String,float) -> a
+com.google.ads.Ad -> com.google.ads.a:
+com.google.ads.AdActivity -> com.google.ads.AdActivity:
+    java.lang.Object a -> a
+    com.google.ads.AdActivity b -> b
+    d c -> c
+    com.google.ads.AdActivity d -> d
+    g e -> e
+    long f -> f
+    android.widget.RelativeLayout g -> g
+    boolean h -> h
+    android.widget.VideoView i -> i
+    void a(java.lang.String) -> a
+    android.widget.VideoView getVideoView() -> a
+    void launchAdActivity(d,e) -> a
+    void onClick(android.view.View) -> onClick
+    void onCreate(android.os.Bundle) -> onCreate
+    void a(g,boolean,int) -> a
+    void showVideo(android.widget.VideoView) -> a
+    void onCompletion(android.media.MediaPlayer) -> onCompletion
+    void onDestroy() -> onDestroy
+    void onPrepared(android.media.MediaPlayer) -> onPrepared
+    void onWindowFocusChanged(boolean) -> onWindowFocusChanged
+com.google.ads.AdListener -> com.google.ads.d:
+    void onReceiveAd$51b51722() -> d
+    void onFailedToReceiveAd$7b642d25(com.google.ads.AdRequest$ErrorCode) -> a
+    void onPresentScreen$51b51722() -> c
+    void onDismissScreen$51b51722() -> a
+    void onLeaveApplication$51b51722() -> b
+com.google.ads.AdRequest -> com.google.ads.c:
+    com.google.ads.AdRequest$Gender a -> a
+    java.lang.String b -> b
+    java.util.Set c -> c
+    java.util.Map d -> d
+    android.location.Location e -> e
+    boolean f -> f
+    void setTesting$1385ff() -> a
+    java.util.Map getRequestMap() -> b
+com.google.ads.AdRequest$ErrorCode -> com.google.ads.b:
+    com.google.ads.AdRequest$ErrorCode INVALID_REQUEST -> a
+    com.google.ads.AdRequest$ErrorCode NO_FILL -> b
+    com.google.ads.AdRequest$ErrorCode NETWORK_ERROR -> c
+    com.google.ads.AdRequest$ErrorCode INTERNAL_ERROR -> d
+    java.lang.String a -> e
+    com.google.ads.AdRequest$ErrorCode[] b -> f
+    com.google.ads.AdRequest$ErrorCode[] values() -> values
+    com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String) -> valueOf
+    java.lang.String toString() -> toString
+com.google.ads.AdRequest$Gender -> com.google.ads.g:
+    com.google.ads.AdRequest$Gender MALE -> a
+    com.google.ads.AdRequest$Gender FEMALE -> b
+    java.lang.String a -> c
+    com.google.ads.AdRequest$Gender[] b -> d
+    com.google.ads.AdRequest$Gender[] values() -> values
+    com.google.ads.AdRequest$Gender valueOf(java.lang.String) -> valueOf
+    java.lang.String toString() -> toString
+com.google.ads.AdSize -> com.google.ads.f:
+    com.google.ads.AdSize BANNER -> a
+    com.google.ads.AdSize IAB_MRECT -> b
+    com.google.ads.AdSize IAB_BANNER -> c
+    com.google.ads.AdSize IAB_LEADERBOARD -> d
+    int a -> e
+    int b -> f
+    java.lang.String c -> g
+    int getWidth() -> a
+    int getHeight() -> b
+    java.lang.String toString() -> toString
+com.google.ads.AdView -> com.google.ads.AdView:
+    d a -> a
+    void a(android.app.Activity,com.google.ads.AdSize,java.lang.String) -> a
+    void loadAd(com.google.ads.AdRequest) -> a
+    void setAdListener(com.google.ads.AdListener) -> a
+com.google.ads.InstallReceiver -> com.google.ads.InstallReceiver:
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    java.lang.String a(java.lang.String,java.lang.String,java.lang.String) -> a
+    void a(android.content.Context,android.content.Intent) -> a
+com.google.ads.InterstitialAd -> com.google.ads.e:
+com.google.gson.ExclusionStrategy -> com.google.a.j:
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+com.google.gson.FieldAttributes -> com.google.a.z:
+    com.google.gson.b a -> a
+    java.lang.Class b -> b
+    java.lang.reflect.Field c -> c
+    java.lang.Class d -> d
+    boolean e -> e
+    int f -> f
+    java.lang.String g -> g
+    java.lang.reflect.Type h -> h
+    java.util.Collection i -> i
+    int c() -> f
+    java.lang.String getName() -> a
+    java.lang.reflect.Type getDeclaredType() -> b
+    java.lang.Class getDeclaredClass() -> c
+    java.lang.annotation.Annotation getAnnotation(java.lang.Class) -> a
+    java.util.Collection getAnnotations() -> d
+    boolean hasModifier(int) -> a
+    java.lang.Object a(java.lang.Object) -> a
+    boolean a() -> e
+com.google.gson.Gson -> com.google.a.al:
+    com.google.gson.a a -> a
+    com.google.gson.ay b -> b
+    com.google.gson.ak c -> c
+    com.google.gson.w d -> d
+    com.google.gson.k e -> e
+    com.google.gson.ExclusionStrategy f -> f
+    com.google.gson.ExclusionStrategy g -> g
+    com.google.gson.ExclusionStrategy h -> h
+    com.google.gson.k i -> i
+    com.google.gson.ai j -> j
+    com.google.gson.aq k -> k
+    com.google.gson.aq l -> l
+    com.google.gson.w m -> m
+    boolean n -> n
+    boolean o -> o
+    java.lang.String toJson(java.lang.Object) -> a
+    java.lang.String toString() -> toString
+com.google.gson.JsonArray -> com.google.a.a:
+    java.util.List a -> a
+    void add(com.google.gson.JsonElement) -> a
+    java.util.Iterator iterator() -> iterator
+    void a(java.lang.Appendable,com.google.gson.h) -> a
+com.google.gson.JsonDeserializer -> com.google.a.i:
+com.google.gson.JsonElement -> com.google.a.ak:
+    com.google.gson.h a -> a
+    boolean isJsonArray() -> b
+    boolean isJsonObject() -> c
+    boolean isJsonNull() -> d
+    com.google.gson.JsonObject getAsJsonObject() -> e
+    com.google.gson.JsonArray getAsJsonArray() -> f
+    com.google.gson.JsonPrimitive getAsJsonPrimitive() -> g
+    com.google.gson.JsonNull getAsJsonNull() -> h
+    java.lang.String toString() -> toString
+    void a(java.lang.Appendable,com.google.gson.h) -> a
+com.google.gson.JsonNull -> com.google.a.ah:
+    com.google.gson.JsonNull a -> a
+    void a(java.lang.Appendable,com.google.gson.h) -> a
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+    com.google.gson.JsonNull b() -> a
+com.google.gson.JsonObject -> com.google.a.ai:
+    java.util.Map a -> a
+    void add(java.lang.String,com.google.gson.JsonElement) -> a
+    void addProperty(java.lang.String,java.lang.Number) -> a
+    java.util.Set entrySet() -> a
+    void a(java.lang.Appendable,com.google.gson.h) -> a
+com.google.gson.JsonPrimitive -> com.google.a.aj:
+    java.lang.Class[] a -> a
+    java.math.BigInteger b -> b
+    java.math.BigInteger c -> c
+    java.lang.Object d -> d
+    void a(java.lang.Object) -> a
+    void a(java.lang.Appendable,com.google.gson.h) -> a
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+    boolean a(com.google.gson.JsonPrimitive) -> a
+    boolean b(com.google.gson.JsonPrimitive) -> b
+com.google.gson.JsonSerializationContext -> com.google.a.ca:
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type) -> a
+com.google.gson.JsonSerializer -> com.google.a.y:
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.LongSerializationPolicy -> com.google.a.f:
+    com.google.gson.LongSerializationPolicy DEFAULT -> a
+    com.google.gson.LongSerializationPolicy STRING -> b
+    com.google.gson.LongSerializationPolicy$b a -> c
+    com.google.gson.LongSerializationPolicy[] b -> d
+    com.google.gson.LongSerializationPolicy[] values() -> values
+    com.google.gson.LongSerializationPolicy valueOf(java.lang.String) -> valueOf
+    com.google.gson.JsonElement serialize(java.lang.Long) -> a
+com.google.gson.LongSerializationPolicy$a -> com.google.a.d:
+    com.google.gson.JsonElement a(java.lang.Long) -> a
+com.google.gson.LongSerializationPolicy$b -> com.google.a.c:
+    com.google.gson.JsonElement a(java.lang.Long) -> a
+com.google.gson.LongSerializationPolicy$c -> com.google.a.b:
+    com.google.gson.JsonElement a(java.lang.Long) -> a
+com.google.gson.ObjectNavigator -> com.google.a.e:
+    com.google.gson.ExclusionStrategy a -> a
+    com.google.gson.ao b -> b
+    void a(com.google.gson.ObjectNavigator$Visitor) -> a
+com.google.gson.ObjectNavigator$Visitor -> com.google.a.g:
+    void start(com.google.gson.ao) -> a
+    void end(com.google.gson.ao) -> b
+    void startVisitingObject$5d527811() -> a
+    void visitArray(java.lang.Object,java.lang.reflect.Type) -> a
+    void visitObjectField(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> a
+    void visitArrayField(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> b
+    boolean visitUsingCustomHandler(com.google.gson.ao) -> c
+    boolean visitFieldUsingCustomHandler(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> c
+    void visitPrimitive(java.lang.Object) -> a
+com.google.gson.a -> com.google.a.w:
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+    boolean a(java.lang.Class) -> b
+com.google.gson.ac -> com.google.a.an:
+    com.google.gson.an a -> a
+    com.google.gson.aq b -> b
+    boolean c -> c
+    com.google.gson.aj d -> d
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type) -> a
+    com.google.gson.JsonElement a(java.lang.Object,java.lang.reflect.Type) -> b
+com.google.gson.ad -> com.google.a.am:
+    com.google.gson.an a -> a
+    com.google.gson.aq b -> b
+    boolean c -> c
+    com.google.gson.JsonSerializationContext d -> d
+    com.google.gson.aj e -> e
+    com.google.gson.JsonElement f -> f
+    void start(com.google.gson.ao) -> a
+    void end(com.google.gson.ao) -> b
+    void startVisitingObject$5d527811() -> a
+    void visitArray(java.lang.Object,java.lang.reflect.Type) -> a
+    void visitArrayField(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> b
+    void visitObjectField(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> a
+    void visitPrimitive(java.lang.Object) -> a
+    void a(com.google.gson.FieldAttributes,com.google.gson.ao) -> a
+    void a(com.google.gson.FieldAttributes,com.google.gson.JsonElement) -> a
+    com.google.gson.JsonElement a(com.google.gson.ao) -> d
+    boolean visitUsingCustomHandler(com.google.gson.ao) -> c
+    com.google.gson.JsonElement b(com.google.gson.ao) -> e
+    boolean visitFieldUsingCustomHandler(com.google.gson.FieldAttributes,java.lang.reflect.Type,java.lang.Object) -> c
+    void a(com.google.gson.JsonElement) -> a
+    boolean a(com.google.gson.FieldAttributes,java.lang.Object) -> a
+    java.lang.Object b(com.google.gson.FieldAttributes,java.lang.Object) -> b
+    com.google.gson.JsonElement a() -> b
+com.google.gson.ae -> com.google.a.bh:
+    com.google.gson.u a -> a
+    boolean b -> b
+    void a(com.google.gson.JsonElement) -> a
+com.google.gson.ah -> com.google.a.bi:
+    int a -> a
+    void a(java.lang.Object,java.lang.Object) -> a
+    void clear() -> clear
+    java.lang.Object a(java.lang.Object) -> a
+    int size() -> size
+    boolean removeEldestEntry(java.util.Map$Entry) -> removeEldestEntry
+com.google.gson.ai -> com.google.a.bc:
+    java.util.logging.Logger a -> a
+    com.google.gson.aq b -> b
+    java.lang.String toString() -> toString
+com.google.gson.aj -> com.google.a.bd:
+    java.util.Stack a -> a
+    com.google.gson.ao a(com.google.gson.ao) -> a
+    com.google.gson.ao a() -> a
+    boolean b(com.google.gson.ao) -> b
+com.google.gson.ak -> com.google.a.bf:
+    java.util.Collection a -> a
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+com.google.gson.al -> com.google.a.bg:
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+com.google.gson.an -> com.google.a.ax:
+    com.google.gson.ExclusionStrategy a -> a
+    com.google.gson.k b -> b
+    com.google.gson.ObjectNavigator a(com.google.gson.ao) -> a
+    com.google.gson.k a() -> a
+com.google.gson.annotations.SerializedName -> com.google.a.a.a:
+    java.lang.String value() -> a
+com.google.gson.ao -> com.google.a.ay:
+    java.lang.Object b -> b
+    java.lang.reflect.Type a -> a
+    boolean c -> c
+    java.lang.Object a() -> a
+    void a(java.lang.Object) -> a
+    com.google.gson.ap a(com.google.gson.aq) -> a
+    com.google.gson.ao b() -> b
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+com.google.gson.ap -> com.google.a.bb:
+    java.lang.Object a -> a
+    java.lang.Object b -> b
+    int hashCode() -> hashCode
+    boolean equals(java.lang.Object) -> equals
+    boolean a(java.lang.Object,java.lang.Object) -> a
+    java.lang.String toString() -> toString
+com.google.gson.aq -> com.google.a.ao:
+    java.util.logging.Logger a -> a
+    java.util.Map b -> b
+    java.util.List c -> c
+    boolean d -> d
+    void a(java.lang.Class,java.lang.Object) -> a
+    void a(com.google.gson.ap) -> a
+    int a(java.lang.Class) -> a
+    void a(java.lang.reflect.Type,java.lang.Object) -> a
+    void a(com.google.gson.aq) -> a
+    void b(java.lang.reflect.Type,java.lang.Object) -> b
+    void a() -> a
+    java.lang.Object a(java.lang.reflect.Type) -> a
+    boolean b(java.lang.reflect.Type) -> b
+    int b(java.lang.Class) -> b
+    java.lang.String toString() -> toString
+com.google.gson.ar -> com.google.a.aq:
+    java.lang.reflect.Type a -> a
+    java.lang.reflect.Type[] b -> b
+    java.lang.reflect.Type c -> c
+    java.lang.reflect.Type getRawType() -> getRawType
+    java.lang.reflect.Type[] getActualTypeArguments() -> getActualTypeArguments
+    java.lang.reflect.Type getOwnerType() -> getOwnerType
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+com.google.gson.at -> com.google.a.au:
+    void a(java.lang.Object) -> a
+    void a(boolean) -> a
+com.google.gson.au -> com.google.a.cd:
+    java.util.Map a -> a
+    java.util.Map b -> b
+    void a(java.util.Map,java.util.Map,java.lang.Class,java.lang.Class) -> a
+    java.lang.Class c(java.lang.Class) -> a
+com.google.gson.av -> com.google.a.cc:
+    java.lang.String a(com.google.gson.FieldAttributes) -> a
+    java.lang.String a$252cc7e1(java.lang.String) -> a
+com.google.gson.aw -> com.google.a.cg:
+    com.google.gson.v a -> a
+    com.google.gson.k b -> b
+    java.lang.String a(com.google.gson.FieldAttributes) -> a
+com.google.gson.ay -> com.google.a.bw:
+    boolean a -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+com.google.gson.b -> com.google.a.x:
+    void a(java.lang.Object,java.lang.Object) -> a
+    java.lang.Object a(java.lang.Object) -> a
+com.google.gson.bb -> com.google.a.bm:
+    java.lang.reflect.Type a -> a
+    java.lang.Class b -> b
+    java.lang.reflect.Type a() -> b
+    java.lang.Class b() -> c
+    boolean c() -> d
+com.google.gson.bc -> com.google.a.bj:
+    java.lang.Class c -> c
+    java.lang.reflect.Type d -> d
+    java.lang.reflect.Type e() -> a
+com.google.gson.bd -> com.google.a.bq:
+    java.lang.reflect.ParameterizedType a -> a
+    java.lang.reflect.Type a() -> a
+com.google.gson.be -> com.google.a.bn:
+    com.google.gson.bb a(java.lang.reflect.Field,java.lang.reflect.Type) -> a
+    java.lang.reflect.Type a(java.lang.reflect.Type,java.lang.reflect.Type,java.lang.Class) -> a
+com.google.gson.bf -> com.google.a.ab:
+    java.lang.reflect.Type a -> a
+    java.lang.reflect.Type b -> b
+    java.lang.reflect.Type b() -> a
+com.google.gson.bg -> com.google.a.aa:
+    boolean a(java.lang.reflect.Type) -> a
+    java.lang.Class b(java.lang.reflect.Type) -> b
+    java.lang.Class a(java.lang.Class) -> a
+com.google.gson.d -> com.google.a.t:
+    java.lang.Object a -> a
+    java.lang.IllegalStateException a(com.google.gson.FieldAttributes) -> a
+com.google.gson.f -> com.google.a.v:
+    com.google.gson.f$g a -> a
+    com.google.gson.f$h b -> b
+    com.google.gson.f$i c -> c
+    com.google.gson.f$j d -> d
+    com.google.gson.f$m e -> e
+    com.google.gson.f$ac f -> f
+    com.google.gson.f$ab g -> g
+    com.google.gson.f$ad h -> h
+    com.google.gson.f$s i -> i
+    com.google.gson.f$f j -> j
+    com.google.gson.f$v k -> k
+    com.google.gson.f$a l -> l
+    com.google.gson.f$b m -> m
+    com.google.gson.f$c n -> n
+    com.google.gson.f$d o -> o
+    com.google.gson.f$e p -> p
+    com.google.gson.f$k q -> q
+    com.google.gson.f$n r -> r
+    com.google.gson.f$r s -> s
+    com.google.gson.f$t t -> t
+    com.google.gson.f$w u -> u
+    com.google.gson.f$y v -> v
+    com.google.gson.f$z w -> w
+    com.google.gson.f$x x -> x
+    com.google.gson.f$aa y -> y
+    com.google.gson.f$q z -> z
+    com.google.gson.f$p A -> A
+    com.google.gson.aq B -> B
+    com.google.gson.aq C -> C
+    com.google.gson.aq D -> D
+    com.google.gson.JsonDeserializer a(com.google.gson.JsonDeserializer) -> a
+    com.google.gson.aq a() -> a
+    com.google.gson.aq b() -> b
+    com.google.gson.aq c() -> c
+com.google.gson.f$a -> com.google.a.be:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$aa -> com.google.a.ae:
+    java.lang.String toString() -> toString
+com.google.gson.f$ab -> com.google.a.af:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$ac -> com.google.a.ac:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$ad -> com.google.a.ad:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$b -> com.google.a.az:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$c -> com.google.a.ba:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$d -> com.google.a.av:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$e -> com.google.a.aw:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$f -> com.google.a.as:
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$g -> com.google.a.at:
+    java.text.DateFormat a -> a
+    com.google.gson.JsonElement a(java.util.Date) -> a
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$h -> com.google.a.ap:
+    java.text.DateFormat a -> a
+    com.google.gson.JsonElement a(java.sql.Date) -> a
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$i -> com.google.a.ar:
+    java.text.DateFormat a -> a
+    com.google.gson.JsonElement a(java.sql.Time) -> a
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$j -> com.google.a.ch:
+com.google.gson.f$k -> com.google.a.cf:
+    java.lang.String toString() -> toString
+com.google.gson.f$l -> com.google.a.ce:
+    boolean a -> a
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$m -> com.google.a.cb:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$n -> com.google.a.bz:
+    java.lang.String toString() -> toString
+com.google.gson.f$o -> com.google.a.by:
+    boolean a -> a
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$p -> com.google.a.bx:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$q -> com.google.a.bv:
+    java.lang.String toString() -> toString
+com.google.gson.f$r -> com.google.a.bu:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$s -> com.google.a.bt:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$t -> com.google.a.bs:
+    java.lang.String toString() -> toString
+com.google.gson.f$u -> com.google.a.br:
+    com.google.gson.LongSerializationPolicy a -> a
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$v -> com.google.a.bp:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$w -> com.google.a.bo:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$x -> com.google.a.bl:
+com.google.gson.f$y -> com.google.a.bk:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.f$z -> com.google.a.h:
+    java.lang.String toString() -> toString
+    com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
+com.google.gson.g -> com.google.a.u:
+    java.util.Collection a -> a
+    boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
+    boolean shouldSkipClass(java.lang.Class) -> a
+com.google.gson.h -> com.google.a.r:
+    char[] a -> a
+    java.util.Set b -> b
+    java.util.Set c -> c
+    boolean d -> d
+    java.lang.String a(java.lang.CharSequence) -> a
+    void a(java.lang.CharSequence,java.lang.StringBuffer) -> a
+    void a(int,java.lang.Appendable) -> a
+com.google.gson.k -> com.google.a.s:
+    java.lang.String a(com.google.gson.FieldAttributes) -> a
+com.google.gson.m -> com.google.a.p:
+    java.lang.reflect.Type a -> a
+    java.lang.reflect.Type getGenericComponentType() -> getGenericComponentType
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+com.google.gson.o -> com.google.a.q:
+    java.lang.String a$252cc7e1(java.lang.String) -> a
+com.google.gson.q -> com.google.a.o:
+    boolean a -> a
+    void a(com.google.gson.JsonElement,java.lang.Appendable,boolean) -> a
+com.google.gson.q$a -> com.google.a.ag:
+    java.lang.Appendable a -> a
+    com.google.gson.h b -> b
+    boolean c -> c
+    void a(com.google.gson.JsonPrimitive) -> a
+    void a() -> a
+    void b() -> b
+    void a(com.google.gson.JsonPrimitive,boolean) -> a
+    void a(boolean) -> a
+    void b(boolean) -> b
+    void c(boolean) -> c
+    void c() -> c
+    void d() -> d
+    void a(java.lang.String,com.google.gson.JsonPrimitive,boolean) -> a
+    void a(java.lang.String,boolean) -> a
+    void b(java.lang.String,boolean) -> b
+    void c(java.lang.String,boolean) -> c
+    void e() -> e
+com.google.gson.t -> com.google.a.k:
+    com.google.gson.JsonDeserializer a -> a
+    java.lang.String toString() -> toString
+com.google.gson.u -> com.google.a.l:
+    void a(com.google.gson.JsonPrimitive) -> a
+    void a() -> a
+    void b() -> b
+    void a(com.google.gson.JsonPrimitive,boolean) -> a
+    void a(boolean) -> a
+    void b(boolean) -> b
+    void c(boolean) -> c
+    void c() -> c
+    void d() -> d
+    void a(java.lang.String,com.google.gson.JsonPrimitive,boolean) -> a
+    void a(java.lang.String,boolean) -> a
+    void b(java.lang.String,boolean) -> b
+    void c(java.lang.String,boolean) -> c
+    void e() -> e
+com.google.gson.v -> com.google.a.m:
+    java.util.regex.Pattern a -> a
+    java.lang.String a(java.lang.String) -> a
+com.google.gson.w -> com.google.a.n:
+    void a(com.google.gson.JsonElement,java.lang.Appendable,boolean) -> a
+com.heyzap.sdk.HeyzapAnalytics -> com.heyzap.sdk.HeyzapAnalytics:
+    boolean loaded -> a
+    java.lang.String deviceId -> b
+    java.lang.String packageName -> c
+    java.lang.String trackHash -> d
+    java.util.concurrent.ExecutorService requestThread -> e
+    void trackEvent(android.content.Context,java.lang.String) -> a
+    java.lang.String getAnalyticsReferrer(android.content.Context) -> a
+    java.lang.String getTrackHash(android.content.Context) -> b
+    java.lang.String convertStreamToString(java.io.InputStream) -> b
+    java.lang.String access$0() -> a
+    java.lang.String access$1() -> b
+    java.lang.String access$2() -> c
+    java.lang.String access$3(java.io.InputStream) -> a
+    void access$4(android.content.Context,java.lang.String) -> b
+com.heyzap.sdk.HeyzapAnalytics$1 -> com.heyzap.sdk.a:
+    java.lang.String val$eventType -> a
+    android.content.Context val$context -> b
+    void run() -> run
+com.heyzap.sdk.HeyzapButton -> com.heyzap.sdk.HeyzapButton:
+    android.content.Context mContext -> a
+    void init(android.content.Context) -> a
+    android.content.Context access$0(com.heyzap.sdk.HeyzapButton) -> a
+com.heyzap.sdk.HeyzapButton$ButtonOnClickListener -> com.heyzap.sdk.c:
+    com.heyzap.sdk.HeyzapButton this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.heyzap.sdk.HeyzapDialog -> com.heyzap.sdk.f:
+    android.widget.LinearLayout dialogView -> a
+    android.widget.RelativeLayout buttonRow -> b
+    android.view.View contentView -> c
+    void onCreate(android.os.Bundle) -> onCreate
+    void setView(android.view.View) -> a
+    void addPrimaryButton(java.lang.String,android.view.View$OnClickListener) -> a
+    void addSecondaryButton(java.lang.String,android.view.View$OnClickListener) -> b
+    void addButton(java.lang.String,int,int,int,android.view.View$OnClickListener) -> a
+com.heyzap.sdk.HeyzapLib -> com.heyzap.sdk.HeyzapLib:
+    java.lang.String packageName -> a
+    void checkin(android.content.Context,java.lang.String) -> a
+    boolean packageIsInstalled(java.lang.String,android.content.Context) -> a
+com.heyzap.sdk.PreMarketDialog -> com.heyzap.sdk.b:
+    java.lang.String packageName -> a
+    java.lang.String gameName -> b
+    android.graphics.drawable.Drawable gameIcon -> c
+    void onCreate(android.os.Bundle) -> onCreate
+com.heyzap.sdk.PreMarketDialog$1 -> com.heyzap.sdk.e:
+    com.heyzap.sdk.PreMarketDialog this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.heyzap.sdk.PreMarketDialog$2 -> com.heyzap.sdk.d:
+    com.heyzap.sdk.PreMarketDialog this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.heyzap.sdk.R -> com.heyzap.sdk.R:
+com.heyzap.sdk.R$array -> com.heyzap.sdk.R$array:
+com.heyzap.sdk.R$attr -> com.heyzap.sdk.R$attr:
+com.heyzap.sdk.R$color -> com.heyzap.sdk.R$color:
+com.heyzap.sdk.R$drawable -> com.heyzap.sdk.R$drawable:
+com.heyzap.sdk.R$id -> com.heyzap.sdk.R$id:
+com.heyzap.sdk.R$layout -> com.heyzap.sdk.R$layout:
+com.heyzap.sdk.R$raw -> com.heyzap.sdk.R$raw:
+com.heyzap.sdk.R$string -> com.heyzap.sdk.R$string:
+com.heyzap.sdk.R$style -> com.heyzap.sdk.R$style:
+com.heyzap.sdk.R$styleable -> com.heyzap.sdk.R$styleable:
+    int[] com_admob_android_ads_AdView -> a
+com.heyzap.sdk.R$xml -> com.heyzap.sdk.R$xml:
+d -> c:
+    java.lang.ref.WeakReference a -> a
+    com.google.ads.Ad b -> b
+    com.google.ads.AdListener c -> c
+    c d -> d
+    com.google.ads.AdRequest e -> e
+    com.google.ads.AdSize f -> f
+    f g -> g
+    java.lang.String h -> h
+    g i -> i
+    h j -> j
+    android.os.Handler k -> k
+    boolean l -> l
+    boolean m -> m
+    long n -> n
+    x o -> o
+    java.util.LinkedList p -> p
+    int q -> q
+    void a(java.lang.String) -> a
+    void a() -> a
+    void b() -> b
+    android.app.Activity c() -> c
+    com.google.ads.Ad d() -> d
+    c e() -> e
+    java.lang.String f() -> f
+    g g() -> g
+    h h() -> h
+    com.google.ads.AdSize i() -> i
+    f j() -> j
+    void a(int) -> a
+    int k() -> k
+    boolean u() -> r
+    boolean m() -> l
+    void a(com.google.ads.AdRequest) -> a
+    void a(com.google.ads.AdRequest$ErrorCode) -> a
+    void n() -> m
+    void o() -> n
+    void p() -> o
+    void q() -> p
+    void r() -> s
+    void s() -> q
+    void a(com.google.ads.AdListener) -> a
+    void a(float) -> a
+e -> d:
+    java.lang.String a -> a
+    java.util.HashMap b -> b
+    android.os.Bundle a() -> a
+    java.lang.String b() -> b
+    java.util.HashMap c() -> c
+f -> a:
+    java.util.LinkedList a -> a
+    long b -> b
+    long c -> c
+    java.util.LinkedList d -> d
+    long e -> e
+    java.lang.String f -> f
+    boolean g -> g
+    boolean h -> h
+    java.lang.String i -> i
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    long e() -> e
+    java.lang.String f() -> f
+    java.lang.String g() -> g
+    long h() -> h
+    long i() -> i
+    java.lang.String j() -> j
+    void a(java.lang.String) -> a
+    boolean k() -> k
+    void l() -> l
+    boolean m() -> m
+    void n() -> n
+    void o() -> o
+    java.lang.String p() -> p
+    void b(java.lang.String) -> b
+g -> b:
+    com.google.ads.AdActivity a -> a
+    com.google.ads.AdSize b -> b
+    void a() -> a
+    com.google.ads.AdActivity b() -> b
+    void a(com.google.ads.AdActivity) -> a
+    void onMeasure(int,int) -> onMeasure
+h -> n:
+    d a -> a
+    a$a b -> b
+    boolean c -> c
+    boolean d -> d
+    boolean e -> e
+    boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+    void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
+    void a() -> a
+    void b() -> b
+h$a -> y:
+    d a -> a
+    java.lang.Void a(java.lang.String[]) -> a
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+i -> o:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+j -> l:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+k -> m:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+l -> j:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+m -> k:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+n -> h:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+o -> i:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+p -> w:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+q -> v:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+r -> u:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+s -> t:
+    void a(d,java.util.HashMap,android.webkit.WebView) -> a
+t -> s:
+    void a(java.lang.String) -> a
+    void b(java.lang.String) -> b
+    void a(java.lang.String,java.lang.Throwable) -> a
+    void c(java.lang.String) -> c
+    void d(java.lang.String) -> d
+    void e(java.lang.String) -> e
+    void b(java.lang.String,java.lang.Throwable) -> b
+    boolean a(java.lang.String,int) -> a
+u -> r:
+    java.lang.Boolean a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    android.media.AudioManager d -> d
+    android.util.DisplayMetrics e -> e
+    boolean f -> f
+    boolean g -> g
+    java.lang.String h -> h
+    java.lang.String a(android.content.Context) -> a
+    boolean b(android.content.Context) -> b
+    boolean a() -> a
+    java.lang.String a(java.lang.String) -> a
+    java.lang.String c(android.content.Context) -> c
+    java.lang.String d(android.content.Context) -> d
+    u$a e(android.content.Context) -> e
+    java.lang.String f(android.content.Context) -> f
+    android.util.DisplayMetrics a(android.app.Activity) -> a
+    java.lang.String a(android.location.Location) -> a
+    java.lang.String b(java.lang.String) -> b
+    java.util.HashMap a(android.net.Uri) -> a
+    boolean b() -> b
+    void a(boolean) -> a
+    void g(android.content.Context) -> g
+    java.lang.String a(android.webkit.WebView) -> a
+    void b(android.webkit.WebView) -> b
+u$a -> aa:
+    u$a a -> d
+    u$a b -> a
+    u$a c -> e
+    u$a d -> b
+    u$a e -> c
+    u$a f -> f
+    u$a[] g -> g
+    u$a[] values() -> values
+    u$a valueOf(java.lang.String) -> valueOf
+u$b -> ab:
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+v -> q:
+    boolean a -> a
+    java.lang.String a(byte[]) -> a
+v$a -> ae:
+    byte[] a -> d
+    int b -> e
+v$b -> ad:
+    byte[] h -> f
+    byte[] i -> g
+    byte[] j -> h
+    int c -> i
+    int k -> j
+    boolean d -> a
+    boolean e -> b
+    boolean f -> c
+    byte[] l -> k
+    boolean g -> l
+    boolean a(byte[],int) -> a
+w -> p:
+    java.lang.Void a(java.lang.String[]) -> a
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+x -> x:
+    java.lang.ref.WeakReference a -> a
+    void run() -> run
