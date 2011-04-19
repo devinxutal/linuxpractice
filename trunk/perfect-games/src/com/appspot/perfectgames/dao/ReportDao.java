@@ -67,6 +67,7 @@ public class ReportDao {
 		try {
 			Query query = getPersistenceManager().newQuery(
 					"select from " + Report.class.getName());
+			query.setOrdering("commitTime desc");
 			List<Report> records = (List<Report>) query.execute();
 			records.size();
 			return records;

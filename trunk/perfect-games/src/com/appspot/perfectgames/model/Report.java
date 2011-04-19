@@ -23,6 +23,9 @@ public class Report {
 	@Persistent
 	private String report;
 
+	@Persistent
+	private Date commitTime;
+	
 	public Key getKey() {
 		return key;
 	}
@@ -53,5 +56,13 @@ public class Report {
 
 	public void setReport(String report) {
 		this.report = report;
+	}
+
+	public Date getCommitTime() {
+		return commitTime;
+	}
+
+	public void setCommitTime(Date commitTime) {
+		this.commitTime = commitTime;
 	}
 }
