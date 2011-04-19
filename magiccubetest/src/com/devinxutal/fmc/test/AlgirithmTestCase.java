@@ -1,19 +1,18 @@
 package com.devinxutal.fmc.test;
 
-import java.io.IOException;
-
 import android.content.res.AssetManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import com.devinxutal.fmc.activities.CubeSolverActivity;
-import com.devinxutal.fmc.algorithm.model.BasicCubeModel;
-import com.devinxutal.fmc.algorithm.pattern.ColorPattern;
-import com.devinxutal.fmc.algorithm.patternalgorithm.PatternAlgorithm;
-import com.devinxutal.fmc.model.MagicCube;
-import com.devinxutal.fmc.solver.CfopSolver;
-import com.devinxutal.fmc.util.AlgorithmUtils;
-import com.devinxutal.fmc.util.SymbolMoveUtil;
+import com.devinxutal.fc.activities.CubeSolverActivity;
+import com.devinxutal.fc.algorithm.model.BasicCubeModel;
+import com.devinxutal.fc.algorithm.pattern.ColorPattern;
+import com.devinxutal.fc.algorithm.patternalgorithm.PatternAlgorithm;
+import com.devinxutal.fc.control.MoveSequence;
+import com.devinxutal.fc.model.MagicCube;
+import com.devinxutal.fc.solver.CfopSolver;
+import com.devinxutal.fc.util.AlgorithmUtils;
+import com.devinxutal.fc.util.SymbolMoveUtil;
 
 public class AlgirithmTestCase extends
 		ActivityInstrumentationTestCase2<CubeSolverActivity> {
@@ -29,7 +28,7 @@ public class AlgirithmTestCase extends
 	String descStr = "Hello World, (2241, 2022, 4223),(3342,3431,4333),URU'R'";
 
 	public AlgirithmTestCase() {
-		super("com.devinxutal.fmc", CubeSolverActivity.class);
+		super("com.devinxutal.fc", CubeSolverActivity.class);
 	}
 
 	public void testGenPatternAlgorithm() {
@@ -81,8 +80,9 @@ public class AlgirithmTestCase extends
 		model = new BasicCubeModel(cube);
 		assertFalse(a.getPattern().match(model));
 		Log.v("motiontest", "now apply rotate");
-		model.applyTurn(SymbolMoveUtil.parseMoveFromSymbol("y", cube.getOrder()));
-		//model.applyRotate(MagicCube.DIM_Y, 1, false);
+		model.applyTurn(SymbolMoveUtil
+				.parseMoveFromSymbol("y", cube.getOrder()));
+		// model.applyRotate(MagicCube.DIM_Y, 1, false);
 		assertTrue(a.getPattern().match(model));
 
 	}
@@ -90,23 +90,62 @@ public class AlgirithmTestCase extends
 	public void testSolver() {
 		assertNotNull(getActivity());
 		AssetManager manager = getActivity().getAssets();
-		try {
-			CfopSolver solver = new CfopSolver();
-			solver.init(manager.open("algorithm/cfop"));
-			assertEquals(41, solver.F.size());
-			assertEquals("01", solver.F.get(0).getName());
+		CfopSolver solver = CfopSolver.getSolver(getActivity());
+		assertEquals(41, solver.F.size());
+		assertEquals("01", solver.F.get(0).getName());
 
-			MagicCube cube = new MagicCube();
-			cube.turnBySymbol("R");
-			cube.turnBySymbol("U");
-			cube.turnBySymbol("R'");
-			cube.turnBySymbol("U'");
+		MagicCube cube = new MagicCube();
+		cube.turnBySymbol("R");
+		cube.turnBySymbol("U");
+		cube.turnBySymbol("R'");
+		cube.turnBySymbol("U'");
 
-			solver.nextMoves(cube);
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("file not opened");
-		}
+		solver.nextMoves(cube);
 		assertNotNull(manager);
 	}
+
+	public void testSymbolMoveUtil() {
+		String moves = "FRUBLDF'R'U'B'L'D'F2R2U2B2L2D2F'2R'2U'2B'2L'2D'2";
+		MoveSequence seq = new MoveSequence(moves, 3);
+		String movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seq, 3);
+		assertEquals(moves, movesNew);
+
+		moves = "frubldf'r'u'b'l'd'f2r2u2b2l2d2f'2r'2u'2b'2l'2d'2";
+		seq = new MoveSequence(moves, 3);
+		movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seq, 3);
+		assertEquals(moves, movesNew);
+
+		moves = "xyzx'y'z'x2y2z2x'2y'2z'2";
+		seq = new MoveSequence(moves, 3);
+		movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seq, 3);
+		assertEquals(moves, movesNew);
+	}
+
+	public void testSequenceOptimize() {
+		String moves = "xyzz'y'x'FRU";
+		MoveSequence seq = new MoveSequence(moves, 3);
+		MoveSequence seqNew = SymbolMoveUtil.optimizeMoveSequence(seq);
+		String movesNew = SymbolMoveUtil
+				.parseSymbolsFromMoveSequence(seqNew, 3);
+		assertEquals("FRU", movesNew);
+
+		moves = "FF'2";
+		seq = new MoveSequence(moves, 3);
+		seqNew = SymbolMoveUtil.optimizeMoveSequence(seq);
+		movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seqNew, 3);
+		assertEquals("F'", movesNew);
+
+		moves = "F'F'";
+		seq = new MoveSequence(moves, 3);
+		seqNew = SymbolMoveUtil.optimizeMoveSequence(seq);
+		movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seqNew, 3);
+		assertEquals("F'2", movesNew);
+
+		moves = "U2U'R'FRyU'";
+		seq = new MoveSequence(moves, 3);
+		seqNew = SymbolMoveUtil.optimizeMoveSequence(seq);
+		movesNew = SymbolMoveUtil.parseSymbolsFromMoveSequence(seqNew, 3);
+		assertEquals("UR'FRyU'", movesNew);
+	}
+
 }
