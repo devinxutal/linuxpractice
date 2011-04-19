@@ -18,7 +18,7 @@
 	<string name="main_btn_tester">Test Camera</string>
 
 	<string name="hello">Hello World, MagicCube!</string>
-	<string name="app_name">Fancy Magic Cube</string>
+	<string name="app_name">Fancy Cube Lite</string>
 	<string name="menu_presentation">Presentation</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="pref_cat_basic">Basic Settings</string>
