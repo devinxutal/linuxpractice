@@ -1,6 +1,7 @@
 package com.appspot.perfectgames.servlets;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +35,7 @@ public class CommitReportServlet extends HttpServlet {
 			report.setInfo(info);
 			report.setApp(app);
 			report.setReport(rpt);
+			report.setCommitTime(new Date());
 			ReportDao.commitRecord(report);
 			ReportDao.closePersistenceManager();
 		}
