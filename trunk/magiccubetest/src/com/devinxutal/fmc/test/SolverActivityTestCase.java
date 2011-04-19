@@ -5,7 +5,7 @@ import java.io.IOException;
 import android.content.res.AssetManager;
 import android.test.ActivityUnitTestCase;
 
-import com.devinxutal.fmc.activities.CubeSolverActivity;
+import com.devinxutal.fc.activities.CubeSolverActivity;
 
 public class SolverActivityTestCase extends
 		ActivityUnitTestCase<CubeSolverActivity> {
