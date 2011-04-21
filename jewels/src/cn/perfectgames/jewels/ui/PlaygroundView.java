@@ -48,16 +48,6 @@ public class PlaygroundView extends SurfaceView implements
 		super(context);
 		getHolder().addCallback(this);
 		init();
-		this.setOnTouchListener(new OnTouchListener() {
-
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				Log.v(TAG, "i'm on touch");
-				if (playground != null) {
-					playground.touch(arg1.getX(), arg1.getY());
-				}
-				return true;
-			}
-		});
 	}
 
 	public void setGameController(GameController controller) {
@@ -76,15 +66,6 @@ public class PlaygroundView extends SurfaceView implements
 	public PlaygroundView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		Log.v(TAG, "i'm on touch");
-		if (this.playground != null) {
-			this.playground.touch(event.getX(), event.getY());
-		}
-		return super.onTouchEvent(event);
 	}
 
 	/**
@@ -320,7 +301,7 @@ public class PlaygroundView extends SurfaceView implements
 		}
 
 		public void resetPaint() {
-			dm.paint.setStyle(Style.FILL_AND_STROKE);
+			paint.setStyle(Style.FILL_AND_STROKE);
 			paint.setAlpha(255);
 			paint.setColor(Color.BLACK);
 			paint.setAntiAlias(true);
@@ -332,9 +313,12 @@ public class PlaygroundView extends SurfaceView implements
 
 			// this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
 			// getHeight());
+			resetPaint();
 			bitmapUtil.drawBackgroundBitmap(canvas, getWidth(), getHeight(),
 					paint);
-
+			resetPaint();
+			playground.getDM().drawPlayground(canvas);
+			resetPaint();
 		}
 
 		private void determinePlaygroundLocation() {
@@ -362,6 +346,12 @@ public class PlaygroundView extends SurfaceView implements
 	public class AnimationThread extends Thread {
 		boolean flag = true;
 		boolean paused = false;
+		
+		int interval = 1000/Constants.FPS;
+		int sleep = interval/ 5;
+		
+		long timeElapsed;
+		long lastTime;
 
 		public AnimationThread() {
 			super();
@@ -369,13 +359,30 @@ public class PlaygroundView extends SurfaceView implements
 
 		@Override
 		public void run() {
+			lastTime = System.currentTimeMillis();
+			timeElapsed = 0;
+			
 			while (flag) {
-				try {
-					if (playground != null) {
-						playground.step();
+				try 
+				{
+					long currentTime = System.currentTimeMillis();
+					timeElapsed += currentTime - lastTime;
+					lastTime = currentTime;
+					
+					//Log.v(TAG, "time elapsed: "+ timeElapsed);
+					boolean stepped = false;
+					while( timeElapsed>= interval){
+						//Log.v(TAG, "need for stepping");
+						timeElapsed -= interval;
+						stepped = true;
+						if(playground != null){
+							playground.step();
+						}
 					}
-					repaint();
-					sleep(40);
+					if(stepped == true){
+						repaint();
+					}
+					sleep(5);
 
 				} catch (InterruptedException e) {
 					e.printStackTrace();

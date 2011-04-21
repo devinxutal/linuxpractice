@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.Log;
+import android.view.animation.Animation;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.util.BitmapUtil;
@@ -23,9 +24,10 @@ public class SelectionAnimation extends AbstractAnimation {
 	private Paint paint;
 
 	public SelectionAnimation() {
-		super(20);
+		super(10);
 		paint = new Paint();
 		paint.setAntiAlias(true);
+		this.setLoop(Animation.INFINITE);
 	}
 
 	public void setSize(int size) {
@@ -45,11 +47,12 @@ public class SelectionAnimation extends AbstractAnimation {
 		this.y = y;
 	}
 
+	public void setLocation(PointF point){
+		this.x = point.x;
+		this.y = point.y;
+	}
 	@Override
-	protected void innerDraw(Canvas canvas) {
-		double total = getFrameCount();
-		double current = getCurrentFrame();
-		Log.v("SelectionAnimation", "selection draw: " + current + "/" + total);
+	protected void innerDraw(Canvas canvas, int current, int total) {
 		int alpha = (int) (255 * Math.abs((total / 2 - current)) / total * 2);
 		paint.setAlpha(alpha);
 		canvas.drawBitmap(selector, x, y, paint);
