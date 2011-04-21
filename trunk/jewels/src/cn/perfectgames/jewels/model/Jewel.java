@@ -2,15 +2,15 @@ package cn.perfectgames.jewels.model;
 
 import java.util.Random;
 
-public class Block {
+public class Jewel {
 	public static final int TYPE_COUNT = 7;
 	private int type = 0;
 
-	public Block() {
+	public Jewel() {
 		this(new Random().nextInt(TYPE_COUNT));
 	}
 
-	public Block(int type) {
+	public Jewel(int type) {
 		this.type = type;
 	}
 
@@ -18,7 +18,7 @@ public class Block {
 		return type;
 	}
 
-	public void copy(Block copy) {
+	public void copy(Jewel copy) {
 		this.type = copy.getType();
 	}
 }

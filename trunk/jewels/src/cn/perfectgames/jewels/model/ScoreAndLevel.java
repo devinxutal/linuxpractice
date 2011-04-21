@@ -3,13 +3,16 @@ package cn.perfectgames.jewels.model;
 import java.io.Serializable;
 
 import cn.perfectgames.jewels.cfg.Configuration;
+import cn.perfectgames.jewels.model.Playground.Elimination;
 
 public class ScoreAndLevel implements Serializable {
 	public static final int MAX_LEVEL = 15;
-	int level;
-	int score;
-	int totalLines;
-	int currentLines;
+	private int level;
+	private int score;
+	private int totalLines;
+	private int currentLines;
+	private int bonusX = 1;
+	
 
 	public void reset() {
 		level = 1;
@@ -21,6 +24,21 @@ public class ScoreAndLevel implements Serializable {
 		}
 	}
 
+	public int addScore(Elimination e , int combo){
+		int scoreToAdd = queryScore(e, combo);
+		this.score += scoreToAdd;
+		return scoreToAdd;
+	}
+	
+	public int queryScore(Elimination e, int combo){
+		int SCORE_BASE = 10;
+		int COMBO_BONUS_BASE = 30;
+		int LENGTH_BONUS_BASE = 20;
+		int len = e.end - e.start+1;
+		int comboBonus = (combo -1) * COMBO_BONUS_BASE;
+		int lenBonus = (len -3)* LENGTH_BONUS_BASE;
+		return bonusX*(SCORE_BASE + comboBonus +lenBonus);
+	}
 	public int getTotalLines() {
 		return totalLines;
 	}

@@ -46,25 +46,16 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	private ImageButton musicButton;
 
 	private Configuration config;
-	private boolean dragMode = true;
-
-	// metrics for drag mode
-	private float slotGap = 0;
-	private float dragDeltaX = 0;
-	private boolean inDrag = false;
-
 	public ControlView(Context context) {
 		super(context);
 		init();
 		this.config = Configuration.config();
-		this.dragMode = config.isDragMode();
 		this.resetControlButtons();
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		SLIDE_THRESHOLD = Math.min(w, h) / 50;
-		this.slotGap = 16;
 		super.onSizeChanged(w, h, oldw, oldh);
 
 	}
@@ -96,19 +87,13 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	private float oldX = -1;
 	private float oldY = -1;
-	private float oldXforDrag = -1;
-	private float oldYforDrag = -1;
-	private float dragDeltaY = 0;
 
+	private float oldXForPlayground = -1;
+	private float oldYForPlayground = -1;
 	public boolean onTouch(View arg0, MotionEvent event) {
-
+		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			// for dragMode
-			if (dragMode) {
-				this.dragDeltaX = 0;
-				this.dragDeltaY = 0;
-			}
-			// end for dragMode
+			
 			float x = event.getX();
 			float y = event.getY();
 			boolean notified = false;
@@ -132,27 +117,19 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			if (touchOnButton) {
 				oldX = -1;
 				oldY = -1;
-				oldXforDrag = -1;
-				oldYforDrag = -1;
 			} else {
 				oldX = x;
 				oldY = y;
-				if (dragMode) {
-					oldXforDrag = x;
-					oldYforDrag = y;
-				}
 			}
 
-		} else if (event.getAction() == MotionEvent.ACTION_UP) {
-			// for dragMode
-			this.dragDeltaX = 0;
-			this.dragDeltaY = 0;
-			if (this.inDrag && dragMode) {
-				this.inDrag = false;
-				return true;
+			//for playground
+			oldXForPlayground = x;
+			oldYForPlayground = y;
+			if(this.controller != null){
+				controller.getPlayground().touch(x, y);
 			}
-			this.inDrag = false;
-			// end for dragMode
+		} else if (event.getAction() == MotionEvent.ACTION_UP) {
+			
 			float x = event.getX();
 			float y = event.getY();
 			for (ButtonInfo button : buttons) {
@@ -199,36 +176,15 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			}
 			oldX = -1;
 			oldY = -1;
-			oldXforDrag = -1;
-			oldYforDrag = -1;
+			
+
+
+			//for playground
+			if(this.controller != null){
+				controller.getPlayground().flip(x - oldXForPlayground, y - oldYForPlayground);
+			}
 		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			if (oldXforDrag < 0 || oldYforDrag < 0 || !dragMode) {
-				return true;
-			}
-			float deltaX = event.getX() - oldXforDrag;
-			float deltaY = event.getY() - oldYforDrag;
-			oldXforDrag = event.getX();
-			oldYforDrag = event.getY();
-
-			dragDeltaX = deltaX + dragDeltaX;
-			dragDeltaY = deltaY + dragDeltaY;
-			if (!inDrag) {
-				if (Math.abs(dragDeltaX) > 1.5 * SLIDE_THRESHOLD
-						&& Math.abs(dragDeltaX) > Math.abs(dragDeltaY)) {
-					inDrag = true;
-				}
-			}
-			if (inDrag) {
-				while (dragDeltaX > 1.1 * slotGap) {
-					dragDeltaX -= slotGap;
-					this.notifyButtonClicked(BTN_RIGHT);
-				}
-
-				while (dragDeltaX < 1.1 * -slotGap) {
-					dragDeltaX += slotGap;
-					this.notifyButtonClicked(BTN_LEFT);
-				}
-			}
+			
 		}
 		return true;
 	}
@@ -348,8 +304,6 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	public void configurationChanged(Configuration config) {
 		this.resetControlButtons();
-		this.dragMode = config.isDragMode();
-		Log.v(TAG, "drag mode : " + dragMode);
 	}
 
 }

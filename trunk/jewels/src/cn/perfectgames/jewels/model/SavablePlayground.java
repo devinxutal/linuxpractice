@@ -20,7 +20,7 @@ public class SavablePlayground implements Serializable {
 
 	}
 
-	public SavableBlock create(Block b) {
+	public SavableBlock create(Jewel b) {
 //		if (b == null) {
 //			return null;
 //		}

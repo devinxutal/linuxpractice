@@ -142,7 +142,7 @@ public class PlaygroundActivity extends Activity {
 		layout.addView(gameController.getPlaygroundView());
 		gameController.addGameListener(new GameFinished());
 
-		//TODO layout.addView(controlView);
+		layout.addView(controlView);
 
 		successScreen = new LinearLayout(this);
 		layout.addView(successScreen);

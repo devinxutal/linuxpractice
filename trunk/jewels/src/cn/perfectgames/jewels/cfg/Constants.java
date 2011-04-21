@@ -4,6 +4,8 @@ public class Constants {
 	public static final String PLAYGROUND_STATE = "playground_state";
 
 	public static final String PREF_KEY_TRIALS_SOLVE_CUBE = "trials_solve_cube";
+	
+	public static final int FPS = 15;
 
 	public static final int VERSION_PRO = 0;
 	public static final int VERSION_LITE = 1;
