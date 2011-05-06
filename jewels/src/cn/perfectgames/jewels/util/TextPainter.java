@@ -2,14 +2,17 @@ package cn.perfectgames.jewels.util;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.Paint.Style;
-
 import cn.perfectgames.jewels.cfg.Constants;
 
 public class TextPainter {
+	public enum Align {
+		Left, Right, Center
+	}
+
 	Paint textPaint = null;
 	Paint strokePaint = null;
 
@@ -116,6 +119,27 @@ public class TextPainter {
 		return textPaint.measureText(text) + (text.length() - 1) * gap + 4;
 	}
 
+	public void drawText(Canvas canvas, String text, RectF rect, Align align) {
+		float x = rect.left;
+		switch (align) {
+		case Left:
+			x = rect.left;
+			break;
+		case Right:
+			x = rect.right - textPaint.measureText(text);
+			break;
+		case Center:
+			x = rect.left + (rect.width() - textPaint.measureText(text)) / 2;
+			break;
+		}
+
+		float y = rect.top
+				+ (rect.height() - textPaint.descent() + textPaint.ascent())
+				/ 2;
+		drawCharacter(canvas, text, x, y);
+	}
+
+	@Deprecated
 	public void drawCenteredText(Canvas canvas, String string, Rect rect) {
 		float x = rect.left + (rect.width() - textPaint.measureText(string))
 				/ 2;
@@ -125,9 +149,8 @@ public class TextPainter {
 		drawCharacter(canvas, string, x, y);
 	}
 
-	private void determineLabelSize(String text, RectF rect) {
+	public float determineTextSize(String text, RectF rect) {
 		float labelSize = 1f;
-		float gapScale = 0.1f;
 		for (; labelSize <= rect.height(); labelSize += 0.5f) {
 			this.setTextSize(labelSize);
 			if (this.measureTextWidth(text, 0) > rect.width()) {
@@ -135,7 +158,12 @@ public class TextPainter {
 			}
 		}
 		labelSize -= 0.5f;
-		this.setTextSize(labelSize);
+		return labelSize;
+	}
+
+	private void determineLabelSize(String text, RectF rect) {
+
+		this.setTextSize(determineTextSize(text, rect));
 	}
 
 }

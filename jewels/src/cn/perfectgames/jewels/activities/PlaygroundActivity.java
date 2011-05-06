@@ -388,69 +388,69 @@ public class PlaygroundActivity extends Activity {
 
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
-			switch (id) {
-			case ControlView.BTN_LEFT:
-				gameController.processCommand(Command.LEFT);
-				break;
-			case ControlView.BTN_RIGHT:
-				gameController.processCommand(Command.RIGHT);
-				break;
-			case ControlView.BTN_TURN:
-				gameController.processCommand(Command.TURN);
-				break;
-			case ControlView.BTN_DOWN:
-				gameController.processCommand(Command.DOWN);
-				break;
-			case ControlView.BTN_DIRECT_DOWN:
-				gameController.processCommand(Command.DIRECT_DOWN);
-				break;
-			case ControlView.BTN_HOLD:
-				gameController.processCommand(Command.HOLD);
-				break;
-			}
+//			switch (id) {
+//			case ControlView.BTN_LEFT:
+//				gameController.processCommand(Command.LEFT);
+//				break;
+//			case ControlView.BTN_RIGHT:
+//				gameController.processCommand(Command.RIGHT);
+//				break;
+//			case ControlView.BTN_TURN:
+//				gameController.processCommand(Command.TURN);
+//				break;
+//			case ControlView.BTN_DOWN:
+//				gameController.processCommand(Command.DOWN);
+//				break;
+//			case ControlView.BTN_DIRECT_DOWN:
+//				gameController.processCommand(Command.DIRECT_DOWN);
+//				break;
+//			case ControlView.BTN_HOLD:
+//				gameController.processCommand(Command.HOLD);
+//				break;
+//			}
 		}
 
 		public void buttonPressed(int id) {
 			Log.v(TAG, "button down : " + id);
-			switch (id) {
-			case ControlView.BTN_LEFT:
-				gameController.processCommand(Command.LEFT_DOWN);
-				break;
-			case ControlView.BTN_RIGHT:
-				gameController.processCommand(Command.RIGHT_DOWN);
-				break;
-			case ControlView.BTN_TURN:
-				gameController.processCommand(Command.TURN_DOWN);
-				break;
-			case ControlView.BTN_DOWN:
-				gameController.processCommand(Command.DOWN_DOWN);
-				break;
-			case ControlView.BTN_DIRECT_DOWN:
-				gameController.processCommand(Command.DIRECT_DOWN);
-				break;
-			}
+//			switch (id) {
+//			case ControlView.BTN_LEFT:
+//				gameController.processCommand(Command.LEFT_DOWN);
+//				break;
+//			case ControlView.BTN_RIGHT:
+//				gameController.processCommand(Command.RIGHT_DOWN);
+//				break;
+//			case ControlView.BTN_TURN:
+//				gameController.processCommand(Command.TURN_DOWN);
+//				break;
+//			case ControlView.BTN_DOWN:
+//				gameController.processCommand(Command.DOWN_DOWN);
+//				break;
+//			case ControlView.BTN_DIRECT_DOWN:
+//				gameController.processCommand(Command.DIRECT_DOWN);
+//				break;
+//			}
 		}
 
 		public void buttonReleased(int id) {
 
 			Log.v(TAG, "button up : " + id);
-			switch (id) {
-			case ControlView.BTN_LEFT:
-				gameController.processCommand(Command.LEFT_UP);
-				break;
-			case ControlView.BTN_RIGHT:
-				gameController.processCommand(Command.RIGHT_UP);
-				break;
-			case ControlView.BTN_TURN:
-				gameController.processCommand(Command.TURN_UP);
-				break;
-			case ControlView.BTN_DOWN:
-				gameController.processCommand(Command.DOWN_UP);
-				break;
-			case ControlView.BTN_HOLD:
-				gameController.processCommand(Command.HOLD);
-				break;
-			}
+//			switch (id) {
+//			case ControlView.BTN_LEFT:
+//				gameController.processCommand(Command.LEFT_UP);
+//				break;
+//			case ControlView.BTN_RIGHT:
+//				gameController.processCommand(Command.RIGHT_UP);
+//				break;
+//			case ControlView.BTN_TURN:
+//				gameController.processCommand(Command.TURN_UP);
+//				break;
+//			case ControlView.BTN_DOWN:
+//				gameController.processCommand(Command.DOWN_UP);
+//				break;
+//			case ControlView.BTN_HOLD:
+//				gameController.processCommand(Command.HOLD);
+//				break;
+//			}
 		}
 	}
 

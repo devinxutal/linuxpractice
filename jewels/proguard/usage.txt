@@ -1,57 +1,126 @@
-com.devinxutal.tetris.R
-com.devinxutal.tetris.R$array
-com.devinxutal.tetris.R$attr
-com.devinxutal.tetris.R$color
-com.devinxutal.tetris.R$drawable
-com.devinxutal.tetris.R$id
-com.devinxutal.tetris.R$layout
-com.devinxutal.tetris.R$raw
-com.devinxutal.tetris.R$string
-com.devinxutal.tetris.R$style
-com.devinxutal.tetris.R$styleable
-com.devinxutal.tetris.R$xml
+cn.perfectgames.amaze.R
+cn.perfectgames.amaze.R$array
+cn.perfectgames.amaze.R$attr
+cn.perfectgames.amaze.R$color
+cn.perfectgames.amaze.R$drawable
+cn.perfectgames.amaze.R$id
+cn.perfectgames.amaze.R$layout
+cn.perfectgames.amaze.R$raw
+cn.perfectgames.amaze.R$string
+cn.perfectgames.amaze.R$style
+cn.perfectgames.amaze.R$styleable
+cn.perfectgames.amaze.R$xml
+cn.perfectgames.amaze.animation.AbstractAnimation:
+    60:60:public int getCurrentFrame()
+    88:88:public boolean isFinished()
+    92:92:public boolean isInfinite()
+    96:96:public boolean isInAnimation()
+    100:100:public int getLoop()
+    115:116:public void setVisible(boolean)
+    126:129:public boolean removeAnimationListener(cn.perfectgames.amaze.animation.AnimationListener)
+    133:136:public void clearAnimationListener()
+cn.perfectgames.amaze.animation.Animation:
+    public static final int INFINITE
+    public abstract void stop()
+    public abstract int getCurrentFrame()
+    public abstract boolean isFinished()
+    public abstract boolean isInfinite()
+    public abstract boolean isInAnimation()
+    public abstract int getLoop()
+    public abstract void setLoop(int)
+    public abstract boolean removeAnimationListener(cn.perfectgames.amaze.animation.AnimationListener)
+    public abstract void clearAnimationListener()
+cn.perfectgames.amaze.animation.AnimationCollection:
+    14:14:public boolean removeAnimation(cn.perfectgames.amaze.animation.Animation)
+    32:35:public boolean removeAnimationListener(cn.perfectgames.amaze.animation.AnimationListener)
+    39:42:public void clearAnimationListener()
+cn.perfectgames.amaze.graphics.Drawable:
+    public abstract void setVisible(boolean)
+cn.perfectgames.amaze.graphics.Layer:
+    33:37:public void removeDrawable(cn.perfectgames.amaze.graphics.Drawable)
+    44:45:public void setVisible(boolean)
+cn.perfectgames.amaze.graphics.Layers:
+    public static final int TOP
+    public static final int BOTTOM
+    41:42:public void setVisible(boolean)
+cn.perfectgames.jewels.R
+cn.perfectgames.jewels.R$array
+cn.perfectgames.jewels.R$attr
+cn.perfectgames.jewels.R$color
+cn.perfectgames.jewels.R$drawable
+cn.perfectgames.jewels.R$id
+cn.perfectgames.jewels.R$layout
+cn.perfectgames.jewels.R$raw
+cn.perfectgames.jewels.R$string
+cn.perfectgames.jewels.R$style
+cn.perfectgames.jewels.R$styleable
+cn.perfectgames.jewels.R$xml
 cn.perfectgames.jewels.activities.HighScoreActivity:
     private static final java.lang.String TAG
 cn.perfectgames.jewels.activities.MainActivity:
     private static final java.lang.String BASE64_PUBLIC_KEY
     private static final java.lang.String TAG
     public static final int PLAYGROUND_ACTIVITY_ID
-    240:240:private void showCommitReportDialog()
+    247:247:private void showCommitReportDialog()
 cn.perfectgames.jewels.activities.PlaygroundActivity:
     public static final java.lang.String TAG
     public static final int PREFERENCE_REQUEST_CODE
     private android.app.Dialog progressDialog
     private android.hardware.Sensor sensor
-    614:615:public void stop()
-    705:711:public void openHelpDialog()
-    723:750:public void submitRecord()
-    753:756:private void submitRecord(java.lang.String)
-    815:825:public void startListening()
-    879:887:public void customizeButtons()
-    899:901:private void customizeButton(android.widget.Button)
+    615:616:public void stop()
+    648:660:public void deleteSavedGame()
+    706:712:public void openHelpDialog()
+    724:751:public void submitRecord()
+    754:757:private void submitRecord(java.lang.String)
+    816:826:public void startListening()
+    880:888:public void customizeButtons()
+    900:902:private void customizeButton(android.widget.Button)
+    537:537:static void access$1(cn.perfectgames.jewels.activities.PlaygroundActivity)
+    284:284:static void access$2(cn.perfectgames.jewels.activities.PlaygroundActivity,cn.perfectgames.jewels.activities.PlaygroundActivity$State)
     96:96:static android.app.Dialog access$5(cn.perfectgames.jewels.activities.PlaygroundActivity)
     96:96:static void access$6(cn.perfectgames.jewels.activities.PlaygroundActivity,android.app.Dialog)
     86:86:static android.widget.Toast access$7(cn.perfectgames.jewels.activities.PlaygroundActivity)
     88:88:static android.widget.Button access$8(cn.perfectgames.jewels.activities.PlaygroundActivity)
     109:109:static boolean access$10(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    752:752:static void access$11(cn.perfectgames.jewels.activities.PlaygroundActivity,java.lang.String)
-com.devinxutal.tetris.activities.PlaygroundActivity$2
-com.devinxutal.tetris.activities.PlaygroundActivity$3
-com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished:
+    753:753:static void access$11(cn.perfectgames.jewels.activities.PlaygroundActivity,java.lang.String)
+cn.perfectgames.jewels.activities.PlaygroundActivity$2
+cn.perfectgames.jewels.activities.PlaygroundActivity$3
+cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished:
     461:467:public void gameFinishing()
-com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$1
-com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener:
-    857:874:public void joyStickMoved(float,float)
-com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread
-com.devinxutal.tetris.activities.PlaygroundActivity$SubmitRecordThread$1
+    471:485:public void gameFinished()
+    457:457:static cn.perfectgames.jewels.activities.PlaygroundActivity access$0(cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished)
+cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished$1
+cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished$2
+cn.perfectgames.jewels.activities.PlaygroundActivity$MyJoyStickListener:
+    858:875:public void joyStickMoved(float,float)
+cn.perfectgames.jewels.activities.PlaygroundActivity$SubmitRecordThread
+cn.perfectgames.jewels.activities.PlaygroundActivity$SubmitRecordThread$1
+cn.perfectgames.jewels.animation.EliminationAnimation:
+    public static final int EVENT_HALF_PASSED
+cn.perfectgames.jewels.animation.ScoreBoardAnimation:
+    public static final int FRAMES_PER_FLIP
+cn.perfectgames.jewels.animation.SelectionAnimation:
+    62:63:public void addScore(java.lang.String,android.graphics.PointF,int)
+    66:67:public void clearScores()
+cn.perfectgames.jewels.animation.SelectionAnimation$ScoreEntry
+cn.perfectgames.jewels.animation.SwapAnimation:
+    private static final int BASIC_FRAMES
 cn.perfectgames.jewels.cfg.Configuration:
     public static final int ACTION_DIRECT_DOWN
     public static final int ACTION_QUICK_DOWN
     public static final int ACTION_TURN
+    28:33:public int getCenterButtonAction()
+    37:41:public java.lang.String getBlockStyle()
+    76:79:public boolean isBlockShadowOn()
     83:88:public void setBlockShadowOn(boolean)
+    91:94:public boolean isSwapRotateHold()
+    98:101:public boolean isSwapQuickDirect()
+    105:109:public int getStartLevel()
+    121:124:public boolean isDragMode()
 cn.perfectgames.jewels.cfg.Constants:
     public static final java.lang.String PLAYGROUND_STATE
     public static final java.lang.String PREF_KEY_TRIALS_SOLVE_CUBE
+    public static final int FPS
     public static final int VERSION_PRO
     public static final int VERSION_LITE
     public static final boolean TEST
@@ -70,6 +139,12 @@ cn.perfectgames.jewels.cfg.Constants:
     public static final java.lang.String URL_COMMIT_REPORT
     public static final int ADVIEW_ID
     public static final java.lang.String ADMOB_PUBLISHER_ID
+cn.perfectgames.jewels.control.ButtonInfo:
+    public android.graphics.Bitmap buttonBG
+    public float bgSize
+    public android.graphics.Bitmap buttonIcon
+    public float iconSize
+    18:29:public ButtonInfo(int,int,int,int,android.graphics.Bitmap,float,android.graphics.Bitmap,float)
 cn.perfectgames.jewels.control.GameController:
     public static final int CONTROL_STICK_PERIOD
     public static final int BASIC_INTERVAL
@@ -79,27 +154,50 @@ cn.perfectgames.jewels.control.GameController:
     public static final int INTERVAL_STEP_ANIMATION
     public static final int IC_STEP
     private static final java.lang.String TAG
-    61:62:public void stop()
-    137:137:public boolean removeGameListener(com.devinxutal.tetris.control.GameController$GameListener)
-    141:142:public void clearGameListeners(com.devinxutal.tetris.control.GameController$GameListener)
-    151:154:protected void notifyGameFinishing()
-    157:158:public void setPlaygroundView(cn.perfectgames.jewels.ui.PlaygroundView)
-    165:166:public void setPlayground(cn.perfectgames.jewels.model.Playground)
-    180:181:public void destroy()
-com.devinxutal.tetris.control.GameController$GameListener:
+    60:61:public void stop()
+    84:84:private int getStepDelay()
+    100:100:public boolean removeGameListener(cn.perfectgames.jewels.control.GameController$GameListener)
+    104:105:public void clearGameListeners(cn.perfectgames.jewels.control.GameController$GameListener)
+    108:111:protected void notifyGameFinished()
+    114:117:protected void notifyGameFinishing()
+    120:121:public void setPlaygroundView(cn.perfectgames.jewels.ui.PlaygroundView)
+    128:129:public void setPlayground(cn.perfectgames.jewels.model.Playground)
+    143:144:public void destroy()
+cn.perfectgames.jewels.control.GameController$GameListener:
     public abstract void gameFinishing()
+    public abstract void gameFinished()
+cn.perfectgames.jewels.model.Jewel:
+    public static final int TYPE_COUNT
 cn.perfectgames.jewels.model.Playground:
-    public static final int VERTICAL_BLOCKS
-    public static final int HORIZONTAL_BLOCKS
-    public static final int GAP_LEN
-    private static final java.lang.String TAG
-    private static final int radix
-    125:153:private void initPlaygroundWidthFloating()
-    224:227:public cn.perfectgames.jewels.model.Block getNextBlock()
+    public static final java.lang.String TAG
+    public static final int NUM_COLS
+    public static final int NUM_ROWS
+cn.perfectgames.jewels.model.Playground$DrawingMetrics:
+    731:747:public void configurationChanged(cn.perfectgames.jewels.cfg.Configuration)
+cn.perfectgames.jewels.model.Playground$State
+cn.perfectgames.jewels.model.SavablePlayground:
+    public int[][] playground
+    public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock activeBlock
+    public java.util.List blockQueue
+    public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock holdBlock
+    public cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel
+    27:30:public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock create(cn.perfectgames.jewels.model.Jewel)
+cn.perfectgames.jewels.model.SavablePlayground$SavableBlock
 cn.perfectgames.jewels.model.ScoreAndLevel:
     public static final int MAX_LEVEL
-    25:25:public int getTotalLines()
-    29:30:public void setTotalLines(int)
+    private int totalLines
+    private int currentLines
+    18:25:public void reset()
+    43:43:public int getTotalLines()
+    47:48:public void setTotalLines(int)
+    51:51:public int getCurrentLines()
+    55:55:public int addScore(int)
+    67:67:public int getGoal()
+    71:71:public int getGoalRemained()
+    75:100:public void eliminateLines(int,boolean)
+    103:105:public void rowsFallDown(int)
+    108:117:public java.lang.String getScroreString(int)
+    121:121:public float getMaxLevel()
 cn.perfectgames.jewels.record.SavableLocalScore:
     23:24:public void setPlayer(java.lang.String)
     31:32:public void setScore(int)
@@ -108,6 +206,10 @@ cn.perfectgames.jewels.record.SavableLocalScores:
 cn.perfectgames.jewels.record.TwentySecondsRecord
 cn.perfectgames.jewels.sound.SoundManager:
     private static final java.lang.String TAG
+    151:160:public void playMoveEffect()
+    163:172:public void playTurnEffect()
+    175:184:public void playDownEffect()
+    187:197:public void playEliminationEffect()
 cn.perfectgames.jewels.ui.ControlView:
     public static final int BTN_PLAY
     public static final int BTN_LEFT
@@ -119,22 +221,40 @@ cn.perfectgames.jewels.ui.ControlView:
     public static final int BTN_SOUND
     public static final int BTN_MUSIC
     private static final java.lang.String TAG
-    325:325:public boolean removeGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener)
-    329:330:public void clearGameControlListener()
+    64:66:public void setButtons(java.util.List)
+    280:280:public boolean removeGameControlListener(cn.perfectgames.jewels.ui.ControlView$GameControlListener)
+    284:285:public void clearGameControlListener()
 cn.perfectgames.jewels.ui.CustomPreference
 cn.perfectgames.jewels.ui.GameTimer
-com.devinxutal.tetris.ui.GameTimer$1
+cn.perfectgames.jewels.ui.GameTimer$1
 cn.perfectgames.jewels.ui.JoyStick
-com.devinxutal.tetris.ui.JoyStick$JoyStickListener
+cn.perfectgames.jewels.ui.JoyStick$JoyStickListener
+cn.perfectgames.jewels.ui.Pair
 cn.perfectgames.jewels.ui.PlaygroundView:
-    89:89:public void destroy()
-    224:224:public void pause(boolean)
-com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics:
-    295:295:private void setProperBackground(int,int)
+    144:144:public void destroy()
+    214:217:public void reset()
+    227:227:public void pause(boolean)
+cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics:
+    private android.graphics.Rect timeBarRect
+    private android.graphics.Rect comboRect
+    private android.graphics.Rect longestRect
+    private android.graphics.RectF scoreRect
+    private android.graphics.RectF levelRect
+    private android.graphics.RectF goalRect
+    private float lineHeight
+    private float scoreLineHeight
+    private float labelLineHeight
+    private float statLineHeight
+    private float scoreSize
+    private float scoreGap
+    private float labelSize
+    private float labelGap
+    private float statSize
+    292:292:private void setProperBackground(int,int)
 cn.perfectgames.jewels.ui.SlideOptionDialog
-com.devinxutal.tetris.ui.SlideOptionDialog$1
-com.devinxutal.tetris.ui.SlideOptionDialog$ColorPickerView
-com.devinxutal.tetris.ui.SlideOptionDialog$OnSlideOptionChangedListener
+cn.perfectgames.jewels.ui.SlideOptionDialog$1
+cn.perfectgames.jewels.ui.SlideOptionDialog$ColorPickerView
+cn.perfectgames.jewels.ui.SlideOptionDialog$OnSlideOptionChangedListener
 cn.perfectgames.jewels.util.AdDaemon:
     public static final java.lang.String TAG
     public static final int ANIMATION_INTERVAL
@@ -142,22 +262,27 @@ cn.perfectgames.jewels.util.AdUtil:
     64:68:public static void determineAd(android.app.Activity)
 cn.perfectgames.jewels.util.BitmapUtil:
     public static final java.lang.String TAG
-com.devinxutal.tetris.util.BitmapUtil$Direction
+    106:106:public android.graphics.Bitmap getAimButtonBitmap1()
+    110:110:public android.graphics.Bitmap getAimButtonBitmap2()
+    122:122:public android.graphics.drawable.Drawable getVerticalInfoBar()
+    126:126:public android.graphics.drawable.Drawable getHorizontalInfoBar()
+    150:173:public android.graphics.Bitmap getArrowBitmap(int)
+cn.perfectgames.jewels.util.BitmapUtil$Direction
 cn.perfectgames.jewels.util.DialogUtil:
-    43:48:public static void showDialog(android.content.Context,int,int)
-    51:57:public static void showDialog(android.content.Context,java.lang.String,java.lang.String)
-    60:155:public static void showRankDialog(android.app.Activity)
-    159:174:private static android.view.View createRankView(android.app.Activity,java.util.List)
-    179:191:public static android.widget.TableRow createRankEntry(android.content.Context,cn.perfectgames.jewels.record.TwentySecondsRecord)
-    195:209:public static android.widget.TableRow createRankHeader(android.app.Activity)
-    213:216:public static android.widget.TextView createTableCell(android.content.Context,java.lang.String)
-    157:157:static android.view.View access$0(android.app.Activity,java.util.List)
-com.devinxutal.tetris.util.DialogUtil$1
-com.devinxutal.tetris.util.DialogUtil$1$1
-com.devinxutal.tetris.util.DialogUtil$1$1$1
-com.devinxutal.tetris.util.DialogUtil$1$1$2
+    42:47:public static void showDialog(android.content.Context,int,int)
+    50:56:public static void showDialog(android.content.Context,java.lang.String,java.lang.String)
+    59:154:public static void showRankDialog(android.app.Activity)
+    158:173:private static android.view.View createRankView(android.app.Activity,java.util.List)
+    178:190:public static android.widget.TableRow createRankEntry(android.content.Context,cn.perfectgames.jewels.record.TwentySecondsRecord)
+    194:208:public static android.widget.TableRow createRankHeader(android.app.Activity)
+    212:215:public static android.widget.TextView createTableCell(android.content.Context,java.lang.String)
+    156:156:static android.view.View access$0(android.app.Activity,java.util.List)
+cn.perfectgames.jewels.util.DialogUtil$1
+cn.perfectgames.jewels.util.DialogUtil$1$1
+cn.perfectgames.jewels.util.DialogUtil$1$1$1
+cn.perfectgames.jewels.util.DialogUtil$1$1$2
 cn.perfectgames.jewels.util.HelpInfoUtil
-com.devinxutal.tetris.util.HelpInfoUtil$HelpInfo
+cn.perfectgames.jewels.util.HelpInfoUtil$HelpInfo
 cn.perfectgames.jewels.util.MarketUtil:
     public static final int MARKET_ANDROID
     public static final int MARKET_AMAZON
@@ -171,13 +296,20 @@ cn.perfectgames.jewels.util.PreferenceUtil:
     26:33:public static void writePlayerName(android.app.Activity,java.lang.String)
     88:96:public static java.lang.String objectToString(java.io.Serializable)
     101:106:public static java.lang.Object stringToObject(java.lang.String)
+cn.perfectgames.jewels.util.RandomUtil
 cn.perfectgames.jewels.util.TextPainter:
     30:30:public android.graphics.Paint getTextPaint()
+    34:34:public android.graphics.Paint getStrokePaint()
+    61:74:public void drawFittedText(android.graphics.Canvas,java.lang.String,android.graphics.RectF,float)
     79:81:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
-    120:126:public void drawCenteredText(android.graphics.Canvas,java.lang.String,android.graphics.Rect)
+    85:87:public void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float)
+    91:98:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float,float)
+    101:107:public void drawText(android.graphics.Canvas,java.lang.String,float,float,float)
+    116:116:public float measureTextWidth(java.lang.String,float)
+    129:139:private void determineLabelSize(java.lang.String,android.graphics.RectF)
 cn.perfectgames.jewels.util.VersionUtil
-com.devinxutal.tetris.util.VersionUtil$1
-com.devinxutal.tetris.util.VersionUtil$VersionInfo
+cn.perfectgames.jewels.util.VersionUtil$1
+cn.perfectgames.jewels.util.VersionUtil$VersionInfo
 com.google.ads.Ad:
     public abstract boolean isReady()
     public abstract void loadAd(com.google.ads.AdRequest)
@@ -481,6 +613,7 @@ com.heyzap.sdk.R$drawable:
     public static final int icon
     public static final int icon_music_off
     public static final int icon_music_on
+    public static final int icon_pause
     public static final int icon_sound_off
     public static final int icon_sound_on
     public static final int main
@@ -489,6 +622,7 @@ com.heyzap.sdk.R$drawable:
     public static final int playbutton_focused
     public static final int playbutton_normal
     public static final int primary_button
+    public static final int selector
     public static final int transparent_button
     public static final int transparent_button_focused
     public static final int transparent_button_normal
@@ -583,6 +717,7 @@ com.heyzap.sdk.R$string:
     public static final int cube_solve_problem_title
     public static final int game_init_continue
     public static final int game_init_new
+    public static final int hello
     public static final int help
     public static final int help_comfirm_color
     public static final int help_info

@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.main_btn_rank:
 			i = new Intent(this, HighScoreActivity.class);
 			//TODO
-			i =new Intent(this, AnimationTestActivity.class);
+			i =new Intent(this, LeaderBoardActivity.class);
 			// DialogUtil.showRankDialog(this);
 			break;
 		case R.id.main_btn_help:

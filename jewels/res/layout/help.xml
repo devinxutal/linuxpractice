@@ -76,6 +76,7 @@
 			<ImageView  android:layout_height="wrap_content" android:scaleType="center" android:layout_width="fill_parent" android:src="@drawable/help_swap_button_2"></ImageView>
 			<TextView  android:textColor="#FFFFFFFF" android:text="Above images just show the button custimization in landscape mode, customize it as you like." android:layout_height="wrap_content" android:paddingLeft="18dip" android:layout_width="wrap_content"></TextView>
 			<TextView  android:textColor="#FFAA99FF" android:text="These customizations can be performed in game option: Control in Landscape Mode" android:layout_height="wrap_content" android:paddingLeft="18dip" android:layout_width="wrap_content"></TextView>
+			<!-- 
 			<LinearLayout
 				android:orientation="horizontal" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:gravity="center_horizontal">
@@ -83,6 +84,7 @@
 				<ImageView  android:layout_height="40dip"  android:layout_width="40dip" android:src="@drawable/arrow_direct_down"></ImageView>
 				<ImageView android:layout_height="40dip" android:layout_width="40dip" android:src="@drawable/arrow_rotate"></ImageView>
 			</LinearLayout>
+			 -->
 			<TextView android:textColor="#FFFFFFFF" android:text="Above images just show the button custimization for central button in portrait mode. The action can be ether QUICK DOWN, DIRECT DOWN, or BLOCK ROTATE." android:layout_height="wrap_content" android:paddingLeft="18dip" android:layout_width="wrap_content"></TextView>
 			<TextView  android:textColor="#FFFFFFFF" android:text="These customization can be performed in game option: Control in Portrait Mode" android:layout_height="wrap_content" android:paddingLeft="18dip" android:layout_width="wrap_content"></TextView>
 			
