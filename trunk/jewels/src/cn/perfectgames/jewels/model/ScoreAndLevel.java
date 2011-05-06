@@ -13,6 +13,22 @@ public class ScoreAndLevel implements Serializable {
 	private int currentLines;
 	private int bonusX = 1;
 	
+	private int maxCombo;
+	private int maxChain;
+	
+	private int combo = 0;
+
+	public int getMaxCombo() {
+		return maxCombo;
+	}
+
+	public int getMaxChain() {
+		return maxChain;
+	}
+	
+	public int getBonusX(){
+		return bonusX;
+	}
 
 	public void reset() {
 		level = 1;
@@ -23,11 +39,33 @@ public class ScoreAndLevel implements Serializable {
 			level = Configuration.config().getStartLevel();
 		}
 	}
+	
+	double progress = 0;
+	double delta = 0.002;
+	public double getProgress(){
+		progress +=delta;
+		if(progress >1){
+			progress = 1;
+			delta = -0.002;
+		}else if(progress <0){
+			progress = 0;
+			delta = 0.002;
+		}
+		return progress;
+	}
 
-	public int addScore(Elimination e , int combo){
+	public int addScore(Elimination e){
+		this.combo++;
+		this.maxCombo = Math.max(maxCombo ,combo);
+		int chain = e.end - e.start +1;
+		this.maxChain = Math.max(chain,maxChain);
 		int scoreToAdd = queryScore(e, combo);
 		this.score += scoreToAdd;
 		return scoreToAdd;
+	}
+	
+	public void resetCombo(){
+		this.combo = 0;
 	}
 	
 	public int queryScore(Elimination e, int combo){
@@ -39,6 +77,7 @@ public class ScoreAndLevel implements Serializable {
 		int lenBonus = (len -3)* LENGTH_BONUS_BASE;
 		return bonusX*(SCORE_BASE + comboBonus +lenBonus);
 	}
+	
 	public int getTotalLines() {
 		return totalLines;
 	}

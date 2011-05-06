@@ -23,6 +23,7 @@ import cn.perfectgames.amaze.graphics.Layers;
 import cn.perfectgames.jewels.animation.EliminationAnimation;
 import cn.perfectgames.jewels.animation.JewelDropAnimation;
 import cn.perfectgames.jewels.animation.ScoreAnimation;
+import cn.perfectgames.jewels.animation.ScoreBoardAnimation;
 import cn.perfectgames.jewels.animation.SelectionAnimation;
 import cn.perfectgames.jewels.animation.SwapAnimation;
 import cn.perfectgames.jewels.cfg.Configuration;
@@ -51,7 +52,6 @@ public class Playground {
 	private AnimationState animationState = AnimationState.IDLE;
 
 	private List<Elimination> eliminations;
-	private int eliminationCombo = 0;;
 	
 	public Playground() {
 		jewels = new Jewel[rows][cols];
@@ -157,7 +157,10 @@ public class Playground {
 		checkElimination();
 		if (eliminations == null) {
 			animationState = AnimationState.IDLE;
-			eliminationCombo = 0;
+			this.scoreLevel.resetCombo();
+
+			animations.scoreBoardAnimation.setNewScore(scoreLevel.getScore());
+			animations.scoreBoardAnimation.start();
 		} else {
 			animationState = AnimationState.ELIMINATING;
 			if(animation){
@@ -196,8 +199,7 @@ public class Playground {
 				}
 				
 				//calculate score
-				eliminationCombo ++;
-				int score = this.scoreLevel.addScore(e, eliminationCombo);
+				int score = this.scoreLevel.addScore(e);
 				if(animation){
 					PointF p1 = null, p2  = null;
 					if(e.vertical){
@@ -230,6 +232,7 @@ public class Playground {
 		}
 	}
 
+	
 	private boolean checkElimination() {
 		LinkedList<Elimination> elis = new LinkedList<Elimination>();
 
@@ -456,6 +459,9 @@ public class Playground {
 	public DrawingMetrics getDM() {
 		return dm;
 	}
+	public Animations getAnimations(){
+		return animations;
+	}
 
 	public void configurationChanged(Configuration config) {
 
@@ -515,7 +521,8 @@ public class Playground {
 		public EliminationAnimation eliminationAnimation = new EliminationAnimation();
 		public SelectionAnimation selectionAnimation = new SelectionAnimation();
 		public JewelDropAnimation jewelDropAnimation = new JewelDropAnimation();
-
+		public ScoreBoardAnimation scoreBoardAnimation = new ScoreBoardAnimation(6);
+		
 		private AnimationCollection collection;
 
 		private Layers animationLayers;
@@ -530,6 +537,7 @@ public class Playground {
 			layer.addDrawable(swapAnimation);
 			layer.addDrawable(selectionAnimation);
 			layer.addDrawable(jewelDropAnimation);
+			layer.addDrawable(scoreBoardAnimation);
 			animationLayers.addLayer(layer, Layers.TOP);
 			
 			
@@ -557,6 +565,7 @@ public class Playground {
 				collection.addAnimation(eliminationAnimation);
 				collection.addAnimation(selectionAnimation);
 				collection.addAnimation(jewelDropAnimation);
+				collection.addAnimation(scoreBoardAnimation);
 			}
 			return collection;
 		}
@@ -606,7 +615,7 @@ public class Playground {
 
 		// paint
 		private Paint paint;
-		private String blockStyle = "animal";
+		private String blockStyle = "jewels";
 		
 		//score color
 		private int score_colors[] = new int[]{

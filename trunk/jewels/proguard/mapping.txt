@@ -52,7 +52,60 @@ c -> f:
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 c$a -> z:
     c a -> a
+cn.perfectgames.amaze.animation.AbstractAnimation -> cn.perfectgames.a.b.c:
+    int totalFrames -> a
+    int currentFrame -> b
+    int loop -> c
+    boolean visible -> d
+    boolean inAnimation -> e
+    java.util.List listeners -> f
+    boolean alwaysShow -> g
+    int loopCounter -> h
+    boolean step() -> b
+    int getFrameCount() -> c
+    void reset() -> d
+    void draw(android.graphics.Canvas) -> a
+    void start() -> e
+    void stop() -> f
+    void setLoop$13462e() -> g
+    boolean isVisible() -> a
+    boolean addAnimationListener(cn.perfectgames.amaze.animation.AnimationListener) -> a
+    void notifyAnimationEventHappened$13462e() -> h
+    void changeTotalFrames(int) -> b
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+    void onStep(int,int) -> a
+cn.perfectgames.amaze.animation.Animation -> cn.perfectgames.a.b.d:
+    void start() -> e
+    boolean step() -> b
+    int getFrameCount() -> c
+    void reset() -> d
+    boolean addAnimationListener(cn.perfectgames.amaze.animation.AnimationListener) -> a
+cn.perfectgames.amaze.animation.AnimationCollection -> cn.perfectgames.a.b.a:
+    java.util.List animations -> a
+    boolean addAnimation(cn.perfectgames.amaze.animation.Animation) -> a
+    void step() -> a
+    boolean addAnimationListener(cn.perfectgames.amaze.animation.AnimationListener) -> a
+cn.perfectgames.amaze.animation.AnimationListener -> cn.perfectgames.a.b.b:
+    void animationFinished(cn.perfectgames.amaze.animation.Animation) -> a
+    void animationEventHappened$3d19e96a(cn.perfectgames.amaze.animation.Animation) -> b
+cn.perfectgames.amaze.graphics.Drawable -> cn.perfectgames.a.a.a:
+    void draw(android.graphics.Canvas) -> a
+    boolean isVisible() -> a
+cn.perfectgames.amaze.graphics.Layer -> cn.perfectgames.a.a.c:
+    boolean visible -> a
+    java.util.LinkedList drawables -> b
+    void draw(android.graphics.Canvas) -> a
+    void addDrawable(cn.perfectgames.amaze.graphics.Drawable) -> a
+    boolean isVisible() -> a
+cn.perfectgames.amaze.graphics.Layers -> cn.perfectgames.a.a.b:
+    boolean visible -> a
+    java.util.LinkedList layers -> b
+    void draw(android.graphics.Canvas) -> a
+    boolean addLayer$3a7f986a(cn.perfectgames.amaze.graphics.Layer) -> a
+    boolean isVisible() -> a
 cn.perfectgames.jewels.activities.AboutActivity -> cn.perfectgames.jewels.activities.AboutActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+cn.perfectgames.jewels.activities.AnimationTestActivity -> cn.perfectgames.jewels.activities.AnimationTestActivity:
     void onCreate(android.os.Bundle) -> onCreate
 cn.perfectgames.jewels.activities.HighScoreActivity -> cn.perfectgames.jewels.activities.HighScoreActivity:
     android.os.Handler adHandler -> a
@@ -64,7 +117,7 @@ cn.perfectgames.jewels.activities.HighScoreActivity -> cn.perfectgames.jewels.ac
     void onClick(android.view.View) -> onClick
 cn.perfectgames.jewels.activities.LocalRankActivity -> cn.perfectgames.jewels.activities.LocalRankActivity:
     void onCreate(android.os.Bundle) -> onCreate
-com.devinxutal.tetris.activities.LocalRankActivity$1 -> com.devinxutal.tetris.activities.c:
+cn.perfectgames.jewels.activities.LocalRankActivity$1 -> cn.perfectgames.jewels.activities.l:
     cn.perfectgames.jewels.activities.LocalRankActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 cn.perfectgames.jewels.activities.MainActivity -> cn.perfectgames.jewels.activities.MainActivity:
@@ -83,27 +136,27 @@ cn.perfectgames.jewels.activities.MainActivity -> cn.perfectgames.jewels.activit
     void customizeButton(android.widget.Button) -> a
     void submitReport() -> a
     android.app.Dialog access$0(cn.perfectgames.jewels.activities.MainActivity) -> a
-    void access$1$7e4e6108(cn.perfectgames.jewels.activities.MainActivity) -> b
+    void access$1$1a65fec5(cn.perfectgames.jewels.activities.MainActivity) -> b
     void access$2(cn.perfectgames.jewels.activities.MainActivity,java.lang.String) -> a
-com.devinxutal.tetris.activities.MainActivity$1 -> com.devinxutal.tetris.activities.f:
+cn.perfectgames.jewels.activities.MainActivity$1 -> cn.perfectgames.jewels.activities.c:
     cn.perfectgames.jewels.activities.MainActivity this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.tetris.activities.MainActivity$2 -> com.devinxutal.tetris.activities.g:
+cn.perfectgames.jewels.activities.MainActivity$2 -> cn.perfectgames.jewels.activities.e:
     cn.perfectgames.jewels.activities.MainActivity this$0 -> a
     android.widget.EditText val$input -> b
     void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.tetris.activities.MainActivity$3 -> com.devinxutal.tetris.activities.h:
+cn.perfectgames.jewels.activities.MainActivity$3 -> cn.perfectgames.jewels.activities.f:
     cn.perfectgames.jewels.activities.MainActivity this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.tetris.activities.MainActivity$4 -> com.devinxutal.tetris.activities.i:
+cn.perfectgames.jewels.activities.MainActivity$4 -> cn.perfectgames.jewels.activities.d:
     cn.perfectgames.jewels.activities.MainActivity this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread -> com.devinxutal.tetris.activities.e:
+cn.perfectgames.jewels.activities.MainActivity$SubmitRecordThread -> cn.perfectgames.jewels.activities.h:
     java.lang.String report -> b
     cn.perfectgames.jewels.activities.MainActivity this$0 -> a
     void run() -> run
-com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread$1 -> com.devinxutal.tetris.activities.d:
-    com.devinxutal.tetris.activities.MainActivity$SubmitRecordThread this$1 -> a
+cn.perfectgames.jewels.activities.MainActivity$SubmitRecordThread$1 -> cn.perfectgames.jewels.activities.k:
+    cn.perfectgames.jewels.activities.MainActivity$SubmitRecordThread this$1 -> a
     int val$sc -> b
     void run() -> run
 cn.perfectgames.jewels.activities.PlaygroundActivity -> cn.perfectgames.jewels.activities.PlaygroundActivity:
@@ -120,15 +173,15 @@ cn.perfectgames.jewels.activities.PlaygroundActivity -> cn.perfectgames.jewels.a
     android.widget.Button pauseScreenQuitButton -> k
     android.widget.Button pauseScreenResumeButton -> l
     android.widget.Button pauseScreenCheckinButton -> m
-    com.devinxutal.tetris.activities.PlaygroundActivity$State state -> n
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State state -> n
     long elapsedTime -> o
     boolean collapsed -> p
     android.hardware.SensorManager sensorManager -> q
     boolean sensorRunning -> r
     boolean useJoyStick -> s
     boolean useAccelerometer -> t
-    com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> u
-    com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> v
+    cn.perfectgames.jewels.activities.PlaygroundActivity$AccelerometerListener accelerometerListener -> u
+    cn.perfectgames.jewels.activities.PlaygroundActivity$MyJoyStickListener joyStickListener -> v
     android.graphics.Typeface typeface -> w
     android.os.Handler adHandler -> x
     cn.perfectgames.jewels.util.AdDaemon adDaemonPause -> y
@@ -137,98 +190,153 @@ cn.perfectgames.jewels.activities.PlaygroundActivity -> cn.perfectgames.jewels.a
     void onDestroy() -> onDestroy
     boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
-    void setScreenOrientation() -> e
-    void switchState(com.devinxutal.tetris.activities.PlaygroundActivity$State,boolean) -> a
+    void setScreenOrientation() -> d
+    void switchState(cn.perfectgames.jewels.activities.PlaygroundActivity$State,boolean) -> a
     void onOptionsMenuClosed(android.view.Menu) -> onOptionsMenuClosed
     void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onRestoreInstanceState(android.os.Bundle) -> onRestoreInstanceState
     void onPause() -> onPause
     void onResume() -> onResume
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    void showSuccessScreen() -> f
-    void hideSuccessScreen() -> g
-    void showPauseScreen() -> h
-    void hidePauseScreen() -> i
-    void play() -> j
-    void resume() -> a
-    void replay() -> b
-    boolean tryLoadGame() -> k
-    void loadGame() -> c
-    void saveGame() -> d
-    void preferenceChanged() -> l
+    void hideSuccessScreen() -> e
+    void showPauseScreen() -> f
+    void hidePauseScreen() -> g
+    void play() -> a
+    void resume() -> b
+    void replay() -> c
+    boolean tryLoadGame() -> h
+    void preferenceChanged() -> i
     void customizeView(android.widget.TextView) -> a
     cn.perfectgames.jewels.control.GameController access$0(cn.perfectgames.jewels.activities.PlaygroundActivity) -> a
-    void access$1(cn.perfectgames.jewels.activities.PlaygroundActivity) -> b
-    void access$2(cn.perfectgames.jewels.activities.PlaygroundActivity,com.devinxutal.tetris.activities.PlaygroundActivity$State) -> a
-    void access$3(cn.perfectgames.jewels.activities.PlaygroundActivity) -> c
-    com.devinxutal.tetris.activities.PlaygroundActivity$State access$4(cn.perfectgames.jewels.activities.PlaygroundActivity) -> d
-    boolean access$9(cn.perfectgames.jewels.activities.PlaygroundActivity) -> e
-com.devinxutal.tetris.activities.PlaygroundActivity$1 -> com.devinxutal.tetris.activities.a:
+    void access$3(cn.perfectgames.jewels.activities.PlaygroundActivity) -> b
+    boolean access$9(cn.perfectgames.jewels.activities.PlaygroundActivity) -> c
+cn.perfectgames.jewels.activities.PlaygroundActivity$1 -> cn.perfectgames.jewels.activities.j:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.devinxutal.tetris.activities.PlaygroundActivity$AccelerometerListener -> com.devinxutal.tetris.activities.b:
+cn.perfectgames.jewels.activities.PlaygroundActivity$AccelerometerListener -> cn.perfectgames.jewels.activities.i:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
     void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
     void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-com.devinxutal.tetris.activities.PlaygroundActivity$ButtonsOnClick -> com.devinxutal.tetris.activities.o:
+cn.perfectgames.jewels.activities.PlaygroundActivity$ButtonsOnClick -> cn.perfectgames.jewels.activities.m:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.devinxutal.tetris.activities.PlaygroundActivity$ControlButtonClicked -> com.devinxutal.tetris.activities.l:
+cn.perfectgames.jewels.activities.PlaygroundActivity$ControlButtonClicked -> cn.perfectgames.jewels.activities.g:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
-    void buttonClickced(int) -> a
-    void buttonPressed(int) -> b
-    void buttonReleased(int) -> c
-com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished -> com.devinxutal.tetris.activities.k:
+    void buttonPressed(int) -> a
+    void buttonReleased(int) -> b
+cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished -> cn.perfectgames.jewels.activities.a:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
-    void gameFinished() -> a
-com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished$2 -> com.devinxutal.tetris.activities.n:
-    com.devinxutal.tetris.activities.PlaygroundActivity$GameFinished this$1 -> a
-    void run() -> run
-com.devinxutal.tetris.activities.PlaygroundActivity$MyJoyStickListener -> com.devinxutal.tetris.activities.j:
+cn.perfectgames.jewels.activities.PlaygroundActivity$MyJoyStickListener -> cn.perfectgames.jewels.activities.n:
     cn.perfectgames.jewels.activities.PlaygroundActivity this$0 -> a
-com.devinxutal.tetris.activities.PlaygroundActivity$State -> com.devinxutal.tetris.activities.m:
-    com.devinxutal.tetris.activities.PlaygroundActivity$State INIT -> a
-    com.devinxutal.tetris.activities.PlaygroundActivity$State PLAY -> b
-    com.devinxutal.tetris.activities.PlaygroundActivity$State PAUSED -> c
-    com.devinxutal.tetris.activities.PlaygroundActivity$State ENDING -> d
-    com.devinxutal.tetris.activities.PlaygroundActivity$State END -> e
-    com.devinxutal.tetris.activities.PlaygroundActivity$State[] ENUM$VALUES -> f
-    com.devinxutal.tetris.activities.PlaygroundActivity$State[] values() -> values
-    com.devinxutal.tetris.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
+cn.perfectgames.jewels.activities.PlaygroundActivity$State -> cn.perfectgames.jewels.activities.b:
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State INIT -> a
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State PLAY -> b
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State PAUSED -> c
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State ENDING -> d
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State END -> e
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State[] ENUM$VALUES -> f
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State[] values() -> values
+    cn.perfectgames.jewels.activities.PlaygroundActivity$State valueOf(java.lang.String) -> valueOf
 cn.perfectgames.jewels.activities.Preferences -> cn.perfectgames.jewels.activities.Preferences:
     void onCreate(android.os.Bundle) -> onCreate
 cn.perfectgames.jewels.activities.WorldRankActivity -> cn.perfectgames.jewels.activities.WorldRankActivity:
     void onCreate(android.os.Bundle) -> onCreate
-cn.perfectgames.jewels.cfg.Configuration -> com.devinxutal.tetris.c.b:
+cn.perfectgames.jewels.animation.EliminationAnimation -> cn.perfectgames.jewels.a.a:
+    int[] jewels -> a
+    android.graphics.PointF[] pos -> b
+    android.graphics.RectF[] rects -> c
+    android.graphics.Rect rect -> d
+    int bitmapSize -> e
+    android.graphics.Paint paint -> f
+    android.graphics.Bitmap[] jewel_bitmaps -> g
+    void setJewelBitmap(android.graphics.Bitmap[]) -> a
+    void setJewels(java.util.List,java.util.List) -> a
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+    void onStep(int,int) -> a
+cn.perfectgames.jewels.animation.JewelDropAnimation -> cn.perfectgames.jewels.a.e:
+    cn.perfectgames.jewels.model.Jewel[] jewels -> a
+    android.graphics.PointF[] initPos -> b
+    android.graphics.PointF[] destPos -> c
+    float upperBound -> d
+    int bitmapSize -> e
+    android.graphics.Paint paint -> f
+    android.graphics.Bitmap[] jewel_bitmaps -> g
+    void setJewelBitmap(android.graphics.Bitmap[]) -> a
+    void setUpperBound(float) -> a
+    void setDropJewels(java.util.List,java.util.List,java.util.List) -> a
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+cn.perfectgames.jewels.animation.ScoreAnimation -> cn.perfectgames.jewels.a.g:
+    java.util.List scoreEntries -> a
+    int maxNum -> b
+    android.graphics.Bitmap[] scores -> c
+    android.graphics.Canvas canvas -> d
+    int scoreW -> e
+    int scoreH -> f
+    android.graphics.Rect rect -> g
+    cn.perfectgames.jewels.util.TextPainter painter -> h
+    float jewelSize -> i
+    android.graphics.Paint paint -> j
+    void setJewelSize(int) -> a
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+    void addScore(java.lang.String,android.graphics.PointF,int) -> a
+    void clearScores() -> i
+cn.perfectgames.jewels.animation.ScoreAnimation$ScoreEntry -> cn.perfectgames.jewels.a.d:
+    java.lang.String score -> b
+    android.graphics.PointF position -> a
+    int color -> c
+    cn.perfectgames.jewels.animation.ScoreAnimation this$0 -> d
+cn.perfectgames.jewels.animation.ScoreBoardAnimation -> cn.perfectgames.jewels.a.c:
+    int digitNUM -> a
+    android.graphics.Bitmap[] digits -> b
+    android.graphics.Rect rect -> c
+    android.graphics.Paint paint -> d
+    int score -> e
+    int[] froms -> f
+    int[] tos -> g
+    void setRect(android.graphics.Rect) -> a
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+    void setNewScore(int) -> a
+cn.perfectgames.jewels.animation.SelectionAnimation -> cn.perfectgames.jewels.a.f:
+    java.util.List scores -> a
+    int size -> b
+    android.graphics.Bitmap selector -> c
+    float x -> d
+    float y -> e
+    android.graphics.Paint paint -> f
+    void setSize(int) -> a
+    void setLocation$2548a35() -> i
+    void setLocation(android.graphics.PointF) -> a
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+cn.perfectgames.jewels.animation.SwapAnimation -> cn.perfectgames.jewels.a.b:
+    cn.perfectgames.jewels.model.Jewel jewel1 -> a
+    android.graphics.PointF loc1 -> b
+    cn.perfectgames.jewels.model.Jewel jewel2 -> c
+    android.graphics.PointF loc2 -> d
+    boolean swapBack -> e
+    android.graphics.Paint paint -> f
+    android.graphics.Bitmap[] jewel_bitmaps -> g
+    void innerDraw(android.graphics.Canvas,int,int) -> a
+    void setJewelBitmap(android.graphics.Bitmap[]) -> a
+    void setSwap(cn.perfectgames.jewels.model.Jewel,android.graphics.PointF,cn.perfectgames.jewels.model.Jewel,android.graphics.PointF,boolean) -> a
+cn.perfectgames.jewels.cfg.Configuration -> cn.perfectgames.jewels.e.b:
     cn.perfectgames.jewels.cfg.Configuration config -> a
     android.content.SharedPreferences preference -> b
     cn.perfectgames.jewels.cfg.Configuration config() -> a
     void setSharedPreferences(android.content.SharedPreferences) -> a
-    int getCenterButtonAction() -> b
-    java.lang.String getBlockStyle() -> c
-    boolean isBackgroundMusicOn() -> d
+    boolean isBackgroundMusicOn() -> b
     void setBackgroundMusicOn(boolean) -> a
-    boolean isSoundEffectsOn() -> e
+    boolean isSoundEffectsOn() -> c
     void setSoundEffectsOn(boolean) -> b
-    boolean isBlockShadowOn() -> f
-    boolean isSwapRotateHold() -> g
-    boolean isSwapQuickDirect() -> h
-    int getStartLevel() -> i
-    java.lang.String getScreenOrientation() -> j
-    boolean isDragMode() -> k
-cn.perfectgames.jewels.cfg.Constants -> com.devinxutal.tetris.c.a:
+    java.lang.String getScreenOrientation() -> d
+cn.perfectgames.jewels.cfg.Constants -> cn.perfectgames.jewels.e.a:
     int VERSION -> a
-cn.perfectgames.jewels.control.ButtonInfo -> com.devinxutal.tetris.a.e:
+cn.perfectgames.jewels.control.ButtonInfo -> cn.perfectgames.jewels.d.a:
     int x -> a
     int y -> b
     int radius -> c
     int buttonID -> d
-    android.graphics.Bitmap buttonBG -> e
-    float bgSize -> f
-    android.graphics.Bitmap buttonIcon -> g
-    float iconSize -> h
-    boolean pressed -> i
-cn.perfectgames.jewels.control.Command -> com.devinxutal.tetris.a.c:
+    boolean pressed -> e
+cn.perfectgames.jewels.control.Command -> cn.perfectgames.jewels.d.b:
     cn.perfectgames.jewels.control.Command TURN -> a
     cn.perfectgames.jewels.control.Command LEFT -> b
     cn.perfectgames.jewels.control.Command RIGHT -> c
@@ -246,7 +354,7 @@ cn.perfectgames.jewels.control.Command -> com.devinxutal.tetris.a.c:
     cn.perfectgames.jewels.control.Command[] ENUM$VALUES -> o
     cn.perfectgames.jewels.control.Command[] values() -> values
     cn.perfectgames.jewels.control.Command valueOf(java.lang.String) -> valueOf
-cn.perfectgames.jewels.control.GameController -> com.devinxutal.tetris.a.d:
+cn.perfectgames.jewels.control.GameController -> cn.perfectgames.jewels.d.c:
     cn.perfectgames.jewels.sound.SoundManager soundManager -> a
     cn.perfectgames.jewels.ui.PlaygroundView playgroundView -> b
     cn.perfectgames.jewels.ui.ControlView controlView -> c
@@ -254,178 +362,131 @@ cn.perfectgames.jewels.control.GameController -> com.devinxutal.tetris.a.d:
     java.util.List listeners -> e
     android.os.Handler handler -> f
     boolean playing -> g
-    com.devinxutal.tetris.control.GameController$StepRunnable stepRunnable -> h
-    com.devinxutal.tetris.control.GameController$ControlRunnable controlRunnable -> i
-    cn.perfectgames.jewels.control.Command pendingCommand -> j
-    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> k
+    cn.perfectgames.jewels.control.Command pendingCommand -> h
     void start() -> a
     void pause() -> b
-    void reset() -> c
-    void finishAnimation() -> d
-    void processCommand(cn.perfectgames.jewels.control.Command) -> a
-    int getStepDelay() -> i
-    cn.perfectgames.jewels.ui.PlaygroundView getPlaygroundView() -> e
-    boolean addGameListener(com.devinxutal.tetris.control.GameController$GameListener) -> a
-    void notifyGameFinished() -> f
-    cn.perfectgames.jewels.model.Playground getPlayground() -> g
-    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
-    void postControlDelay(int) -> a
-    void postStepDelay(int) -> b
-    boolean letPlaygroundProcessCommand(cn.perfectgames.jewels.control.Command) -> b
-    cn.perfectgames.jewels.ui.ControlView getControlView() -> h
-    cn.perfectgames.jewels.model.Playground access$0(cn.perfectgames.jewels.control.GameController) -> a
-    cn.perfectgames.jewels.ui.PlaygroundView access$1(cn.perfectgames.jewels.control.GameController) -> b
-    cn.perfectgames.jewels.sound.SoundManager access$2(cn.perfectgames.jewels.control.GameController) -> c
-    void access$3$62c8496d(cn.perfectgames.jewels.control.GameController) -> d
-    boolean access$4(cn.perfectgames.jewels.control.GameController) -> e
-    void access$5(cn.perfectgames.jewels.control.GameController,int) -> a
-    int access$6(cn.perfectgames.jewels.control.GameController) -> f
-    cn.perfectgames.jewels.control.Command access$7(cn.perfectgames.jewels.control.GameController) -> g
-    boolean access$8(cn.perfectgames.jewels.control.GameController,cn.perfectgames.jewels.control.Command) -> a
-    void access$9$62c8099c(cn.perfectgames.jewels.control.GameController) -> h
-    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> j
-com.devinxutal.tetris.control.GameController$ControlRunnable -> com.devinxutal.tetris.a.f:
-    long idToProcess -> a
-    long idProcessed -> b
-    cn.perfectgames.jewels.control.GameController this$0 -> c
-    void increaseIDToProcess() -> a
-    void run() -> run
-com.devinxutal.tetris.control.GameController$GameListener -> com.devinxutal.tetris.a.a:
-    void gameFinished() -> a
-com.devinxutal.tetris.control.GameController$StepRunnable -> com.devinxutal.tetris.a.b:
-    long idToProcess -> a
-    long idProcessed -> b
-    cn.perfectgames.jewels.control.GameController this$0 -> c
-    void increaseIDToProcess() -> a
-    void run() -> run
-cn.perfectgames.jewels.model.Block -> com.devinxutal.tetris.model.a:
-    boolean[][][] matrix -> a
-    int current -> b
-    int numStatus -> c
-    com.devinxutal.tetris.model.Block$BlockType blockType -> d
-    boolean recalculated -> e
-    int fc -> f
-    int fr -> g
-    int rc -> h
-    int cc -> i
-    int getCurrent() -> a
-    void turn() -> b
-    void recalc() -> j
-    int firstValidColumn() -> c
-    int firstValidRow() -> d
-    int columnCount() -> e
-    int rowCount() -> f
-    boolean[][] getMatrix() -> g
-    boolean[][] getTurnedMatrix() -> h
-    com.devinxutal.tetris.model.Block$BlockType getBlockType() -> i
-com.devinxutal.tetris.model.Block$BlockType -> com.devinxutal.tetris.model.e:
-    com.devinxutal.tetris.model.Block$BlockType I -> a
-    com.devinxutal.tetris.model.Block$BlockType J -> b
-    com.devinxutal.tetris.model.Block$BlockType L -> c
-    com.devinxutal.tetris.model.Block$BlockType O -> d
-    com.devinxutal.tetris.model.Block$BlockType S -> e
-    com.devinxutal.tetris.model.Block$BlockType T -> f
-    com.devinxutal.tetris.model.Block$BlockType Z -> g
-    boolean[][][][] matrix_array -> h
-    com.devinxutal.tetris.model.Block$BlockType[] ENUM$VALUES -> i
-    boolean[][][] getMatrix(com.devinxutal.tetris.model.Block$BlockType) -> a
-    com.devinxutal.tetris.model.Block$BlockType random() -> a
-    com.devinxutal.tetris.model.Block$BlockType[] values() -> values
-    com.devinxutal.tetris.model.Block$BlockType valueOf(java.lang.String) -> valueOf
-cn.perfectgames.jewels.model.Playground -> com.devinxutal.tetris.model.d:
-    int width -> a
-    int height -> b
-    int blockSize -> c
-    boolean inAnimation -> d
-    boolean[] eliminating -> e
-    int eliminatingCurrentStep -> f
-    int eliminatingTotalSteps -> g
-    int eliminationLines -> h
-    boolean finished -> i
-    cn.perfectgames.jewels.model.Block activeBlock -> j
-    int blockOffsetX -> k
-    int blockOffsetY -> l
-    int projectedY -> m
-    int originalOffsetY -> n
-    int rowsFallDown -> o
-    int[][] playground -> p
-    java.util.Set floatingBlocks -> q
-    boolean floatingBlocksJustSettled -> r
-    java.util.LinkedList blockQueue -> s
-    int blockQueueLen -> t
-    boolean combo -> u
-    cn.perfectgames.jewels.model.Block hold -> v
-    boolean holdUsed -> w
-    cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel -> x
-    boolean option_block_shadow_on -> y
-    com.devinxutal.tetris.model.Playground$DrawingMetrics dm -> z
-    boolean isFinishingElimination -> A
-    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command -> B
-    int getWidth() -> a
-    int getHeight() -> b
-    int getBlockSize() -> c
-    float getSpeedScale() -> d
-    void reset() -> e
-    boolean isFinished() -> f
-    cn.perfectgames.jewels.model.ScoreAndLevel getScoreAndLevel() -> g
-    void moveOn() -> h
-    boolean processCommand(cn.perfectgames.jewels.control.Command) -> a
-    boolean isInAnimation() -> i
-    void determinSize(int,int) -> a
-    void initDrawingMetrics(android.content.Context) -> a
-    void drawPendingBlocks(android.graphics.Canvas,android.graphics.Rect,android.graphics.Rect,android.graphics.Rect) -> a
-    void drawHoldBlock(android.graphics.Canvas,android.graphics.Rect) -> a
-    void drawBlock(android.graphics.Canvas,cn.perfectgames.jewels.model.Block,android.graphics.Rect) -> a
-    cn.perfectgames.jewels.model.SavablePlayground getSavablePlayground() -> j
-    void restoreSavablePlayground(cn.perfectgames.jewels.model.SavablePlayground) -> a
-    void draw(android.graphics.Canvas,int,int) -> a
-    boolean moveBlockDown() -> l
-    void allocateBlock() -> m
-    void allocateBlock(cn.perfectgames.jewels.model.Block) -> a
-    boolean checkElimination() -> n
-    boolean isFinishingElimination() -> k
-    java.util.Set checkFloatingBlock() -> o
-    void calculateProjectedY() -> p
-    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
-    int access$0(cn.perfectgames.jewels.model.Playground) -> a
-    int[] $SWITCH_TABLE$com$devinxutal$tetris$control$Command() -> q
-com.devinxutal.tetris.model.Playground$DrawingMetrics -> com.devinxutal.tetris.model.b:
-    int[] COLORS -> b
-    android.graphics.Bitmap[] original_blocks -> c
-    android.graphics.Bitmap[] sized_blocks -> a
-    android.graphics.Paint paint -> d
-    java.lang.String blockStyle -> e
-    android.content.Context context -> f
-    cn.perfectgames.jewels.model.Playground this$0 -> g
+    cn.perfectgames.jewels.ui.PlaygroundView getPlaygroundView() -> c
+    boolean addGameListener(cn.perfectgames.jewels.control.GameController$GameListener) -> a
+    cn.perfectgames.jewels.model.Playground getPlayground() -> d
+    void configurationChanged$710d5161() -> e
+    cn.perfectgames.jewels.ui.ControlView getControlView() -> f
+cn.perfectgames.jewels.control.GameController$GameListener -> cn.perfectgames.jewels.d.d:
+cn.perfectgames.jewels.model.Jewel -> cn.perfectgames.jewels.model.f:
+    int type -> a
+    int getType() -> a
+    void copy(cn.perfectgames.jewels.model.Jewel) -> a
+cn.perfectgames.jewels.model.Playground -> cn.perfectgames.jewels.model.d:
+    int cols -> a
+    int rows -> b
+    cn.perfectgames.jewels.model.Jewel[][] jewels -> c
+    boolean[][] visibilities -> d
+    cn.perfectgames.jewels.model.Jewel tempJewel -> e
+    cn.perfectgames.jewels.model.Position first -> f
+    cn.perfectgames.jewels.model.Position second -> g
+    cn.perfectgames.jewels.model.Playground$DrawingMetrics dm -> h
+    cn.perfectgames.jewels.model.Playground$Animations animations -> i
+    cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel -> j
+    cn.perfectgames.jewels.model.Playground$AnimationState animationState -> k
+    java.util.List eliminations -> l
+    int eliminationCombo -> m
+    float touchX -> n
+    float touchY -> o
+    int flipX -> p
+    int flipY -> q
+    void draw(android.graphics.Canvas) -> a
+    void finishElimination(boolean) -> b
+    void totallyFinishElimination(boolean) -> c
+    void startElimination(boolean) -> a
+    boolean checkElimination() -> e
+    java.util.List checkElimination(cn.perfectgames.jewels.model.Position) -> a
+    void startSwap() -> f
+    void step() -> a
+    void touch(float,float) -> a
+    void flip(float,float) -> b
+    cn.perfectgames.jewels.model.ScoreAndLevel getScoreAndLevel() -> b
+    cn.perfectgames.jewels.model.Playground$DrawingMetrics getDM() -> c
+    cn.perfectgames.jewels.model.Playground$Animations getAnimations() -> d
+    android.graphics.PointF mapToPoint(int,int) -> a
+    android.graphics.PointF mapToPoint(cn.perfectgames.jewels.model.Position) -> b
+    cn.perfectgames.jewels.model.Jewel j(cn.perfectgames.jewels.model.Position) -> c
+    cn.perfectgames.jewels.model.Jewel j(int,int) -> b
+    boolean checkPosition(cn.perfectgames.jewels.model.Position) -> d
+    cn.perfectgames.jewels.model.Playground$AnimationState access$0(cn.perfectgames.jewels.model.Playground) -> a
+    void access$1(cn.perfectgames.jewels.model.Playground) -> b
+    java.util.List access$2(cn.perfectgames.jewels.model.Playground) -> c
+    void access$3(cn.perfectgames.jewels.model.Playground,cn.perfectgames.jewels.model.Playground$AnimationState) -> a
+    void access$4$a331f1(cn.perfectgames.jewels.model.Playground) -> d
+    void access$5$a331f1(cn.perfectgames.jewels.model.Playground) -> e
+    int access$6(cn.perfectgames.jewels.model.Playground) -> f
+    int access$7(cn.perfectgames.jewels.model.Playground) -> g
+    boolean[][] access$8(cn.perfectgames.jewels.model.Playground) -> h
+    cn.perfectgames.jewels.model.Jewel access$9(cn.perfectgames.jewels.model.Playground,int,int) -> a
+    android.graphics.PointF access$10(cn.perfectgames.jewels.model.Playground,int,int) -> b
+    cn.perfectgames.jewels.model.Playground$Animations access$11(cn.perfectgames.jewels.model.Playground) -> i
+cn.perfectgames.jewels.model.Playground$AnimationState -> cn.perfectgames.jewels.model.b:
+    cn.perfectgames.jewels.model.Playground$AnimationState IDLE -> a
+    cn.perfectgames.jewels.model.Playground$AnimationState SWAPPING -> b
+    cn.perfectgames.jewels.model.Playground$AnimationState ELIMINATING -> c
+    cn.perfectgames.jewels.model.Playground$AnimationState BLASTING -> e
+    cn.perfectgames.jewels.model.Playground$AnimationState REFILLING -> f
+    cn.perfectgames.jewels.model.Playground$AnimationState ELIMINATION_DROPPING -> d
+    cn.perfectgames.jewels.model.Playground$AnimationState[] ENUM$VALUES -> g
+    cn.perfectgames.jewels.model.Playground$AnimationState[] values() -> values
+    cn.perfectgames.jewels.model.Playground$AnimationState valueOf(java.lang.String) -> valueOf
+cn.perfectgames.jewels.model.Playground$Animations -> cn.perfectgames.jewels.model.g:
+    cn.perfectgames.jewels.animation.ScoreAnimation scoreAnimation -> a
+    cn.perfectgames.jewels.animation.SwapAnimation swapAnimation -> b
+    cn.perfectgames.jewels.animation.EliminationAnimation eliminationAnimation -> c
+    cn.perfectgames.jewels.animation.SelectionAnimation selectionAnimation -> d
+    cn.perfectgames.jewels.animation.JewelDropAnimation jewelDropAnimation -> e
+    cn.perfectgames.jewels.animation.ScoreBoardAnimation scoreBoardAnimation -> f
+    cn.perfectgames.amaze.animation.AnimationCollection collection -> g
+    cn.perfectgames.amaze.graphics.Layers animationLayers -> h
+    cn.perfectgames.jewels.model.Playground this$0 -> i
+    cn.perfectgames.amaze.graphics.Layers getAnimationLayers() -> a
+    cn.perfectgames.amaze.animation.AnimationCollection getAsCollection() -> b
+    void animationFinished(cn.perfectgames.amaze.animation.Animation) -> a
+    void animationEventHappened$3d19e96a(cn.perfectgames.amaze.animation.Animation) -> b
+cn.perfectgames.jewels.model.Playground$DrawingMetrics -> cn.perfectgames.jewels.model.e:
+    android.graphics.RectF pg -> a
+    float size -> b
+    float bsize -> c
+    android.graphics.Bitmap[] original_blocks -> d
+    android.graphics.Bitmap[] sized_blocks -> e
+    android.graphics.Paint paint -> f
+    java.lang.String blockStyle -> g
+    int[] score_colors -> h
+    android.content.Context context -> i
+    cn.perfectgames.jewels.model.Playground this$0 -> j
+    void setRectF(android.graphics.RectF) -> a
+    void draw(android.graphics.Canvas) -> a
+    void drawPlayground(android.graphics.Canvas) -> b
     void init(android.content.Context) -> a
-    void onSizeChanged(boolean) -> a
-    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
-    android.graphics.Paint access$0(com.devinxutal.tetris.model.Playground$DrawingMetrics) -> a
+    void onSizeChanged$1385ff() -> a
+    float access$0(cn.perfectgames.jewels.model.Playground$DrawingMetrics) -> a
+    int[] access$1(cn.perfectgames.jewels.model.Playground$DrawingMetrics) -> b
+    android.graphics.RectF access$2(cn.perfectgames.jewels.model.Playground$DrawingMetrics) -> c
+cn.perfectgames.jewels.model.Playground$Elimination -> cn.perfectgames.jewels.model.c:
+    boolean vertical -> a
+    int position -> b
+    int start -> c
+    int end -> d
+    cn.perfectgames.jewels.model.Playground this$0 -> e
+cn.perfectgames.jewels.model.Position -> cn.perfectgames.jewels.model.a:
+    int row -> a
+    int col -> b
 cn.perfectgames.jewels.model.SavablePlayground -> cn.perfectgames.jewels.model.SavablePlayground:
-    int[][] playground -> a
-    com.devinxutal.tetris.model.SavablePlayground$SavableBlock activeBlock -> b
-    int offsetX -> c
-    int offsetY -> d
-    java.util.List blockQueue -> e
-    com.devinxutal.tetris.model.SavablePlayground$SavableBlock holdBlock -> f
-    boolean holdUsed -> g
-    cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel -> h
-    boolean finished -> i
-    com.devinxutal.tetris.model.SavablePlayground$SavableBlock create(cn.perfectgames.jewels.model.Block) -> a
-com.devinxutal.tetris.model.SavablePlayground$SavableBlock -> com.devinxutal.tetris.model.c:
-    com.devinxutal.tetris.model.Block$BlockType blockType -> a
-    int current -> b
-    cn.perfectgames.jewels.model.SavablePlayground this$0 -> c
+    int offsetX -> a
+    int offsetY -> b
+    boolean holdUsed -> c
+    boolean finished -> d
 cn.perfectgames.jewels.model.ScoreAndLevel -> cn.perfectgames.jewels.model.ScoreAndLevel:
     int level -> a
     int score -> b
-    int totalLines -> c
-    int currentLines -> d
-    int addScore(int) -> a
+    int bonusX -> c
+    int addScore(cn.perfectgames.jewels.model.Playground$Elimination,int) -> a
     int getScore() -> a
     int getLevel() -> b
-    int getGoalRemained() -> c
-    java.lang.String getScroreString(int) -> b
 cn.perfectgames.jewels.record.SavableLocalScore -> cn.perfectgames.jewels.record.SavableLocalScore:
     java.lang.String player -> a
     int score -> b
@@ -438,7 +499,7 @@ cn.perfectgames.jewels.record.SavableLocalScores -> cn.perfectgames.jewels.recor
     void trim() -> a
     java.util.List getLocalRankForList$28cc3cee() -> b
     void addScore(java.lang.String,int) -> a
-cn.perfectgames.jewels.sound.SoundManager -> com.devinxutal.tetris.d.a:
+cn.perfectgames.jewels.sound.SoundManager -> cn.perfectgames.jewels.c.a:
     android.media.SoundPool soundpool -> a
     android.app.Activity activity -> b
     android.media.MediaPlayer mediaPlayer -> c
@@ -459,11 +520,7 @@ cn.perfectgames.jewels.sound.SoundManager -> com.devinxutal.tetris.d.a:
     void stopBackgroundMusic() -> c
     void pauseBackgroundMusic() -> d
     void playButtonClickEffect() -> e
-    void playMoveEffect() -> f
-    void playTurnEffect() -> g
-    void playDownEffect() -> h
-    void playEliminationEffect() -> i
-cn.perfectgames.jewels.ui.ControlView -> com.devinxutal.tetris.ui.b:
+cn.perfectgames.jewels.ui.ControlView -> cn.perfectgames.jewels.ui.a:
     cn.perfectgames.jewels.control.GameController controller -> a
     java.util.List listeners -> b
     float SLIDE_THRESHOLD -> c
@@ -472,121 +529,86 @@ cn.perfectgames.jewels.ui.ControlView -> com.devinxutal.tetris.ui.b:
     android.widget.ImageButton soundButton -> f
     android.widget.ImageButton musicButton -> g
     cn.perfectgames.jewels.cfg.Configuration config -> h
-    boolean dragMode -> i
-    float slotGap -> j
-    float dragDeltaX -> k
-    boolean inDrag -> l
-    float oldX -> m
-    float oldY -> n
-    float oldXforDrag -> o
-    float oldYforDrag -> p
-    float dragDeltaY -> q
+    float oldX -> i
+    float oldY -> j
+    float oldXForPlayground -> k
+    float oldYForPlayground -> l
     void onSizeChanged(int,int,int,int) -> onSizeChanged
-    void setButtons(java.util.List) -> a
     void setGameController(cn.perfectgames.jewels.control.GameController) -> a
-    void init() -> a
+    void init() -> b
     void onDraw(android.graphics.Canvas) -> onDraw
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
     void onLayout(boolean,int,int,int,int) -> onLayout
     android.widget.ImageButton makeButton(int,int) -> a
     void onClick(android.view.View) -> onClick
-    void resetControlButtons() -> b
-    boolean addGameControlListener(com.devinxutal.tetris.ui.ControlView$GameControlListener) -> a
-    void notifyButtonClicked(int) -> a
-    void notifyButtonReleased(int) -> b
-    void configurationChanged(cn.perfectgames.jewels.cfg.Configuration) -> a
-com.devinxutal.tetris.ui.ControlView$GameControlListener -> com.devinxutal.tetris.ui.c:
-    void buttonClickced(int) -> a
-    void buttonPressed(int) -> b
-    void buttonReleased(int) -> c
-cn.perfectgames.jewels.ui.Pair -> com.devinxutal.tetris.ui.a:
-    int x -> a
-    int y -> b
+    void resetControlButtons() -> c
+    boolean addGameControlListener(cn.perfectgames.jewels.ui.ControlView$GameControlListener) -> a
+    void notifyButtonClicked$13462e() -> d
+    void notifyButtonReleased(int) -> a
+    void configurationChanged$710d5161() -> a
+cn.perfectgames.jewels.ui.ControlView$GameControlListener -> cn.perfectgames.jewels.ui.b:
+    void buttonPressed(int) -> a
+    void buttonReleased(int) -> b
 cn.perfectgames.jewels.ui.PlaygroundView -> cn.perfectgames.jewels.ui.PlaygroundView:
     java.lang.String TAG -> a
-    cn.perfectgames.jewels.control.GameController gameController -> b
-    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics dm -> c
-    cn.perfectgames.jewels.model.Playground playground -> d
-    boolean finishedAlreadyNotified -> e
-    boolean finishingAlreadyNotified -> f
-    boolean notifyFinished -> g
-    cn.perfectgames.jewels.ui.ControlView controlView -> h
+    cn.perfectgames.jewels.ui.PlaygroundView$AnimationThread animationThread -> b
+    cn.perfectgames.jewels.control.GameController gameController -> c
+    cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics dm -> d
+    cn.perfectgames.jewels.model.Playground playground -> e
+    boolean finishedAlreadyNotified -> f
+    boolean finishingAlreadyNotified -> g
+    boolean notifyFinished -> h
+    cn.perfectgames.jewels.ui.ControlView controlView -> i
     void setGameController(cn.perfectgames.jewels.control.GameController) -> a
     cn.perfectgames.jewels.model.Playground getPlayground() -> a
     void setPlayground(cn.perfectgames.jewels.model.Playground) -> a
-    void init() -> d
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void paint(android.graphics.Canvas) -> a
+    void init() -> c
+    void surfaceChanged(android.view.SurfaceHolder,int,int,int) -> surfaceChanged
+    void surfaceCreated(android.view.SurfaceHolder) -> surfaceCreated
+    void surfaceDestroyed(android.view.SurfaceHolder) -> surfaceDestroyed
     void onMeasure(int,int) -> onMeasure
     void onSizeChanged(int,int,int,int) -> onSizeChanged
     void onWindowVisibilityChanged(int) -> onWindowVisibilityChanged
-    void reset() -> b
-    void onDraw(android.graphics.Canvas) -> onDraw
     void setControlView(cn.perfectgames.jewels.ui.ControlView) -> a
-    void configurationChanged$8fc215e() -> c
-    com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics access$0(cn.perfectgames.jewels.ui.PlaygroundView) -> a
-    cn.perfectgames.jewels.model.Playground access$1(cn.perfectgames.jewels.ui.PlaygroundView) -> b
-    cn.perfectgames.jewels.ui.ControlView access$2(cn.perfectgames.jewels.ui.PlaygroundView) -> c
-com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics -> com.devinxutal.tetris.ui.d:
+    void configurationChanged$710d5161() -> b
+    cn.perfectgames.jewels.model.Playground access$0(cn.perfectgames.jewels.ui.PlaygroundView) -> a
+    void access$1(cn.perfectgames.jewels.ui.PlaygroundView) -> b
+cn.perfectgames.jewels.ui.PlaygroundView$AnimationThread -> cn.perfectgames.jewels.ui.d:
+    boolean flag -> a
+    boolean paused -> b
+    int interval -> c
+    int sleep -> d
+    long timeElapsed -> e
+    long lastTime -> f
+    cn.perfectgames.jewels.ui.PlaygroundView this$0 -> g
+    void run() -> run
+cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics -> cn.perfectgames.jewels.ui.c:
     int[] STAR_COLORS -> a
     android.graphics.Paint paint -> b
     cn.perfectgames.jewels.util.BitmapUtil bitmapUtil -> c
     android.graphics.Bitmap bgBitmap -> d
     android.graphics.Canvas canvas -> e
-    android.graphics.Bitmap gridBitmap -> f
-    android.graphics.Rect playgroundRect -> g
-    android.graphics.Rect next1BlockRect -> h
-    android.graphics.Rect next2BlockRect -> i
-    android.graphics.Rect next3BlockRect -> j
-    android.graphics.Rect holdBlockRect -> k
-    cn.perfectgames.jewels.control.ButtonInfo holdButtonInfo -> l
-    android.graphics.RectF scoreRect -> m
-    android.graphics.RectF levelRect -> n
-    android.graphics.RectF goalRect -> o
-    android.graphics.Typeface font -> p
-    android.graphics.Typeface scoreFont -> q
-    android.graphics.Typeface labelFont -> r
-    android.graphics.Typeface statFont -> s
-    float lineHeight -> t
-    float scoreLineHeight -> u
-    float labelLineHeight -> v
-    float statLineHeight -> w
-    float scoreSize -> x
-    int scoreDigits -> y
-    float scoreGap -> z
-    float labelSize -> A
-    float labelGap -> B
-    float statSize -> C
-    int statDigits -> D
-    float textStrokeScale -> E
-    cn.perfectgames.jewels.ui.PlaygroundView this$0 -> F
+    android.graphics.Rect playgroundRect -> f
+    android.graphics.Rect infoAreaRect -> g
+    android.graphics.Rect controlBarRect -> h
+    android.graphics.Typeface font -> i
+    android.graphics.Typeface scoreFont -> j
+    android.graphics.Typeface labelFont -> k
+    android.graphics.Typeface statFont -> l
+    int scoreDigits -> m
+    int statDigits -> n
+    float textStrokeScale -> o
+    cn.perfectgames.jewels.ui.PlaygroundView this$0 -> p
     void onSizeChanged(int,int) -> a
     void resetPaint() -> a
     void regenerateBackground() -> b
-    void determinAndDrawControlButtons(android.graphics.Canvas) -> a
-    float determineScoreSize(float,float) -> a
-    float determineLabelSize(float,float) -> b
-    float determineStatSize(float,float) -> c
-    android.graphics.Paint access$0(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> a
-    android.graphics.Bitmap access$1(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> b
-    android.graphics.Rect access$2(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> c
-    android.graphics.Rect access$3(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> d
-    android.graphics.Rect access$4(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> e
-    android.graphics.Rect access$5(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> f
-    android.graphics.Rect access$6(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> g
-    float access$7(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> h
-    android.graphics.Typeface access$8(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> i
-    float access$9(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> j
-    int access$10(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> k
-    android.graphics.RectF access$11(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> l
-    float access$12(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> m
-    float access$13(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> n
-    android.graphics.Typeface access$14(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> o
-    android.graphics.RectF access$15(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> p
-    float access$16(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> q
-    android.graphics.RectF access$17(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> r
-    float access$18(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> s
-    android.graphics.Typeface access$19(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> t
-    void access$20(com.devinxutal.tetris.ui.PlaygroundView$DrawingMetrics) -> u
-cn.perfectgames.jewels.util.AdDaemon -> com.devinxutal.tetris.b.j:
+    android.graphics.Paint access$0(cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics) -> a
+    android.graphics.Bitmap access$1(cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics) -> b
+    android.graphics.Rect access$2(cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics) -> c
+    void access$3(cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics) -> d
+cn.perfectgames.jewels.util.AdDaemon -> cn.perfectgames.jewels.b.e:
     android.app.Activity activity -> a
     android.view.View adView -> b
     android.os.Handler handler -> c
@@ -619,36 +641,36 @@ cn.perfectgames.jewels.util.AdDaemon -> com.devinxutal.tetris.b.j:
     long access$12(cn.perfectgames.jewels.util.AdDaemon) -> j
     java.lang.Runnable access$13(cn.perfectgames.jewels.util.AdDaemon) -> k
     void access$14(cn.perfectgames.jewels.util.AdDaemon) -> l
-    void access$15$53949221(cn.perfectgames.jewels.util.AdDaemon) -> m
-com.devinxutal.tetris.util.AdDaemon$1 -> com.devinxutal.tetris.b.e:
+    void access$15$3088f4bc(cn.perfectgames.jewels.util.AdDaemon) -> m
+cn.perfectgames.jewels.util.AdDaemon$1 -> cn.perfectgames.jewels.b.f:
     cn.perfectgames.jewels.util.AdDaemon this$0 -> a
     void run() -> run
-com.devinxutal.tetris.util.AdDaemon$1$1 -> com.devinxutal.tetris.b.a:
-    com.devinxutal.tetris.util.AdDaemon$1 this$1 -> a
+cn.perfectgames.jewels.util.AdDaemon$1$1 -> cn.perfectgames.jewels.b.b:
+    cn.perfectgames.jewels.util.AdDaemon$1 this$1 -> a
     void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
     void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
     void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
-com.devinxutal.tetris.util.AdDaemon$2 -> com.devinxutal.tetris.b.d:
+cn.perfectgames.jewels.util.AdDaemon$2 -> cn.perfectgames.jewels.b.h:
     cn.perfectgames.jewels.util.AdDaemon this$0 -> a
     void onClick(android.view.View) -> onClick
-com.devinxutal.tetris.util.AdDaemon$3 -> com.devinxutal.tetris.b.c:
+cn.perfectgames.jewels.util.AdDaemon$3 -> cn.perfectgames.jewels.b.i:
     cn.perfectgames.jewels.util.AdDaemon this$0 -> a
-    void onDismissScreen$51b51722() -> a
+    void onDismissScreen$51b51722() -> c
     void onFailedToReceiveAd$7b642d25(com.google.ads.AdRequest$ErrorCode) -> a
-    void onLeaveApplication$51b51722() -> b
-    void onPresentScreen$51b51722() -> c
-    void onReceiveAd$51b51722() -> d
-com.devinxutal.tetris.util.AdDaemon$AnimationRunnable -> com.devinxutal.tetris.b.l:
+    void onLeaveApplication$51b51722() -> d
+    void onPresentScreen$51b51722() -> b
+    void onReceiveAd$51b51722() -> a
+cn.perfectgames.jewels.util.AdDaemon$AnimationRunnable -> cn.perfectgames.jewels.b.j:
     long serialID -> a
     cn.perfectgames.jewels.util.AdDaemon this$0 -> b
     void run() -> run
-com.devinxutal.tetris.util.AdDaemon$RequestRunnable -> com.devinxutal.tetris.b.g:
+cn.perfectgames.jewels.util.AdDaemon$RequestRunnable -> cn.perfectgames.jewels.b.k:
     long serialID -> a
     cn.perfectgames.jewels.util.AdDaemon this$0 -> b
     void run() -> run
-cn.perfectgames.jewels.util.AdUtil -> com.devinxutal.tetris.b.k:
+cn.perfectgames.jewels.util.AdUtil -> cn.perfectgames.jewels.b.g:
     void determineAd(android.app.Activity,int) -> a
-cn.perfectgames.jewels.util.BitmapUtil -> com.devinxutal.tetris.b.n:
+cn.perfectgames.jewels.util.BitmapUtil -> cn.perfectgames.jewels.b.d:
     android.content.Context context -> a
     android.graphics.Bitmap background -> b
     android.graphics.Bitmap aimButton1 -> c
@@ -665,40 +687,30 @@ cn.perfectgames.jewels.util.BitmapUtil -> com.devinxutal.tetris.b.n:
     android.graphics.Bitmap screen -> n
     cn.perfectgames.jewels.util.BitmapUtil util -> o
     cn.perfectgames.jewels.util.BitmapUtil get(android.content.Context) -> a
+    cn.perfectgames.jewels.util.BitmapUtil get() -> a
     android.graphics.Bitmap getScreenBitmap(android.content.Context) -> b
-    android.graphics.Bitmap getAimButtonBitmap1() -> a
-    android.graphics.Bitmap getAimButtonBitmap2() -> b
-    android.graphics.drawable.Drawable getVerticalInfoBar() -> c
-    android.graphics.drawable.Drawable getHorizontalInfoBar() -> d
     void drawBackgroundBitmap(android.graphics.Canvas,int,int,android.graphics.Paint) -> a
-    android.graphics.Bitmap getArrowBitmap(int) -> a
-cn.perfectgames.jewels.util.MarketUtil -> com.devinxutal.tetris.b.o:
+    android.graphics.Bitmap getBitmap$2c4494f4() -> b
+    android.graphics.Bitmap getBitmap(java.lang.String) -> a
+cn.perfectgames.jewels.util.MarketUtil -> cn.perfectgames.jewels.b.m:
     int TARGET_MARKET -> a
     void openMarketForApp(android.app.Activity,java.lang.String) -> a
     void openMarketForAuthor(android.app.Activity,java.lang.String) -> b
-cn.perfectgames.jewels.util.MathUtil -> com.devinxutal.tetris.b.f:
+cn.perfectgames.jewels.util.MathUtil -> cn.perfectgames.jewels.b.a:
     double distance(double,double,double,double) -> a
-cn.perfectgames.jewels.util.PreferenceUtil -> com.devinxutal.tetris.b.i:
+cn.perfectgames.jewels.util.PreferenceUtil -> cn.perfectgames.jewels.b.l:
     java.lang.String getShowUpgradeNoticeStr(android.app.Activity) -> a
-cn.perfectgames.jewels.util.RandomUtil -> com.devinxutal.tetris.b.b:
-    java.util.Random r -> a
-cn.perfectgames.jewels.util.ScoreUtil -> com.devinxutal.tetris.b.m:
+cn.perfectgames.jewels.util.ScoreUtil -> cn.perfectgames.jewels.b.n:
     cn.perfectgames.jewels.record.SavableLocalScores loadLocalScores() -> a
-    void saveCubeState(java.lang.String,int) -> a
-cn.perfectgames.jewels.util.TextPainter -> com.devinxutal.tetris.b.h:
+cn.perfectgames.jewels.util.TextPainter -> cn.perfectgames.jewels.b.c:
     android.graphics.Paint textPaint -> a
     android.graphics.Paint strokePaint -> b
-    android.graphics.Paint getStrokePaint() -> a
     void setStrokeWidth(float) -> a
-    void setStrokeColor$13462e() -> b
-    void setTextColor$13462e() -> c
+    void setStrokeColor$13462e() -> a
+    void setTextColor(int) -> a
     void setTextSize(float) -> b
     void setTypeface(android.graphics.Typeface) -> a
-    void drawFittedText(android.graphics.Canvas,java.lang.String,android.graphics.RectF,float) -> a
-    void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float) -> a
-    void drawText(android.graphics.Canvas,java.lang.String,float,float,float) -> b
-    void drawCharacter(android.graphics.Canvas,java.lang.String,float,float) -> a
-    float measureTextWidth(java.lang.String,float) -> a
+    void drawCenteredText(android.graphics.Canvas,java.lang.String,android.graphics.Rect) -> a
 com.google.ads.Ad -> com.google.ads.a:
 com.google.ads.AdActivity -> com.google.ads.AdActivity:
     java.lang.Object a -> a
@@ -722,11 +734,11 @@ com.google.ads.AdActivity -> com.google.ads.AdActivity:
     void onPrepared(android.media.MediaPlayer) -> onPrepared
     void onWindowFocusChanged(boolean) -> onWindowFocusChanged
 com.google.ads.AdListener -> com.google.ads.d:
-    void onReceiveAd$51b51722() -> d
+    void onReceiveAd$51b51722() -> a
     void onFailedToReceiveAd$7b642d25(com.google.ads.AdRequest$ErrorCode) -> a
-    void onPresentScreen$51b51722() -> c
-    void onDismissScreen$51b51722() -> a
-    void onLeaveApplication$51b51722() -> b
+    void onPresentScreen$51b51722() -> b
+    void onDismissScreen$51b51722() -> c
+    void onLeaveApplication$51b51722() -> d
 com.google.ads.AdRequest -> com.google.ads.c:
     com.google.ads.AdRequest$Gender a -> a
     java.lang.String b -> b
@@ -949,7 +961,7 @@ com.google.gson.ak -> com.google.a.bf:
 com.google.gson.al -> com.google.a.bg:
     boolean shouldSkipField(com.google.gson.FieldAttributes) -> a
     boolean shouldSkipClass(java.lang.Class) -> a
-com.google.gson.an -> com.google.a.ax:
+com.google.gson.an -> com.google.a.aw:
     com.google.gson.ExclusionStrategy a -> a
     com.google.gson.k b -> b
     com.google.gson.ObjectNavigator a(com.google.gson.ao) -> a
@@ -1105,7 +1117,7 @@ com.google.gson.f$c -> com.google.a.ba:
 com.google.gson.f$d -> com.google.a.av:
     java.lang.String toString() -> toString
     com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
-com.google.gson.f$e -> com.google.a.aw:
+com.google.gson.f$e -> com.google.a.ax:
     java.lang.String toString() -> toString
     com.google.gson.JsonElement serialize(java.lang.Object,java.lang.reflect.Type,com.google.gson.JsonSerializationContext) -> a
 com.google.gson.f$f -> com.google.a.as:

@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.util.TextPainter;
@@ -36,6 +37,7 @@ public class ScoreAnimation extends AbstractAnimation {
 		scores = new Bitmap[maxNum];
 		canvas = new Canvas();
 		painter = new TextPainter();
+		painter.setTypeface(Typeface.DEFAULT_BOLD);
 		paint = new Paint();
 		paint.setAntiAlias(true);
 	}
@@ -56,7 +58,7 @@ public class ScoreAnimation extends AbstractAnimation {
 
 		rect = new Rect(0,0,scoreW, scoreH);
 		painter.setStrokeColor(Color.DKGRAY);
-		float textSize  =size*2.5f/5;
+		float textSize  =size*2.8f/5;
 		painter.setStrokeWidth(textSize*0.1f);
 		painter.setTextSize(textSize);
 		
@@ -64,8 +66,12 @@ public class ScoreAnimation extends AbstractAnimation {
 	@Override
 	protected void innerDraw(Canvas canvas, int current, int total) {
 		int i = 0;
-		paint.setAlpha( 255 * (total - current)/total);
-		float ydelta = 2* jewelSize* current/total; 
+		int alpha = 255;
+		if(current > total/3){
+			alpha = 255 * (total-current)/(total- total/3);
+		}
+		paint.setAlpha( alpha);
+		float ydelta = 1.1f* jewelSize* current/total; 
 		for(ScoreEntry se: scoreEntries){
 			canvas.drawBitmap(scores[i], se.position.x - rect.width()/2, se.position.y - rect.height()/2 - ydelta, paint);
 			i++;

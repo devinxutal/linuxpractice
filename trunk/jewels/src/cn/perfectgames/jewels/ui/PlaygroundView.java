@@ -1,29 +1,26 @@
 package cn.perfectgames.jewels.ui;
 
-import java.io.IOException;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.Paint.Style;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
-import cn.perfectgames.jewels.control.ButtonInfo;
 import cn.perfectgames.jewels.control.GameController;
 import cn.perfectgames.jewels.model.Playground;
 import cn.perfectgames.jewels.util.BitmapUtil;
+import cn.perfectgames.jewels.util.TextPainter;
 
 public class PlaygroundView extends SurfaceView implements
 		SurfaceHolder.Callback {
@@ -83,8 +80,26 @@ public class PlaygroundView extends SurfaceView implements
 		canvas.drawRGB(0, 0, 0);
 
 		if (playground != null) {
+			//canvas.clipRect(new Rect(100, 100, 200, 200));
 			canvas.drawBitmap(dm.bgBitmap, 0, 0, dm.paint);
 			playground.draw(canvas);
+			
+			
+			// draw progress indicator
+			int len = (int)(playground.getScoreAndLevel().getProgress()*(dm.pgRect.width()-dm.pgind.getIntrinsicHeight()))+dm.pgind.getIntrinsicHeight();
+			Rect indRect = new Rect(dm.pgRect.left, dm.pgRect.top, dm.pgRect.left+len,dm.pgRect.bottom );
+			dm.pgind.setBounds(indRect);
+			dm.pgind.draw(canvas);
+			
+			// draw stats
+			dm.painter.setTypeface(dm.font);
+			dm.painter.setTextColor(Color.GREEN);
+			dm.painter.setStrokeColor(Color.GRAY);
+			dm.painter.setTextSize(dm.statDigitSize);
+			dm.painter.setStrokeWidth(dm.statDigitSize * dm.textStrokeScale);
+			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getMaxCombo(), new RectF(dm.comboRect), TextPainter.Align.Left);
+			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getMaxChain(), new RectF(dm.chainRect), TextPainter.Align.Left);
+			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getBonusX()+"X", new RectF(dm.bonusRect), TextPainter.Align.Left);
 		}
 
 	}
@@ -205,6 +220,7 @@ public class PlaygroundView extends SurfaceView implements
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) { // repaint();
 		super.onSizeChanged(w, h, oldw, oldh);
 		if (this.getPlayground() != null) {
+			
 			dm.onSizeChanged(w, h);
 		}
 	}
@@ -236,55 +252,46 @@ public class PlaygroundView extends SurfaceView implements
 				Color.rgb(150, 0, 100), Color.rgb(0, 0, 150) };
 
 		private Paint paint;
+		private TextPainter painter = new TextPainter();
 		private BitmapUtil bitmapUtil;
 		private Bitmap bgBitmap;
+		
+		private Drawable pgbar;
+		private Drawable pgind;
+		private Rect pgRect;
+		
 		private Canvas canvas;
-		private Bitmap gridBitmap;
 		private Rect playgroundRect;
-		private Rect next1BlockRect;
-		private Rect next2BlockRect;
-		private Rect next3BlockRect;
-		private Rect holdBlockRect;
-		private ButtonInfo holdButtonInfo;
-		private RectF scoreRect;
-		private RectF levelRect;
-		private RectF goalRect;
+		private Rect infoAreaRect;
+		private Rect controlBarRect;
+		
+		private Rect comboRect;
+		private Rect chainRect;
+		private Rect bonusRect;
+		private Rect comboLabelRect;
+		private Rect chainLabelRect;
+		private Rect bonusLabelRect;
+		private Rect scoreRect;
 		private Typeface font;
-		private Typeface scoreFont;
-		private Typeface labelFont;
-		private Typeface statFont;
-		private float lineHeight;
-		private float scoreLineHeight;
-		private float labelLineHeight;
-		private float statLineHeight;
 
-		private float scoreSize;
-		private int scoreDigits = 6;
-		private float scoreGap;
-		private float labelSize;
-		private float labelGap;
-		private float statSize;
-		private int statDigits = 3;
+		private float statLabelSize;
+		private float statDigitSize;
 		private float textStrokeScale = 0.15f;
 
 		public DrawingMetrics() {
 			font = Typeface.createFromAsset(getContext().getAssets(),
-					Constants.FONT_PATH_MONO);
-			scoreFont = statFont = font;
-			labelFont = Typeface.create("Arial Black", Typeface.NORMAL);
+					Constants.FONT_PATH_COMIC);
 			paint = new Paint();
 			paint.setAntiAlias(true);
 			paint.setTextSize(18);
 			bitmapUtil = BitmapUtil.get(getContext());
-			try {
-				gridBitmap = BitmapFactory.decodeStream(getContext()
-						.getAssets().open("images/block_bg.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 
 			bgBitmap = bitmapUtil.getScreenBitmap(getContext());
 			canvas = new Canvas(bgBitmap);
+			// progress bar
+			pgbar = getResources().getDrawable(R.drawable.pg_bar);
+			pgind = getResources().getDrawable(R.drawable.pg_ind);
 		}
 
 		public void onSizeChanged(int w, int h) {
@@ -311,25 +318,84 @@ public class PlaygroundView extends SurfaceView implements
 		private void regenerateBackground() {
 			BitmapUtil util = BitmapUtil.get(getContext());
 
-			// this.bgBitmap = bitmapUtil.getBackgroundBitmap(getWidth(),
-			// getHeight());
 			resetPaint();
 			bitmapUtil.drawBackgroundBitmap(canvas, getWidth(), getHeight(),
 					paint);
 			resetPaint();
 			playground.getDM().drawPlayground(canvas);
 			resetPaint();
+			//draw control bar
+			paint.setColor(Color.BLACK);
+			paint.setAlpha(80);
+			canvas.drawRect(controlBarRect, paint);
+			//draw progress bar
+			this.pgbar.setBounds(pgRect);
+			pgbar.draw(canvas);
+			//draw combo and chain label
+			
+			painter.setTypeface(font);
+			painter.setTextColor(Color.rgb(255, 200, 100));
+			painter.setStrokeColor(Color.GRAY);
+			painter.setTextSize(statLabelSize);
+			dm.painter.setStrokeWidth(statLabelSize * dm.textStrokeScale);
+			painter.drawText(canvas, "CHAIN", new RectF(chainLabelRect), TextPainter.Align.Left);
+			painter.drawText(canvas, "COMBO", new RectF(comboLabelRect), TextPainter.Align.Left);
+			painter.drawText(canvas, "BONUS", new RectF(bonusLabelRect), TextPainter.Align.Left);
+		
 		}
 
 		private void determinePlaygroundLocation() {
 			int height = getHeight();
 			int width = getWidth();
 			int size = Math.min(height, width);
-			size = Playground.NUM_COLS * ((int) (size / Playground.NUM_COLS));
-			RectF rect = new RectF((width - size) / 2, (height - size) / 2,
-					(width - size) / 2 + size, (height - size) / 2 + size);
+			int l, t, w, h;
+			// control bar
+			this.controlBarRect = new Rect(0,0,width,getContext().getResources().getDrawable(R.drawable.icon_pause).getIntrinsicHeight());
+			
+			// info area
+			int heightOfInfoArea = Math.min(height - size - controlBarRect.height(), width/3);
+			this.playgroundRect = new Rect((width - size)/2, heightOfInfoArea+controlBarRect.height(), (width+size)/2, heightOfInfoArea+size+controlBarRect.height());
+			RectF rect = new RectF(playgroundRect.left, playgroundRect.top, playgroundRect.right, playgroundRect.bottom);
 			playground.getDM().setRectF(rect);
+			
+			
+			
+			this.infoAreaRect = new Rect(0,controlBarRect.height(),width, heightOfInfoArea + controlBarRect.height());
+			
+			// progress bar
 
+			int pgbarWidth = width;
+			int pgbarHeight = this.pgbar.getIntrinsicHeight();
+			this.pgRect = new Rect((width - pgbarWidth)/2, infoAreaRect.bottom - pgbarHeight - 5, (width+pgbarWidth)/2, infoAreaRect.bottom - 5);
+			
+			// score bar 
+			w = width/2; h = Math.min(infoAreaRect.height() - pgRect.height(),w/2);
+			l = width/2; t = infoAreaRect.top+5;
+			this.scoreRect = new Rect(width/2, infoAreaRect.top, width, pgRect.top);
+			getPlayground().getAnimations().scoreBoardAnimation.setRect(scoreRect);
+			
+			// combo and chain and bonus
+			l = 5; t = infoAreaRect.top+5; w = width/2 - 10; h = Math.min(w/2, infoAreaRect.height() - pgRect.height());
+			int labelW = w*6/10; int numW = w - labelW;
+			int H = h/3;
+			h = H*7/10;
+			
+			comboLabelRect = new Rect(l, t,l+ labelW,  t+h);
+			comboRect = new Rect(l+labelW + 5, t,l+ labelW+numW,  t+h);
+
+			t+=H;
+			chainLabelRect =  new Rect(l, t,l+ labelW,  t+h);
+			chainRect = new Rect(l+labelW + 5, t,l+ labelW+numW,  t+h);
+			
+			t+=H;
+			bonusLabelRect =  new Rect(l, t,l+ labelW,  t+h);
+			bonusRect = new Rect(l+labelW + 5, t,l+ labelW+numW,  t+h);
+			
+			this.painter.setTypeface(font);
+			this.statLabelSize = Math.min(this.painter.determineTextSize("COMBO", new RectF(comboLabelRect)),this.painter.determineTextSize("BONUS", new RectF(comboLabelRect))) ;
+			this.statDigitSize = 1.1f* statLabelSize;
+			
+			
 		}
 	}
 

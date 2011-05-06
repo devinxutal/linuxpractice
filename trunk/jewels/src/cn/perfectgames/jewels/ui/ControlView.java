@@ -25,14 +25,8 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	private GameController controller;
 	private List<GameControlListener> listeners = new LinkedList<GameControlListener>();
 
-	public static final int BTN_PLAY = 3300;
-	public static final int BTN_LEFT = 3301;
-	public static final int BTN_RIGHT = 3302;
-	public static final int BTN_TURN = 3303;
-	public static final int BTN_DOWN = 3304;
-	public static final int BTN_DIRECT_DOWN = 3305;
-	public static final int BTN_HOLD = 3306;
 
+	public static final int BTN_PAUSE = 3400;
 	public static final int BTN_SOUND = 3401;
 	public static final int BTN_MUSIC = 3402;
 
@@ -44,6 +38,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	private List<ImageButton> controlButtons = new LinkedList<ImageButton>();
 	private ImageButton soundButton;
 	private ImageButton musicButton;
+	private ImageButton pauseButton;
 
 	private Configuration config;
 	public ControlView(Context context) {
@@ -72,8 +67,11 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	private void init() {
 		this.soundButton = makeButton(BTN_SOUND, R.drawable.icon_sound_on);
 		this.musicButton = makeButton(BTN_MUSIC, R.drawable.icon_music_on);
+		this.pauseButton = makeButton(BTN_PAUSE, R.drawable.icon_pause);
 		controlButtons.add(soundButton);
 		controlButtons.add(musicButton);
+		
+		this.addView(pauseButton);
 		for (ImageButton b : controlButtons) {
 			this.addView(b);
 		}
@@ -85,9 +83,6 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 		super.onDraw(canvas);
 	}
 
-	private float oldX = -1;
-	private float oldY = -1;
-
 	private float oldXForPlayground = -1;
 	private float oldYForPlayground = -1;
 	public boolean onTouch(View arg0, MotionEvent event) {
@@ -96,31 +91,6 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			
 			float x = event.getX();
 			float y = event.getY();
-			boolean notified = false;
-			boolean touchOnButton = false;
-			for (ButtonInfo button : buttons) {
-				if (MathUtil.distance(x, y, button.x, button.y) <= button.radius
-						&& !notified) {
-					if (!button.pressed) {
-						button.pressed = true;
-						touchOnButton = true;
-						this.notifyButtonPressed(button.buttonID);
-					}
-					notified = true;
-				} else {
-					if (button.pressed) {
-						button.pressed = false;
-						this.notifyButtonReleased(button.buttonID);
-					}
-				}
-			}
-			if (touchOnButton) {
-				oldX = -1;
-				oldY = -1;
-			} else {
-				oldX = x;
-				oldY = y;
-			}
 
 			//for playground
 			oldXForPlayground = x;
@@ -132,53 +102,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			
 			float x = event.getX();
 			float y = event.getY();
-			for (ButtonInfo button : buttons) {
-				if (button.pressed) {
-					button.pressed = false;
-					if (MathUtil.distance(x, y, button.x, button.y) <= button.radius) {
-						this.notifyButtonReleased(button.buttonID);
-						// this.notifyButtonClicked(button.buttonID);
-					} else {
-						this.notifyButtonReleased(button.buttonID);
-					}
-				}
-
-			}
-			if (oldX >= 0 && oldY >= 0) {
-				float deltaX = x - oldX;
-				float deltaY = y - oldY;
-				Log.v(TAG, deltaX + "\t" + deltaY);
-				if (Math.abs(deltaX) > 0.8 * Math.abs(deltaY)) { // left and
-					// right
-					if (Math.abs(deltaX) > SLIDE_THRESHOLD
-							|| Math.abs(deltaY) > SLIDE_THRESHOLD) {
-						if (deltaX > 0) {
-							this.notifyButtonClicked(BTN_RIGHT);
-						} else {
-							this.notifyButtonClicked(BTN_LEFT);
-						}
-					} else {
-						this.notifyButtonClicked(BTN_TURN);
-					}
-
-				} else {
-					if (Math.abs(deltaY) > 1.8 * SLIDE_THRESHOLD) {
-						if (deltaY > 0) {
-							this.notifyButtonClicked(BTN_DIRECT_DOWN);
-						} else {
-							this.notifyButtonClicked(BTN_TURN);
-						}
-					} else {
-						this.notifyButtonClicked(BTN_TURN);
-					}
-				}
-
-			}
-			oldX = -1;
-			oldY = -1;
-			
-
-
+		
 			//for playground
 			if(this.controller != null){
 				controller.getPlayground().flip(x - oldXForPlayground, y - oldYForPlayground);
@@ -200,18 +124,23 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 		int height = b - t;
 		int len = width > height ? height : width;
 		int btn_len = soundButton.getMeasuredWidth();
-		int margin = 5;
+		int marginH = 5;
+		int marginV = 0;
 		int padding = 5;
 		if (Math.min(width, height) < 300) {
-			margin = padding = 1;
+			marginV = padding = 1;
 		}
 		int index = -1;
+		
+		// layout pause button
+		pauseButton.layout(marginH,marginV,marginH+btn_len, marginV+btn_len);
+		// layout right aligned buttons
 		for (ImageButton btn : controlButtons) {
 			index++;
 			btn.layout(
-					width - (margin + index * (padding + btn_len) + btn_len),
-					margin, width - (margin + index * (padding + btn_len)),
-					margin + btn_len);
+					width - (marginH + index * (padding + btn_len) + btn_len),
+					marginV, width - (marginH + index * (padding + btn_len)),
+					marginV + btn_len);
 
 		}
 	}

@@ -31,12 +31,18 @@ cn.perfectgames.jewels.ui.PlaygroundView
 cn.perfectgames.jewels.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet,int)
 com.heyzap.sdk.HeyzapButton
 com.heyzap.sdk.HeyzapButton: HeyzapButton(android.content.Context,android.util.AttributeSet,int)
+cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState[] values()
+cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState valueOf(java.lang.String)
+cn.perfectgames.jewels.activities.PlaygroundActivity$State: cn.perfectgames.jewels.activities.PlaygroundActivity$State[] values()
+cn.perfectgames.jewels.activities.PlaygroundActivity$State: cn.perfectgames.jewels.activities.PlaygroundActivity$State valueOf(java.lang.String)
 com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy[] values()
 com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy valueOf(java.lang.String)
-com.devinxutal.tetris.util.BitmapUtil$Direction: com.devinxutal.tetris.util.BitmapUtil$Direction[] values()
-com.devinxutal.tetris.util.BitmapUtil$Direction: com.devinxutal.tetris.util.BitmapUtil$Direction valueOf(java.lang.String)
+cn.perfectgames.jewels.util.BitmapUtil$Direction: cn.perfectgames.jewels.util.BitmapUtil$Direction[] values()
+cn.perfectgames.jewels.util.BitmapUtil$Direction: cn.perfectgames.jewels.util.BitmapUtil$Direction valueOf(java.lang.String)
 com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
 com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command[] values()
+cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command valueOf(java.lang.String)
 com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier[] values()
 com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier valueOf(java.lang.String)
 u$a: u$a[] values()
@@ -45,18 +51,15 @@ a$a: a$a[] values()
 a$a: a$a valueOf(java.lang.String)
 com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy[] values()
 com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy valueOf(java.lang.String)
-cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command[] values()
-cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command valueOf(java.lang.String)
-com.devinxutal.tetris.activities.PlaygroundActivity$State: com.devinxutal.tetris.activities.PlaygroundActivity$State[] values()
-com.devinxutal.tetris.activities.PlaygroundActivity$State: com.devinxutal.tetris.activities.PlaygroundActivity$State valueOf(java.lang.String)
-com.devinxutal.tetris.model.Block$BlockType: com.devinxutal.tetris.model.Block$BlockType[] values()
-com.devinxutal.tetris.model.Block$BlockType: com.devinxutal.tetris.model.Block$BlockType valueOf(java.lang.String)
+cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State[] values()
+cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State valueOf(java.lang.String)
 com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender[] values()
 com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender valueOf(java.lang.String)
 com.google.ads.AdActivity
-cn.perfectgames.jewels.activities.AboutActivity
-cn.perfectgames.jewels.activities.MainActivity
+cn.perfectgames.jewels.activities.AnimationTestActivity
 cn.perfectgames.jewels.activities.WorldRankActivity
+cn.perfectgames.jewels.activities.MainActivity
+cn.perfectgames.jewels.activities.AboutActivity
 cn.perfectgames.jewels.activities.PlaygroundActivity
 cn.perfectgames.jewels.activities.HighScoreActivity
 cn.perfectgames.jewels.activities.LocalRankActivity

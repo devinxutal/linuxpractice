@@ -4,19 +4,18 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.Bitmap.Config;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 import cn.perfectgames.jewels.R;
-import cn.perfectgames.jewels.ui.ControlView;
 
 public class BitmapUtil {
 	public static final String TAG = "BitmapUtil";
@@ -24,13 +23,7 @@ public class BitmapUtil {
 	private Bitmap background;
 	private Bitmap aimButton1;
 	private Bitmap aimButton2;
-	private Bitmap arrowDown;
-	private Bitmap arrowDirectDown;
-	private Bitmap arrowRotate;
-	private Bitmap arrowHold;
-	private Bitmap arrowLeft;
-	private Bitmap arrowRight;
-
+	
 	private Paint paint;
 	private Drawable hInfoBar;
 	private Drawable vInfoBar;
@@ -61,19 +54,7 @@ public class BitmapUtil {
 			aimButton2 = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.aim_button2);
 
-			arrowDown = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_down);
-			arrowDirectDown = BitmapFactory.decodeResource(context
-					.getResources(), R.drawable.arrow_direct_down);
-			arrowRotate = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_rotate);
-			arrowHold = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_hold);
-			arrowLeft = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_left);
-			arrowRight = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.arrow_right);
-
+		
 			hInfoBar = context.getResources()
 					.getDrawable(R.drawable.h_info_bar);
 
@@ -125,32 +106,6 @@ public class BitmapUtil {
 	public Drawable getHorizontalInfoBar() {
 		return hInfoBar;
 	}
-
-	// public Bitmap getBackgroundBitmap(int width, int height) {
-	// int w = background.getWidth();
-	// int h = background.getWidth();
-	// float scale = Math.min(w / (float) width, h / (float) height);
-	// int ww = (int) (width * scale);
-	// int hh = (int) (height * scale);
-	// int x = (w - ww) / 2;
-	// int y = (h - hh) / 2;
-	// Log.v("BitmapUtil", "getBackgroundBitmap called, width height: "
-	// + width + "," + height + ". w h: " + w + "," + h);
-	// Bitmap bg = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-	// Canvas canvas = new Canvas(bg);
-	// paint.reset();
-	// paint.setAntiAlias(true);
-	// canvas.drawBitmap(background, new Rect(x, y, x + ww, y + hh), new Rect(
-	// 0, 0, width, height), paint);
-	// paint.setAntiAlias(false);
-	// paint.setColor(Color.argb(50, 255, 255, 255));
-	//
-	// for (int i = 0; i < height; i += 2) {
-	// canvas.drawLine(0, i, width, i, paint);
-	// }
-	// return bg;
-	// }
-
 	public void drawBackgroundBitmap(Canvas canvas, int width, int height,
 			Paint paint) {
 		int w = background.getWidth();
@@ -166,45 +121,30 @@ public class BitmapUtil {
 		canvas.drawBitmap(background, new Rect(x, y, x + ww, y + hh), new Rect(
 				0, 0, width, height), paint);
 
-		paint.setColor(Color.argb(50, 255, 255, 255));
-		for (int i = 0; i < height; i += 2) {
-			canvas.drawLine(0, i, width, i, paint);
-		}
 	}
 
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
 	}
 
-	public Bitmap getArrowBitmap(int id) {
-		Bitmap arrowBitmap = null;
-		switch (id) {
-		case ControlView.BTN_TURN:
-			arrowBitmap = arrowRotate;
-			break;
-		case ControlView.BTN_HOLD:
-			arrowBitmap = arrowHold;
-			break;
-		case ControlView.BTN_DOWN:
-			arrowBitmap = arrowDown;
-			break;
-		case ControlView.BTN_DIRECT_DOWN:
-			arrowBitmap = arrowDirectDown;
-			break;
-		case ControlView.BTN_LEFT:
-			arrowBitmap = arrowLeft;
-			break;
-		case ControlView.BTN_RIGHT:
-			arrowBitmap = arrowRight;
-			break;
-		default:
-			arrowBitmap = arrowDown;
-		}
-		return arrowBitmap;
-	}
-
 	public Bitmap getBitmap(int id) {
 		return BitmapFactory.decodeResource(context.getResources(), id);
 	}
+	
+	public Bitmap getBitmap(String assetPath){
+		try {
+			return BitmapFactory.decodeStream(context.getAssets().open(
+			assetPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
+	public float dipToPixel(float dip){
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 
+                (float) dip, this.context.getResources().getDisplayMetrics());
+
+	}
 }

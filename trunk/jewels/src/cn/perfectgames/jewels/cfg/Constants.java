@@ -39,5 +39,9 @@ public class Constants {
 
 	public static final String ADMOB_PUBLISHER_ID = "a14d70b38c4cc74";
 	// public static final String ADMOB_PUBLISHER_ID = "a14d5bb6038850d";
+	//public static final String SCORELOOP_SECRET = "I1mpr5hwWh3yIEEaJXCizB6FS4gnvhrVTSSpuM0uGhoDNZU60ykWGw==";
+
+	
+	public static final String SCORELOOP_SECRET = "WZ379LahAF1m34CjmmK3X97AyH7+cLdY3UrRzWRsZjuQklB0Ai/Sdg==";
 
 }
