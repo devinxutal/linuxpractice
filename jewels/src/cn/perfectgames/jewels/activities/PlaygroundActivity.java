@@ -18,7 +18,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -42,10 +41,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -69,8 +68,12 @@ import cn.perfectgames.jewels.util.PreferenceUtil;
 import cn.perfectgames.jewels.util.ScoreUtil;
 
 import com.heyzap.sdk.HeyzapLib;
+import com.scoreloop.client.android.core.controller.RequestController;
+import com.scoreloop.client.android.core.controller.RequestControllerObserver;
+import com.scoreloop.client.android.core.controller.ScoreController;
+import com.scoreloop.client.android.core.model.Score;
 
-public class PlaygroundActivity extends Activity {
+public class PlaygroundActivity extends BaseActivity {
 	public static final String TAG = "PlaygroundActivity";
 
 	public static final int PREFERENCE_REQUEST_CODE = 0x100;
@@ -505,6 +508,12 @@ public class PlaygroundActivity extends Activity {
 				}
 				int score = gameController.getPlayground().getScoreAndLevel()
 						.getScore();
+				Score sc = new Score((double)score, null);
+				sc.setMode(0);
+				final ScoreController scoreController = new ScoreController(new ScoreSubmitObserver());
+				scoreController.submitScore(sc);
+				showDialog(DIALOG_PROGRESS);
+				
 				if (score > 0) {
 					ScoreUtil.saveCubeState("Player", score);
 				}
@@ -899,6 +908,27 @@ public class PlaygroundActivity extends Activity {
 	private void customizeButton(Button button) {
 		button.setTypeface(typeface);
 		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
+	}
+
+	
+
+	private class ScoreSubmitObserver implements RequestControllerObserver {
+
+		
+		public void requestControllerDidFail(final RequestController requestController, final Exception exception) {
+			dismissDialog(DIALOG_PROGRESS);
+			if (isRequestCancellation(exception)) {
+				return;
+			}
+
+			showToast("Score submission failed due to unknown problem");
+		}
+
+		
+		public void requestControllerDidReceiveResponse(final RequestController requestController) {
+			dismissDialog(DIALOG_PROGRESS);
+			showToast("Your score has been submitted successfully.");
+		}
 	}
 
 }

@@ -78,16 +78,17 @@ public class LeaderBoardActivity extends Activity implements OnClickListener,
 	}
 
 	private void loadNextRange() {
-		if (alreadyLoading()) {
+		if (alreadyLoading() || !scoresController.hasNextRange()) {
 			return;
 		}
 		showDialog(DIALOG_PROGRESS);
 		currentOperation = CurrentOperationType.other;
+		
 		scoresController.loadNextRange();
 	}
 
 	private void loadPreviousRange() {
-		if (alreadyLoading()) {
+		if (alreadyLoading() || !scoresController.hasPreviousRange()) {
 			return;
 		}
 		showDialog(DIALOG_PROGRESS);
