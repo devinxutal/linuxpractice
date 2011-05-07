@@ -14,7 +14,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.util.BitmapUtil;
@@ -83,7 +82,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			for (ButtonInfo button : buttons) {
 				Log.v(TAG, "check button: " + button.bound);
 				if (button.bound.contains((int) x, (int) y) && !notified) {
-					if (!button.pressed) {
+					if (!button.pressed && button.enabled) {
 						button.pressed = true;
 						Log.v(TAG, "notify button pressed");
 						this.notifyButtonPressed(button.id);
@@ -92,7 +91,9 @@ public class LeaderBoardView extends View implements OnTouchListener {
 				} else {
 					if (button.pressed) {
 						button.pressed = false;
-						this.notifyButtonReleased(button.id);
+						if (button.enabled) {
+							this.notifyButtonReleased(button.id);
+						}
 					}
 				}
 			}
@@ -104,18 +105,31 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			for (ButtonInfo button : buttons) {
 				if (button.pressed) {
 					button.pressed = false;
-					if (button.bound.contains((int) x, (int) y)) {
-						this.notifyButtonReleased(button.id);
-						this.notifyButtonClicked(button.id);
-						Log.v(TAG, "notify button clicked");
-					} else {
-						this.notifyButtonReleased(button.id);
+					if (button.enabled) {
+						if (button.bound.contains((int) x, (int) y)) {
+							this.notifyButtonReleased(button.id);
+							this.notifyButtonClicked(button.id);
+						} else {
+							this.notifyButtonReleased(button.id);
+						}
 					}
 				}
 			}
 		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
-			Log.v(TAG, "on touch move");
+			float x = event.getX();
+			float y = event.getY();
+			for (ButtonInfo button : buttons) {
+				if (button.pressed) {
+					if (button.bound.contains((int) x, (int) y)) {
+						// do nothing
+					} else {
+						button.pressed = false;
+						if (button.enabled) {
+							this.notifyButtonReleased(button.id);
+						}
+					}
+				}
+			}
 		}
 		return true;
 	}
@@ -158,10 +172,15 @@ public class LeaderBoardView extends View implements OnTouchListener {
 		public boolean enabled = true;
 
 		public void draw(Canvas canvas, Paint paint) {
-			paint.setColor(Color.rgb(150, 100, 255));
+			paint.setColor(dm.color_btn_normal);
 			paint.setAlpha(255);
 			paint.setAntiAlias(true);
 			paint.setShadowLayer(4, 1, 1, Color.BLACK);
+			if (!this.enabled) {
+				paint.setColor(dm.color_btn_disabled);
+			} else if (this.pressed) {
+				paint.setColor(dm.color_btn_focused);
+			}
 			float r = getRound();
 			canvas.drawRoundRect(new RectF(bound), r, r, paint);
 			if (text != null) {
@@ -195,9 +214,13 @@ public class LeaderBoardView extends View implements OnTouchListener {
 
 		private final int color_layer_mask = Color.argb(100, 0, 0, 0);
 		private final int color_scoreboard = Color.argb(200, 0, 0, 0);
-		private final int color_scoreboard_light = Color.argb(200, 80,80,80);
+		private final int color_scoreboard_light = Color.argb(200, 80, 80, 80);
 		private final int color_scoreboard_highlight = Color.rgb(100, 0, 150);
 		private final int color_shaddow = Color.DKGRAY;
+
+		private final int color_btn_normal = Color.rgb(150, 100, 255);
+		private final int color_btn_focused = Color.rgb(200, 180, 255);
+		private final int color_btn_disabled = Color.rgb(100, 100, 100);
 
 		public DrawingMetrics() {
 			paint = new Paint();
@@ -422,17 +445,20 @@ public class LeaderBoardView extends View implements OnTouchListener {
 		for (ButtonListener l : listeners) {
 			l.buttonClickced(id);
 		}
+		this.invalidate();
 	}
 
 	public void notifyButtonPressed(int id) {
 		for (ButtonListener l : listeners) {
 			l.buttonPressed(id);
 		}
+		this.invalidate();
 	}
 
 	public void notifyButtonReleased(int id) {
 		for (ButtonListener l : listeners) {
 			l.buttonReleased(id);
 		}
+		this.invalidate();
 	}
 }
