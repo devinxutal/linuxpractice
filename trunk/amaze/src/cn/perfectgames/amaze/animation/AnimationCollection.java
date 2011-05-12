@@ -19,4 +19,27 @@ public class AnimationCollection {
 			a.step();
 		}
 	}
+	
+
+	public boolean addAnimationListener(AnimationListener l){
+		for(Animation a: animations){
+			a.addAnimationListener(l);
+		}
+		return true;
+	}
+
+	public boolean removeAnimationListener(AnimationListener l){
+		for(Animation a: animations){
+			a.removeAnimationListener(l);
+		}
+		return true;
+	}
+
+	public void clearAnimationListener(){
+		for(Animation a: animations){
+			a.clearAnimationListener();
+		}
+	}
+	
+	
 }

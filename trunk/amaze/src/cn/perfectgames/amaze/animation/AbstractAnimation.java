@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 public abstract class AbstractAnimation implements Animation {
 	private int totalFrames;
@@ -15,6 +14,10 @@ public abstract class AbstractAnimation implements Animation {
 
 	private boolean inAnimation = false;
 	private List<AnimationListener> listeners;
+	
+	private boolean alwaysShow = false;
+
+	private int loopCounter = 0;
 
 	public boolean step() {
 		if (!inAnimation) {
@@ -22,7 +25,16 @@ public abstract class AbstractAnimation implements Animation {
 		}
 		if (currentFrame < totalFrames) {
 			currentFrame++;
-			return true;
+			onStep(currentFrame, totalFrames);
+			if (currentFrame == totalFrames) {
+				loopCounter++;
+				if (loop == Animation.INFINITE || loop > loopCounter) {
+					currentFrame = 0;
+				}
+			}
+			if (currentFrame != totalFrames) {
+				return true;
+			}
 		}
 		if (inAnimation) {
 			inAnimation = false;
@@ -32,7 +44,11 @@ public abstract class AbstractAnimation implements Animation {
 	}
 
 	public AbstractAnimation(int totalFrames) {
+		this(totalFrames, false);
+	}
+	public AbstractAnimation(int totalFrames, boolean alwaysShow){
 		this.totalFrames = totalFrames;
+		this.alwaysShow = alwaysShow;
 		this.currentFrame = -1;
 	}
 
@@ -47,14 +63,15 @@ public abstract class AbstractAnimation implements Animation {
 	public void reset() {
 		currentFrame = -1;
 		inAnimation = false;
+		loopCounter = 0;
 	}
 
 	public void draw(Canvas canvas) {
-		Log.v("AbstractAnimation", this.getClass().getName()
-				+ " is about to draw: visible-" + visible + ", inAnimation-"
-				+ inAnimation);
-		if (visible && inAnimation) {
-			innerDraw(canvas);
+		
+		if (visible && inAnimation && currentFrame >= 0) {
+			innerDraw(canvas, currentFrame, totalFrames);
+		}else if (alwaysShow){
+			innerDraw(canvas, -1, totalFrames);
 		}
 	}
 
@@ -119,8 +136,31 @@ public abstract class AbstractAnimation implements Animation {
 	}
 
 	protected void notifyAnimationFinished() {
-
+		if (listeners != null) {
+			for (AnimationListener l : listeners) {
+				l.animationFinished(this);
+			}
+		}
 	}
 
-	protected abstract void innerDraw(Canvas canvas);
+	protected void notifyAnimationEventHappened(int eventID) {
+		if (listeners != null) {
+			for (AnimationListener l : listeners) {
+				l.animationEventHappened(this, eventID);
+			}
+		}
+	}
+
+	protected void changeTotalFrames(int frames) {
+		if (!inAnimation) {
+			this.totalFrames = frames;
+			this.currentFrame = -1;
+		}
+	}
+
+	protected abstract void innerDraw(Canvas canvas, int current, int total);
+
+	protected void onStep(int current, int total) {
+
+	}
 }
