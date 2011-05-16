@@ -12,4 +12,8 @@ public class Position {
 	public boolean conjuncted(Position other){
 		return (row == other.row && Math.abs(col - other.col) == 1) ||(col == other.col && Math.abs(row - other.row) == 1) ;
 	}
+	
+	public String toString(){
+		return "["+row+","+col+"]";
+	}
 }

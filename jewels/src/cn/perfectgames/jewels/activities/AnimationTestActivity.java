@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.perfectgames.amaze.animation.Animation;
+import cn.perfectgames.jewels.animation.HintAnimation;
 import cn.perfectgames.jewels.animation.SelectionAnimation;
 import cn.perfectgames.jewels.cfg.Configuration;
 
@@ -30,8 +30,8 @@ public class AnimationTestActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		testSelectionAnimation();
-		
+		//testSelectionAnimation();
+		testHintAnimation();
 		
 	}
 	
@@ -40,6 +40,12 @@ public class AnimationTestActivity extends Activity {
 		ani.setSize(40);
 		ani.setLocation(0,0);
 		testAnimation(ani, 40 ,2);
+	}
+	public void testHintAnimation(){
+		HintAnimation ani = new HintAnimation();
+		ani.setSize(40);
+		ani.setLocation(0,0);
+		testAnimation(ani, 40, 1);
 	}
 	
 	public void testAnimation(Animation animation, int canvasSize, int loop){

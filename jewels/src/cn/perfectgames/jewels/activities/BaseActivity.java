@@ -27,6 +27,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.view.Window;
 import android.widget.Toast;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 
 import com.scoreloop.client.android.core.controller.RequestCancelledException;
@@ -42,7 +43,15 @@ abstract class BaseActivity extends Activity {
 	static final int DIALOG_INFO = 13;
 	static final int DIALOG_PROGRESS = 12;
 	String infoDialogMessage;
+	private String progressDialogMessage;
+	
+	protected void setProgressDialogMessage(String msg){
+		progressDialogMessage = msg;
+	}
 
+	protected GoJewelsApplication getGoJewelsApplication(){
+		return (GoJewelsApplication)getApplication();
+	}
 	protected void showToast (final int resId){
 		this.showToast(resId, 3000);
 	}
@@ -81,7 +90,12 @@ abstract class BaseActivity extends Activity {
 	protected Dialog createProgressDialog() {
 		final ProgressDialog dialog = new ProgressDialog(this);
 		dialog.setCancelable(false);
+		if(progressDialogMessage != null){
+			dialog.setMessage(progressDialogMessage);
+		}else{
 		dialog.setMessage(getString(R.string.progress_message_default));
+		
+		}
 		return dialog;
 	}
 

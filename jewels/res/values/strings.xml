@@ -25,7 +25,7 @@
 	<string name="common_game_over">GAME OVER</string>
 	<string name="common_help">Help</string>
 
-	<string name="progress_message_default">Retrieving data, please wait...</string>
+	<string name="progress_message_default">Please wait...</string>
 	
 	<string name="common_high_score">High Scores</string>
 	
