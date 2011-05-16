@@ -20,15 +20,6 @@
 		<activity android:name="cn.perfectgames.jewels.activities.AboutActivity"
 			android:label="@string/common_about" android:screenOrientation="landscape">
 		</activity>
-		<activity android:name="cn.perfectgames.jewels.activities.HighScoreActivity"
-			android:label="@string/common_about">
-		</activity>
-		<activity android:name="cn.perfectgames.jewels.activities.LocalRankActivity"
-			android:label="@string/common_about">
-		</activity>
-		<activity android:name="cn.perfectgames.jewels.activities.WorldRankActivity"
-			android:label="@string/common_about">
-		</activity>
 		<activity android:name="cn.perfectgames.jewels.activities.AnimationTestActivity"
 			android:label="@string/common_about">
 		</activity>

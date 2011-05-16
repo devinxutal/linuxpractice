@@ -22,17 +22,6 @@ public class Preferences extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		int resid = this.getIntent().getIntExtra("pref_res", R.xml.preferences);
 		addPreferencesFromResource(resid);
-		setScreenOrientation();
 	}
 
-	private void setScreenOrientation() {
-		String att = Configuration.config().getScreenOrientation();
-		if (att.equals("auto")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		} else if (att.equals("portrait")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else if (att.equals("landscape")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		}
-	}
 }

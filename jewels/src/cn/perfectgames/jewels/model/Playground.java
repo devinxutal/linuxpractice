@@ -30,6 +30,7 @@ import cn.perfectgames.jewels.animation.ScoreBoardAnimation;
 import cn.perfectgames.jewels.animation.SelectionAnimation;
 import cn.perfectgames.jewels.animation.SwapAnimation;
 import cn.perfectgames.jewels.cfg.Configuration;
+import cn.perfectgames.jewels.sound.SoundManager;
 
 public class Playground {
 	public static final String TAG = "Playground";
@@ -62,6 +63,8 @@ public class Playground {
 
 	private int hintDelay = 0;
 
+	private SoundManager soundManager;
+	
 	public Playground(GameMode mode) {
 		this.gameMode = mode;
 		jewels = new Jewel[rows][cols];
@@ -96,6 +99,9 @@ public class Playground {
 		Log.v(TAG, "Animation state after elimination : " + animationState);
 	}
 
+	public void setSoundManager(SoundManager manager){
+		this.soundManager = manager;
+	}
 	public void draw(Canvas canvas) {
 		dm.draw(canvas);
 		if (animations != null) {
@@ -122,6 +128,9 @@ public class Playground {
 				tempJewel.copy(j(p1));
 				j(p1).copy(j(p2));
 				j(p2).copy(tempJewel);
+				
+				// play sound
+				soundManager.playIllegalSwapEffect();
 			}
 		}
 	}
@@ -179,6 +188,9 @@ public class Playground {
 			animations.jewelDropAnimation.setDropJewels(jewels, initPos,
 					destPos);
 			animations.jewelDropAnimation.start();
+			
+			// play sound 
+			this.soundManager.playDropEffect();
 		}
 
 	}
@@ -277,6 +289,17 @@ public class Playground {
 			animations.eliminationAnimation.start();
 
 			animations.scoreAnimation.start();
+			
+
+			// play sound 
+			int firstEliminationType = 0;
+			Elimination e = eliminations.get(0);
+			if(e.vertical){
+				firstEliminationType = j(e.start, e.position).getType();
+			}else{
+				firstEliminationType = j(e.position, e.start).getType();
+			}
+			this.soundManager.playEliminationEffect(firstEliminationType);
 		}
 	}
 
@@ -587,7 +610,7 @@ public class Playground {
 	}
 
 	public void configurationChanged(Configuration config) {
-
+		dm.configurationChanged(config);
 	}
 
 	private Position map(float x, float y) {
@@ -740,7 +763,7 @@ public class Playground {
 
 		// paint
 		private Paint paint;
-		private String blockStyle = "jewels";
+		private String jewelStyle = "jewels";
 
 		// score color
 		private int score_colors[] = new int[] { Color.rgb(255, 255, 255),// white
@@ -810,13 +833,13 @@ public class Playground {
 
 			Log.v(TAG, "playground dm - init");
 			this.context = context;
-			// TODO blockStyle = Configuration.config().getBlockStyle();
+			jewelStyle = Configuration.config().getJewelStyle();
 			for (int i = 0; i < 7; i++) {
 				try {
 
 					original_blocks[i] = BitmapFactory.decodeStream(context
 							.getAssets().open(
-									"images/jewels/" + blockStyle + "/" + i
+									"images/jewels/" + jewelStyle + "/" + i
 											+ ".png"));
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -852,15 +875,15 @@ public class Playground {
 		}
 
 		public void configurationChanged(Configuration config) {
-			String bs = config.getBlockStyle();
-			if (!bs.equals(blockStyle) && context != null) {
-				blockStyle = bs;
+			String bs = config.getJewelStyle();
+			if (!bs.equals(jewelStyle) && context != null) {
+				jewelStyle = bs;
 				for (int i = 0; i < 7; i++) {
 					try {
 						original_blocks[i] = BitmapFactory.decodeStream(context
 								.getAssets().open(
-										"blocks/" + blockStyle + "/" + i
-												+ ".png"));
+										"images/jewels/" + jewelStyle + "/" + i
+										+ ".png"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

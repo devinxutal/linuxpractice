@@ -62,9 +62,9 @@ public class HintAnimation extends AbstractAnimation {
 		}
 		float spin = (float) 180 * current / total;
 		paint.setAlpha(alpha);
-		Log.v("HintAnimation", "alpha, rotate, scale:" + alpha + " " + spin
-				+ " " + scale);
-		Log.v("HintAnimation", "position: " + x + "," + y);
+		// Log.v("HintAnimation", "alpha, rotate, scale:" + alpha + " " + spin
+		//		+ " " + scale);
+		// Log.v("HintAnimation", "position: " + x + "," + y);
 
 		matrix.reset();
 		matrix.postRotate(spin, spark1.getWidth() / 2f, spark1.getHeight() / 2f);

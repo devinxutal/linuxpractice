@@ -78,22 +78,6 @@
 	<string name="pref_ent_sound_effects_summary">
 	</string>
 	
-	<string name="pref_ent_block_shadow">Block Shadow</string>
-	<string name="pref_ent_block_shadow_summary">Show a shadow of current block where it will drop. 
-	</string>
-	
-	<string name="pref_ent_swap_rotate_hold">Swap HOLD and ROTATE</string>
-	<string name="pref_ent_swap_rotate_hold_summary">Swap HOLD and ROTATE buttons
-	</string>
-
-	<string name="pref_ent_swap_quick_direct">Swap QUICK and DIRECT</string>
-	<string name="pref_ent_swap_quick_direct_summary">Swap Quick Down and Direct Down buttons
-	</string>
-	
-	<string name="pref_ent_enable_drag_mode">Enable Drag Mode</string>
-	<string name="pref_ent_enable_drag_mode_summary">In Drag Mode, block will move left/right multiple slots following your finger flip, not just one slot
-	</string>
-	
 	<string name="pref_ent_screen_orientation">Screen Orientation</string>
 	<string name="pref_ent_screen_orientation_summary">Set screen orientation while playing</string>
 	<string-array name="pref_ent_screen_orientation_entries">
@@ -107,15 +91,15 @@
 		<item>landscape</item>
 	</string-array>
 
-	<string name="pref_ent_block_style">Block Style</string>
-	<string name="pref_ent_block_style_summary">Select the style of blocks</string>
-	<string-array name="pref_ent_block_style_entries">
+	<string name="pref_ent_jewel_style">Jewel Style</string>
+	<string name="pref_ent_jewel_style_summary">Select the style of jewels</string>
+	<string-array name="pref_ent_jewel_style_entries">
 		<item>Classic</item>
-		<item>Crystal</item>
+		<item>Animals</item>
 	</string-array>
-	<string-array name="pref_ent_block_style_values">
+	<string-array name="pref_ent_jewel_style_values">
 		<item>classic</item>
-		<item>crystal</item>
+		<item>animal</item>
 	</string-array>
 
 	<string name="pref_ent_center_button_action">Central Button Action</string>

@@ -21,6 +21,7 @@ import cn.perfectgames.amaze.record.LocalRecordManager;
 import cn.perfectgames.amaze.record.Record;
 import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
+import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.record.JScore;
 import cn.perfectgames.jewels.sound.SoundManager;
@@ -75,10 +76,13 @@ public class LeaderBoardActivity extends BaseActivity implements
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		setContentView(R.layout.highscore);
+		
 		leaderBoard = new LeaderBoardView(this);
 		leaderBoard.addButtonListener(this);
-		setContentView(leaderBoard);
+		((LinearLayout)this.findViewById(R.id.content_area)).addView(leaderBoard);
 
+		
 		userController = new UserController(new UserUpdateObserver());
 
 		//
@@ -93,6 +97,10 @@ public class LeaderBoardActivity extends BaseActivity implements
 		this.localRecordManager = GoJewelsApplication.getLocalRecordManager();
 		this.localRecordManager.setRangeLength(ITEMS_PER_PAGE);
 		this.localRecordManager.setGameMode(currentMode.ordinal());
+		
+		// ad 
+		adDaemon = new AdDaemon("highscore", this, this
+				.findViewById(Constants.ADVIEW_ID), adHandler);
 
 	}
 
@@ -100,6 +108,7 @@ public class LeaderBoardActivity extends BaseActivity implements
 	protected void onStart() {
 		updateButtonText();
 		loadListFromStart();
+		this.adDaemon.run();
 		super.onStart();
 	}
 
@@ -175,19 +184,19 @@ public class LeaderBoardActivity extends BaseActivity implements
 
 	@Override
 	protected void onDestroy() {
-		// adDaemon.stop();
+		adDaemon.stop();
 		super.onDestroy();
 		SoundManager.release();
 	}
 
 	@Override
 	protected void onPause() {
-		// adDaemon.stop();
+		adDaemon.stop();
 		super.onPause();
 	}
 
 	protected void onResume() {
-		// adDaemon.run();
+		adDaemon.run();
 		super.onResume();
 	}
 

@@ -7,9 +7,7 @@
 		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
 			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
 			android:defaultValue="true" />
-		<CheckBoxPreference android:title="@string/pref_ent_block_shadow"
-			android:summary="@string/pref_ent_block_shadow_summary" android:key="block_shadow"
-			android:defaultValue="true" />
+		<!-- 
 		<ListPreference android:title="@string/pref_ent_difficulty"
 			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
 			android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries"
@@ -19,36 +17,12 @@
 			android:key="screen_orientation" android:defaultValue="auto"
 			android:entries="@array/pref_ent_screen_orientation_entries"
 			android:entryValues="@array/pref_ent_screen_orientation_values" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_appearence">
-		<ListPreference android:title="@string/pref_ent_block_style"
-			android:summary="@string/pref_ent_block_style_summary" android:key="block_style"
-			android:defaultValue="classic" android:entries="@array/pref_ent_block_style_entries"
-			android:entryValues="@array/pref_ent_block_style_values" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_control">
-		<CheckBoxPreference android:title="@string/pref_ent_enable_drag_mode"
-			android:summary="@string/pref_ent_enable_drag_mode_summary"
-			android:key="enable_drag_mode" android:defaultValue="true" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_landscape_control">
-		<CheckBoxPreference android:title="@string/pref_ent_swap_rotate_hold"
-			android:summary="@string/pref_ent_swap_rotate_hold_summary"
-			android:key="swap_rotate_hold" android:defaultValue="false" />
-		<CheckBoxPreference android:title="@string/pref_ent_swap_quick_direct"
-			android:summary="@string/pref_ent_swap_quick_direct_summary"
-			android:key="swap_quick_direct" android:defaultValue="false" />
-		<!--
-			<cn.perfectgames.jewels.ui.CustomPreference android:key="flip_angle"
-			android:title="Flip Angle" android:summary="Customize the slide
-			angle" android:defaultValue="0.6" />
 		-->
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_portrait_control">
-		<ListPreference android:title="@string/pref_ent_center_button_action"
-			android:summary="@string/pref_ent_center_button_action_summary"
-			android:key="center_button_action" android:defaultValue="2"
-			android:entries="@array/pref_ent_center_button_action_entries"
-			android:entryValues="@array/pref_ent_center_button_action_values" />
+	<PreferenceCategory android:title="@string/pref_cat_appearence">
+		<ListPreference android:title="@string/pref_ent_jewel_style"
+			android:summary="@string/pref_ent_jewel_style_summary" android:key="jewel_style"
+			android:defaultValue="classic" android:entries="@array/pref_ent_jewel_style_entries"
+			android:entryValues="@array/pref_ent_jewel_style_values" />
 	</PreferenceCategory>
 </PreferenceScreen>

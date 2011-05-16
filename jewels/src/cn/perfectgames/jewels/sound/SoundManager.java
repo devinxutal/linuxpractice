@@ -14,6 +14,11 @@ import cn.perfectgames.jewels.cfg.Configuration;
 
 
 public class SoundManager {
+	public static final int STYLE_JEWEL =0;
+	public static final int STYLE_ANIMAL = 1;
+	
+	private int style = 0;
+	
 	private static final String TAG = "SoundManager";
 	private SoundPool soundpool;
 	private Activity activity;
@@ -24,6 +29,10 @@ public class SoundManager {
 	private int moveMusicID = -1;
 	private int downMusicID = -1;
 	private int eliminationMusicID = -1;
+	
+	private int[][] eliminationSounds = new int[2][7];
+	private int[] illigalSwapSounds = new int[2];
+	private int[] dropSounds = new int[2];
 
 	private float streamVolume = 1;
 
@@ -84,6 +93,17 @@ public class SoundManager {
 			this.downMusicID = soundpool.load(activity, R.raw.down, 10);
 			this.eliminationMusicID = soundpool.load(activity,
 					R.raw.elimination, 10);
+			
+			this.dropSounds[0] = this.dropSounds[1] = soundpool.load(activity, R.raw.drop_jewel,10);
+
+			this.illigalSwapSounds[0]= this.illigalSwapSounds[1] = soundpool.load(activity, R.raw.illegal_swap,10);
+			
+			int tmpId = soundpool.load(activity,R.raw.remove,10);
+			for(int i =0; i<2; i++){
+				for(int j = 0; j<7; j++){
+					eliminationSounds[i][j] = tmpId;
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -195,7 +215,39 @@ public class SoundManager {
 					0, 1);
 		}
 	}
+	
+	public void playIllegalSwapEffect(){
+		if(!Configuration.config().isSoundEffectsOn()){
+			return;
+		}
+		if(soundpool == null){
+			return;
+		}
+		soundpool.play(this.illigalSwapSounds[style], streamVolume, streamVolume, 1,0,1);
+	}
 
+	public void playDropEffect(){
+		if(!Configuration.config().isSoundEffectsOn()){
+			return;
+		}
+		if(soundpool == null){
+			return;
+		}
+		soundpool.play(this.dropSounds[style], streamVolume, streamVolume, 1,0,1);
+	}
+
+
+	public void playEliminationEffect(int type){
+		if(!Configuration.config().isSoundEffectsOn()){
+			return;
+		}
+		if(soundpool == null){
+			return;
+		}
+		soundpool.play(this.eliminationSounds[style][type], streamVolume, streamVolume, 1,0,1);
+	}
+
+	
 	private void internalRelease() {
 		if (soundpool != null) {
 			soundpool.release();
