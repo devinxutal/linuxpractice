@@ -16,12 +16,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import cn.perfectgames.jewels.cfg.Configuration;
+import cn.perfectgames.jewels.record.JScore;
 import cn.perfectgames.jewels.util.BitmapUtil;
 import cn.perfectgames.jewels.util.TextPainter;
 import cn.perfectgames.jewels.util.TextPainter.Align;
-
-import com.scoreloop.client.android.core.model.Score;
-import com.scoreloop.client.android.core.model.Session;
 
 public class LeaderBoardView extends View implements OnTouchListener {
 	public static final int BTN_SCOPE = 3300;
@@ -40,7 +38,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 
 	private DrawingMetrics dm = new DrawingMetrics();
 
-	private List<Score> scores = new LinkedList<Score>();
+	private List<JScore> scores = new LinkedList<JScore>();
 
 	private int itemNum = 10;
 
@@ -50,11 +48,16 @@ public class LeaderBoardView extends View implements OnTouchListener {
 		super(context);
 		this.config = Configuration.config();
 		this.setOnTouchListener(this);
+		dm.createButtons();
 	}
 
-	public void setScores(List<Score> scores) {
+	public void setScores(List<JScore> scores) {
 		this.scores.clear();
 		this.scores.addAll(scores);
+		this.invalidate();
+	}
+	public void clearScores(){
+		this.scores.clear();
 		this.invalidate();
 	}
 
@@ -148,6 +151,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 		if (b != null) {
 			b.text = text;
 		}
+		this.invalidate();
 	}
 
 	public void setButtonEnabled(int id, boolean enabled) {
@@ -155,6 +159,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 		if (b != null) {
 			b.enabled = enabled;
 		}
+		this.invalidate();
 	}
 
 	public void configurationChanged(Configuration config) {
@@ -267,7 +272,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			int index = 0;
 			drawScoreHeader(canvas, rect);
 			for (index = 0; index < itemNum; index++) {
-				Score score = null;
+				JScore score = null;
 				if (index < scores.size()) {
 					score = scores.get(index);
 				}
@@ -295,7 +300,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 
 		}
 
-		public void drawScore(Canvas canvas, int index, Rect rect, Score score) {
+		public void drawScore(Canvas canvas, int index, Rect rect, JScore score) {
 
 			Log.v(TAG, "Draw score: " + score);
 
@@ -307,10 +312,7 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			paint.setShadowLayer(0, 0, 0, 0);
 			float round = rect.height() / 4;
 
-			if (score != null
-					&& score.getUser() != null
-					&& score.getUser().equals(
-							Session.getCurrentSession().getUser())) {
+			if (score != null && score.isHighlight()) {
 				paint.setColor(color_scoreboard_highlight);
 				canvas.drawRoundRect(new RectF(rect), round, round, paint);
 			} else if (index % 2 == 0) {
@@ -327,16 +329,16 @@ public class LeaderBoardView extends View implements OnTouchListener {
 						rect.left + pad, rect.top, rect.right, rect.bottom),
 						TextPainter.Align.Left);
 				// draw name
-				if (score.getUser() != null) {
+				
 					painter.setTextSize(util.dipToPixel(12));
-					painter.drawText(canvas, score.getUser().getDisplayName(),
+					painter.drawText(canvas, score.getPlayer(),
 							new RectF(rect.left + rect.width() * 1 / 5,
 									rect.top, rect.right, rect.bottom),
 							TextPainter.Align.Left);
-				}
+			
 				// draw score
 				painter.setTextSize(util.dipToPixel(12));
-				painter.drawText(canvas, ("" + score.getResult().intValue()),
+				painter.drawText(canvas, ("" + score.getScore()),
 						new RectF(rect.right - rect.width() * 3 / 10, rect.top,
 								rect.right - pad, rect.bottom),
 						TextPainter.Align.Right);
@@ -360,40 +362,51 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			// button area
 			t = scoreArea.bottom + gapV;
 			buttonArea = new Rect(l, t, l + w, t + h);
-			recreateButtons();
+			adjustButtons();
 		}
 
-		public void recreateButtons() {
-			buttons.clear();
-			// selection area
+		public void adjustButtons() {
 			int gap = selectionArea.left;
 			int unit = (selectionArea.width() - 2 * gap) / 6;
-			buttons.add(this
-					.createSelectionButton(BTN_SCOPE, "Global",
-							new Rect(selectionArea.left, selectionArea.top,
-									selectionArea.left + 2 * unit,
-									selectionArea.bottom), null));
+			getButtonInfo(BTN_SCOPE).bound = new Rect(selectionArea.left,
+					selectionArea.top, selectionArea.left + 2 * unit,
+					selectionArea.bottom);
+
+			getButtonInfo(BTN_MODE).bound = new Rect(selectionArea.left + 2
+					* unit + gap, selectionArea.top, selectionArea.left + 2
+					* unit + gap + 3 * unit, selectionArea.bottom);
+			getButtonInfo(BTN_SCORELOOP).bound = new Rect(selectionArea.right
+					- unit, selectionArea.top, selectionArea.right,
+					selectionArea.bottom);
+
+			// buttons
+			int ids[] = new int[] { BTN_PREV, BTN_ME, BTN_TOP, BTN_NEXT };
+			int btn_w = (buttonArea.width() - 3 * gap) / 4;
+			for (int i = 0; i < 4; i++) {
+				getButtonInfo(ids[i]).bound = new Rect(buttonArea.left + i
+						* (gap + btn_w), buttonArea.top, buttonArea.left + i
+						* (gap + btn_w) + btn_w, buttonArea.bottom);
+			}
+		}
+
+		public void createButtons() {
+			buttons.clear();
+			Rect rect = new Rect();
+			buttons.add(this.createSelectionButton(BTN_SCOPE, "Global", rect,
+					null));
 
 			buttons.add(this.createSelectionButton(BTN_MODE, "Normal Mode",
-					new Rect(selectionArea.left + 2 * unit + gap,
-							selectionArea.top, selectionArea.left + 2 * unit
-									+ gap + 3 * unit, selectionArea.bottom),
+					rect, null));
+			buttons.add(this.createSelectionButton(BTN_SCORELOOP, "SL", rect,
 					null));
-			buttons.add(this.createSelectionButton(BTN_SCORELOOP, "SL",
-					new Rect(selectionArea.right - unit, selectionArea.top,
-							selectionArea.right, selectionArea.bottom), null));
 
 			// buttons
 			int ids[] = new int[] { BTN_PREV, BTN_ME, BTN_TOP, BTN_NEXT };
 			Drawable drawables[] = new Drawable[] { null, null, null, null };
 			String texts[] = new String[] { "<", "Me", "Top", ">" };
-			int btn_w = (buttonArea.width() - 3 * gap) / 4;
 			for (int i = 0; i < 4; i++) {
-				buttons.add(this.createNavigationButton(ids[i], texts[i],
-						new Rect(buttonArea.left + i * (gap + btn_w),
-								buttonArea.top, buttonArea.left + i
-										* (gap + btn_w) + btn_w,
-								buttonArea.bottom), drawables[i]));
+				buttons.add(this.createNavigationButton(ids[i], texts[i], rect,
+						drawables[i]));
 			}
 
 		}

@@ -6,19 +6,19 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.control.ButtonInfo;
 import cn.perfectgames.jewels.control.GameController;
 import cn.perfectgames.jewels.sound.SoundManager;
-import cn.perfectgames.jewels.util.MathUtil;
 
 public class ControlView extends LinearLayout implements OnTouchListener,
 		OnClickListener {
@@ -39,6 +39,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	private ImageButton soundButton;
 	private ImageButton musicButton;
 	private ImageButton pauseButton;
+	private TextView modeText;
 
 	private Configuration config;
 	public ControlView(Context context) {
@@ -62,6 +63,8 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 
 	public void setGameController(GameController controller) {
 		this.controller = controller;
+		modeText.setText(controller.getPlayground().getGameMode().toString().toUpperCase());
+		this.invalidate();
 	}
 
 	private void init() {
@@ -76,6 +79,11 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			this.addView(b);
 		}
 		this.setOnTouchListener(this);
+		
+		this.modeText = new TextView(getContext());
+		this.modeText.setTextColor(Color.WHITE);
+		this.modeText.setShadowLayer(2,1,1, Color.YELLOW);
+		this.addView(modeText);
 	}
 
 	@Override
@@ -143,6 +151,13 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 					marginV + btn_len);
 
 		}
+		
+		// layout mode text
+		modeText.setTextSize(btn_len /2);
+		modeText.measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		int hh = modeText.getMeasuredHeight();
+		int ww = modeText.getMeasuredWidth();
+		modeText.layout((width -ww)/2, marginV+(btn_len - hh)/2, (width+ww)/2, marginV+(btn_len + hh)/2);
 	}
 
 	private ImageButton makeButton(int id, int resid) {

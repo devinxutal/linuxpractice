@@ -25,6 +25,8 @@ import java.util.List;
 
 import android.app.Application;
 import android.util.Log;
+import cn.perfectgames.amaze.record.LocalRecordManager;
+import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.scoreloop.ScoreloopManager;
 
 import com.scoreloop.client.android.core.model.Score;
@@ -32,8 +34,26 @@ import com.scoreloop.client.android.core.model.User;
 
 public class GoJewelsApplication extends Application {
 
+	
+	private static GameMode gameMode = GameMode.Normal;
+	
+	private static LocalRecordManager localRecordManager;
+	
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+
+	public static void setGameMode(GameMode gameMode) {
+		gameMode = gameMode;
+	}
+	
+	public static LocalRecordManager getLocalRecordManager(){
+		return localRecordManager;
+	}
+
 	private static Score score;
 	private static List<User> users;
+	
 	
 	
 	static Score getScore() { // pass data from GamePlayActivity to GameResultActivity
@@ -70,5 +90,6 @@ public class GoJewelsApplication extends Application {
 		Log.v("GoJewelsApplication", "Start Up Initialization");
 		ScoreloopManager.init(this.getApplicationContext());
 		
+		localRecordManager = new LocalRecordManager(getApplicationContext());
 	}
 }

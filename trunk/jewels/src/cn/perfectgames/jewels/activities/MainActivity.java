@@ -30,10 +30,10 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -45,7 +45,6 @@ import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
 import cn.perfectgames.jewels.util.BitmapUtil;
-import cn.perfectgames.jewels.util.DialogUtil;
 import cn.perfectgames.jewels.util.MarketUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
 
@@ -149,15 +148,17 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 
 		case R.id.main_btn_rank:
-			i = new Intent(this, HighScoreActivity.class);
+			//i = new Intent(this, HighScoreActivity.class);
 			//TODO
 			i =new Intent(this, LeaderBoardActivity.class);
 			// DialogUtil.showRankDialog(this);
 			break;
 		case R.id.main_btn_help:
-			DialogUtil
-					.showDialogWithView(this, "Go Tetris Help", R.layout.help);
-			return;
+			i = new Intent(this, AnimationTestActivity.class);
+			//DialogUtil
+			//		.showDialogWithView(this, "Go Tetris Help", R.layout.help);
+			//return;
+			//break;
 		}
 		if (startID >= 0) {
 			this.startActivityForResult(i, startID);

@@ -6,9 +6,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
-
 import cn.perfectgames.jewels.cfg.Configuration;
+import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.model.Playground;
 import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.ui.ControlView;
@@ -26,6 +25,8 @@ public class GameController {
 
 	public static final int IC_STEP = 5;
 	private static final String TAG = "GameController";
+	
+	private GameMode mode;
 
 	public interface GameListener {
 		public void gameFinishing();
@@ -128,8 +129,8 @@ public class GameController {
 		this.playground = playground;
 	}
 
-	public GameController(Context context) {
-		this.playground = new Playground();
+	public GameController(Context context, GameMode mode) {
+		this.playground = new Playground(mode);
 		this.playgroundView = new PlaygroundView(context);
 		this.playgroundView.setPlayground(playground);
 		this.playgroundView.setGameController(this);

@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
@@ -24,12 +23,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,17 +45,19 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.perfectgames.amaze.record.Record;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.control.Command;
 import cn.perfectgames.jewels.control.GameController;
 import cn.perfectgames.jewels.control.GameController.GameListener;
+import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.model.SavablePlayground;
 import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.ui.ControlView;
 import cn.perfectgames.jewels.ui.ControlView.GameControlListener;
-import cn.perfectgames.jewels.ui.JoyStick.JoyStickListener;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
@@ -82,6 +78,7 @@ public class PlaygroundActivity extends BaseActivity {
 		INIT, PLAY, PAUSED, ENDING, END
 	}
 
+	private GameMode gameMode = GameMode.Normal;
 	private GameController gameController;
 	private ControlView controlView;
 	private ViewGroup successScreen;
@@ -104,16 +101,6 @@ public class PlaygroundActivity extends BaseActivity {
 	private long elapsedTime = 0;
 	private boolean collapsed = true;
 
-	// user interfaces
-
-	private SensorManager sensorManager;
-	private Sensor sensor;
-	private boolean sensorRunning = false;
-	private boolean useJoyStick = true;
-	private boolean useAccelerometer = false;
-	private AccelerometerListener accelerometerListener = new AccelerometerListener();
-	private MyJoyStickListener joyStickListener = new MyJoyStickListener();
-
 	private Typeface typeface;
 
 	// for ad animation
@@ -132,11 +119,16 @@ public class PlaygroundActivity extends BaseActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
-		setScreenOrientation();
 
 		PowerManager pm = (PowerManager) this
 				.getSystemService(Context.POWER_SERVICE);
-		gameController = new GameController(this);
+
+		// activity params
+
+		this.gameMode = this.getGoJewelsApplication().getGameMode();
+
+		//
+		gameController = new GameController(this, gameMode);
 		controlView = gameController.getControlView();
 		toast = Toast.makeText(this, "", 5000);
 		controlView.addGameControlListener(new ControlButtonClicked());
@@ -202,6 +194,7 @@ public class PlaygroundActivity extends BaseActivity {
 		}
 		//
 
+		// for ads
 		View view = (View) PlaygroundActivity.this
 				.findViewById(R.id.ss_ad_area);
 		View ad = null;
@@ -217,6 +210,7 @@ public class PlaygroundActivity extends BaseActivity {
 
 		adDaemonSuccess.run();
 		adDaemonPause.run();
+
 	}
 
 	@Override
@@ -271,17 +265,6 @@ public class PlaygroundActivity extends BaseActivity {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	private void setScreenOrientation() {
-		String att = Configuration.config().getScreenOrientation();
-		if (att.equals("auto")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		} else if (att.equals("portrait")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else if (att.equals("landscape")) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		}
 	}
 
 	private void switchState(State to) {
@@ -364,7 +347,6 @@ public class PlaygroundActivity extends BaseActivity {
 			switchState(State.PAUSED, false);
 		}
 		SoundManager.get(this).stopBackgroundMusic();
-		this.stopListening();
 		super.onPause();
 	}
 
@@ -391,69 +373,69 @@ public class PlaygroundActivity extends BaseActivity {
 
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
-//			switch (id) {
-//			case ControlView.BTN_LEFT:
-//				gameController.processCommand(Command.LEFT);
-//				break;
-//			case ControlView.BTN_RIGHT:
-//				gameController.processCommand(Command.RIGHT);
-//				break;
-//			case ControlView.BTN_TURN:
-//				gameController.processCommand(Command.TURN);
-//				break;
-//			case ControlView.BTN_DOWN:
-//				gameController.processCommand(Command.DOWN);
-//				break;
-//			case ControlView.BTN_DIRECT_DOWN:
-//				gameController.processCommand(Command.DIRECT_DOWN);
-//				break;
-//			case ControlView.BTN_HOLD:
-//				gameController.processCommand(Command.HOLD);
-//				break;
-//			}
+			// switch (id) {
+			// case ControlView.BTN_LEFT:
+			// gameController.processCommand(Command.LEFT);
+			// break;
+			// case ControlView.BTN_RIGHT:
+			// gameController.processCommand(Command.RIGHT);
+			// break;
+			// case ControlView.BTN_TURN:
+			// gameController.processCommand(Command.TURN);
+			// break;
+			// case ControlView.BTN_DOWN:
+			// gameController.processCommand(Command.DOWN);
+			// break;
+			// case ControlView.BTN_DIRECT_DOWN:
+			// gameController.processCommand(Command.DIRECT_DOWN);
+			// break;
+			// case ControlView.BTN_HOLD:
+			// gameController.processCommand(Command.HOLD);
+			// break;
+			// }
 		}
 
 		public void buttonPressed(int id) {
 			Log.v(TAG, "button down : " + id);
-//			switch (id) {
-//			case ControlView.BTN_LEFT:
-//				gameController.processCommand(Command.LEFT_DOWN);
-//				break;
-//			case ControlView.BTN_RIGHT:
-//				gameController.processCommand(Command.RIGHT_DOWN);
-//				break;
-//			case ControlView.BTN_TURN:
-//				gameController.processCommand(Command.TURN_DOWN);
-//				break;
-//			case ControlView.BTN_DOWN:
-//				gameController.processCommand(Command.DOWN_DOWN);
-//				break;
-//			case ControlView.BTN_DIRECT_DOWN:
-//				gameController.processCommand(Command.DIRECT_DOWN);
-//				break;
-//			}
+			// switch (id) {
+			// case ControlView.BTN_LEFT:
+			// gameController.processCommand(Command.LEFT_DOWN);
+			// break;
+			// case ControlView.BTN_RIGHT:
+			// gameController.processCommand(Command.RIGHT_DOWN);
+			// break;
+			// case ControlView.BTN_TURN:
+			// gameController.processCommand(Command.TURN_DOWN);
+			// break;
+			// case ControlView.BTN_DOWN:
+			// gameController.processCommand(Command.DOWN_DOWN);
+			// break;
+			// case ControlView.BTN_DIRECT_DOWN:
+			// gameController.processCommand(Command.DIRECT_DOWN);
+			// break;
+			// }
 		}
 
 		public void buttonReleased(int id) {
 
 			Log.v(TAG, "button up : " + id);
-//			switch (id) {
-//			case ControlView.BTN_LEFT:
-//				gameController.processCommand(Command.LEFT_UP);
-//				break;
-//			case ControlView.BTN_RIGHT:
-//				gameController.processCommand(Command.RIGHT_UP);
-//				break;
-//			case ControlView.BTN_TURN:
-//				gameController.processCommand(Command.TURN_UP);
-//				break;
-//			case ControlView.BTN_DOWN:
-//				gameController.processCommand(Command.DOWN_UP);
-//				break;
-//			case ControlView.BTN_HOLD:
-//				gameController.processCommand(Command.HOLD);
-//				break;
-//			}
+			// switch (id) {
+			// case ControlView.BTN_LEFT:
+			// gameController.processCommand(Command.LEFT_UP);
+			// break;
+			// case ControlView.BTN_RIGHT:
+			// gameController.processCommand(Command.RIGHT_UP);
+			// break;
+			// case ControlView.BTN_TURN:
+			// gameController.processCommand(Command.TURN_UP);
+			// break;
+			// case ControlView.BTN_DOWN:
+			// gameController.processCommand(Command.DOWN_UP);
+			// break;
+			// case ControlView.BTN_HOLD:
+			// gameController.processCommand(Command.HOLD);
+			// break;
+			// }
 		}
 	}
 
@@ -508,12 +490,28 @@ public class PlaygroundActivity extends BaseActivity {
 				}
 				int score = gameController.getPlayground().getScoreAndLevel()
 						.getScore();
-				Score sc = new Score((double)score, null);
-				sc.setMode(0);
-				final ScoreController scoreController = new ScoreController(new ScoreSubmitObserver());
-				scoreController.submitScore(sc);
+				// score loop score
+				Score sc = new Score((double) score, null);
+				sc.setMode(gameMode.ordinal());
+				sc.setLevel(gameController.getPlayground().getScoreAndLevel()
+						.getLevel());
+
+				final ScoreController scoreController = new ScoreController(
+						new ScoreSubmitObserver());
+				//scoreController.submitScore(sc);
+
+				// local score
+				Record record = new Record();
+				record.setMode(gameMode.ordinal());
+				record.setLevel(gameController.getPlayground()
+						.getScoreAndLevel().getLevel());
+				record.setResult(score);
+				record.setPlayer("Hello Baby");
+
+				GoJewelsApplication.getLocalRecordManager()
+						.submitRecord(record);
 				showDialog(DIALOG_PROGRESS);
-				
+
 				if (score > 0) {
 					ScoreUtil.saveCubeState("Player", score);
 				}
@@ -726,7 +724,6 @@ public class PlaygroundActivity extends BaseActivity {
 		if (this.gameController != null) {
 			gameController.configurationChanged(Configuration.config());
 		}
-		this.setScreenOrientation();
 	}
 
 	public void submitRecord() {
@@ -809,80 +806,13 @@ public class PlaygroundActivity extends BaseActivity {
 						successScreenSubmitButton
 								.setText(R.string.success_screen_world_rank);
 					} else {
-						toast
-								.setText("Submit failed, please check your network connection.");
+						toast.setText("Submit failed, please check your network connection.");
 						toast.show();
 					}
 				}
 
 			});
 		}
-	}
-
-	// accelerometer
-
-	public void startListening() {
-		sensorManager = (SensorManager) gameController.getPlaygroundView()
-				.getContext().getSystemService(Context.SENSOR_SERVICE);
-		List<Sensor> sensors = sensorManager
-				.getSensorList(Sensor.TYPE_ACCELEROMETER);
-		if (sensors.size() > 0) {
-			sensor = sensors.get(0);
-			sensorRunning = sensorManager.registerListener(
-					accelerometerListener, sensor,
-					SensorManager.SENSOR_DELAY_GAME);
-		}
-	}
-
-	/**
-	 * Unregisters listeners
-	 */
-	public void stopListening() {
-		sensorRunning = false;
-		try {
-			if (sensorManager != null && accelerometerListener != null) {
-				sensorManager.unregisterListener(accelerometerListener);
-			}
-		} catch (Exception e) {
-		}
-	}
-
-	class AccelerometerListener implements SensorEventListener {
-
-		public void onAccuracyChanged(Sensor arg0, int arg1) {
-		}
-
-		public void onSensorChanged(SensorEvent event) {
-			if (!useAccelerometer) {
-				return;
-			}
-			float x = event.values[0];
-			float y = event.values[1];
-		}
-	}
-
-	class MyJoyStickListener implements JoyStickListener {
-
-		public void joyStickMoved(float dx, float dy) {
-			Log.v(TAG, "joy stick moved: dx=" + dx + ", dy=" + dy);
-			if (!useJoyStick) {
-				return;
-			}
-			if (Math.abs(dx) > Math.abs(dy)) {
-				if (dx > 0.5f) {
-					gameController.processCommand(Command.RIGHT);
-				} else if (dx < -0.5f) {
-					gameController.processCommand(Command.LEFT);
-				}
-			} else {
-				if (dy < 0 - .5f) {
-					gameController.processCommand(Command.TURN);
-				}
-			}
-			gameController.getPlaygroundView().invalidate();
-
-		}
-
 	}
 
 	public void customizeButtons() {
@@ -910,12 +840,11 @@ public class PlaygroundActivity extends BaseActivity {
 		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
 	}
 
-	
-
 	private class ScoreSubmitObserver implements RequestControllerObserver {
 
-		
-		public void requestControllerDidFail(final RequestController requestController, final Exception exception) {
+		public void requestControllerDidFail(
+				final RequestController requestController,
+				final Exception exception) {
 			dismissDialog(DIALOG_PROGRESS);
 			if (isRequestCancellation(exception)) {
 				return;
@@ -924,8 +853,8 @@ public class PlaygroundActivity extends BaseActivity {
 			showToast("Score submission failed due to unknown problem");
 		}
 
-		
-		public void requestControllerDidReceiveResponse(final RequestController requestController) {
+		public void requestControllerDidReceiveResponse(
+				final RequestController requestController) {
 			dismissDialog(DIALOG_PROGRESS);
 			showToast("Your score has been submitted successfully.");
 		}
