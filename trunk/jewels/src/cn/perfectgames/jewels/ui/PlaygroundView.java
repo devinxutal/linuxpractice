@@ -99,7 +99,7 @@ public class PlaygroundView extends SurfaceView implements
 			dm.painter.setStrokeWidth(dm.statDigitSize * dm.textStrokeScale);
 			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getMaxCombo(), new RectF(dm.comboRect), TextPainter.Align.Left);
 			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getMaxChain(), new RectF(dm.chainRect), TextPainter.Align.Left);
-			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getBonusX()+"X", new RectF(dm.bonusRect), TextPainter.Align.Left);
+			dm.painter.drawText(canvas, ""+playground.getScoreAndLevel().getBonusX()+"x", new RectF(dm.bonusRect), TextPainter.Align.Left);
 		}
 
 	}

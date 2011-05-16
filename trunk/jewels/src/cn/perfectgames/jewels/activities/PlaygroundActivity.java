@@ -61,7 +61,6 @@ import cn.perfectgames.jewels.ui.ControlView.GameControlListener;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
-import cn.perfectgames.jewels.util.ScoreUtil;
 
 import com.heyzap.sdk.HeyzapLib;
 import com.scoreloop.client.android.core.controller.RequestController;
@@ -125,10 +124,11 @@ public class PlaygroundActivity extends BaseActivity {
 
 		// activity params
 
-		this.gameMode = this.getGoJewelsApplication().getGameMode();
+		this.gameMode = GoJewelsApplication.getGameMode();
 
 		//
 		gameController = new GameController(this, gameMode);
+		gameController.getPlayground().setSoundManager(SoundManager.get(this));
 		controlView = gameController.getControlView();
 		toast = Toast.makeText(this, "", 5000);
 		controlView.addGameControlListener(new ControlButtonClicked());
@@ -459,7 +459,7 @@ public class PlaygroundActivity extends BaseActivity {
 					// .getScoreAndLevel().getScore();
 					int score = 0;
 					if (score > 0) {
-						ScoreUtil.saveCubeState("Player", score);
+						// ScoreUtil.saveCubeState("Player", score);
 					}
 					deleteSavedGame();
 					showSuccessScreen();
@@ -478,7 +478,7 @@ public class PlaygroundActivity extends BaseActivity {
 				replay();
 			} else if (view.getId() == R.id.submit_button) {
 				Intent intent = new Intent(PlaygroundActivity.this,
-						HighScoreActivity.class);
+						LeaderBoardActivity.class);
 				startActivity(intent);
 
 			} else if (view.getId() == R.id.back_button) {
@@ -488,32 +488,33 @@ public class PlaygroundActivity extends BaseActivity {
 						&& !gameController.getPlayground().isFinished()) {
 					saveGame();
 				}
+
 				int score = gameController.getPlayground().getScoreAndLevel()
 						.getScore();
-				// score loop score
-				Score sc = new Score((double) score, null);
-				sc.setMode(gameMode.ordinal());
-				sc.setLevel(gameController.getPlayground().getScoreAndLevel()
-						.getLevel());
-
-				final ScoreController scoreController = new ScoreController(
-						new ScoreSubmitObserver());
-				//scoreController.submitScore(sc);
-
-				// local score
-				Record record = new Record();
-				record.setMode(gameMode.ordinal());
-				record.setLevel(gameController.getPlayground()
-						.getScoreAndLevel().getLevel());
-				record.setResult(score);
-				record.setPlayer("Hello Baby");
-
-				GoJewelsApplication.getLocalRecordManager()
-						.submitRecord(record);
-				showDialog(DIALOG_PROGRESS);
-
 				if (score > 0) {
-					ScoreUtil.saveCubeState("Player", score);
+
+					// score loop score
+					Score sc = new Score((double) score, null);
+					sc.setMode(gameMode.ordinal());
+					sc.setLevel(gameController.getPlayground()
+							.getScoreAndLevel().getLevel());
+
+					final ScoreController scoreController = new ScoreController(
+							new ScoreSubmitObserver());
+					// scoreController.submitScore(sc);
+
+					// local score
+					Record record = new Record();
+					record.setMode(gameMode.ordinal());
+					record.setLevel(gameController.getPlayground()
+							.getScoreAndLevel().getLevel());
+					record.setResult(score);
+					record.setPlayer("Hello Baby");
+
+					GoJewelsApplication.getLocalRecordManager().submitRecord(
+							record);
+					showDialog(DIALOG_PROGRESS);
+
 				}
 				PlaygroundActivity.this.finish();
 			} else if (view.getId() == R.id.resume_button) {

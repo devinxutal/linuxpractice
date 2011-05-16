@@ -35,9 +35,7 @@ public class ScoreAndLevel implements Serializable {
 		score = 0;
 		totalLines = 0;
 		currentLines = 0;
-		if (Configuration.config() != null) {
-			level = Configuration.config().getStartLevel();
-		}
+		
 	}
 	
 	double progress = 0;

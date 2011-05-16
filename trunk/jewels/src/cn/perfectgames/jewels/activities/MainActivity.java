@@ -12,7 +12,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -38,9 +37,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
+import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
@@ -48,12 +49,8 @@ import cn.perfectgames.jewels.util.BitmapUtil;
 import cn.perfectgames.jewels.util.MarketUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
 
-public class MainActivity extends Activity implements OnClickListener {
-	private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAit2OZ8OaxRwh8B9Du45ejqWe4XaWVp4RwD4Du0j1S7ZokOAJqYlu4rEQwdz9mGLqLV3I9fJhmgryXjqMpxl5+wODxS7FNvy6uRNzVLTbXdD/vvIt5CucAXRs9xFHj1gT212m59q2dw6iAT4E6dRhnzWIT48v9YYVW4iWymgnQYW7WMxTuk56bBp37VW0qZ9V+D+PrYlRkklSezBe2fVsOVuv09nLkD2sRTQVyvm0fW4P6Q9/7yUx2HJ5p1TQvtHe2ZaRUJuRG5+ZR3/gdGcaEfRXopB59S0DWhNyzMkw2RZRzUtg0N6H9PIbodHab04/qZCM86jTtRUDmQFFnp4/ZQIDAQAB";
-
-	private static final byte[] SALT = new byte[] { -46, 65, 30, -128, -103,
-			-57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64,
-			89 };
+public class MainActivity extends BaseActivity implements OnClickListener {
+	
 
 	private static final String TAG = "MainActvity";
 
@@ -102,8 +99,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR,
 		// "7037AF0B100BC4F3CC9F4B5401F96685" });
 		adHandler = new Handler();
-		this.adDaemon = new AdDaemon("main", this, this
-				.findViewById(Constants.ADVIEW_ID), adHandler);
+		this.adDaemon = new AdDaemon("main", this,
+				this.findViewById(Constants.ADVIEW_ID), adHandler);
 		adDaemon.run();
 
 	}
@@ -138,27 +135,26 @@ public class MainActivity extends Activity implements OnClickListener {
 		Log.v(TAG, "after play effect");
 		switch (view.getId()) {
 		case R.id.main_btn_play_game:
-			i = new Intent(this, PlaygroundActivity.class);
-			startID = PLAYGROUND_ACTIVITY_ID;
+			this.showModeSelectionDialog();
 
-			break;
+			return;
 
 		case R.id.main_btn_preference:
 			i = new Intent(this, Preferences.class);
 			break;
 
 		case R.id.main_btn_rank:
-			//i = new Intent(this, HighScoreActivity.class);
-			//TODO
-			i =new Intent(this, LeaderBoardActivity.class);
+			// i = new Intent(this, HighScoreActivity.class);
+			// TODO
+			i = new Intent(this, LeaderBoardActivity.class);
 			// DialogUtil.showRankDialog(this);
 			break;
 		case R.id.main_btn_help:
 			i = new Intent(this, AnimationTestActivity.class);
-			//DialogUtil
-			//		.showDialogWithView(this, "Go Tetris Help", R.layout.help);
-			//return;
-			//break;
+			// DialogUtil
+			// .showDialogWithView(this, "Go Tetris Help", R.layout.help);
+			// return;
+			// break;
 		}
 		if (startID >= 0) {
 			this.startActivityForResult(i, startID);
@@ -204,6 +200,34 @@ public class MainActivity extends Activity implements OnClickListener {
 			button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 11);
 		}
 		// button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+	}
+
+	private void showModeSelectionDialog() {
+		final CharSequence[] items = {
+				getResources().getString(R.string.mode_normal),
+				getResources().getString(R.string.mode_timed),
+				getResources().getString(R.string.mode_quick),
+				getResources().getString(R.string.mode_infinite) };
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(
+				getResources().getString(R.string.mode_title));
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				GameMode mode = GameMode.Normal;
+				
+				for(GameMode m: GameMode.values()){
+					if(m.ordinal() == item){
+						mode = m;
+					}
+				}
+				GoJewelsApplication.setGameMode(mode);
+				Intent intent = new Intent(MainActivity.this, PlaygroundActivity.class);
+				startActivityForResult(intent, PLAYGROUND_ACTIVITY_ID);
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	private void showQuitDialog() {
@@ -338,11 +362,10 @@ public class MainActivity extends Activity implements OnClickListener {
 								"Your feedback has been submitted. Thankyou!",
 								1000).show();
 					} else {
-						Toast
-								.makeText(
-										MainActivity.this,
-										"Submit failed, please check your network connection.",
-										1000).show();
+						Toast.makeText(
+								MainActivity.this,
+								"Submit failed, please check your network connection.",
+								1000).show();
 					}
 				}
 
@@ -357,10 +380,11 @@ public class MainActivity extends Activity implements OnClickListener {
 			LinearLayout l = new LinearLayout(this);
 			inflater.inflate(R.layout.whats_new, l);
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("What's New").setCancelable(false)
+			builder.setTitle("What's New")
+					.setCancelable(false)
 					.setPositiveButton(R.string.common_ok, null)
-					.setPositiveButton("OK", null).setNegativeButton(
-							"Never Show Again",
+					.setPositiveButton("OK", null)
+					.setNegativeButton("Never Show Again",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int which) {

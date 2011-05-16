@@ -25,7 +25,7 @@ public class JewelDropAnimation extends AbstractAnimation {
 	private Bitmap[] jewel_bitmaps;
 	
 	public JewelDropAnimation() {
-		super(Constants.FPS/2);
+		super(Constants.FPS/3);
 
 		paint = new Paint();
 		paint.setAntiAlias(true);

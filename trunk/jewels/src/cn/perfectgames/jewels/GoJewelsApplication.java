@@ -39,12 +39,12 @@ public class GoJewelsApplication extends Application {
 	
 	private static LocalRecordManager localRecordManager;
 	
-	public GameMode getGameMode() {
+	public static GameMode getGameMode() {
 		return gameMode;
 	}
 
-	public static void setGameMode(GameMode gameMode) {
-		gameMode = gameMode;
+	public static void setGameMode(GameMode mode) {
+		gameMode = mode;
 	}
 	
 	public static LocalRecordManager getLocalRecordManager(){
