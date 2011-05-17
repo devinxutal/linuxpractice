@@ -25,11 +25,13 @@ import cn.perfectgames.amaze.graphics.Layers;
 import cn.perfectgames.jewels.animation.EliminationAnimation;
 import cn.perfectgames.jewels.animation.HintAnimation;
 import cn.perfectgames.jewels.animation.JewelDropAnimation;
+import cn.perfectgames.jewels.animation.RefillPlaygroundAnimation;
 import cn.perfectgames.jewels.animation.ScoreAnimation;
 import cn.perfectgames.jewels.animation.ScoreBoardAnimation;
 import cn.perfectgames.jewels.animation.SelectionAnimation;
 import cn.perfectgames.jewels.animation.SwapAnimation;
 import cn.perfectgames.jewels.cfg.Configuration;
+import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.sound.SoundManager;
 
 public class Playground {
@@ -64,11 +66,14 @@ public class Playground {
 	private int hintDelay = 0;
 
 	private SoundManager soundManager;
-	
+
 	public Playground(GameMode mode) {
 		this.gameMode = mode;
+		this.scoreLevel.setGameMode(mode);
 		jewels = new Jewel[rows][cols];
 		visibilities = new boolean[rows][cols];
+
+		this.animations = new Animations();
 
 		// generate jewels, if the generated jewels is bad(cannot find
 		// swappable), regenerate it.
@@ -87,8 +92,8 @@ public class Playground {
 
 			checkElimination();
 			while (eliminations != null) {
-				startElimination(false);
-				finishElimination(false);
+				startElimination(false, false);
+				finishElimination(false, false);
 				checkElimination();
 				setVisibilities(true);
 			}
@@ -99,9 +104,10 @@ public class Playground {
 		Log.v(TAG, "Animation state after elimination : " + animationState);
 	}
 
-	public void setSoundManager(SoundManager manager){
+	public void setSoundManager(SoundManager manager) {
 		this.soundManager = manager;
 	}
+
 	public void draw(Canvas canvas) {
 		dm.draw(canvas);
 		if (animations != null) {
@@ -128,10 +134,24 @@ public class Playground {
 				tempJewel.copy(j(p1));
 				j(p1).copy(j(p2));
 				j(p2).copy(tempJewel);
-				
+
 				// play sound
 				soundManager.playIllegalSwapEffect();
 			}
+		}
+	}
+
+	public void refillPlayground(boolean animation, boolean mainRoutine) {
+		if (animation && mainRoutine) {
+			this.animations.refillAnimation.setOriginalJewels(this.jewels);
+		}
+		this.regenerateJewels();
+		if (animation && mainRoutine) {
+			this.animations.refillAnimation.setRefilledJewels(this.jewels);
+			this.animationState = AnimationState.REFILLING;
+
+			this.setVisibilities(false);
+			this.animations.refillAnimation.start();
 		}
 	}
 
@@ -144,7 +164,7 @@ public class Playground {
 		// TODO;
 	}
 
-	private void finishElimination(boolean animation) {
+	private void finishElimination(boolean animation, boolean mainRoutine) {
 		Log.v(TAG, "finish elimination: " + animation);
 		LinkedList<Jewel> jewels = new LinkedList<Jewel>();
 		LinkedList<PointF> initPos = new LinkedList<PointF>();
@@ -188,14 +208,14 @@ public class Playground {
 			animations.jewelDropAnimation.setDropJewels(jewels, initPos,
 					destPos);
 			animations.jewelDropAnimation.start();
-			
-			// play sound 
+
+			// play sound
 			this.soundManager.playDropEffect();
 		}
 
 	}
 
-	private void totallyFinishElimination(boolean animation) {
+	private void totallyFinishElimination(boolean animation, boolean mainRoutine) {
 		Log.v(TAG, "totally finish elimination: " + animation);
 		setVisibilities(true);
 		checkElimination();
@@ -211,15 +231,15 @@ public class Playground {
 			// recalculate the swap hint;
 			findSwappable();
 			Log.v(TAG, "swap hint size: " + swapables.size());
-			
+
 			if (swapables.isEmpty()) {
-				regenerateJewels();
+				refillPlayground(animation, mainRoutine);
 			}
 
 		} else {
 			if (animation) {
 				animationState = AnimationState.ELIMINATING;
-				startElimination(animation);
+				startElimination(animation, mainRoutine);
 			}
 		}
 	}
@@ -232,7 +252,7 @@ public class Playground {
 		}
 	}
 
-	public void startElimination(boolean animation) {
+	public void startElimination(boolean animation, boolean mainRoutine) {
 
 		Log.v(TAG, "start elimination: " + animation);
 		animations.scoreAnimation.clearScores();
@@ -255,7 +275,7 @@ public class Playground {
 				}
 
 				// calculate score
-				if (animation) {
+				if (animation && mainRoutine) {
 					int score = this.scoreLevel.addScore(e);
 					PointF p1 = null, p2 = null;
 					if (e.vertical) {
@@ -287,16 +307,16 @@ public class Playground {
 			}
 			animations.eliminationAnimation.setJewels(jewels, pos);
 			animations.eliminationAnimation.start();
+			if (mainRoutine) {
+				animations.scoreAnimation.start();
+			}
 
-			animations.scoreAnimation.start();
-			
-
-			// play sound 
+			// play sound
 			int firstEliminationType = 0;
 			Elimination e = eliminations.get(0);
-			if(e.vertical){
+			if (e.vertical) {
 				firstEliminationType = j(e.start, e.position).getType();
-			}else{
+			} else {
 				firstEliminationType = j(e.position, e.start).getType();
 			}
 			this.soundManager.playEliminationEffect(firstEliminationType);
@@ -473,7 +493,7 @@ public class Playground {
 				{ -1, 0 } };
 		Position pp = new Position(p.row, p.col);
 		for (int i = 0; i < offsets.length; i++) {
-			if(i == ignore_side){
+			if (i == ignore_side) {
 				continue;
 			}
 			pp.row = p.row + offsets[i][0];
@@ -492,6 +512,7 @@ public class Playground {
 	public void step() {
 		checkTouch();
 		checkFlip();
+		scoreLevel.stepTime(1000 / Constants.FPS);
 		animations.getAsCollection().step();
 
 		hintDelay++;
@@ -524,6 +545,7 @@ public class Playground {
 	}
 
 	private void checkTouch() {
+
 		if (touchX >= 0 && touchY >= 0) {
 			doTouch(touchX, touchY);
 			touchX = -1;
@@ -534,7 +556,7 @@ public class Playground {
 	private void checkFlip() {
 		if (flipX != 0 || flipY != 0) {
 			doFlip(flipX, flipY);
-			flipX = 0;
+			flipX = 0; 
 			flipY = 0;
 		}
 	}
@@ -662,14 +684,14 @@ public class Playground {
 	}
 
 	public class Animations implements AnimationListener {
-		public ScoreAnimation scoreAnimation = new ScoreAnimation(20);
-		public SwapAnimation swapAnimation = new SwapAnimation();
-		public EliminationAnimation eliminationAnimation = new EliminationAnimation();
-		public SelectionAnimation selectionAnimation = new SelectionAnimation();
-		public HintAnimation hintAnimation = new HintAnimation();
-		public JewelDropAnimation jewelDropAnimation = new JewelDropAnimation();
-		public ScoreBoardAnimation scoreBoardAnimation = new ScoreBoardAnimation(
-				6);
+		public ScoreAnimation scoreAnimation;
+		public SwapAnimation swapAnimation;
+		public EliminationAnimation eliminationAnimation;
+		public SelectionAnimation selectionAnimation;
+		public HintAnimation hintAnimation;
+		public JewelDropAnimation jewelDropAnimation;
+		public ScoreBoardAnimation scoreBoardAnimation;
+		public RefillPlaygroundAnimation refillAnimation;
 
 		private AnimationCollection collection;
 
@@ -677,6 +699,16 @@ public class Playground {
 
 		public Animations() {
 
+			scoreAnimation = new ScoreAnimation(20);
+			swapAnimation = new SwapAnimation();
+			eliminationAnimation = new EliminationAnimation();
+			selectionAnimation = new SelectionAnimation();
+			hintAnimation = new HintAnimation();
+			jewelDropAnimation = new JewelDropAnimation();
+			scoreBoardAnimation = new ScoreBoardAnimation(6);
+			refillAnimation = new RefillPlaygroundAnimation(rows, cols);
+
+			// //////////////////
 			animationLayers = new Layers();
 
 			Layer layer = new Layer();
@@ -689,6 +721,7 @@ public class Playground {
 
 			layer = new Layer();
 			layer.addDrawable(eliminationAnimation);
+			layer.addDrawable(refillAnimation);
 			animationLayers.addLayer(layer, Layers.TOP);
 
 			layer = new Layer();
@@ -712,6 +745,7 @@ public class Playground {
 				collection.addAnimation(hintAnimation);
 				collection.addAnimation(jewelDropAnimation);
 				collection.addAnimation(scoreBoardAnimation);
+				collection.addAnimation(refillAnimation);
 			}
 			return collection;
 		}
@@ -723,22 +757,27 @@ public class Playground {
 				finishSwap();
 				if (eliminations != null) {
 					animationState = AnimationState.ELIMINATING;
-					startElimination(true);
+					startElimination(true, true);
 				} else {
 					animationState = AnimationState.IDLE;
 				}
 			} else if (animation == jewelDropAnimation
 					&& animationState == AnimationState.ELIMINATION_DROPPING) {
-				totallyFinishElimination(true);
+				totallyFinishElimination(true, true);
+			} else if (animation == refillAnimation
+					&& animationState == AnimationState.REFILLING) {
+				animationState = AnimationState.IDLE;
+				setVisibilities(true);
 			}
 		}
 
 		public void animationEventHappened(Animation animation, int eventID) {
 			if (animation == eliminationAnimation
 					&& eventID == EliminationAnimation.EVENT_HALF_PASSED
-					&& animationState == AnimationState.ELIMINATING)
+					&& animationState == AnimationState.ELIMINATING) {
 				animationState = AnimationState.ELIMINATION_DROPPING;
-			finishElimination(true);
+				finishElimination(true, true);
+			}
 		}
 
 	}
@@ -871,7 +910,10 @@ public class Playground {
 			animations.jewelDropAnimation.setUpperBound(pg.top);
 			animations.eliminationAnimation.setJewelBitmap(sized_blocks);
 			animations.scoreAnimation.setJewelSize(Math.round(bsize));
-
+			animations.refillAnimation.setSize(Math.round(bsize));
+			animations.refillAnimation.setJewelBitmap(sized_blocks);
+			animations.refillAnimation.setTopLeftPosition(new PointF(pg.left,
+					pg.top));
 		}
 
 		public void configurationChanged(Configuration config) {
@@ -883,7 +925,7 @@ public class Playground {
 						original_blocks[i] = BitmapFactory.decodeStream(context
 								.getAssets().open(
 										"images/jewels/" + jewelStyle + "/" + i
-										+ ".png"));
+												+ ".png"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
