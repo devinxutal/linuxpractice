@@ -102,16 +102,22 @@
 		<item>animal</item>
 	</string-array>
 
-	<string name="pref_ent_center_button_action">Central Button Action</string>
-	<string name="pref_ent_center_button_action_summary">Select action of the central button</string>
-	<string-array name="pref_ent_center_button_action_entries">
-		<item>Direct Down</item>
-		<item>Quick Down</item>
-		<item>Rotate Block</item>
+	<string name="pref_ent_hint_delay">Hint Delay</string>
+	<string name="pref_ent_hint_delay_summary">Set hint delay time</string>
+	<string-array name="pref_ent_hint_delay_entries">
+		<item>No Hint</item>
+		<item>5 seconds</item>
+		<item>10 seconds</item>
+		<item>15 seconds</item>
+		<item>20 seconds</item>
+		<item>30 seconds</item>
 	</string-array>
-	<string-array name="pref_ent_center_button_action_values">
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
+	<string-array name="pref_ent_hint_delay_values">
+		<item>0</item>
+		<item>5000</item>
+		<item>10000</item>
+		<item>15000</item>
+		<item>20000</item>
+		<item>30000</item>
 	</string-array>
 </resources>

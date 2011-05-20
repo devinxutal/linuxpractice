@@ -50,7 +50,6 @@ import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
-import cn.perfectgames.jewels.control.Command;
 import cn.perfectgames.jewels.control.GameController;
 import cn.perfectgames.jewels.control.GameController.GameListener;
 import cn.perfectgames.jewels.model.GameMode;
@@ -232,23 +231,23 @@ public class PlaygroundActivity extends BaseActivity {
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		Log.v(TAG, "key up " + event.getKeyCode());
-		switch (event.getKeyCode()) {
-		case KeyEvent.KEYCODE_DPAD_UP:
-			gameController.processCommand(Command.TURN);
-			break;
-		case KeyEvent.KEYCODE_DPAD_DOWN:
-			gameController.processCommand(Command.DOWN);
-			break;
-		case KeyEvent.KEYCODE_DPAD_CENTER:
-			gameController.processCommand(Command.DOWN);
-			break;
-		case KeyEvent.KEYCODE_DPAD_LEFT:
-			gameController.processCommand(Command.LEFT);
-			break;
-		case KeyEvent.KEYCODE_DPAD_RIGHT:
-			gameController.processCommand(Command.RIGHT);
-			break;
-		}
+		// switch (event.getKeyCode()) {
+		// case KeyEvent.KEYCODE_DPAD_UP:
+		// gameController.processCommand(Command.TURN);
+		// break;
+		// case KeyEvent.KEYCODE_DPAD_DOWN:
+		// gameController.processCommand(Command.DOWN);
+		// break;
+		// case KeyEvent.KEYCODE_DPAD_CENTER:
+		// gameController.processCommand(Command.DOWN);
+		// break;
+		// case KeyEvent.KEYCODE_DPAD_LEFT:
+		// gameController.processCommand(Command.LEFT);
+		// break;
+		// case KeyEvent.KEYCODE_DPAD_RIGHT:
+		// gameController.processCommand(Command.RIGHT);
+		// break;
+		// }
 		return super.onKeyUp(keyCode, event);
 	}
 
@@ -373,26 +372,29 @@ public class PlaygroundActivity extends BaseActivity {
 
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
-			// switch (id) {
-			// case ControlView.BTN_LEFT:
-			// gameController.processCommand(Command.LEFT);
-			// break;
-			// case ControlView.BTN_RIGHT:
-			// gameController.processCommand(Command.RIGHT);
-			// break;
-			// case ControlView.BTN_TURN:
-			// gameController.processCommand(Command.TURN);
-			// break;
-			// case ControlView.BTN_DOWN:
-			// gameController.processCommand(Command.DOWN);
-			// break;
-			// case ControlView.BTN_DIRECT_DOWN:
-			// gameController.processCommand(Command.DIRECT_DOWN);
-			// break;
-			// case ControlView.BTN_HOLD:
-			// gameController.processCommand(Command.HOLD);
-			// break;
-			// }
+			switch (id) {
+//			case ControlView.BTN_LEFT:
+//				gameController.processCommand(Command.LEFT);
+//				break;
+//			case ControlView.BTN_RIGHT:
+//				gameController.processCommand(Command.RIGHT);
+//				break;
+//			case ControlView.BTN_TURN:
+//				gameController.processCommand(Command.TURN);
+//				break;
+//			case ControlView.BTN_DOWN:
+//				gameController.processCommand(Command.DOWN);
+//				break;
+//			case ControlView.BTN_DIRECT_DOWN:
+//				gameController.processCommand(Command.DIRECT_DOWN);
+//				break;
+//			case ControlView.BTN_HOLD:
+//				gameController.processCommand(Command.HOLD);
+//				break;
+			case ControlView.BTN_PAUSE:
+				pause();
+				break;
+			}
 		}
 
 		public void buttonPressed(int id) {
@@ -455,9 +457,9 @@ public class PlaygroundActivity extends BaseActivity {
 
 			PlaygroundActivity.this.runOnUiThread(new Runnable() {
 				public void run() {
-					// TODO int score = gameController.getPlayground()
-					// .getScoreAndLevel().getScore();
-					int score = 0;
+					Log.v(TAG, "Game Finished");
+					int score = gameController.getPlayground()
+					.getScoreAndLevel().getScore();
 					if (score > 0) {
 						// ScoreUtil.saveCubeState("Player", score);
 					}

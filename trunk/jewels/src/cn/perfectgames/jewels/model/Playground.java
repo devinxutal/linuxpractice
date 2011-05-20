@@ -1,13 +1,11 @@
 package cn.perfectgames.jewels.model;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -33,6 +31,7 @@ import cn.perfectgames.jewels.animation.SwapAnimation;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.sound.SoundManager;
+import cn.perfectgames.jewels.util.BitmapUtil;
 
 public class Playground {
 	public static final String TAG = "Playground";
@@ -63,13 +62,18 @@ public class Playground {
 
 	private List<Pair<Position, Position>> swapables = new LinkedList<Pair<Position, Position>>();
 
-	private int hintDelay = 0;
-
+	private int delayCount = 0;
+	
 	private SoundManager soundManager;
 
+	private int HINT_DELAY = 0;
+	
 	public Playground(GameMode mode) {
 		this.gameMode = mode;
 		this.scoreLevel.setGameMode(mode);
+
+		this.HINT_DELAY = Configuration.config().getHintDelay();
+		
 		jewels = new Jewel[rows][cols];
 		visibilities = new boolean[rows][cols];
 
@@ -77,9 +81,15 @@ public class Playground {
 
 		// generate jewels, if the generated jewels is bad(cannot find
 		// swappable), regenerate it.
-		regenerateJewels();
+		reset();
 	}
 
+	
+	public void reset(){
+		this.scoreLevel.reset();
+		regenerateJewels();
+		
+	}
 	private void regenerateJewels() {
 		do {
 			for (int i = 0; i < rows; i++) {
@@ -116,6 +126,7 @@ public class Playground {
 	}
 
 	public void swap(Position p1, Position p2) {
+		this.delayCount = 0;
 		if (animationState != AnimationState.IDLE) {
 			return;
 		}
@@ -160,8 +171,17 @@ public class Playground {
 	}
 
 	public boolean isFinished() {
+		if(animationState != AnimationState.IDLE){
+			return false;
+		}
+		if(gameMode == GameMode.Infinite){
+			return false;
+		}else if(gameMode == GameMode.Timed || gameMode == GameMode.Quick){
+			return scoreLevel.getTimeProgress()<=0;
+		}else if(gameMode == GameMode.Normal){
+			return this.swapables.isEmpty();
+		}
 		return true;
-		// TODO;
 	}
 
 	private void finishElimination(boolean animation, boolean mainRoutine) {
@@ -222,7 +242,7 @@ public class Playground {
 		if (eliminations == null) { // no more eliminations
 			animationState = AnimationState.IDLE;
 			this.scoreLevel.resetCombo();
-			this.hintDelay = 0;
+			this.delayCount = 0;
 			if (animation) {
 				animations.scoreBoardAnimation.setNewScore(scoreLevel
 						.getScore());
@@ -230,10 +250,11 @@ public class Playground {
 			}
 			// recalculate the swap hint;
 			findSwappable();
-			Log.v(TAG, "swap hint size: " + swapables.size());
 
-			if (swapables.isEmpty()) {
-				refillPlayground(animation, mainRoutine);
+			if (swapables.isEmpty()) { // no swappables, need to refill
+				if(gameMode != GameMode.Normal){
+					refillPlayground(animation, mainRoutine);
+				}
 			}
 
 		} else {
@@ -458,6 +479,8 @@ public class Playground {
 
 					findSwappable(swapables, new Position(r + 1, c), j(r, c)
 							.getType(), 3); // down
+				}else if(r>1 && j(r,c).getType() == j(r-2,c).getType()){
+					findSwappable(swapables, new Position(r-1,c), j(r,c).getType(), 5); //ignore vertical
 				}
 			}
 
@@ -471,6 +494,8 @@ public class Playground {
 					findSwappable(swapables, new Position(r, c + 1), j(r, c)
 							.getType(), 1); // right
 
+				}else if(c>1 && j(r,c).getType() == j(r,c-2).getType()){
+					findSwappable(swapables, new Position(r,c-1), j(r,c).getType(), 4); //ignore horizontal
 				}
 			}
 		}
@@ -482,7 +507,7 @@ public class Playground {
 	 * @param p
 	 * @param type
 	 * @param ignore_side
-	 *            0: right, 1: left, 2: down, 3: up
+	 *            0: right, 1: left, 2: down, 3: up, 4: horizontal, 5: vertical
 	 */
 	private void findSwappable(List<Pair<Position, Position>> swapables,
 			Position p, int type, int ignore_side) {
@@ -494,6 +519,11 @@ public class Playground {
 		Position pp = new Position(p.row, p.col);
 		for (int i = 0; i < offsets.length; i++) {
 			if (i == ignore_side) {
+				continue;
+			}
+			if( ignore_side == 4 && (i == 0 || i == 1)){
+				continue;
+			}if( ignore_side == 5 && (i == 2 || i == 3)){
 				continue;
 			}
 			pp.row = p.row + offsets[i][0];
@@ -515,14 +545,13 @@ public class Playground {
 		scoreLevel.stepTime(1000 / Constants.FPS);
 		animations.getAsCollection().step();
 
-		hintDelay++;
-		if (hintDelay > 50 && swapables.size() > 0) {
+		delayCount+= 1000/Constants.FPS;
+		if (HINT_DELAY >0 && delayCount > HINT_DELAY && swapables.size() > 0) {
 			Random r = new Random();
 			animations.hintAnimation.setLocation(this.mapToPoint(swapables
 					.get(r.nextInt(swapables.size())).first));
 			animations.hintAnimation.start();
-			Log.v(TAG, "start hint animation");
-			hintDelay = 0;
+			delayCount = 0;
 		}
 	}
 
@@ -534,14 +563,12 @@ public class Playground {
 	public void touch(float x, float y) {
 		this.touchX = x;
 		this.touchY = y;
-		Log.v(TAG, "touch set: " + x + ", " + y);
 	}
 
 	public void flip(float dx, float dy) {
 		this.flipX = (int) dx;
 		this.flipY = (int) dy;
 
-		Log.v(TAG, "touch set: " + dx + ", " + dy);
 	}
 
 	private void checkTouch() {
@@ -556,7 +583,7 @@ public class Playground {
 	private void checkFlip() {
 		if (flipX != 0 || flipY != 0) {
 			doFlip(flipX, flipY);
-			flipX = 0; 
+			flipX = 0;
 			flipY = 0;
 		}
 	}
@@ -633,6 +660,7 @@ public class Playground {
 
 	public void configurationChanged(Configuration config) {
 		dm.configurationChanged(config);
+		this.HINT_DELAY = config.getHintDelay();
 	}
 
 	private Position map(float x, float y) {
@@ -797,7 +825,6 @@ public class Playground {
 		private float bsize = 0f;
 
 		// drawing bitmaps
-		public Bitmap[] original_blocks = new Bitmap[7];
 		public Bitmap[] sized_blocks = new Bitmap[7];
 
 		// paint
@@ -847,9 +874,9 @@ public class Playground {
 			for (int r = 0; r < rows; r++) {
 				for (int c = 0; c < cols; c++) {
 					if ((r + c) % 2 == 0) {
-						paint.setAlpha(160);
+						paint.setAlpha(180);
 					} else {
-						paint.setAlpha(80);
+						paint.setAlpha(100);
 					}
 					PointF p = mapToPoint(r, c);
 					canvas.drawRect(new RectF(p.x, p.y, p.x + bsize, p.y
@@ -869,40 +896,14 @@ public class Playground {
 		private Context context;
 
 		public void init(Context context) {
-
 			Log.v(TAG, "playground dm - init");
 			this.context = context;
 			jewelStyle = Configuration.config().getJewelStyle();
-			for (int i = 0; i < 7; i++) {
-				try {
-
-					original_blocks[i] = BitmapFactory.decodeStream(context
-							.getAssets().open(
-									"images/jewels/" + jewelStyle + "/" + i
-											+ ".png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 
 		public void onSizeChanged(boolean mustChange) {
-			Log.v(TAG, "playground dm - on size changed");
-			if (sized_blocks[0] == null || sized_blocks[0].getWidth() != bsize
-					|| mustChange) {
-				for (int i = 0; i < 7; i++) {
-
-					Log.v(TAG, "playground dm - on size changed in for");
-					if (original_blocks[i] != null) {
-
-						Log.v(TAG,
-								"playground dm - on size changed, creating image");
-						sized_blocks[i] = Bitmap.createScaledBitmap(
-								original_blocks[i], Math.round(bsize),
-								Math.round(bsize), false);
-					}
-				}
-			}
+			
+			reloadJewelBitmap(Configuration.config().getJewelStyle(), mustChange);
 			animations.selectionAnimation.setSize(Math.round(bsize));
 			animations.hintAnimation.setSize(Math.round(bsize));
 			animations.swapAnimation.setJewelBitmap(sized_blocks);
@@ -918,21 +919,33 @@ public class Playground {
 
 		public void configurationChanged(Configuration config) {
 			String bs = config.getJewelStyle();
-			if (!bs.equals(jewelStyle) && context != null) {
-				jewelStyle = bs;
+			reloadJewelBitmap(bs, false);
+
+		}
+
+		private void reloadJewelBitmap(String jewelStyle,
+				boolean mustReload) {
+			if (this.sized_blocks[0] == null || jewelStyle != this.jewelStyle
+					|| Math.round(bsize) != sized_blocks[0].getWidth() || mustReload) {
+				this.jewelStyle = jewelStyle;
+				Log.v(TAG, "reloading bitmap , bitmap size: "+bsize);
 				for (int i = 0; i < 7; i++) {
 					try {
-						original_blocks[i] = BitmapFactory.decodeStream(context
-								.getAssets().open(
-										"images/jewels/" + jewelStyle + "/" + i
-												+ ".png"));
-					} catch (IOException e) {
+						if (sized_blocks[i] != null) {
+							sized_blocks[i].recycle();
+						}
+						sized_blocks[i] = BitmapUtil.get()
+								.getBitmapOfPreferedSize(
+										"images/jewels/" + jewelStyle, i + "",
+										"png", Math.round(bsize));
+						if (sized_blocks[i] == null) {
+							throw new Exception("Bitmap is null");
+						}
+					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-				onSizeChanged(true);
 			}
-
 		}
 	}
 

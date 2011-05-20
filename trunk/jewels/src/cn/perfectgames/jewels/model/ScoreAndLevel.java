@@ -2,9 +2,11 @@ package cn.perfectgames.jewels.model;
 
 import java.io.Serializable;
 
+import android.util.Log;
 import cn.perfectgames.jewels.model.Playground.Elimination;
 
 public class ScoreAndLevel implements Serializable {
+	public static final String TAG = "ScoreAndLevel";
 	public static final int MAX_LEVEL = 15;
 	
 	private GameMode gameMode = GameMode.Normal;
@@ -62,6 +64,8 @@ public class ScoreAndLevel implements Serializable {
 	}
 	
 	public double getLevelProgress(){
+		double progress = Math.min(1, getCurrentEliminations()/(double)getGoal());
+		Log.v(TAG, "level progress: "+progress);
 		return Math.min(1, getCurrentEliminations()/(double)getGoal());
 	}
 	

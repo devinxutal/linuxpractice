@@ -7,17 +7,17 @@
 		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
 			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
 			android:defaultValue="true" />
-		<!-- 
-		<ListPreference android:title="@string/pref_ent_difficulty"
-			android:summary="@string/pref_ent_difficulty_summary" android:key="difficulty"
-			android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries"
-			android:entryValues="@array/pref_ent_difficulty_values" />
-		<ListPreference android:title="@string/pref_ent_screen_orientation"
-			android:summary="@string/pref_ent_screen_orientation_summary"
-			android:key="screen_orientation" android:defaultValue="auto"
-			android:entries="@array/pref_ent_screen_orientation_entries"
-			android:entryValues="@array/pref_ent_screen_orientation_values" />
-		-->
+		<ListPreference android:title="@string/pref_ent_hint_delay"
+			android:summary="@string/pref_ent_hint_delay_summary" android:key="hint_delay"
+			android:defaultValue="10000" android:entries="@array/pref_ent_hint_delay_entries"
+			android:entryValues="@array/pref_ent_hint_delay_values" />
+		<!-- <ListPreference android:title="@string/pref_ent_difficulty" android:summary="@string/pref_ent_difficulty_summary" 
+			android:key="difficulty" android:defaultValue="1" android:entries="@array/pref_ent_difficulty_entries" 
+			android:entryValues="@array/pref_ent_difficulty_values" /> 
+			<ListPreference 
+			android:title="@string/pref_ent_screen_orientation" android:summary="@string/pref_ent_screen_orientation_summary" 
+			android:key="screen_orientation" android:defaultValue="auto" android:entries="@array/pref_ent_screen_orientation_entries" 
+			android:entryValues="@array/pref_ent_screen_orientation_values" /> -->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_appearence">
 		<ListPreference android:title="@string/pref_ent_jewel_style"
