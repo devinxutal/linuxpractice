@@ -3,16 +3,12 @@ package cn.perfectgames.jewels.control;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.model.Playground;
-import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.ui.ControlView;
 import cn.perfectgames.jewels.ui.PlaygroundView;
-
 
 public class GameController {
 	public static final int CONTROL_STICK_PERIOD = 100;
@@ -25,7 +21,7 @@ public class GameController {
 
 	public static final int IC_STEP = 5;
 	private static final String TAG = "GameController";
-	
+
 	private GameMode mode;
 
 	public interface GameListener {
@@ -34,27 +30,20 @@ public class GameController {
 		public void gameFinished();
 	}
 
-	private SoundManager soundManager;
-
 	private PlaygroundView playgroundView;
 	private ControlView controlView;
 	private Playground playground;
 	private List<GameListener> listeners = new LinkedList<GameListener>();
 
-	private Handler handler;
-
 	private boolean playing = true;
-	
-	private Command pendingCommand = null;
 
 	public void start() {
 		playing = true;
-		
+
 	}
 
 	public void pause() {
 		playing = false;
-		this.clearPendingCommand();
 	}
 
 	public void stop() {
@@ -62,31 +51,38 @@ public class GameController {
 	}
 
 	public void reset() {
-		//TODO
-//		playground.reset();
-//		this.playgroundView.reset();
-//		this.clearPendingCommand();
+		// playground.reset();
+		// this.playgroundView.reset();
+		// this.clearPendingCommand();
+	}
+
+	public void step() {
+		if (playing && !playground.isFinished()) {
+			playground.step();
+
+			if (playground.isFinished()) {
+				notifyGameFinished();
+			}
+		}
+	}
+
+	public void touch(float x, float y) {
+		if (playing && !playground.isFinished()) {
+			playground.touch(x, y);
+		}
+	}
+
+	public void flip(float dx, float dy) {
+		if (playing && !playground.isFinished()) {
+			playground.flip(dx, dy);
+		}
 	}
 
 	public void finishAnimation() {
-		//TODO
-//		while (this.playground.isInAnimation()) {
-//			this.playground.moveOn();
-//		}
-	}
-
-	public void processCommand(Command cmd) {
-
-	}
-
-	private int getStepDelay() {
-		//TODO
-//		return (int) (INTERVAL_STEP_NORMAL * playground.getSpeedScale());
-		return 400;
-	}
-
-	public void clearPendingCommand() {
-		this.pendingCommand = null;
+		// TODO
+		// while (this.playground.isInAnimation()) {
+		// this.playground.moveOn();
+		// }
 	}
 
 	public PlaygroundView getPlaygroundView() {
@@ -132,12 +128,9 @@ public class GameController {
 	public GameController(Context context, GameMode mode) {
 		this.playground = new Playground(mode);
 		this.playgroundView = new PlaygroundView(context);
-		this.playgroundView.setPlayground(playground);
 		this.playgroundView.setGameController(this);
 		this.controlView = new ControlView(context);
 		this.playgroundView.setControlView(this.controlView);
-		this.handler = new Handler();
-		this.soundManager = SoundManager.get((Activity) context);
 	}
 
 	public void destroy() {
@@ -149,7 +142,6 @@ public class GameController {
 		this.playgroundView.configurationChanged(config);
 		this.playground.configurationChanged(config);
 	}
-
 
 	public ControlView getControlView() {
 		return this.controlView;

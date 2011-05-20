@@ -29,6 +29,13 @@ public class Configuration {
 		return defaultValue;
 	}
 
+	public int getHintDelay(){
+		int defaultValue = 10000;
+		if (preference != null) {
+			return Integer.valueOf(preference.getString("hint_delay", defaultValue+""));
+		}
+		return defaultValue;
+	}
 	public boolean isBackgroundMusicOn() {
 		if (preference != null) {
 			return preference.getBoolean("background_music", true);

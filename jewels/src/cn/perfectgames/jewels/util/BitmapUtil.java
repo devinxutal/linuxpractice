@@ -25,8 +25,6 @@ public class BitmapUtil {
 	private Bitmap aimButton2;
 	
 	private Paint paint;
-	private Drawable hInfoBar;
-	private Drawable vInfoBar;
 
 	private Bitmap screen;
 
@@ -55,11 +53,6 @@ public class BitmapUtil {
 					R.drawable.aim_button2);
 
 		
-			hInfoBar = context.getResources()
-					.getDrawable(R.drawable.h_info_bar);
-
-			vInfoBar = context.getResources()
-					.getDrawable(R.drawable.v_info_bar);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -91,21 +84,27 @@ public class BitmapUtil {
 		return aimButton2;
 	}
 
-	// public Bitmap getAimButtonBitmap1(int size) {
-	// return Bitmap.createScaledBitmap(aimButton1, size, size, true);
-	// }
-	//
-	// public Bitmap getAimButtonBitmap2(int size) {
-	// return Bitmap.createScaledBitmap(aimButton2, size, size, true);
-	// }
-
-	public Drawable getVerticalInfoBar() {
-		return vInfoBar;
+	public Bitmap getBitmapOfPreferedSize(String path, String fileName, String postfix, int size){
+		for(String filepath: new String[]{(path+"/"+fileName+"_"+size+"."+postfix),(path+"/"+fileName+"."+postfix)}){
+			Log.v("BitmapUtil", "trying to get bitmap: "+filepath);
+			try{
+				Bitmap bitmap = BitmapFactory.decodeStream(context
+						.getAssets().open(filepath));
+				if(bitmap.getWidth() != size){
+					Bitmap temp = bitmap;
+					bitmap = Bitmap.createScaledBitmap(temp, size, size, true);
+					temp.recycle();
+				}
+				Log.v("BitmapUtil" , "bitmap size: "+ bitmap.getWidth());
+				return bitmap;
+			}catch(Exception e){
+				
+			}
+		}
+		
+		return null;
 	}
-
-	public Drawable getHorizontalInfoBar() {
-		return hInfoBar;
-	}
+	
 	public void drawBackgroundBitmap(Canvas canvas, int width, int height,
 			Paint paint) {
 		int w = background.getWidth();

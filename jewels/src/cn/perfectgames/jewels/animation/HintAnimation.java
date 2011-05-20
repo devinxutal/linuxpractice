@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.Log;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Constants;
@@ -42,8 +41,8 @@ public class HintAnimation extends AbstractAnimation {
 	}
 
 	public void setLocation(float x, float y) {
-		this.x = x ;
-		this.y = y ;
+		this.x = x +size/6;
+		this.y = y - size/6;
 	}
 
 	public void setLocation(PointF point) {

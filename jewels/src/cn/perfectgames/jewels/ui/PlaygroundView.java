@@ -49,13 +49,14 @@ public class PlaygroundView extends SurfaceView implements
 
 	public void setGameController(GameController controller) {
 		this.gameController = controller;
+		setPlayground(controller.getPlayground());
 	}
 
 	public Playground getPlayground() {
 		return playground;
 	}
 
-	public void setPlayground(Playground playground) {
+	private void setPlayground(Playground playground) {
 		this.playground = playground;
 		this.playground.getDM().init(this.getContext());
 	}
@@ -241,9 +242,6 @@ public class PlaygroundView extends SurfaceView implements
 
 	private ControlView controlView;
 
-	public void pause(boolean pause) {
-
-	}
 
 	public class DrawingMetrics {
 
@@ -441,8 +439,8 @@ public class PlaygroundView extends SurfaceView implements
 						//Log.v(TAG, "need for stepping");
 						timeElapsed -= interval;
 						stepped = true;
-						if(playground != null){
-							playground.step();
+						if(gameController != null){
+							gameController.step();
 						}
 					}
 					if(stepped == true){

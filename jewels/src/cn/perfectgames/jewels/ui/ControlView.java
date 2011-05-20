@@ -104,7 +104,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 			oldXForPlayground = x;
 			oldYForPlayground = y;
 			if(this.controller != null){
-				controller.getPlayground().touch(x, y);
+				controller.touch(x, y);
 			}
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
 			
@@ -113,7 +113,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 		
 			//for playground
 			if(this.controller != null){
-				controller.getPlayground().flip(x - oldXForPlayground, y - oldYForPlayground);
+				controller.flip(x - oldXForPlayground, y - oldYForPlayground);
 			}
 		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			
@@ -209,11 +209,14 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 	}
 
 	public interface GameControlListener {
+		
 		void buttonClickced(int id);
 
 		void buttonPressed(int id);
 
 		void buttonReleased(int id);
+		
+		
 	}
 
 	public boolean addGameControlListener(GameControlListener l) {
