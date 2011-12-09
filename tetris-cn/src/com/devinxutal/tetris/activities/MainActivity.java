@@ -60,13 +60,12 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private static final String TAG = "MainActvity";
 
-	static{   
+	static{ 
 	 //第一个参数为您的应用发布Id
 	 //第二个参数为您的应用密码
 	 //第三个参数是请求广告的间隔，有效的设置值为30至200，单位为秒
 	 //第四个参数是设置测试模式，设置为true时，可以获取测试广告，正式发布请设置此参数为false
-	 //第五个参数是供开发者设置的应用版本标识，开发者设置此参数后，可以通过有米广告网站的开发者管理页面看到应用的统计情况。
-	 net.youmi.android.AdManager.init("9a569a351928555b", "779567818294d49a", 30, false,"1.2.2"); 
+	 net.youmi.android.AdManager.init(null,"9a569a351928555b", "779567818294d49a", 30, false); 
 	}
 	private Typeface buttonFont;
 	private Dialog progressDialog;
