@@ -6,12 +6,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import cn.perfectgames.jewels.activities.BaseActivity;
 
 public class PreferenceUtil {
 
@@ -98,11 +103,23 @@ public class PreferenceUtil {
 
 	public static Object stringToObject(String encodedObject) {
 		try {
-			return new ObjectInputStream(new ByteArrayInputStream(encodedObject
-					.getBytes())).readObject();
+			return new ObjectInputStream(new ByteArrayInputStream(
+					encodedObject.getBytes())).readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void resetLocale(BaseActivity activity, Locale locale) {
+		Resources res = activity.getBaseContext().getResources();
+		android.content.res.Configuration conf = res.getConfiguration();
+		
+		conf.locale = locale;
+		Locale.setDefault(locale);
+		DisplayMetrics dm = res.getDisplayMetrics();
+		res.updateConfiguration(conf, dm);
+		Log.v("configuration", "now we are setting locale to " + locale);
+
 	}
 }

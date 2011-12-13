@@ -5,30 +5,16 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -39,13 +25,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.perfectgames.amaze.record.Record;
+import cn.perfectgames.amaze.util.StorageUtil;
 import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
@@ -59,6 +49,7 @@ import cn.perfectgames.jewels.ui.ControlView;
 import cn.perfectgames.jewels.ui.ControlView.GameControlListener;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
+import cn.perfectgames.jewels.util.BitmapUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
 
 import com.heyzap.sdk.HeyzapLib;
@@ -69,8 +60,6 @@ import com.scoreloop.client.android.core.model.Score;
 
 public class PlaygroundActivity extends BaseActivity {
 	public static final String TAG = "PlaygroundActivity";
-
-	public static final int PREFERENCE_REQUEST_CODE = 0x100;
 
 	public enum State {
 		INIT, PLAY, PAUSED, ENDING, END
@@ -117,9 +106,11 @@ public class PlaygroundActivity extends BaseActivity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN); // (NEW)
+		
 
-		PowerManager pm = (PowerManager) this
-				.getSystemService(Context.POWER_SERVICE);
+		if(GoJewelsApplication.getBitmapUtil() == null){
+			GoJewelsApplication.setBitmapUtil(BitmapUtil.get(this));
+		}
 
 		// activity params
 
@@ -209,7 +200,6 @@ public class PlaygroundActivity extends BaseActivity {
 
 		adDaemonSuccess.run();
 		adDaemonPause.run();
-
 	}
 
 	@Override
@@ -362,35 +352,27 @@ public class PlaygroundActivity extends BaseActivity {
 		super.onResume();
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == PREFERENCE_REQUEST_CODE) {
-			this.preferenceChanged();
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
-
 	class ControlButtonClicked implements GameControlListener {
 		public void buttonClickced(int id) {
 			switch (id) {
-//			case ControlView.BTN_LEFT:
-//				gameController.processCommand(Command.LEFT);
-//				break;
-//			case ControlView.BTN_RIGHT:
-//				gameController.processCommand(Command.RIGHT);
-//				break;
-//			case ControlView.BTN_TURN:
-//				gameController.processCommand(Command.TURN);
-//				break;
-//			case ControlView.BTN_DOWN:
-//				gameController.processCommand(Command.DOWN);
-//				break;
-//			case ControlView.BTN_DIRECT_DOWN:
-//				gameController.processCommand(Command.DIRECT_DOWN);
-//				break;
-//			case ControlView.BTN_HOLD:
-//				gameController.processCommand(Command.HOLD);
-//				break;
+			// case ControlView.BTN_LEFT:
+			// gameController.processCommand(Command.LEFT);
+			// break;
+			// case ControlView.BTN_RIGHT:
+			// gameController.processCommand(Command.RIGHT);
+			// break;
+			// case ControlView.BTN_TURN:
+			// gameController.processCommand(Command.TURN);
+			// break;
+			// case ControlView.BTN_DOWN:
+			// gameController.processCommand(Command.DOWN);
+			// break;
+			// case ControlView.BTN_DIRECT_DOWN:
+			// gameController.processCommand(Command.DIRECT_DOWN);
+			// break;
+			// case ControlView.BTN_HOLD:
+			// gameController.processCommand(Command.HOLD);
+			// break;
 			case ControlView.BTN_PAUSE:
 				pause();
 				break;
@@ -459,7 +441,7 @@ public class PlaygroundActivity extends BaseActivity {
 				public void run() {
 					Log.v(TAG, "Game Finished");
 					int score = gameController.getPlayground()
-					.getScoreAndLevel().getScore();
+							.getScoreAndLevel().getScore();
 					if (score > 0) {
 						// ScoreUtil.saveCubeState("Player", score);
 					}
@@ -479,9 +461,20 @@ public class PlaygroundActivity extends BaseActivity {
 				hideSuccessScreen();
 				replay();
 			} else if (view.getId() == R.id.submit_button) {
-				Intent intent = new Intent(PlaygroundActivity.this,
-						LeaderBoardActivity.class);
-				startActivity(intent);
+				if (((Button) view).getText().equals(
+						getResources().getString(
+								R.string.success_screen_submit_score))) {
+					if (gameMode != GameMode.Infinite) {
+						PlaygroundActivity.this.submitRecord();
+					}
+				} else {
+					Intent intent = new Intent(PlaygroundActivity.this,
+							LeaderBoardActivity.class);
+					if(gameMode!= GameMode.Infinite){
+					intent.putExtra("game_mode", gameMode);
+					}
+					startActivity(intent);
+				}
 
 			} else if (view.getId() == R.id.back_button) {
 				PlaygroundActivity.this.finish();
@@ -489,34 +482,6 @@ public class PlaygroundActivity extends BaseActivity {
 				if (state == State.PAUSED
 						&& !gameController.getPlayground().isFinished()) {
 					saveGame();
-				}
-
-				int score = gameController.getPlayground().getScoreAndLevel()
-						.getScore();
-				if (score > 0) {
-
-					// score loop score
-					Score sc = new Score((double) score, null);
-					sc.setMode(gameMode.ordinal());
-					sc.setLevel(gameController.getPlayground()
-							.getScoreAndLevel().getLevel());
-
-					final ScoreController scoreController = new ScoreController(
-							new ScoreSubmitObserver());
-					// scoreController.submitScore(sc);
-
-					// local score
-					Record record = new Record();
-					record.setMode(gameMode.ordinal());
-					record.setLevel(gameController.getPlayground()
-							.getScoreAndLevel().getLevel());
-					record.setResult(score);
-					record.setPlayer("Hello Baby");
-
-					GoJewelsApplication.getLocalRecordManager().submitRecord(
-							record);
-					showDialog(DIALOG_PROGRESS);
-
 				}
 				PlaygroundActivity.this.finish();
 			} else if (view.getId() == R.id.resume_button) {
@@ -545,7 +510,6 @@ public class PlaygroundActivity extends BaseActivity {
 	}
 
 	private void showSuccessScreen() {
-		Log.v(TAG, "showing screen");
 		this.successScreen.setVisibility(View.VISIBLE);
 		this.customizeView(((TextView) this
 				.findViewById(R.id.success_screen_title)));
@@ -554,8 +518,17 @@ public class PlaygroundActivity extends BaseActivity {
 		scoreText.setText(gameController.getPlayground().getScoreAndLevel()
 				.getScore()
 				+ "");
-		// this.successScreenSubmitButton
-		// .setText(R.string.success_screen_submit_score);
+		if (this.gameMode == gameMode.Infinite || this.gameController.getPlayground().getScoreAndLevel().getScore() <=0) {
+
+			this.successScreenSubmitButton
+					.setText(R.string.success_screen_world_rank);
+		} else {
+			this.successScreenSubmitButton
+					.setText(R.string.success_screen_submit_score);
+		}
+		Animation ani = new AlphaAnimation(0f, 1f);
+		ani.setDuration(1500);
+		this.successScreen.startAnimation(ani);
 	}
 
 	private void hideSuccessScreen() {
@@ -586,7 +559,8 @@ public class PlaygroundActivity extends BaseActivity {
 				this.getResources().getString(R.string.game_init_new) };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Go Tetris").setCancelable(false);
+		builder.setTitle(getResources().getString(R.string.app_name))
+				.setCancelable(false);
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 0) {
@@ -626,65 +600,64 @@ public class PlaygroundActivity extends BaseActivity {
 	}
 
 	public boolean tryLoadGame() {
-		File file = Environment.getExternalStorageDirectory();
 		SavablePlayground game = null;
-		ObjectInputStream in = null;
-		try {
-			File dataFile = new File(file, Constants.DATA_DIR + "/"
-					+ Constants.GAME_SAVING_FILE);
-			if (dataFile.exists()) {
-				in = new ObjectInputStream(new FileInputStream(dataFile));
-				game = (SavablePlayground) in.readObject();
-				if (game != null) {
-					return true;
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (in != null) {
-				try {
+		File dataFolder = StorageUtil.getDataStoreFolder(this, "save");
+		if (dataFolder != null) {
+			File dataFile = new File(dataFolder, this.gameMode.toString());
+			try {
+				if (dataFile.exists()) {
+					ObjectInputStream in = new ObjectInputStream(
+							new FileInputStream(dataFile));
+					game = (SavablePlayground) in.readObject();
 					in.close();
-				} catch (Exception e) {
-					e.printStackTrace();
+					if (game != null) {
+						return true;
+					}
 				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
+
 		return false;
 	}
 
 	public void deleteSavedGame() {
-		File file = Environment.getExternalStorageDirectory();
-		SavablePlayground game = null;
-		try {
-			File dataFile = new File(file, Constants.DATA_DIR + "/"
-					+ Constants.GAME_SAVING_FILE);
-			if (dataFile.exists()) {
-				dataFile.delete();
-			}
+		File dataFolder = StorageUtil.getDataStoreFolder(this, "save");
+		if (dataFolder != null) {
+			File dataFile = new File(dataFolder, this.gameMode.toString());
+			try {
+				if (dataFile.exists()) {
+					dataFile.delete();
+				}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	public void loadGame() {
-		File file = Environment.getExternalStorageDirectory();
-		SavablePlayground game = null;
-		try {
-			File dataFile = new File(file, Constants.DATA_DIR + "/"
-					+ Constants.GAME_SAVING_FILE);
-			if (dataFile.exists()) {
-				ObjectInputStream in = new ObjectInputStream(
-						new FileInputStream(dataFile));
-				game = (SavablePlayground) in.readObject();
-				in.close();
-			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		SavablePlayground game = null;
+		File dataFolder = StorageUtil.getDataStoreFolder(this, "save");
+		if (dataFolder != null) {
+			File dataFile = new File(dataFolder, this.gameMode.toString());
+			try {
+				if (dataFile.exists()) {
+					ObjectInputStream in = new ObjectInputStream(
+							new FileInputStream(dataFile));
+					game = (SavablePlayground) in.readObject();
+					in.close();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+
 		if (game != null) {
 			this.gameController.getPlayground().restoreSavablePlayground(game);
 			play();
@@ -694,21 +667,18 @@ public class PlaygroundActivity extends BaseActivity {
 	}
 
 	public void saveGame() {
-		File file = Environment.getExternalStorageDirectory();
-		try {
-			File dir = new File(file, Constants.DATA_DIR);
-			if (!dir.exists()) {
-				dir.mkdirs();
+		File dataFolder = StorageUtil.getDataStoreFolder(this, "save");
+		if (dataFolder != null) {
+			File dataFile = new File(dataFolder, this.gameMode.toString());
+			try {
+				ObjectOutputStream out = new ObjectOutputStream(
+						new FileOutputStream(dataFile));
+				out.writeObject(this.gameController.getPlayground()
+						.getSavablePlayground());
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			File dataFile = new File(dir, Constants.GAME_SAVING_FILE);
-
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(dataFile));
-			out.writeObject(this.gameController.getPlayground()
-					.getSavablePlayground());
-			out.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -721,11 +691,19 @@ public class PlaygroundActivity extends BaseActivity {
 		alert.show();
 	}
 
-	private void preferenceChanged() {
+	protected void preferenceChanged() {
 		Log.v(TAG, "preference changed");
 		// /////////////
+		PreferenceUtil.resetLocale(this, Configuration.config().getLanguage());
 		if (this.gameController != null) {
 			gameController.configurationChanged(Configuration.config());
+			String jewelStyle = Configuration.config().getJewelStyle();
+			if (jewelStyle.equals("animal")) {
+				SoundManager.get(this).setSoundStyle(SoundManager.STYLE_ANIMAL);
+			} else {
+
+				SoundManager.get(this).setSoundStyle(SoundManager.STYLE_JEWEL);
+			}
 		}
 	}
 
@@ -733,20 +711,25 @@ public class PlaygroundActivity extends BaseActivity {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(R.string.record_submit_input_name_title);
-		final EditText input = new EditText(this);
-		input.setText(PreferenceUtil.readPlayerName(this));
-		LinearLayout layout = new LinearLayout(this);
-		layout.setPadding(20, 10, 20, 10);
-		layout.addView(input, ViewGroup.LayoutParams.FILL_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
-		alert.setView(layout);
 
+		LayoutInflater inflater = (LayoutInflater) this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout l = new LinearLayout(this);
+		inflater.inflate(R.layout.submit_score, l);
+		final EditText playerName = ((EditText) l
+				.findViewById(R.id.player_name));
+		final CheckBox submitToGlobal = ((CheckBox) l
+				.findViewById(R.id.submit_to_global));
+		alert.setView(l);
+
+		playerName.setText(PreferenceUtil.readPlayerName(this));
 		alert.setPositiveButton(R.string.common_ok,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						PreferenceUtil.writePlayerName(PlaygroundActivity.this,
-								input.getText().toString());
-						submitRecord(input.getText().toString());
+								playerName.getText().toString());
+						submitRecord(playerName.getText().toString(),
+								submitToGlobal.isChecked());
 					}
 				});
 
@@ -759,62 +742,34 @@ public class PlaygroundActivity extends BaseActivity {
 		alert.show();
 	}
 
-	private void submitRecord(String player) {
-		progressDialog = ProgressDialog.show(this, "", getResources()
-				.getString(R.string.record_submit_submitting_record), true);
-		new SubmitRecordThread(player).start();
-	}
+	private void submitRecord(String player, boolean global) {
+		int score = gameController.getPlayground().getScoreAndLevel()
+				.getScore();
+		if (score > 0) {
+			if (global) {
+				// score loop score
+				Score sc = new Score((double) score, null);
+				sc.setMode(gameMode.ordinal());
+				sc.setLevel(gameController.getPlayground().getScoreAndLevel()
+						.getLevel());
 
-	class SubmitRecordThread extends Thread {
-		private String player;
-
-		public SubmitRecordThread(String player) {
-			this.player = player;
-		}
-
-		@Override
-		public void run() {
-			String url = Constants.URL_COMMIT_RECORD;
-			Map<String, String> data = new HashMap<String, String>();
-			data.put("player", player);
-			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost(url);
-			ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
-			for (Map.Entry<String, String> m : data.entrySet()) {
-				postData.add(new BasicNameValuePair(m.getKey(), m.getValue()));
+				final ScoreController scoreController = new ScoreController(
+						new ScoreSubmitObserver());
+				scoreController.submitScore(sc);
+				showDialog(DIALOG_PROGRESS);
 			}
-			int statusCode = HttpStatus.SC_ACCEPTED;
-			try {
-				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
-						postData, HTTP.UTF_8);
+			// local score
+			Record record = new Record();
+			record.setMode(gameMode.ordinal());
+			record.setLevel(gameController.getPlayground().getScoreAndLevel()
+					.getLevel());
+			record.setResult(score);
+			record.setPlayer(player);
 
-				httpPost.setEntity(entity);
-				HttpResponse response = httpClient.execute(httpPost);
-				statusCode = response.getStatusLine().getStatusCode();
-
-			} catch (Exception e) {
-				e.printStackTrace();
+			GoJewelsApplication.getLocalRecordManager().submitRecord(record);
+			if(!global){
+				this.successScreenSubmitButton.setText(R.string.success_screen_world_rank);
 			}
-			final int sc = statusCode;
-			PlaygroundActivity.this.runOnUiThread(new Runnable() {
-
-				public void run() {
-					if (progressDialog != null) {
-						progressDialog.cancel();
-						progressDialog = null;
-					}
-					if (sc == HttpStatus.SC_OK) {
-						toast.setText("Your record has been submitted.");
-						toast.show();
-						successScreenSubmitButton
-								.setText(R.string.success_screen_world_rank);
-					} else {
-						toast.setText("Submit failed, please check your network connection.");
-						toast.show();
-					}
-				}
-
-			});
 		}
 	}
 
@@ -860,6 +815,7 @@ public class PlaygroundActivity extends BaseActivity {
 				final RequestController requestController) {
 			dismissDialog(DIALOG_PROGRESS);
 			showToast("Your score has been submitted successfully.");
+			successScreenSubmitButton.setText(R.string.success_screen_world_rank);
 		}
 	}
 

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_cat_basic">
+		<!-- 
 		<CheckBoxPreference android:title="@string/pref_ent_background_music"
 			android:summary="@string/pref_ent_background_music_summary"
 			android:key="background_music" android:defaultValue="true" />
+		 -->
+		<ListPreference android:title="@string/pref_ent_language"
+			android:summary="@string/pref_ent_language_summary" android:key="language"
+		    android:entries="@array/pref_ent_language_entries"
+			android:entryValues="@array/pref_ent_language_values" />
 		<CheckBoxPreference android:title="@string/pref_ent_sound_effects"
 			android:summary="@string/pref_ent_sound_effects_summary" android:key="sound_effects"
 			android:defaultValue="true" />

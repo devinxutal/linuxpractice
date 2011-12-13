@@ -12,24 +12,23 @@ import android.util.Log;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 
-
 public class SoundManager {
-	public static final int STYLE_JEWEL =0;
+	public static final int STYLE_JEWEL = 0;
 	public static final int STYLE_ANIMAL = 1;
-	
+
 	private int style = 0;
-	
+
 	private static final String TAG = "SoundManager";
 	private SoundPool soundpool;
 	private Activity activity;
 	private MediaPlayer mediaPlayer;
 	private AudioManager audioManager;
 	private int btnMusicID = -1;
-	private int turnMusicID = -1;
-	private int moveMusicID = -1;
-	private int downMusicID = -1;
 	private int eliminationMusicID = -1;
-	
+	private int levelupMusicID = -1;
+	private int regenerateMusicID = -1;
+	private int finishMusicID = -1;
+
 	private int[][] eliminationSounds = new int[2][7];
 	private int[] illigalSwapSounds = new int[2];
 	private int[] dropSounds = new int[2];
@@ -66,45 +65,58 @@ public class SoundManager {
 	}
 
 	private SoundManager(Activity activity) {
-		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		soundpool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		audioManager = (AudioManager) activity
 				.getSystemService(Context.AUDIO_SERVICE);
-		try {
-			mediaPlayer.reset();
-			mediaPlayer.setLooping(true);
-			AssetFileDescriptor fd = activity.getAssets().openFd(
-					"sounds/tetris.mp3");
-			mediaPlayer.setDataSource(fd.getFileDescriptor(), fd
-					.getStartOffset(), fd.getLength());
-			mediaPlayer.prepare();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+		// TODO uncomment below if bg music is enabled
+		// try {
+		// mediaPlayer.reset();
+		// mediaPlayer.setLooping(true);
+		// AssetFileDescriptor fd = activity.getAssets().openFd(
+		// "sounds/bg_music.mp3");
+		// mediaPlayer.setDataSource(fd.getFileDescriptor(), fd
+		// .getStartOffset(), fd.getLength());
+		// mediaPlayer.prepare();
+		// } catch (Exception e1) {
+		// e1.printStackTrace();
+		// }
 		Log.v(TAG, "soundpool null?" + (soundpool == null));
 		try {
 
-			this.btnMusicID = soundpool.load(activity.getAssets().openFd(
-					"sounds/buttonclick.mp3"), 1);
+			this.btnMusicID = soundpool.load(activity, R.raw.buttonclick, 10);
 
-			this.moveMusicID = soundpool.load(activity, R.raw.move, 10);
-			this.turnMusicID = soundpool.load(activity, R.raw.turn, 10);
-			this.downMusicID = soundpool.load(activity, R.raw.down, 10);
 			this.eliminationMusicID = soundpool.load(activity,
 					R.raw.elimination, 10);
-			
-			this.dropSounds[0] = this.dropSounds[1] = soundpool.load(activity, R.raw.drop_jewel,10);
+			this.levelupMusicID = soundpool.load(activity, R.raw.levelup, 10);
+			this.finishMusicID = soundpool.load(activity, R.raw.finish, 10);
+			this.regenerateMusicID = soundpool.load(activity, R.raw.regenerate,
+					10);
+			this.dropSounds[0] = soundpool.load(activity, R.raw.drop_jewel, 10);
+			this.dropSounds[1] = -1;
 
-			this.illigalSwapSounds[0]= this.illigalSwapSounds[1] = soundpool.load(activity, R.raw.illegal_swap,10);
-			
-			int tmpId = soundpool.load(activity,R.raw.remove,10);
-			for(int i =0; i<2; i++){
-				for(int j = 0; j<7; j++){
+			this.illigalSwapSounds[0] = this.illigalSwapSounds[1] = soundpool
+					.load(activity, R.raw.illegal_swap, 10);
+
+			int tmpId = soundpool.load(activity, R.raw.remove, 10);
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 7; j++) {
 					eliminationSounds[i][j] = tmpId;
 				}
 			}
-		} catch (IOException e) {
+			// sounds for animals
+			eliminationSounds[1][0] = soundpool.load(activity, R.raw.dog, 10);
+			eliminationSounds[1][1] = soundpool.load(activity, R.raw.chicken,
+					10);
+			eliminationSounds[1][2] = soundpool.load(activity, R.raw.panda, 10);
+			eliminationSounds[1][3] = soundpool
+					.load(activity, R.raw.cattle, 10);
+			eliminationSounds[1][4] = soundpool.load(activity, R.raw.cat, 10);
+			eliminationSounds[1][5] = soundpool.load(activity, R.raw.frog, 10);
+			eliminationSounds[1][6] = soundpool
+					.load(activity, R.raw.monkey, 10);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.activity = activity;
@@ -115,35 +127,32 @@ public class SoundManager {
 	}
 
 	public void playBackgroundMusic() {
-		Log.v(TAG, "play background music 1");
-		if (!Configuration.config().isBackgroundMusicOn()) {
-			return;
-		}
-		Log.v(TAG, "play background music 2");
-		if (!mediaPlayer.isPlaying()) {
-			Log.v(TAG, "really play background music");
-			mediaPlayer.setVolume(streamVolume, streamVolume);
-			mediaPlayer.setVolume(1, 1);
-			Log.v(TAG, "really play background music");
-			mediaPlayer.start();
-		}
+		// TODO uncomment below if bg music is enabled
+		// if (!Configuration.config().isBackgroundMusicOn()) {
+		// return;
+		// }
+		// if (!mediaPlayer.isPlaying()) {
+		// mediaPlayer.setVolume(streamVolume, streamVolume);
+		// mediaPlayer.setVolume(1, 1);
+		// mediaPlayer.start();
+		// }
 	}
 
 	public void stopBackgroundMusic() {
-		Log.v(TAG, "stop background music");
-		if (mediaPlayer.isPlaying()) {
-			mediaPlayer.stop();
-			try {
-				mediaPlayer.prepare();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+
+		// TODO uncomment below if bg music is enabled
+		// if (mediaPlayer.isPlaying()) {
+		// mediaPlayer.stop();
+		// try {
+		// mediaPlayer.prepare();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
 
 	}
 
 	public void pauseBackgroundMusic() {
-		Log.v(TAG, "pause background music");
 		if (mediaPlayer.isPlaying()) {
 			mediaPlayer.pause();
 		}
@@ -167,42 +176,6 @@ public class SoundManager {
 		}
 	}
 
-	public void playMoveEffect() {
-		if (!Configuration.config().isSoundEffectsOn()) {
-			return;
-		}
-		if (soundpool == null) {
-			return;
-		}
-		if (moveMusicID >= 0) {
-			soundpool.play(moveMusicID, streamVolume, streamVolume, 1, 0, 1);
-		}
-	}
-
-	public void playTurnEffect() {
-		if (!Configuration.config().isSoundEffectsOn()) {
-			return;
-		}
-		if (soundpool == null) {
-			return;
-		}
-		if (turnMusicID >= 0) {
-			soundpool.play(turnMusicID, streamVolume, streamVolume, 1, 0, 1);
-		}
-	}
-
-	public void playDownEffect() {
-		if (!Configuration.config().isSoundEffectsOn()) {
-			return;
-		}
-		if (soundpool == null) {
-			return;
-		}
-		if (downMusicID >= 0) {
-			soundpool.play(downMusicID, streamVolume, streamVolume, 1, 0, 1);
-		}
-	}
-
 	public void playEliminationEffect() {
 		if (!Configuration.config().isSoundEffectsOn()) {
 			return;
@@ -215,39 +188,76 @@ public class SoundManager {
 					0, 1);
 		}
 	}
-	
-	public void playIllegalSwapEffect(){
-		if(!Configuration.config().isSoundEffectsOn()){
+
+	public void playFinishEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
 			return;
 		}
-		if(soundpool == null){
+		if (soundpool == null) {
 			return;
 		}
-		soundpool.play(this.illigalSwapSounds[style], streamVolume, streamVolume, 1,0,1);
+		soundpool.play(this.finishMusicID, streamVolume, streamVolume, 1, 0, 1);
 	}
 
-	public void playDropEffect(){
-		if(!Configuration.config().isSoundEffectsOn()){
+	public void playRegenerateEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
 			return;
 		}
-		if(soundpool == null){
+		if (soundpool == null) {
 			return;
 		}
-		soundpool.play(this.dropSounds[style], streamVolume, streamVolume, 1,0,1);
+		soundpool.play(this.regenerateMusicID, streamVolume, streamVolume, 1,
+				0, 1);
 	}
 
-
-	public void playEliminationEffect(int type){
-		if(!Configuration.config().isSoundEffectsOn()){
+	public void playLevelUpffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
 			return;
 		}
-		if(soundpool == null){
+		if (soundpool == null) {
 			return;
 		}
-		soundpool.play(this.eliminationSounds[style][type], streamVolume, streamVolume, 1,0,1);
+		soundpool
+				.play(this.levelupMusicID, streamVolume, streamVolume, 1, 0, 1);
 	}
 
-	
+	public void playIllegalSwapEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		soundpool.play(this.illigalSwapSounds[style], streamVolume,
+				streamVolume, 1, 0, 1);
+	}
+
+	public void playDropEffect() {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		int id = this.dropSounds[style];
+		if (id >= 0) {
+			soundpool.play(this.dropSounds[style], streamVolume, streamVolume,
+					1, 0, 1);
+
+		}
+	}
+
+	public void playEliminationEffect(int type) {
+		if (!Configuration.config().isSoundEffectsOn()) {
+			return;
+		}
+		if (soundpool == null) {
+			return;
+		}
+		soundpool.play(this.eliminationSounds[style][type], streamVolume,
+				streamVolume, 1, 0, 1);
+	}
+
 	private void internalRelease() {
 		if (soundpool != null) {
 			soundpool.release();
@@ -259,5 +269,9 @@ public class SoundManager {
 			}
 			mediaPlayer.release();
 		}
+	}
+
+	public void setSoundStyle(int style) {
+		this.style = style;
 	}
 }

@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.util.BitmapUtil;
@@ -26,14 +27,13 @@ public class HintAnimation extends AbstractAnimation {
 
 	private Paint paint;
 
-	public HintAnimation() {
+	public HintAnimation(){
 		super((int)(1.5 * Constants.FPS));
 		paint = new Paint();
 		paint.setAntiAlias(true);
 
-		spark1 = BitmapUtil.get().getBitmap(R.drawable.spark1);
-		spark2 = BitmapUtil.get().getBitmap(R.drawable.spark2);
-
+		spark1 = GoJewelsApplication.getBitmapUtil().getBitmap(R.drawable.spark1);
+		spark2 = GoJewelsApplication.getBitmapUtil().getBitmap(R.drawable.spark2);
 	}
 
 	public void setSize(int size) {

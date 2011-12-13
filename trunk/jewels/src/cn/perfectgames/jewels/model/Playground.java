@@ -20,6 +20,8 @@ import cn.perfectgames.amaze.animation.AnimationCollection;
 import cn.perfectgames.amaze.animation.AnimationListener;
 import cn.perfectgames.amaze.graphics.Layer;
 import cn.perfectgames.amaze.graphics.Layers;
+import cn.perfectgames.jewels.GoJewelsApplication;
+import cn.perfectgames.jewels.animation.DripJewelsAnimation;
 import cn.perfectgames.jewels.animation.EliminationAnimation;
 import cn.perfectgames.jewels.animation.HintAnimation;
 import cn.perfectgames.jewels.animation.JewelDropAnimation;
@@ -57,23 +59,26 @@ public class Playground {
 	private ScoreAndLevel scoreLevel = new ScoreAndLevel();
 
 	private AnimationState animationState = AnimationState.IDLE;
+	private State state = State.INIT;
 
 	private List<Elimination> eliminations;
 
 	private List<Pair<Position, Position>> swapables = new LinkedList<Pair<Position, Position>>();
 
 	private int delayCount = 0;
-	
+
 	private SoundManager soundManager;
 
 	private int HINT_DELAY = 0;
-	
+
+	private boolean inLevelupAnimation;
+
 	public Playground(GameMode mode) {
 		this.gameMode = mode;
 		this.scoreLevel.setGameMode(mode);
 
 		this.HINT_DELAY = Configuration.config().getHintDelay();
-		
+
 		jewels = new Jewel[rows][cols];
 		visibilities = new boolean[rows][cols];
 
@@ -84,10 +89,27 @@ public class Playground {
 		reset();
 	}
 
-	
-	public void reset(){
+	public void reset() {
+		this.state = State.INIT;
 		this.scoreLevel.reset();
+		this.animations.reset();
 		regenerateJewels();
+		
+		// control
+		this.clearCommand();
+	}
+	public void play(){
+		if(this.state == State.INIT || this.state == State.PAUSED){
+			this.state = State.PLAYING;
+		}
+	}
+
+	private void clearCommand(){
+		this.touchX = -1
+		;
+		this.touchY =-1;
+		this.flipX = 0;
+		this.flipY = 0;
 		
 	}
 	private void regenerateJewels() {
@@ -163,6 +185,7 @@ public class Playground {
 
 			this.setVisibilities(false);
 			this.animations.refillAnimation.start();
+			this.soundManager.playRegenerateEffect();
 		}
 	}
 
@@ -171,14 +194,15 @@ public class Playground {
 	}
 
 	public boolean isFinished() {
-		if(animationState != AnimationState.IDLE){
+		return (this.state == State.FINISHED);
+	}
+
+	private boolean shouldFinish() {
+		if (gameMode == GameMode.Infinite) {
 			return false;
-		}
-		if(gameMode == GameMode.Infinite){
-			return false;
-		}else if(gameMode == GameMode.Timed || gameMode == GameMode.Quick){
-			return scoreLevel.getTimeProgress()<=0;
-		}else if(gameMode == GameMode.Normal){
+		} else if (gameMode == GameMode.Timed || gameMode == GameMode.Quick) {
+			return scoreLevel.getTimeProgress() <= 0;
+		} else if (gameMode == GameMode.Normal) {
 			return this.swapables.isEmpty();
 		}
 		return true;
@@ -229,39 +253,51 @@ public class Playground {
 					destPos);
 			animations.jewelDropAnimation.start();
 
-			// play sound
-			this.soundManager.playDropEffect();
 		}
 
 	}
 
 	private void totallyFinishElimination(boolean animation, boolean mainRoutine) {
-		Log.v(TAG, "totally finish elimination: " + animation);
 		setVisibilities(true);
-		checkElimination();
-		if (eliminations == null) { // no more eliminations
-			animationState = AnimationState.IDLE;
-			this.scoreLevel.resetCombo();
-			this.delayCount = 0;
-			if (animation) {
-				animations.scoreBoardAnimation.setNewScore(scoreLevel
-						.getScore());
-				animations.scoreBoardAnimation.start();
-			}
-			// recalculate the swap hint;
-			findSwappable();
 
-			if (swapables.isEmpty()) { // no swappables, need to refill
-				if(gameMode != GameMode.Normal){
-					refillPlayground(animation, mainRoutine);
+		Log.v(TAG, "totally finish eliminattion, check level up");
+		if (!this.inLevelupAnimation && scoreLevel.checkLevelUp()) {
+			// level up;
+
+			Log.v(TAG, "totally finish eliminattion, level up");
+			this.startLevelUp();
+		} else {
+			if (this.inLevelupAnimation) {
+				this.finishLevelUp();
+			}
+			checkElimination();
+			if (this.state != State.FINISHING  && this.state != State.FINISHED){
+				if (eliminations == null) { // no more eliminations
+					animationState = AnimationState.IDLE;
+					this.scoreLevel.resetCombo();
+					this.delayCount = 0;
+					if (animation) {
+						animations.scoreBoardAnimation.setNewScore(scoreLevel
+								.getScore());
+						animations.scoreBoardAnimation.start();
+					}
+					// recalculate the swap hint;
+					findSwappable();
+
+					if (swapables.isEmpty()) { // no swappables, need to refill
+						if (gameMode != GameMode.Normal) {
+							refillPlayground(animation, mainRoutine);
+						}
+					}
+
+				} else {
+					if (animation) {
+						animationState = AnimationState.ELIMINATING;
+						startElimination(animation, mainRoutine);
+					}
 				}
 			}
 
-		} else {
-			if (animation) {
-				animationState = AnimationState.ELIMINATING;
-				startElimination(animation, mainRoutine);
-			}
 		}
 	}
 
@@ -275,7 +311,7 @@ public class Playground {
 
 	public void startElimination(boolean animation, boolean mainRoutine) {
 
-		Log.v(TAG, "start elimination: " + animation);
+		Log.v(TAG, "start elimination: " + animation + ", " + mainRoutine);
 		animations.scoreAnimation.clearScores();
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
@@ -313,6 +349,7 @@ public class Playground {
 									% dm.score_colors.length]);
 				}
 			}
+
 		}
 
 		if (animation) {
@@ -326,7 +363,14 @@ public class Playground {
 					}
 				}
 			}
-			animations.eliminationAnimation.setJewels(jewels, pos);
+			if(this.inLevelupAnimation){
+				Log.v(TAG, "Elimination Animation for level up");
+				animations.eliminationAnimation.setJewels(jewels, pos, EliminationAnimation.Usage.Levelup);
+			}else{
+
+				Log.v(TAG, "Elimination Animation for normal");
+				animations.eliminationAnimation.setJewels(jewels, pos, EliminationAnimation.Usage.Elimination);
+			}
 			animations.eliminationAnimation.start();
 			if (mainRoutine) {
 				animations.scoreAnimation.start();
@@ -342,6 +386,32 @@ public class Playground {
 			}
 			this.soundManager.playEliminationEffect(firstEliminationType);
 		}
+	}
+
+	private void playFinishingAnimation() {
+		this.setVisibilities(false);
+
+		List<Jewel> jewels = new LinkedList<Jewel>();
+		List<PointF> pos = new LinkedList<PointF>();
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				jewels.add(j(r, c));
+				pos.add(mapToPoint(r, c));
+			}
+		}
+		
+		{ // reset all animations before play drip animation
+			animations.swapAnimation.reset();
+			animations.jewelDropAnimation.reset();
+			animations.eliminationAnimation.reset();
+		}
+		animations.dripJewelsAnimation.setJewels(jewels, pos);
+		animations.dripJewelsAnimation.start();
+		
+		// play sound
+		this.soundManager.playFinishEffect();
+		//this.soundManager.playEliminationEffect(firstEliminationType);
+
 	}
 
 	private boolean checkElimination() {
@@ -441,6 +511,30 @@ public class Playground {
 		return elis;
 	}
 
+	private void startLevelUp() {
+		Log.v(TAG, "start level up");
+		this.inLevelupAnimation = true;
+		this.eliminations.clear();
+		int eliminateType1 = new Jewel().getType();
+		int eliminateType2 = (eliminateType1+4)%7;
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				if (j(r, c).getType() == eliminateType1 ||j(r,c).getType() == eliminateType2) {
+					eliminations.add(new Elimination(false, r, c, c));
+
+				}
+			}
+		}
+
+		animationState = AnimationState.ELIMINATING;
+		this.startElimination(true, false);
+		soundManager.playLevelUpffect();
+	}
+
+	private void finishLevelUp() {
+		this.inLevelupAnimation = false;
+	}
+
 	private void startSwap() {
 		Log.v(TAG, "startSwap");
 		swap(first, second);
@@ -479,8 +573,9 @@ public class Playground {
 
 					findSwappable(swapables, new Position(r + 1, c), j(r, c)
 							.getType(), 3); // down
-				}else if(r>1 && j(r,c).getType() == j(r-2,c).getType()){
-					findSwappable(swapables, new Position(r-1,c), j(r,c).getType(), 5); //ignore vertical
+				} else if (r > 1 && j(r, c).getType() == j(r - 2, c).getType()) {
+					findSwappable(swapables, new Position(r - 1, c), j(r, c)
+							.getType(), 5); // ignore vertical
 				}
 			}
 
@@ -494,8 +589,9 @@ public class Playground {
 					findSwappable(swapables, new Position(r, c + 1), j(r, c)
 							.getType(), 1); // right
 
-				}else if(c>1 && j(r,c).getType() == j(r,c-2).getType()){
-					findSwappable(swapables, new Position(r,c-1), j(r,c).getType(), 4); //ignore horizontal
+				} else if (c > 1 && j(r, c).getType() == j(r, c - 2).getType()) {
+					findSwappable(swapables, new Position(r, c - 1), j(r, c)
+							.getType(), 4); // ignore horizontal
 				}
 			}
 		}
@@ -521,9 +617,10 @@ public class Playground {
 			if (i == ignore_side) {
 				continue;
 			}
-			if( ignore_side == 4 && (i == 0 || i == 1)){
+			if (ignore_side == 4 && (i == 0 || i == 1)) {
 				continue;
-			}if( ignore_side == 5 && (i == 2 || i == 3)){
+			}
+			if (ignore_side == 5 && (i == 2 || i == 3)) {
 				continue;
 			}
 			pp.row = p.row + offsets[i][0];
@@ -540,18 +637,27 @@ public class Playground {
 	}
 
 	public void step() {
-		checkTouch();
-		checkFlip();
-		scoreLevel.stepTime(1000 / Constants.FPS);
+		if (this.state == State.PLAYING) {
+			checkTouch();
+			checkFlip();
+		}
+		if(this.state != State.INIT && this.state != State.FINISHING && this.state != State.FINISHED){
+			scoreLevel.stepTime(1000 / Constants.FPS);
+		}
 		animations.getAsCollection().step();
 
-		delayCount+= 1000/Constants.FPS;
-		if (HINT_DELAY >0 && delayCount > HINT_DELAY && swapables.size() > 0) {
+		delayCount += 1000 / Constants.FPS;
+		if (HINT_DELAY > 0 && delayCount > HINT_DELAY && swapables.size() > 0) {
 			Random r = new Random();
 			animations.hintAnimation.setLocation(this.mapToPoint(swapables
 					.get(r.nextInt(swapables.size())).first));
 			animations.hintAnimation.start();
 			delayCount = 0;
+		}
+		
+		if(this.state == State.PLAYING && this.shouldFinish()){
+			this.state = State.FINISHING;
+			this.playFinishingAnimation();
 		}
 	}
 
@@ -715,6 +821,7 @@ public class Playground {
 		public ScoreAnimation scoreAnimation;
 		public SwapAnimation swapAnimation;
 		public EliminationAnimation eliminationAnimation;
+		public DripJewelsAnimation dripJewelsAnimation;
 		public SelectionAnimation selectionAnimation;
 		public HintAnimation hintAnimation;
 		public JewelDropAnimation jewelDropAnimation;
@@ -730,10 +837,11 @@ public class Playground {
 			scoreAnimation = new ScoreAnimation(20);
 			swapAnimation = new SwapAnimation();
 			eliminationAnimation = new EliminationAnimation();
+			dripJewelsAnimation = new DripJewelsAnimation();
 			selectionAnimation = new SelectionAnimation();
 			hintAnimation = new HintAnimation();
 			jewelDropAnimation = new JewelDropAnimation();
-			scoreBoardAnimation = new ScoreBoardAnimation(6);
+			scoreBoardAnimation = new ScoreBoardAnimation(7);
 			refillAnimation = new RefillPlaygroundAnimation(rows, cols);
 
 			// //////////////////
@@ -749,6 +857,7 @@ public class Playground {
 
 			layer = new Layer();
 			layer.addDrawable(eliminationAnimation);
+			layer.addDrawable(dripJewelsAnimation);
 			layer.addDrawable(refillAnimation);
 			animationLayers.addLayer(layer, Layers.TOP);
 
@@ -769,6 +878,7 @@ public class Playground {
 				collection.addAnimation(scoreAnimation);
 				collection.addAnimation(swapAnimation);
 				collection.addAnimation(eliminationAnimation);
+				collection.addAnimation(dripJewelsAnimation);
 				collection.addAnimation(selectionAnimation);
 				collection.addAnimation(hintAnimation);
 				collection.addAnimation(jewelDropAnimation);
@@ -791,31 +901,69 @@ public class Playground {
 				}
 			} else if (animation == jewelDropAnimation
 					&& animationState == AnimationState.ELIMINATION_DROPPING) {
+
+				// play sound
+				soundManager.playDropEffect();
+				
 				totallyFinishElimination(true, true);
 			} else if (animation == refillAnimation
 					&& animationState == AnimationState.REFILLING) {
 				animationState = AnimationState.IDLE;
 				setVisibilities(true);
+			} else if (animation == dripJewelsAnimation
+					&& state == State.FINISHING) {
+				state = State.FINISHED;
 			}
 		}
 
 		public void animationEventHappened(Animation animation, int eventID) {
-			if (animation == eliminationAnimation
-					&& eventID == EliminationAnimation.EVENT_HALF_PASSED
+			Log.v(TAG,
+					"animation Event Happened, animation:"
+							+ animation.getClass() + ", eventID:" + eventID
+							+ ", animationState:" + animationState);
+			if (((animation == eliminationAnimation && eventID == EliminationAnimation.EVENT_HALF_PASSED) || (animation == dripJewelsAnimation && eventID == DripJewelsAnimation.EVENT_HALF_PASSED))
 					&& animationState == AnimationState.ELIMINATING) {
+				Log.v(TAG, "eliminationAnimationHalfPassed");
 				animationState = AnimationState.ELIMINATION_DROPPING;
-				finishElimination(true, true);
+				if (inLevelupAnimation) {
+					finishElimination(true, false);
+				} else {
+					finishElimination(true, true);
+				}
 			}
 		}
-
+		public void reset(){
+			this.scoreBoardAnimation.setNewScore(0);
+		}
 	}
 
 	public SavablePlayground getSavablePlayground() {
-		return null;
+		SavablePlayground pg = new SavablePlayground();
+		pg.playground = new Jewel[rows][cols];
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				pg.playground[r][c] = new Jewel();
+				pg.playground[r][c].copy(jewels[r][c]);
+			}
+		}
+		pg.scoreLevel = this.scoreLevel;
+		return pg;
 	}
 
 	public void restoreSavablePlayground(SavablePlayground sp) {
-
+		if (sp != null) {
+			if (sp.playground != null) {
+				for (int r = 0; r < rows; r++) {
+					for (int c = 0; c < cols; c++) {
+						jewels[r][c].copy(sp.playground[r][c]);
+					}
+				}
+			}
+			if (sp.scoreLevel != null) {
+				this.scoreLevel = sp.scoreLevel;
+				this.animations.scoreBoardAnimation.setNewScore(scoreLevel.getScore());
+			}
+		}
 	}
 
 	public class DrawingMetrics {
@@ -857,11 +1005,13 @@ public class Playground {
 
 		public void draw(Canvas canvas) {
 			paint.setAlpha(255);
-			for (int r = 0; r < rows; r++) {
-				for (int c = 0; c < cols; c++) {
-					if (visibilities[r][c]) {
-						canvas.drawBitmap(sized_blocks[j(r, c).getType()],
-								pg.left + c * bsize, pg.top + r * bsize, paint);
+			if(state != State.INIT){
+				for (int r = 0; r < rows; r++) {
+					for (int c = 0; c < cols; c++) {
+						if (visibilities[r][c]) {
+							canvas.drawBitmap(sized_blocks[j(r, c).getType()],
+									pg.left + c * bsize, pg.top + r * bsize, paint);
+						}
 					}
 				}
 			}
@@ -902,14 +1052,16 @@ public class Playground {
 		}
 
 		public void onSizeChanged(boolean mustChange) {
-			
-			reloadJewelBitmap(Configuration.config().getJewelStyle(), mustChange);
+
+			reloadJewelBitmap(Configuration.config().getJewelStyle(),
+					mustChange);
 			animations.selectionAnimation.setSize(Math.round(bsize));
 			animations.hintAnimation.setSize(Math.round(bsize));
 			animations.swapAnimation.setJewelBitmap(sized_blocks);
 			animations.jewelDropAnimation.setJewelBitmap(sized_blocks);
 			animations.jewelDropAnimation.setUpperBound(pg.top);
 			animations.eliminationAnimation.setJewelBitmap(sized_blocks);
+			animations.dripJewelsAnimation.setJewelBitmap(sized_blocks);
 			animations.scoreAnimation.setJewelSize(Math.round(bsize));
 			animations.refillAnimation.setSize(Math.round(bsize));
 			animations.refillAnimation.setJewelBitmap(sized_blocks);
@@ -923,18 +1075,18 @@ public class Playground {
 
 		}
 
-		private void reloadJewelBitmap(String jewelStyle,
-				boolean mustReload) {
+		private void reloadJewelBitmap(String jewelStyle, boolean mustReload) {
 			if (this.sized_blocks[0] == null || jewelStyle != this.jewelStyle
-					|| Math.round(bsize) != sized_blocks[0].getWidth() || mustReload) {
+					|| Math.round(bsize) != sized_blocks[0].getWidth()
+					|| mustReload) {
 				this.jewelStyle = jewelStyle;
-				Log.v(TAG, "reloading bitmap , bitmap size: "+bsize);
+				Log.v(TAG, "reloading bitmap , bitmap size: " + bsize);
 				for (int i = 0; i < 7; i++) {
 					try {
 						if (sized_blocks[i] != null) {
 							sized_blocks[i].recycle();
 						}
-						sized_blocks[i] = BitmapUtil.get()
+						sized_blocks[i] = GoJewelsApplication.getBitmapUtil()
 								.getBitmapOfPreferedSize(
 										"images/jewels/" + jewelStyle, i + "",
 										"png", Math.round(bsize));
@@ -950,7 +1102,7 @@ public class Playground {
 	}
 
 	public enum State {
-		INIT, PLAYING, PAUSED, FINISHED,
+		INIT, PLAYING, PLAYING_ANIMATING, PAUSED, FINISHING, FINISHED,
 	}
 
 	public enum AnimationState {

@@ -2,29 +2,27 @@ package cn.perfectgames.jewels.model;
 
 import java.io.Serializable;
 
-import android.util.Log;
+import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.model.Playground.Elimination;
 
 public class ScoreAndLevel implements Serializable {
 	public static final String TAG = "ScoreAndLevel";
 	public static final int MAX_LEVEL = 15;
-	
+
 	private GameMode gameMode = GameMode.Normal;
-	
+
 	private int level;
 	private int score;
 	private int totalEliminations;
 	private int currentEliminations;
-	private int bonusX = 1;
-	
+
 	private int timeElapsed;
-	
+
 	private int maxCombo;
 	private int maxChain;
-	
+
 	private int combo = 0;
 
-	
 	public int getMaxCombo() {
 		return maxCombo;
 	}
@@ -32,9 +30,9 @@ public class ScoreAndLevel implements Serializable {
 	public int getMaxChain() {
 		return maxChain;
 	}
-	
-	public int getBonusX(){
-		return bonusX;
+
+	public int getBonusX() {
+		return getLevel();
 	}
 
 	public void reset() {
@@ -43,97 +41,96 @@ public class ScoreAndLevel implements Serializable {
 		totalEliminations = 0;
 		currentEliminations = 0;
 		timeElapsed = 0;
-		bonusX = 1;
-		
+
 		combo = 0;
 		maxChain = 0;
 		maxCombo = 0;
 	}
-	
-	public double getProgress(){
-		switch(gameMode){
+
+	public double getProgress() {
+		switch (gameMode) {
+
+		case Infinite:
 		case Normal:
 			return getLevelProgress();
 		case Timed:
 		case Quick:
 			return getTimeProgress();
-		case Infinite:
-			return 1;
 		}
 		return 1;
 	}
-	
-	public double getLevelProgress(){
-		double progress = Math.min(1, getCurrentEliminations()/(double)getGoal());
-		Log.v(TAG, "level progress: "+progress);
-		return Math.min(1, getCurrentEliminations()/(double)getGoal());
+
+	public double getLevelProgress() {
+		double progress = Math.min(1, getCurrentEliminations()
+				/ (double) getGoal());
+		return Math.min(1, getCurrentEliminations() / (double) getGoal());
 	}
-	
-	public double getTimeProgress(){
-		double progress = (getLevelTime() - timeElapsed)/(double) getLevelTime();
-		if(progress < 0){
+
+	public double getTimeProgress() {
+		double progress = (getLevelTime() - timeElapsed)
+				/ (double) getLevelTime();
+		if (progress < 0) {
 			return 0;
 		}
-		if(progress >1){
+		if (progress > 1) {
 			return 1;
 		}
 		return progress;
 	}
 
-	public int addScore(Elimination e){
-		
+	public int addScore(Elimination e) {
+
 		this.combo++;
-		this.maxCombo = Math.max(maxCombo ,combo);
-		int chain = e.end - e.start +1;
-		this.maxChain = Math.max(chain,maxChain);
+		this.maxCombo = Math.max(maxCombo, combo);
+		int chain = e.end - e.start + 1;
+		this.maxChain = Math.max(chain, maxChain);
 		int scoreToAdd = queryScore(e, combo);
 		this.score += scoreToAdd;
-		
+
 		// eliminations stat
-		currentEliminations ++;
-		// time 
-		if(gameMode == GameMode.Timed){
-			int timeToAdd = 500 + scoreToAdd* 5;
+		currentEliminations++;
+		// time
+		if (gameMode == GameMode.Timed) {
+			int timeToAdd = 500 + scoreToAdd * 5;
 			timeElapsed -= timeToAdd;
-			if(timeElapsed< 0){
+			if (timeElapsed < 0) {
 				timeElapsed = 0;
 			}
 		}
 		return scoreToAdd;
 	}
-	
-	public boolean checkLevelUp(){
-		if(currentEliminations > getGoal() && level < MAX_LEVEL){
-			level ++ ;
+
+	public boolean checkLevelUp() {
+		if (currentEliminations >= getGoal() && level < MAX_LEVEL) {
 			currentEliminations -= getGoal();
+			level++;
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
-	public void resetCombo(){
+
+	public void resetCombo() {
 		this.combo = 0;
 	}
-	
-	public void stepTime(int timeElapsed){
+
+	public void stepTime(int timeElapsed) {
 		this.timeElapsed += timeElapsed;
 	}
-	
-	public int queryScore(Elimination e, int combo){
+
+	public int queryScore(Elimination e, int combo) {
 		int SCORE_BASE = 10;
 		int COMBO_BONUS_BASE = 30;
 		int LENGTH_BONUS_BASE = 20;
-		int len = e.end - e.start+1;
-		int comboBonus = (combo -1) * COMBO_BONUS_BASE;
-		int lenBonus = (len -3)* LENGTH_BONUS_BASE;
-		return bonusX*(SCORE_BASE + comboBonus +lenBonus);
+		int len = e.end - e.start + 1;
+		int comboBonus = (combo - 1) * COMBO_BONUS_BASE;
+		int lenBonus = (len - 3) * LENGTH_BONUS_BASE;
+		return getBonusX() * (SCORE_BASE + comboBonus + lenBonus);
 	}
-	
+
 	public int getTotalEliminations() {
 		return totalEliminations;
 	}
-
 
 	public int getCurrentEliminations() {
 		return currentEliminations;
@@ -152,11 +149,19 @@ public class ScoreAndLevel implements Serializable {
 	}
 
 	public int getGoal() {
-		return level * 40;
+		if (Constants.TEST) {
+			return level * 4;
+		} else {
+			return 10 + level * 30;
+		}
 	}
-	
-	public int getLevelTime(){
-		return 90 * 1000;
+
+	public int getLevelTime() {
+		if (Constants.TEST) {
+			return 5 * 1000;
+		}else{
+			return 90 * 1000;
+		}
 	}
 
 	public int getGoalRemained() {
@@ -166,8 +171,8 @@ public class ScoreAndLevel implements Serializable {
 	public float getMaxLevel() {
 		return MAX_LEVEL;
 	}
-	
-	public void setGameMode(GameMode mode){
+
+	public void setGameMode(GameMode mode) {
 		this.gameMode = mode;
 	}
 }

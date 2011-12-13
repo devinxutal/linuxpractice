@@ -1,7 +1,10 @@
 package cn.perfectgames.jewels.cfg;
 
+import java.util.Locale;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 public class Configuration {
 	private static Configuration config = new Configuration();
@@ -66,4 +69,21 @@ public class Configuration {
 		}
 	}
 
+	public Locale getLanguage() {
+
+		Locale l = Locale.getDefault();
+		if (preference != null) {
+			String locale = preference.getString("language", "default");
+			Log.v("configuration", locale);
+			if (locale.equals("zh")) {
+				l = Locale.SIMPLIFIED_CHINESE;
+			} else if (locale.equals("en")) {
+				l = Locale.ENGLISH;
+
+			} 
+		}
+
+		Log.v("configuration", "finally get : "+ l);
+		return l;
+	}
 }

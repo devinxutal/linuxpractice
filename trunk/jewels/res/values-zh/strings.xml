@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Go Jewels</string>
+	
+	<string name="common_ok">确定</string>
+	<string name="common_cancel">取消</string>
+	<string name="common_yes">是</string>
+	<string name="common_no">否</string>
+	<string name="common_reset">重置</string>
+	<string name="common_save">保存</string>
+	<string name="common_load">载入</string>
+	<string name="common_next">继续</string>
+	<string name="common_back">返回</string>
+	<string name="common_finish">完成</string>
+	<string name="common_submit">提交</string>
+	<string name="common_cong">恭喜你</string>
+	<string name="common_steps">步数</string>
+	<string name="common_time">时间</string>
+	<string name="common_more">更多</string>
+	<string name="common_replay">再玩一次</string>
+	<string name="common_about">关于</string>
+	<string name="common_paused">已暂停</string>
+	<string name="common_resume">继续游戏</string>
+	<string name="common_quit_game">退出游戏</string>
+	<string name="common_back_game">回到游戏</string>
+	<string name="common_feedback">发送反馈</string>
+	<string name="common_rate_me">评价游戏</string>
+	<string name="common_more_games">更多游戏</string>
+	<string name="common_tell_friends">分享给好友</string>
+	<string name="common_options">游戏设置</string>
+	<string name="common_score">得分</string>
+	<string name="common_game_over">游戏结束</string>
+	<string name="common_help">帮助</string>
+
+	<string name="progress_message_default">请稍候...</string>
+	
+	<string name="common_high_score">排行榜</string>
+	
+	<string name="game_init_continue">继续保存的游戏</string>
+	<string name="game_init_new">开始新游戏</string>
+
+	<string name="main_btn_play_game">开始游戏</string>
+	<string name="main_btn_about">关于</string>
+	<string name="main_btn_more">更多</string>
+	<string name="main_btn_preference">游戏设置</string>
+	<string name="main_btn_world_rank">排行榜</string>
+
+
+	<string name="mode_title">模式选择</string>
+	<string name="mode_normal">普通</string>
+	<string name="mode_timed">计时</string>
+	<string name="mode_quick">快速</string>
+	<string name="mode_infinite">无限</string>
+	
+	
+	<string name="menu_presentation">Presentation</string>
+	<string name="menu_preferences">Preferences</string>
+	<string name="menu_help">Help</string>
+
+	<string name="record_submit_input_name_title">请输入您的名字</string>
+	<string name="record_submit_global">同时提交到全球排行榜</string>
+	<string name="record_submit_submitting_record">提交中, 请稍候...</string>
+	<string name="success_screen_retrieving_data">获取数据...</string>
+
+	<string name="prompt_title_succeed">恭喜您</string>
+	<string name="prompt_title_failed">WELL DONE</string>
+	<string name="prompt_succeed">You\'ve successfully get through 20 seconds!
+	</string>
+	<string name="prompt_faied">It\'s a pity that you didn\'t make it, but it\'s
+		still a remarkable record.</string>
+
+	<string name="success_screen_submit_score">Submit Score</string>
+	<string name="success_screen_world_rank">High Scores</string>
+
+	<string name="help_info">Help Information</string>
+	<string name="help">Help</string>
+	<string name="help_take_photo">Take a photo of your cube.</string>
+
+	<string name="help_locate_cube">Move the white joy sticks to perfectly fit the
+		cube.
+	</string>
+	<string name="help_comfirm_color">Confirm the recognized cube, if any piece gets a
+		wrong color, just tap it and re-assign a correct color.
+	</string>
+
+
+	<string name="help_info_title">Help Information</string>
+	<string name="help_info_cube">
+		Fancy Cube is the greatest cube game on ANDROID
+		ever, which allows you to play with a vivid rubiks cube.\n\n
+		[Cube
+		Control]\n\n
+		TURN: flick the cube along any side corner, or edge to
+		turn that face in a particular direction.\n\n
+		ROTATE: to rotate the
+		whole cube, just flick the cube in any black area. in some particular
+		situation that cube turning is disabled, flicking the cube in ANY area
+		leads to a cube rotation.\n\n
+		OTHER: you can unfold the control pad
+		(click the icon in the upper left corner of the screen) to get a
+		easier control over the cube. Here you can zoom in/out the cube and
+		rotate it.\n\n
+	</string>
+
+	<string name="quit_option_feedback">填写反馈</string>
+	<string name="quit_option_rate">评价此游戏</string>
+	<string name="quit_option_more">更多游戏</string>
+	<string name="quit_option_quit">退出游戏</string>
+	
+	
+	<string name="version_title">Pro Edition Required</string>
+	<string name="version_desc">This function is only provided in Pro edition, and
+		this is a LITE version.
+	</string>
+
+	<string name="version_get_pro">Get Pro</string>
+	<string name="version_trials_1">You have </string>
+	<string name="version_trials_2">trials left.</string>
+	<string name="version_continue_hint">Do you want to continue?</string>
+
+	<string name="record_rank">Rank</string>
+	<string name="record_player">Player</string>
+	<string name="record_time">Time</string>
+	<string name="record_steps">Moves</string>
+	<string name="record_cube_size">Size</string>
+	<string name="record_military_rank">Military Rank</string>
+
+	
+	<string name="quit_button">Exit</string>
+
+
+</resources>

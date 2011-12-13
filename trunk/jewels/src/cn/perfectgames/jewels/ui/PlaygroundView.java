@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
@@ -81,17 +82,20 @@ public class PlaygroundView extends SurfaceView implements
 		canvas.drawRGB(0, 0, 0);
 
 		if (playground != null) {
-			//canvas.clipRect(new Rect(100, 100, 200, 200));
 			canvas.drawBitmap(dm.bgBitmap, 0, 0, dm.paint);
-			playground.draw(canvas);
-			
-			
 			// draw progress indicator
 			int len = (int)(playground.getScoreAndLevel().getProgress()*(dm.pgRect.width()-dm.pgind.getIntrinsicHeight()))+dm.pgind.getIntrinsicHeight();
 			Rect indRect = new Rect(dm.pgRect.left, dm.pgRect.top, dm.pgRect.left+len,dm.pgRect.bottom );
 			dm.pgind.setBounds(indRect);
 			dm.pgind.draw(canvas);
 			
+			
+			//canvas.clipRect(new Rect(100, 100, 200, 200));
+			
+			playground.draw(canvas);
+			
+			
+
 			// draw stats
 			dm.painter.setTypeface(dm.font);
 			dm.painter.setTextColor(Color.GREEN);
@@ -262,6 +266,7 @@ public class PlaygroundView extends SurfaceView implements
 		private Rect playgroundRect;
 		private Rect infoAreaRect;
 		private Rect controlBarRect;
+		private Rect bottomBarRect;
 		
 		private Rect comboRect;
 		private Rect chainRect;
@@ -282,7 +287,7 @@ public class PlaygroundView extends SurfaceView implements
 			paint = new Paint();
 			paint.setAntiAlias(true);
 			paint.setTextSize(18);
-			bitmapUtil = BitmapUtil.get(getContext());
+			bitmapUtil = GoJewelsApplication.getBitmapUtil();
 			
 
 			bgBitmap = bitmapUtil.getScreenBitmap(getContext());
@@ -314,7 +319,7 @@ public class PlaygroundView extends SurfaceView implements
 		}
 
 		private void regenerateBackground() {
-			BitmapUtil util = BitmapUtil.get(getContext());
+			GoJewelsApplication.getBitmapUtil();
 
 			resetPaint();
 			bitmapUtil.drawBackgroundBitmap(canvas, getWidth(), getHeight(),
@@ -326,6 +331,7 @@ public class PlaygroundView extends SurfaceView implements
 			paint.setColor(Color.BLACK);
 			paint.setAlpha(80);
 			canvas.drawRect(controlBarRect, paint);
+			canvas.drawRect(bottomBarRect, paint);
 			//draw progress bar
 			this.pgbar.setBounds(pgRect);
 			pgbar.draw(canvas);
@@ -349,7 +355,6 @@ public class PlaygroundView extends SurfaceView implements
 			int l, t, w, h;
 			// control bar
 			this.controlBarRect = new Rect(0,0,width,getContext().getResources().getDrawable(R.drawable.icon_pause).getIntrinsicHeight());
-			
 			// info area
 			int heightOfInfoArea = Math.min(height - size - controlBarRect.height(), width/3);
 			this.playgroundRect = new Rect((width - size)/2, heightOfInfoArea+controlBarRect.height(), (width+size)/2, heightOfInfoArea+size+controlBarRect.height());
@@ -359,6 +364,8 @@ public class PlaygroundView extends SurfaceView implements
 			
 			
 			this.infoAreaRect = new Rect(0,controlBarRect.height(),width, heightOfInfoArea + controlBarRect.height());
+			// bottom bar
+			this.bottomBarRect = new Rect(0, this.playgroundRect.bottom, width, height);
 			
 			// progress bar
 
@@ -373,7 +380,7 @@ public class PlaygroundView extends SurfaceView implements
 			getPlayground().getAnimations().scoreBoardAnimation.setRect(scoreRect);
 			
 			// combo and chain and bonus
-			l = 5; t = infoAreaRect.top+5; w = width/2 - 10; h = Math.min(w/2, infoAreaRect.height() - pgRect.height());
+			l = 5; t = infoAreaRect.top+5; w = width/2 - 10; h = Math.min(w/2, pgRect.top-infoAreaRect.top) - 5;
 			int labelW = w*6/10; int numW = w - labelW;
 			int H = h/3;
 			h = H*7/10;

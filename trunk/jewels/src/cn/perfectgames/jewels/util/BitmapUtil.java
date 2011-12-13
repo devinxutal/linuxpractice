@@ -10,19 +10,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
-import cn.perfectgames.jewels.R;
 
 public class BitmapUtil {
 	public static final String TAG = "BitmapUtil";
 	private Context context;
 	private Bitmap background;
-	private Bitmap aimButton1;
-	private Bitmap aimButton2;
 	
 	private Paint paint;
 
@@ -36,21 +32,13 @@ public class BitmapUtil {
 		}
 		return util;
 	}
-
-	public synchronized static BitmapUtil get() {
-		return util;
-	}
-
+	
 	private BitmapUtil(Context context) {
 		this.context = context;
 		Log.v(TAG, "recreating resources");
 		try {
 			background = BitmapFactory.decodeStream(context.getAssets().open(
 					"images/bg.jpg"));
-			aimButton1 = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.aim_button1);
-			aimButton2 = BitmapFactory.decodeResource(context.getResources(),
-					R.drawable.aim_button2);
 
 		
 
@@ -76,14 +64,7 @@ public class BitmapUtil {
 		return screen;
 	}
 
-	public Bitmap getAimButtonBitmap1() {
-		return aimButton1;
-	}
-
-	public Bitmap getAimButtonBitmap2() {
-		return aimButton2;
-	}
-
+	
 	public Bitmap getBitmapOfPreferedSize(String path, String fileName, String postfix, int size){
 		for(String filepath: new String[]{(path+"/"+fileName+"_"+size+"."+postfix),(path+"/"+fileName+"."+postfix)}){
 			Log.v("BitmapUtil", "trying to get bitmap: "+filepath);
@@ -120,6 +101,10 @@ public class BitmapUtil {
 		canvas.drawBitmap(background, new Rect(x, y, x + ww, y + hh), new Rect(
 				0, 0, width, height), paint);
 
+	}
+	
+	public Bitmap getBackgroundBitmap(){
+		return this.background;
 	}
 
 	public enum Direction {

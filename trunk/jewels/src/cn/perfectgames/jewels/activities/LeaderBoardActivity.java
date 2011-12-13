@@ -21,6 +21,7 @@ import cn.perfectgames.amaze.record.LocalRecordManager;
 import cn.perfectgames.amaze.record.Record;
 import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
+import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.record.JScore;
@@ -28,6 +29,8 @@ import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.ui.LeaderBoardView;
 import cn.perfectgames.jewels.ui.LeaderBoardView.ButtonListener;
 import cn.perfectgames.jewels.util.AdDaemon;
+import cn.perfectgames.jewels.util.AdUtil;
+import cn.perfectgames.jewels.util.PreferenceUtil;
 
 import com.scoreloop.client.android.core.controller.RequestController;
 import com.scoreloop.client.android.core.controller.RequestControllerException;
@@ -86,6 +89,11 @@ public class LeaderBoardActivity extends BaseActivity implements
 		userController = new UserController(new UserUpdateObserver());
 
 		//
+		GameMode mm =(GameMode) this.getIntent().getSerializableExtra("game_mode");
+		if(mm != null){
+			this.currentMode = mm;
+		}
+		//
 		this.scoresController = new ScoresController(
 				new ScoresControllerObserver());
 		this.scoresController.setRangeLength(ITEMS_PER_PAGE);
@@ -99,8 +107,12 @@ public class LeaderBoardActivity extends BaseActivity implements
 		this.localRecordManager.setGameMode(currentMode.ordinal());
 		
 		// ad 
+		AdUtil.determineAd(this, R.id.ad_area);
 		adDaemon = new AdDaemon("highscore", this, this
 				.findViewById(Constants.ADVIEW_ID), adHandler);
+		
+		// set language
+		preferenceChanged();
 
 	}
 
@@ -186,7 +198,6 @@ public class LeaderBoardActivity extends BaseActivity implements
 	protected void onDestroy() {
 		adDaemon.stop();
 		super.onDestroy();
-		SoundManager.release();
 	}
 
 	@Override
@@ -420,7 +431,7 @@ public class LeaderBoardActivity extends BaseActivity implements
 	}
 
 	private void showModeChooser() {
-		final CharSequence[] items = new CharSequence[GameMode.values().length];
+		final CharSequence[] items = new CharSequence[GameMode.values().length-1];
 		final GameMode[] values = GameMode.values();
 		int index = -1;
 		for (int i = 0; i < items.length; i++) {
@@ -428,7 +439,6 @@ public class LeaderBoardActivity extends BaseActivity implements
 			if (currentMode == values[i]) {
 				index = i;
 			}
-
 		}
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -542,4 +552,9 @@ public class LeaderBoardActivity extends BaseActivity implements
 		}
 		return scores;
 	}
+	protected void preferenceChanged() {
+		PreferenceUtil.resetLocale(this, Configuration.config().getLanguage());
+		
+	}
+
 }

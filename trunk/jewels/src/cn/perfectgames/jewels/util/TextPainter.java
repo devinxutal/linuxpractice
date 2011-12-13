@@ -137,6 +137,11 @@ public class TextPainter {
 				+ (rect.height() - textPaint.descent() + textPaint.ascent())
 				/ 2;
 		drawCharacter(canvas, text, x, y);
+		if (Constants.TEST) {
+			textPaint.setStyle(Style.STROKE);
+			canvas.drawRect(rect, textPaint);
+			textPaint.setStyle(Style.FILL);
+		}
 	}
 
 	@Deprecated

@@ -71,6 +71,7 @@ public class ControlView extends LinearLayout implements OnTouchListener,
 		this.soundButton = makeButton(BTN_SOUND, R.drawable.icon_sound_on);
 		this.musicButton = makeButton(BTN_MUSIC, R.drawable.icon_music_on);
 		this.pauseButton = makeButton(BTN_PAUSE, R.drawable.icon_pause);
+		this.musicButton.setVisibility(View.INVISIBLE); // TODO 
 		controlButtons.add(soundButton);
 		controlButtons.add(musicButton);
 		
