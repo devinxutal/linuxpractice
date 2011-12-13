@@ -23,6 +23,11 @@
 	<string name="common_paused">Paused</string>
 	<string name="common_resume">Resume</string>
 	<string name="common_quit_game">Quit Game</string>
+	<string name="common_back_game">Back to Game</string>
+	<string name="common_feedback">Send Feedback</string>
+	<string name="common_rate_me">Rate me</string>
+	<string name="common_more_games">More Games</string>
+	<string name="common_tell_friends">Tell Friends</string>
 	<string name="common_options">Options</string>
 	<string name="common_score">SCORE</string>
 	<string name="common_game_over">GAME OVER</string>
@@ -54,6 +59,7 @@
 	<string name="menu_help">Help</string>
 
 	<string name="record_submit_input_name_title">Enter your name</string>
+	<string name="record_submit_global">Also submit to global leaderboard</string>
 	<string name="record_submit_submitting_record">Submitting, please wait...</string>
 	<string name="success_screen_retrieving_data">Retrieving data...</string>
 
@@ -65,7 +71,7 @@
 		still a remarkable record.</string>
 
 	<string name="success_screen_submit_score">Submit Score</string>
-	<string name="success_screen_world_rank">World Rank</string>
+	<string name="success_screen_world_rank">High Scores</string>
 
 	<string name="help_info">Help Information</string>
 	<string name="help">Help</string>
@@ -77,7 +83,6 @@
 	<string name="help_comfirm_color">Confirm the recognized cube, if any piece gets a
 		wrong color, just tap it and re-assign a correct color.
 	</string>
-
 
 
 	<string name="help_info_title">Help Information</string>
@@ -98,7 +103,12 @@
 		rotate it.\n\n
 	</string>
 
-
+	<string name="quit_option_feedback">Give us feedback</string>
+	<string name="quit_option_rate">Rate Go Jewels</string>
+	<string name="quit_option_more">More games</string>
+	<string name="quit_option_quit">Quit game</string>
+	
+	
 	<string name="version_title">Pro Edition Required</string>
 	<string name="version_desc">This function is only provided in Pro edition, and
 		this is a LITE version.
@@ -116,28 +126,7 @@
 	<string name="record_cube_size">Size</string>
 	<string name="record_military_rank">Military Rank</string>
 
-	<!-- Unlicensed dialog messages -->
-	<string name="unlicensed_dialog_title">Application not licensed</string>
-	<string name="unlicensed_dialog_body">It seems that you are using an unlisenced
-		distribution of Fancy Cube Pro. Please purchase
-		it from Android Market.
-	</string>
-	<string name="buy_button">Buy now</string>
 	<string name="quit_button">Exit</string>
 
-
-	<string name="progress_solving_cube">Solving cube, please wait...</string>
-	<string name="progress_validating_cube">Validating and solving the cube, please wait...
-	</string>
-	<string name="about_fancy_cube">About Fancy Cube</string>
-	<string name="about_info">
-		See if you can continue playing for 20 seconds.\n\n
-		\n\n
-
-		[Developer information]\n\n
-		Yinfei Xu \n
-		devinxutal@gmail.com \n
-		http://twitter.com/devinxutal \n
-	</string>
 
 </resources>

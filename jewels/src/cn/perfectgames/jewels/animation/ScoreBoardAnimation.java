@@ -4,14 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
+import android.graphics.RectF;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.util.BitmapUtil;
 
 public class ScoreBoardAnimation extends AbstractAnimation {
 
-	public static final int FRAMES_PER_FLIP = Constants.FPS*300 /1000 ;
+	public static final int FRAMES_PER_FLIP = Constants.FPS*400 /1000 ;
 	private int digitNUM;
 	private Bitmap[] digits;
 	private Rect rect;
@@ -23,8 +24,10 @@ public class ScoreBoardAnimation extends AbstractAnimation {
 	private int[] froms;
 	private int[] tos;
 
+	private int asiFrom =0; // alpha start index
+	private int asiTo = 0;	// alpha start index
 	public ScoreBoardAnimation(int digitNum) {
-		super(Constants.FPS*5, true);
+		super(FRAMES_PER_FLIP*2, true);
 		this.digitNUM = digitNum;
 		froms = new int[digitNum];
 		tos = new int[digitNum];
@@ -43,7 +46,7 @@ public class ScoreBoardAnimation extends AbstractAnimation {
 		}
 		digits = new Bitmap[10];
 		for (int i = 0; i <= 9; i++) {
-			digits[i] = BitmapUtil.get().getBitmap(
+			digits[i] = GoJewelsApplication.getBitmapUtil().getBitmap(
 					"images/digits/style1/" + i + ".png");
 		}
 
@@ -87,64 +90,55 @@ public class ScoreBoardAnimation extends AbstractAnimation {
 			}
 		} else {
 			// draw animated score
-			canvas.clipRect(rect);
-			
-			int sc = this.score;
-			for (int i = digitNUM - 1; i >= 0; i--) {
-				int alpha = ALPHA_SOLID;
-				int roll = current % FRAMES_PER_FLIP;
-				int fixDigit = -1;
-				if (froms[i] == tos[i]) {
-					roll = 0;
-					if (sc == 0) {
-						alpha = ALPHA_TRANSPARENT;
-					}
-					fixDigit = tos[i];
-				} else {
-					int steps = froms[i] < tos[i] ? tos[i] - froms[i] : tos[i]
-							- froms[i] + 10;
-					if (current / FRAMES_PER_FLIP > steps -1 ) {
-						fixDigit = tos[i];
-						roll = 0;
-					}
-				}
 
-				// draw
+			Rect bitmapRect = new Rect(0, 0, digits[0].getWidth(), digits[0].getHeight());
+			RectF toRect = new RectF();
+			for(int i = 0; i< froms.length; i++){
+				int alpha = ALPHA_SOLID;
+				Bitmap digit = digits[froms[i]];
+				int asi = asiFrom;
+				int ii = current;
+				if( current >= FRAMES_PER_FLIP){
+					ii = FRAMES_PER_FLIP*2 - current;
+					asi = asiTo;
+					digit = digits[tos[i]];
+				}
+				if(i<asi){
+					alpha = ALPHA_TRANSPARENT;
+				}
 				paint.setAlpha(alpha);
-				if (roll == 0) {
-					Bitmap bm = null;
-					if (fixDigit >= 0) {
-						bm = digits[fixDigit];
-					} else {
-						bm = digits[(froms[i] + current / FRAMES_PER_FLIP) % 9];
-					}
-					canvas.drawBitmap(bm, rect.left + rect.width() * i
+				if(froms[i]  == tos[i]){
+					canvas.drawBitmap(digit, rect.left + rect.width() * i
 							/ digitNUM, rect.top, paint);
-				} else {
-					Bitmap up = digits[(froms[i] + current / FRAMES_PER_FLIP) % 9];
-					Bitmap down = digits[(froms[i] + current / FRAMES_PER_FLIP + 1) % 9];
-					float move = current % FRAMES_PER_FLIP
-							/ (float) FRAMES_PER_FLIP * rect.height();
-					canvas.drawBitmap(up, rect.left + rect.width() * i
-							/ digitNUM, rect.top - move, paint);
-					canvas.drawBitmap(down, rect.left + rect.width() * i
-							/ digitNUM, rect.bottom - move, paint);
+				}else{
+					float delta =  ii * digit.getWidth() / FRAMES_PER_FLIP /2;
+					toRect.left = rect.left + rect.width() * i
+					/ digitNUM+ delta;
+					toRect.right = toRect.left + digit.getWidth() - 2 * delta;
+					toRect.top = rect.top;
+					toRect.bottom = rect.top+ digit.getHeight();
+					canvas.drawBitmap(digit, bitmapRect, toRect, paint);
 				}
 				
-				sc /= 10;
 			}
-			canvas.restore();
 		}
 	}
 
 	public void setNewScore(int score) {
 		int old = this.score;
 		int neww = score;
+		asiFrom = asiTo = -1;
 		for (int i = digitNUM - 1; i >= 0; i--) {
 			froms[i] = old % 10;
 			tos[i] = neww % 10;
 			old /=10;
 			neww /= 10;
+			if(old == 0 && asiFrom <0){ 
+				asiFrom = i;
+			}
+			if(neww == 0 && asiTo <0){
+				asiTo = i;
+			}
 		}
 		this.score = score;
 	}

@@ -1,8 +1,10 @@
 package cn.perfectgames.jewels.model;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Jewel {
+public class Jewel implements Serializable{
+	private static final long serialVersionUID = 1L;
 	public static final int TYPE_COUNT = 7;
 	private int type = 0;
 

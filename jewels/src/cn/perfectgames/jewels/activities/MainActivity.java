@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -27,7 +28,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,6 +35,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import cn.perfectgames.jewels.GoJewelsApplication;
@@ -46,11 +47,11 @@ import cn.perfectgames.jewels.sound.SoundManager;
 import cn.perfectgames.jewels.util.AdDaemon;
 import cn.perfectgames.jewels.util.AdUtil;
 import cn.perfectgames.jewels.util.BitmapUtil;
+import cn.perfectgames.jewels.util.DialogUtil;
 import cn.perfectgames.jewels.util.MarketUtil;
 import cn.perfectgames.jewels.util.PreferenceUtil;
 
 public class MainActivity extends BaseActivity implements OnClickListener {
-	
 
 	private static final String TAG = "MainActvity";
 
@@ -63,9 +64,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private AdDaemon adDaemon;
 
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		globalInit();
+
 		super.onCreate(savedInstanceState);
 
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // (NEW)
@@ -75,8 +78,18 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				.setSharedPreferences(
 						PreferenceManager
 								.getDefaultSharedPreferences(getBaseContext()));
+		
+			
+		if(GoJewelsApplication.getBitmapUtil() == null){
+			GoJewelsApplication.setBitmapUtil(BitmapUtil.get(this));
+		}
+		
 		this.setContentView(R.layout.main);
-		SoundManager.init(this);
+		// set background image
+		ImageView iv = (ImageView)this.findViewById(R.id.background_image);
+		iv.setBackgroundDrawable(new BitmapDrawable(GoJewelsApplication.getBitmapUtil().getBackgroundBitmap()));
+		
+		//
 		customizeButtons();
 		int ids[] = new int[] { R.id.main_btn_play_game,
 				R.id.main_btn_preference, R.id.main_btn_rank,
@@ -103,11 +116,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				this.findViewById(Constants.ADVIEW_ID), adHandler);
 		adDaemon.run();
 
+
+		// ((ImageView)this.findViewById(R.id.background_image)).setBackgroundResource(resid)
+		
+		// set language
+		preferenceChanged();
 	}
 
-	public void globalInit() {
-		BitmapUtil.get(this);
-	}
+
 
 	@Override
 	protected void onDestroy() {
@@ -141,8 +157,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 		case R.id.main_btn_preference:
 			i = new Intent(this, Preferences.class);
-			break;
-
+			MainActivity.this.startActivityForResult(i,
+					PREFERENCE_REQUEST_CODE);
+			return;
 		case R.id.main_btn_rank:
 			// i = new Intent(this, HighScoreActivity.class);
 			// TODO
@@ -150,11 +167,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			// DialogUtil.showRankDialog(this);
 			break;
 		case R.id.main_btn_help:
-			i = new Intent(this, AnimationTestActivity.class);
-			// DialogUtil
-			// .showDialogWithView(this, "Go Tetris Help", R.layout.help);
-			// return;
-			// break;
+
+			DialogUtil.showHelpDialog(this);
+			return;
 		}
 		if (startID >= 0) {
 			this.startActivityForResult(i, startID);
@@ -163,10 +178,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -210,19 +222,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				getResources().getString(R.string.mode_infinite) };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(
-				getResources().getString(R.string.mode_title));
+		builder.setTitle(getResources().getString(R.string.mode_title));
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				GameMode mode = GameMode.Normal;
-				
-				for(GameMode m: GameMode.values()){
-					if(m.ordinal() == item){
+
+				for (GameMode m : GameMode.values()) {
+					if (m.ordinal() == item) {
 						mode = m;
 					}
 				}
 				GoJewelsApplication.setGameMode(mode);
-				Intent intent = new Intent(MainActivity.this, PlaygroundActivity.class);
+				Intent intent = new Intent(MainActivity.this,
+						PlaygroundActivity.class);
 				startActivityForResult(intent, PLAYGROUND_ACTIVITY_ID);
 			}
 		});
@@ -231,32 +243,24 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void showQuitDialog() {
-		final CharSequence[] items = { "Give us feedback", "Rate Go Tetris",
-				"More games", "Quit game" };
+		final CharSequence[] items = {
+				getString(R.string.quit_option_feedback),
+				getString(R.string.quit_option_rate),
+				getString(R.string.quit_option_more),
+				getString(R.string.quit_option_quit) };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Go Tetris");
+		builder.setTitle(R.string.app_name);
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 0) {
 					MainActivity.this.submitReport();
 				} else if (item == 1) {
 					MarketUtil.openMarketForApp(MainActivity.this,
-							"com.devinxutal.tetris");
-
-					// TODO check this
-					// Intent i = new Intent(Intent.ACTION_VIEW, Uri
-					// .parse("market://details?id=com.devinxutal.tetris"));
-					// startActivity(i);
+							MainActivity.this.getPackageName());
 				} else if (item == 2) {
 					MarketUtil.openMarketForAuthor(MainActivity.this,
 							"Yinfei XU");
-					// TODO check this
-					// Intent i = new Intent(Intent.ACTION_SEARCH);
-					// i.setPackage("com.android.vending");
-					// i.putExtra("query", "pub:\"Yinfei XU\"");
-					// i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					// startActivity(i);
 				} else if (item == 3) {
 
 					MainActivity.this.finish();
@@ -329,7 +333,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			String url = Constants.URL_COMMIT_REPORT;
 
 			Map<String, String> data = new HashMap<String, String>();
-			data.put("app", "Go Tetris");
+			data.put("app", getString(R.string.app_name));
 			data.put("report", report);
 			data.put("info", getInfo());
 			DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -374,28 +378,34 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void showNoticeDialog() {
-		if (PreferenceUtil.canShowUpgradeNotice(MainActivity.this)) {
-			LayoutInflater inflater = (LayoutInflater) this
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			LinearLayout l = new LinearLayout(this);
-			inflater.inflate(R.layout.whats_new, l);
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("What's New")
-					.setCancelable(false)
-					.setPositiveButton(R.string.common_ok, null)
-					.setPositiveButton("OK", null)
-					.setNegativeButton("Never Show Again",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-									PreferenceUtil.setShowUpgradeNotice(
-											MainActivity.this, false);
-								}
-							}).setView(l);
-			AlertDialog alert = builder.create();
-
-			// alert.setContentView(view_id);
-			alert.show();
-		}
+		// if (PreferenceUtil.canShowUpgradeNotice(MainActivity.this)) {
+		// LayoutInflater inflater = (LayoutInflater) this
+		// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		// LinearLayout l = new LinearLayout(this);
+		// inflater.inflate(R.layout.whats_new, l);
+		// AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// builder.setTitle("What's New")
+		// .setCancelable(false)
+		// .setPositiveButton(R.string.common_ok, null)
+		// .setPositiveButton("OK", null)
+		// .setNegativeButton("Never Show Again",
+		// new DialogInterface.OnClickListener() {
+		// public void onClick(DialogInterface dialog,
+		// int which) {
+		// PreferenceUtil.setShowUpgradeNotice(
+		// MainActivity.this, false);
+		// }
+		// }).setView(l);
+		// AlertDialog alert = builder.create();
+		//
+		// // alert.setContentView(view_id);
+		// alert.show();
+		// }
 	}
+	
+	protected void preferenceChanged() {
+		PreferenceUtil.resetLocale(this, Configuration.config().getLanguage());
+		
+	}
+
 }

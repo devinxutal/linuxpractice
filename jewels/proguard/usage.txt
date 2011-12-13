@@ -43,6 +43,27 @@ cn.perfectgames.amaze.graphics.Layers:
     public static final int TOP
     public static final int BOTTOM
     41:42:public void setVisible(boolean)
+cn.perfectgames.amaze.paint.TextPainter
+cn.perfectgames.amaze.paint.TextPainter$Align
+cn.perfectgames.amaze.record.AbstractRecordComparator:
+    private static final double DELTA
+    18:24:protected int compare(int,int)
+cn.perfectgames.amaze.record.LocalRecordManager:
+    public static final int MAX_RECORDS
+    71:71:public int getRangeLength()
+    79:79:public int getGameMode()
+    83:83:public cn.perfectgames.amaze.record.Record getSubmittedRecord()
+    87:90:public java.util.List getRecords()
+cn.perfectgames.amaze.record.Record:
+    101:104:public static java.lang.String serializeRecord(cn.perfectgames.amaze.record.Record)
+cn.perfectgames.jewels.GoJewelsApplication:
+    private static com.scoreloop.client.android.core.model.Score score
+    private static java.util.List users
+    71:71:static com.scoreloop.client.android.core.model.Score getScore()
+    75:75:static java.util.List getUsers()
+    80:86:static com.scoreloop.client.android.core.model.User popUser()
+    91:92:static void setScore(com.scoreloop.client.android.core.model.Score)
+    95:96:static void setUsers(java.util.List)
 cn.perfectgames.jewels.R
 cn.perfectgames.jewels.R$array
 cn.perfectgames.jewels.R$attr
@@ -55,68 +76,67 @@ cn.perfectgames.jewels.R$string
 cn.perfectgames.jewels.R$style
 cn.perfectgames.jewels.R$styleable
 cn.perfectgames.jewels.R$xml
-cn.perfectgames.jewels.activities.HighScoreActivity:
+cn.perfectgames.jewels.activities.AnimationTestActivity:
+    39:43:public void testSelectionAnimation()
+cn.perfectgames.jewels.activities.BaseActivity:
+    public static final int PREFERENCE_REQUEST_CODE
+    static final int DIALOG_ERROR_EMAIL_ALREADY_TAKEN
+    static final int DIALOG_ERROR_INSUFFICIENT_BALANCE
+    static final int DIALOG_ERROR_INVALID_EMAIL_FORMAT
+    static final int DIALOG_ERROR_NAME_ALREADY_TAKEN
+    static final int DIALOG_ERROR_NETWORK
+    static final int DIALOG_ERROR_NOT_ON_HIGHSCORE_LIST
+    static final int DIALOG_ERROR_REQUEST_CANCELLED
+    static final int DIALOG_INFO
+    static final int DIALOG_PROGRESS
+    76:76:protected cn.perfectgames.jewels.GoJewelsApplication getGoJewelsApplication()
+    79:80:protected void showToast(int)
+    85:86:protected void showToast(int,int)
+    92:92:protected android.app.Dialog createErrorDialog(int)
+    126:128:private void hideProgressIndicatorAndShowDialog(int)
+cn.perfectgames.jewels.activities.LeaderBoardActivity:
     private static final java.lang.String TAG
+    public static final int ITEMS_PER_PAGE
+    private static final int FIXED_OFFSET
 cn.perfectgames.jewels.activities.MainActivity:
-    private static final java.lang.String BASE64_PUBLIC_KEY
     private static final java.lang.String TAG
     public static final int PLAYGROUND_ACTIVITY_ID
-    247:247:private void showCommitReportDialog()
+    276:276:private void showCommitReportDialog()
 cn.perfectgames.jewels.activities.PlaygroundActivity:
     public static final java.lang.String TAG
-    public static final int PREFERENCE_REQUEST_CODE
     private android.app.Dialog progressDialog
-    private android.hardware.Sensor sensor
-    615:616:public void stop()
-    648:660:public void deleteSavedGame()
-    706:712:public void openHelpDialog()
-    724:751:public void submitRecord()
-    754:757:private void submitRecord(java.lang.String)
-    816:826:public void startListening()
-    880:888:public void customizeButtons()
-    900:902:private void customizeButton(android.widget.Button)
-    537:537:static void access$1(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    284:284:static void access$2(cn.perfectgames.jewels.activities.PlaygroundActivity,cn.perfectgames.jewels.activities.PlaygroundActivity$State)
-    96:96:static android.app.Dialog access$5(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    96:96:static void access$6(cn.perfectgames.jewels.activities.PlaygroundActivity,android.app.Dialog)
-    86:86:static android.widget.Toast access$7(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    88:88:static android.widget.Button access$8(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    109:109:static boolean access$10(cn.perfectgames.jewels.activities.PlaygroundActivity)
-    753:753:static void access$11(cn.perfectgames.jewels.activities.PlaygroundActivity,java.lang.String)
-cn.perfectgames.jewels.activities.PlaygroundActivity$2
-cn.perfectgames.jewels.activities.PlaygroundActivity$3
+    599:600:public void stop()
+    686:692:public void openHelpDialog()
+    777:785:public void customizeButtons()
+    797:799:private void customizeButton(android.widget.Button)
+cn.perfectgames.jewels.activities.PlaygroundActivity$ControlButtonClicked:
+    383:401:public void buttonPressed(int)
+    405:423:public void buttonReleased(int)
 cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished:
-    461:467:public void gameFinishing()
-    471:485:public void gameFinished()
-    457:457:static cn.perfectgames.jewels.activities.PlaygroundActivity access$0(cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished)
+    430:436:public void gameFinishing()
 cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished$1
-cn.perfectgames.jewels.activities.PlaygroundActivity$GameFinished$2
-cn.perfectgames.jewels.activities.PlaygroundActivity$MyJoyStickListener:
-    858:875:public void joyStickMoved(float,float)
-cn.perfectgames.jewels.activities.PlaygroundActivity$SubmitRecordThread
-cn.perfectgames.jewels.activities.PlaygroundActivity$SubmitRecordThread$1
+cn.perfectgames.jewels.animation.CopyOfScoreBoardAnimation
+cn.perfectgames.jewels.animation.DripJewelsAnimation:
+    public static final int EVENT_HALF_PASSED
+    private static final int CURVE_TIME
 cn.perfectgames.jewels.animation.EliminationAnimation:
     public static final int EVENT_HALF_PASSED
+cn.perfectgames.jewels.animation.HintAnimation:
+    86:87:public void addScore(java.lang.String,android.graphics.PointF,int)
+    90:91:public void clearScores()
+cn.perfectgames.jewels.animation.HintAnimation$ScoreEntry
+cn.perfectgames.jewels.animation.RefillPlaygroundAnimation:
+    public static final int EVENT_HALF_PASSED
+    54:58:public void setPlaygroundRefill(cn.perfectgames.jewels.model.Jewel[][],cn.perfectgames.jewels.model.Jewel[][],android.graphics.PointF,int)
 cn.perfectgames.jewels.animation.ScoreBoardAnimation:
     public static final int FRAMES_PER_FLIP
 cn.perfectgames.jewels.animation.SelectionAnimation:
-    62:63:public void addScore(java.lang.String,android.graphics.PointF,int)
-    66:67:public void clearScores()
+    47:49:public void setLocation(float,float)
+    63:64:public void addScore(java.lang.String,android.graphics.PointF,int)
+    67:68:public void clearScores()
 cn.perfectgames.jewels.animation.SelectionAnimation$ScoreEntry
 cn.perfectgames.jewels.animation.SwapAnimation:
     private static final int BASIC_FRAMES
-cn.perfectgames.jewels.cfg.Configuration:
-    public static final int ACTION_DIRECT_DOWN
-    public static final int ACTION_QUICK_DOWN
-    public static final int ACTION_TURN
-    28:33:public int getCenterButtonAction()
-    37:41:public java.lang.String getBlockStyle()
-    76:79:public boolean isBlockShadowOn()
-    83:88:public void setBlockShadowOn(boolean)
-    91:94:public boolean isSwapRotateHold()
-    98:101:public boolean isSwapQuickDirect()
-    105:109:public int getStartLevel()
-    121:124:public boolean isDragMode()
 cn.perfectgames.jewels.cfg.Constants:
     public static final java.lang.String PLAYGROUND_STATE
     public static final java.lang.String PREF_KEY_TRIALS_SOLVE_CUBE
@@ -127,7 +147,6 @@ cn.perfectgames.jewels.cfg.Constants:
     public static final int TRIAL_TIMES
     public static final int ADMOB_WIDTH
     public static final int ADMOB_HEIGHT
-    public static final java.lang.String DATA_DIR
     public static final java.lang.String SCORE_SAVING_FILE
     public static final java.lang.String GAME_SAVING_FILE
     public static final java.lang.String FONT_PATH_MONO
@@ -139,12 +158,9 @@ cn.perfectgames.jewels.cfg.Constants:
     public static final java.lang.String URL_COMMIT_REPORT
     public static final int ADVIEW_ID
     public static final java.lang.String ADMOB_PUBLISHER_ID
-cn.perfectgames.jewels.control.ButtonInfo:
-    public android.graphics.Bitmap buttonBG
-    public float bgSize
-    public android.graphics.Bitmap buttonIcon
-    public float iconSize
-    18:29:public ButtonInfo(int,int,int,int,android.graphics.Bitmap,float,android.graphics.Bitmap,float)
+    public static final java.lang.String SCORELOOP_SECRET
+cn.perfectgames.jewels.control.ButtonInfo
+cn.perfectgames.jewels.control.Command
 cn.perfectgames.jewels.control.GameController:
     public static final int CONTROL_STICK_PERIOD
     public static final int BASIC_INTERVAL
@@ -154,103 +170,84 @@ cn.perfectgames.jewels.control.GameController:
     public static final int INTERVAL_STEP_ANIMATION
     public static final int IC_STEP
     private static final java.lang.String TAG
-    60:61:public void stop()
-    84:84:private int getStepDelay()
-    100:100:public boolean removeGameListener(cn.perfectgames.jewels.control.GameController$GameListener)
-    104:105:public void clearGameListeners(cn.perfectgames.jewels.control.GameController$GameListener)
-    108:111:protected void notifyGameFinished()
-    114:117:protected void notifyGameFinishing()
-    120:121:public void setPlaygroundView(cn.perfectgames.jewels.ui.PlaygroundView)
-    128:129:public void setPlayground(cn.perfectgames.jewels.model.Playground)
-    143:144:public void destroy()
+    private cn.perfectgames.jewels.model.GameMode mode
+    50:51:public void stop()
+    97:97:public boolean removeGameListener(cn.perfectgames.jewels.control.GameController$GameListener)
+    101:102:public void clearGameListeners(cn.perfectgames.jewels.control.GameController$GameListener)
+    111:114:protected void notifyGameFinishing()
+    117:118:public void setPlaygroundView(cn.perfectgames.jewels.ui.PlaygroundView)
+    125:126:public void setPlayground(cn.perfectgames.jewels.model.Playground)
+    137:138:public void destroy()
 cn.perfectgames.jewels.control.GameController$GameListener:
     public abstract void gameFinishing()
-    public abstract void gameFinished()
 cn.perfectgames.jewels.model.Jewel:
+    private static final long serialVersionUID
     public static final int TYPE_COUNT
 cn.perfectgames.jewels.model.Playground:
     public static final java.lang.String TAG
     public static final int NUM_COLS
     public static final int NUM_ROWS
-cn.perfectgames.jewels.model.Playground$DrawingMetrics:
-    731:747:public void configurationChanged(cn.perfectgames.jewels.cfg.Configuration)
-cn.perfectgames.jewels.model.Playground$State
-cn.perfectgames.jewels.model.SavablePlayground:
-    public int[][] playground
-    public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock activeBlock
-    public java.util.List blockQueue
-    public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock holdBlock
-    public cn.perfectgames.jewels.model.ScoreAndLevel scoreLevel
-    27:30:public cn.perfectgames.jewels.model.SavablePlayground$SavableBlock create(cn.perfectgames.jewels.model.Jewel)
-cn.perfectgames.jewels.model.SavablePlayground$SavableBlock
 cn.perfectgames.jewels.model.ScoreAndLevel:
+    public static final java.lang.String TAG
     public static final int MAX_LEVEL
-    private int totalLines
-    private int currentLines
-    18:25:public void reset()
-    43:43:public int getTotalLines()
-    47:48:public void setTotalLines(int)
-    51:51:public int getCurrentLines()
-    55:55:public int addScore(int)
-    67:67:public int getGoal()
-    71:71:public int getGoalRemained()
-    75:100:public void eliminateLines(int,boolean)
-    103:105:public void rowsFallDown(int)
-    108:117:public java.lang.String getScroreString(int)
-    121:121:public float getMaxLevel()
-cn.perfectgames.jewels.record.SavableLocalScore:
-    23:24:public void setPlayer(java.lang.String)
-    31:32:public void setScore(int)
-cn.perfectgames.jewels.record.SavableLocalScores:
-    46:58:public java.util.List getLocalRank(int,int)
-cn.perfectgames.jewels.record.TwentySecondsRecord
+    132:132:public int getTotalEliminations()
+    140:140:public int addScore(int)
+    168:168:public int getGoalRemained()
+    172:172:public float getMaxLevel()
+cn.perfectgames.jewels.record.JScore:
+    28:28:public int getLevel()
+    49:49:public static cn.perfectgames.amaze.record.Record toAmazeRecord(cn.perfectgames.jewels.record.JScore)
+    63:63:public static com.scoreloop.client.android.core.model.Score toScoreloopScore(cn.perfectgames.jewels.record.JScore)
+cn.perfectgames.jewels.scoreloop.ScoreloopManager:
+    private static cn.perfectgames.jewels.scoreloop.ScoreloopManager manager
+    private com.scoreloop.client.android.core.controller.ScoreController scoreController
+    private com.scoreloop.client.android.core.controller.ScoresController scoresController
+    private com.scoreloop.client.android.core.controller.UserController userController
+    private com.scoreloop.client.android.core.controller.UsersController usersController
+    46:49:public static cn.perfectgames.jewels.scoreloop.ScoreloopManager get()
 cn.perfectgames.jewels.sound.SoundManager:
+    public static final int STYLE_JEWEL
+    public static final int STYLE_ANIMAL
     private static final java.lang.String TAG
-    151:160:public void playMoveEffect()
-    163:172:public void playTurnEffect()
-    175:184:public void playDownEffect()
-    187:197:public void playEliminationEffect()
+    180:190:public void playEliminationEffect()
 cn.perfectgames.jewels.ui.ControlView:
-    public static final int BTN_PLAY
-    public static final int BTN_LEFT
-    public static final int BTN_RIGHT
-    public static final int BTN_TURN
-    public static final int BTN_DOWN
-    public static final int BTN_DIRECT_DOWN
-    public static final int BTN_HOLD
+    public static final int BTN_PAUSE
     public static final int BTN_SOUND
     public static final int BTN_MUSIC
     private static final java.lang.String TAG
-    64:66:public void setButtons(java.util.List)
-    280:280:public boolean removeGameControlListener(cn.perfectgames.jewels.ui.ControlView$GameControlListener)
-    284:285:public void clearGameControlListener()
+    60:62:public void setButtons(java.util.List)
+    228:228:public boolean removeGameControlListener(cn.perfectgames.jewels.ui.ControlView$GameControlListener)
+    232:233:public void clearGameControlListener()
+    242:245:public void notifyButtonPressed(int)
+    248:251:public void notifyButtonReleased(int)
+cn.perfectgames.jewels.ui.ControlView$GameControlListener:
+    public abstract void buttonPressed(int)
+    public abstract void buttonReleased(int)
 cn.perfectgames.jewels.ui.CustomPreference
 cn.perfectgames.jewels.ui.GameTimer
 cn.perfectgames.jewels.ui.GameTimer$1
 cn.perfectgames.jewels.ui.JoyStick
 cn.perfectgames.jewels.ui.JoyStick$JoyStickListener
+cn.perfectgames.jewels.ui.LeaderBoardView:
+    public static final int BTN_SCOPE
+    public static final int BTN_MODE
+    public static final int BTN_SCORELOOP
+    public static final int BTN_PREV
+    public static final int BTN_NEXT
+    public static final int BTN_TOP
+    public static final int BTN_ME
+    private static final java.lang.String TAG
+    168:168:public void configurationChanged(cn.perfectgames.jewels.cfg.Configuration)
+    451:451:public boolean removeButtonListener(cn.perfectgames.jewels.ui.LeaderBoardView$ButtonListener)
+    455:456:public void clearButtonListener()
+cn.perfectgames.jewels.ui.LeaderBoardView$DrawingMetrics:
+    private android.graphics.Bitmap bg
+    private android.graphics.Rect titleArea
 cn.perfectgames.jewels.ui.Pair
 cn.perfectgames.jewels.ui.PlaygroundView:
-    144:144:public void destroy()
-    214:217:public void reset()
-    227:227:public void pause(boolean)
+    168:168:public void destroy()
 cn.perfectgames.jewels.ui.PlaygroundView$DrawingMetrics:
-    private android.graphics.Rect timeBarRect
-    private android.graphics.Rect comboRect
-    private android.graphics.Rect longestRect
-    private android.graphics.RectF scoreRect
-    private android.graphics.RectF levelRect
-    private android.graphics.RectF goalRect
-    private float lineHeight
-    private float scoreLineHeight
-    private float labelLineHeight
-    private float statLineHeight
-    private float scoreSize
-    private float scoreGap
-    private float labelSize
-    private float labelGap
-    private float statSize
-    292:292:private void setProperBackground(int,int)
+    311:311:private void setProperBackground(int,int)
 cn.perfectgames.jewels.ui.SlideOptionDialog
 cn.perfectgames.jewels.ui.SlideOptionDialog$1
 cn.perfectgames.jewels.ui.SlideOptionDialog$ColorPickerView
@@ -259,28 +256,16 @@ cn.perfectgames.jewels.util.AdDaemon:
     public static final java.lang.String TAG
     public static final int ANIMATION_INTERVAL
 cn.perfectgames.jewels.util.AdUtil:
-    64:68:public static void determineAd(android.app.Activity)
+    35:39:public static com.google.ads.AdView createAdViewNewSDK(android.app.Activity)
+    88:92:public static void determineAd(android.app.Activity)
 cn.perfectgames.jewels.util.BitmapUtil:
     public static final java.lang.String TAG
-    106:106:public android.graphics.Bitmap getAimButtonBitmap1()
-    110:110:public android.graphics.Bitmap getAimButtonBitmap2()
-    122:122:public android.graphics.drawable.Drawable getVerticalInfoBar()
-    126:126:public android.graphics.drawable.Drawable getHorizontalInfoBar()
-    150:173:public android.graphics.Bitmap getArrowBitmap(int)
 cn.perfectgames.jewels.util.BitmapUtil$Direction
 cn.perfectgames.jewels.util.DialogUtil:
-    42:47:public static void showDialog(android.content.Context,int,int)
-    50:56:public static void showDialog(android.content.Context,java.lang.String,java.lang.String)
-    59:154:public static void showRankDialog(android.app.Activity)
-    158:173:private static android.view.View createRankView(android.app.Activity,java.util.List)
-    178:190:public static android.widget.TableRow createRankEntry(android.content.Context,cn.perfectgames.jewels.record.TwentySecondsRecord)
-    194:208:public static android.widget.TableRow createRankHeader(android.app.Activity)
-    212:215:public static android.widget.TextView createTableCell(android.content.Context,java.lang.String)
-    156:156:static android.view.View access$0(android.app.Activity,java.util.List)
-cn.perfectgames.jewels.util.DialogUtil$1
-cn.perfectgames.jewels.util.DialogUtil$1$1
-cn.perfectgames.jewels.util.DialogUtil$1$1$1
-cn.perfectgames.jewels.util.DialogUtil$1$1$2
+    14:19:public static void showDialog(android.content.Context,int,int)
+    22:28:public static void showDialog(android.content.Context,java.lang.String,java.lang.String)
+    31:34:public static android.widget.TextView createTableCell(android.content.Context,java.lang.String)
+    39:51:public static void showDialogWithView(android.content.Context,java.lang.String,int)
 cn.perfectgames.jewels.util.HelpInfoUtil
 cn.perfectgames.jewels.util.HelpInfoUtil$HelpInfo
 cn.perfectgames.jewels.util.MarketUtil:
@@ -289,27 +274,78 @@ cn.perfectgames.jewels.util.MarketUtil:
     public static final int MARKET_SLIDEME
     public static final int MARKET_MOTO
     public static final int MARKET_OPHONE
-cn.perfectgames.jewels.util.MathUtil:
-    14:14:public static double velocityScale(double,double,double)
+cn.perfectgames.jewels.util.MathUtil
 cn.perfectgames.jewels.util.PreferenceUtil:
-    20:21:public static java.lang.String readPlayerName(android.app.Activity)
-    26:33:public static void writePlayerName(android.app.Activity,java.lang.String)
-    88:96:public static java.lang.String objectToString(java.io.Serializable)
-    101:106:public static java.lang.Object stringToObject(java.lang.String)
+    41:50:public static java.lang.String getShowUpgradeNoticeStr(android.app.Activity)
+    56:57:public static boolean canShowUpgradeNotice(android.app.Activity)
+    62:66:public static void setShowUpgradeNotice(android.app.Activity,boolean)
+    93:101:public static java.lang.String objectToString(java.io.Serializable)
+    106:111:public static java.lang.Object stringToObject(java.lang.String)
 cn.perfectgames.jewels.util.RandomUtil
 cn.perfectgames.jewels.util.TextPainter:
-    30:30:public android.graphics.Paint getTextPaint()
-    34:34:public android.graphics.Paint getStrokePaint()
-    61:74:public void drawFittedText(android.graphics.Canvas,java.lang.String,android.graphics.RectF,float)
-    79:81:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
-    85:87:public void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float)
-    91:98:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float,float)
-    101:107:public void drawText(android.graphics.Canvas,java.lang.String,float,float,float)
-    116:116:public float measureTextWidth(java.lang.String,float)
-    129:139:private void determineLabelSize(java.lang.String,android.graphics.RectF)
+    33:33:public android.graphics.Paint getTextPaint()
+    37:37:public android.graphics.Paint getStrokePaint()
+    64:77:public void drawFittedText(android.graphics.Canvas,java.lang.String,android.graphics.RectF,float)
+    82:84:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float)
+    88:90:public void drawMonoScore(android.graphics.Canvas,java.lang.String,float,float,float)
+    94:101:public void drawMonoText(android.graphics.Canvas,java.lang.String,float,float,float,float)
+    104:110:public void drawText(android.graphics.Canvas,java.lang.String,float,float,float)
+    171:172:private void determineLabelSize(java.lang.String,android.graphics.RectF)
 cn.perfectgames.jewels.util.VersionUtil
 cn.perfectgames.jewels.util.VersionUtil$1
 cn.perfectgames.jewels.util.VersionUtil$VersionInfo
+com.facebook.android.a
+com.facebook.android.b
+com.facebook.android.b$1
+com.facebook.android.b$2
+com.facebook.android.b$a
+com.facebook.android.c
+com.facebook.android.d
+com.facebook.android.d$1
+com.facebook.android.d$a
+com.facebook.android.e
+com.feedback.NotificationType
+com.feedback.UMFeedbackService:
+    private static com.feedback.NotificationType a
+    private static android.content.Context b
+    private static void b(java.lang.String)
+    public static void openUmengFeedbackSDK(android.content.Context)
+    public static void enableNewReplyNotification(android.content.Context,com.feedback.NotificationType)
+    static android.content.Context a()
+    static void a(java.lang.String)
+com.feedback.a
+com.feedback.a.a:
+    public java.lang.String d
+com.feedback.b
+com.feedback.b.a:
+    public static void c(android.content.Context)
+com.feedback.b.b:
+    public static int a(org.json.JSONObject)
+com.feedback.b.d:
+    static final java.lang.String a
+    private static final int b
+com.feedback.c
+com.feedback.c.a:
+    java.lang.String d
+    java.lang.String e
+    int f
+    int g
+com.feedback.c.b:
+    public b(android.content.Context,int)
+    public b(android.content.Context,android.os.Handler)
+com.feedback.ui.FeedbackConversations:
+    private static final int c
+    private static final int d
+    private static final int e
+    private static final int f
+    private static final int g
+com.feedback.ui.ThreadView
+com.feedback.ui.c:
+    java.lang.String c
+com.feedback.ui.g:
+    org.json.JSONArray d
+    java.lang.String[] e
+    public com.feedback.a.e a(int)
 com.google.ads.Ad:
     public abstract boolean isReady()
     public abstract void loadAd(com.google.ads.AdRequest)
@@ -332,9 +368,12 @@ com.google.ads.AdRequest:
     public void setExtras(java.util.Map)
     public void addExtra(java.lang.String,java.lang.Object)
     public void setLocation(android.location.Location)
+    public void addTestDevice(java.lang.String)
+    public void setTestDevices(java.util.Set)
 com.google.ads.AdSize:
     public AdSize(int,int)
 com.google.ads.AdView:
+    public void destroy()
     public boolean isReady()
     public void stopLoading()
 com.google.ads.InterstitialAd:
@@ -345,201 +384,6 @@ com.google.ads.InterstitialAd:
     public void show()
     public void setAdListener(com.google.ads.AdListener)
     public void stopLoading()
-com.google.gson.FieldAttributes:
-    final void a(java.lang.Object,java.lang.Object)
-    final java.lang.reflect.Field b()
-com.google.gson.FieldNamingPolicy
-com.google.gson.FieldNamingStrategy
-com.google.gson.Gson:
-    public final com.google.gson.JsonElement toJsonTree(java.lang.Object)
-    public final void toJson(java.lang.Object,java.lang.Appendable)
-    public final java.lang.String toJson(com.google.gson.JsonElement)
-    public final java.lang.Object fromJson(java.lang.String,java.lang.Class)
-    public final java.lang.Object fromJson(java.lang.String,java.lang.reflect.Type)
-    public final java.lang.Object fromJson(java.io.Reader,java.lang.Class)
-    public final java.lang.Object fromJson(java.io.Reader,java.lang.reflect.Type)
-    public final java.lang.Object fromJson(com.google.gson.JsonElement,java.lang.Class)
-    public final java.lang.Object fromJson(com.google.gson.JsonElement,java.lang.reflect.Type)
-com.google.gson.GsonBuilder
-com.google.gson.InstanceCreator
-com.google.gson.JsonArray:
-    public final void addAll(com.google.gson.JsonArray)
-    public final int size()
-    public final com.google.gson.JsonElement get(int)
-    public final java.lang.String getAsString()
-    public final double getAsDouble()
-    public final java.math.BigDecimal getAsBigDecimal()
-    public final java.math.BigInteger getAsBigInteger()
-    public final float getAsFloat()
-    public final long getAsLong()
-    public final int getAsInt()
-    public final byte getAsByte()
-    public final char getAsCharacter()
-    public final short getAsShort()
-    public final boolean getAsBoolean()
-    final java.lang.Object a()
-com.google.gson.JsonDeserializationContext
-com.google.gson.JsonDeserializer:
-    public abstract java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.JsonElement:
-    public boolean getAsBoolean()
-    public java.lang.String getAsString()
-    public double getAsDouble()
-    public float getAsFloat()
-    public long getAsLong()
-    public int getAsInt()
-    public byte getAsByte()
-    public char getAsCharacter()
-    public java.math.BigDecimal getAsBigDecimal()
-    public java.math.BigInteger getAsBigInteger()
-    public short getAsShort()
-    java.lang.Object a()
-com.google.gson.JsonObject:
-    public final com.google.gson.JsonElement remove(java.lang.String)
-    public final void addProperty(java.lang.String,java.lang.String)
-    public final void addProperty(java.lang.String,java.lang.Boolean)
-    public final void addProperty(java.lang.String,java.lang.Character)
-    public final boolean has(java.lang.String)
-    public final com.google.gson.JsonElement get(java.lang.String)
-    public final com.google.gson.JsonPrimitive getAsJsonPrimitive(java.lang.String)
-    public final com.google.gson.JsonArray getAsJsonArray(java.lang.String)
-    public final com.google.gson.JsonObject getAsJsonObject(java.lang.String)
-com.google.gson.JsonParseException
-com.google.gson.JsonParser
-com.google.gson.JsonPrimitive:
-    public final boolean isBoolean()
-    public final boolean getAsBoolean()
-    public final boolean isNumber()
-    public final java.lang.String getAsString()
-    public final double getAsDouble()
-    public final java.math.BigDecimal getAsBigDecimal()
-    public final java.math.BigInteger getAsBigInteger()
-    public final float getAsFloat()
-    public final long getAsLong()
-    public final short getAsShort()
-    public final int getAsInt()
-    public final byte getAsByte()
-    public final char getAsCharacter()
-    final java.lang.Object a()
-com.google.gson.JsonSerializationContext:
-    public abstract com.google.gson.JsonElement serialize(java.lang.Object)
-com.google.gson.JsonStreamParser
-com.google.gson.ModifyFirstLetterNamingPolicy
-com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier
-com.google.gson.aa
-com.google.gson.ab
-com.google.gson.ab$a
-com.google.gson.ab$b
-com.google.gson.ac:
-    public final com.google.gson.JsonElement serialize(java.lang.Object)
-com.google.gson.af
-com.google.gson.ag
-com.google.gson.ai:
-    public final java.lang.Object a(java.lang.reflect.Type)
-    public final java.lang.Object a(java.lang.reflect.Type,int)
-    private static java.lang.Object b(java.lang.reflect.Type)
-com.google.gson.am
-com.google.gson.annotations.Expose
-com.google.gson.annotations.Since
-com.google.gson.annotations.Until
-com.google.gson.aq:
-    public final synchronized com.google.gson.aq b()
-com.google.gson.as
-com.google.gson.au:
-    public static boolean a(java.lang.Class)
-    public static java.lang.Class b(java.lang.Class)
-com.google.gson.ax
-com.google.gson.az
-com.google.gson.ba
-com.google.gson.bb:
-    public final boolean d()
-com.google.gson.bc:
-    public final java.lang.Class f()
-com.google.gson.bf:
-    public final java.lang.reflect.Type a()
-com.google.gson.bh
-com.google.gson.bi
-com.google.gson.c
-com.google.gson.e
-com.google.gson.f$a:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$aa:
-    public java.lang.Object createInstance(java.lang.reflect.Type)
-com.google.gson.f$ab:
-    private static java.net.URI a(com.google.gson.JsonElement)
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$ac:
-    private static java.net.URL a(com.google.gson.JsonElement)
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$ad:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$b:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$c:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$d:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$e:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$f:
-    public final java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-    public final java.lang.Object createInstance(java.lang.reflect.Type)
-com.google.gson.f$g:
-    f$g(java.lang.String)
-    public f$g(int,int)
-    private java.util.Date a(com.google.gson.JsonElement)
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$h:
-    private java.sql.Date a(com.google.gson.JsonElement)
-    public final java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$i:
-    private java.sql.Time a(com.google.gson.JsonElement)
-    public final java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$j:
-    public final java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$k:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$m:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$n:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$p:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$q:
-    public java.lang.Object createInstance(java.lang.reflect.Type)
-com.google.gson.f$r:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$s:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$t:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$v:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-    public java.lang.Object createInstance(java.lang.reflect.Type)
-com.google.gson.f$w:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$x:
-    public final java.lang.Object createInstance(java.lang.reflect.Type)
-com.google.gson.f$y:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.f$z:
-    public java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.i
-com.google.gson.j
-com.google.gson.l
-com.google.gson.n
-com.google.gson.p
-com.google.gson.r
-com.google.gson.reflect.TypeToken
-com.google.gson.reflect.TypeToken$a
-com.google.gson.s
-com.google.gson.t:
-    public final java.lang.Object deserialize(com.google.gson.JsonElement,java.lang.reflect.Type,com.google.gson.JsonDeserializationContext)
-com.google.gson.x
-com.google.gson.y
-com.google.gson.y$a
-com.google.gson.y$b
-com.google.gson.z
 com.heyzap.sdk.HeyzapAnalytics:
     private static final java.lang.String LOG_TAG
     private static final java.lang.String HEYZAP_ANALYTICS_ID_PREF
@@ -558,16 +402,18 @@ com.heyzap.sdk.HeyzapLib:
 com.heyzap.sdk.PreMarketDialog:
     private static final java.lang.String LOG_TAG
 com.heyzap.sdk.R$array:
-    public static final int pref_ent_block_style_entries
-    public static final int pref_ent_block_style_values
-    public static final int pref_ent_center_button_action_entries
-    public static final int pref_ent_center_button_action_values
     public static final int pref_ent_control_entries
     public static final int pref_ent_control_values
     public static final int pref_ent_difficulty_entries
     public static final int pref_ent_difficulty_values
+    public static final int pref_ent_hint_delay_entries
+    public static final int pref_ent_hint_delay_values
+    public static final int pref_ent_jewel_style_entries
+    public static final int pref_ent_jewel_style_values
     public static final int pref_ent_joystick_position_entries
     public static final int pref_ent_joystick_position_values
+    public static final int pref_ent_language_entries
+    public static final int pref_ent_language_values
     public static final int pref_ent_screen_orientation_entries
     public static final int pref_ent_screen_orientation_values
 com.heyzap.sdk.R$attr:
@@ -579,15 +425,6 @@ com.heyzap.sdk.R$attr:
 com.heyzap.sdk.R$color:
     public static final int main_button
 com.heyzap.sdk.R$drawable:
-    public static final int aim_button1
-    public static final int aim_button2
-    public static final int arrow_direct_down
-    public static final int arrow_down
-    public static final int arrow_hold
-    public static final int arrow_left
-    public static final int arrow_right
-    public static final int arrow_rotate
-    public static final int arrow_up
     public static final int btn_black
     public static final int btn_custom
     public static final int btn_custom_text
@@ -602,9 +439,9 @@ com.heyzap.sdk.R$drawable:
     public static final int dialog_grn_btn
     public static final int dialog_grn_btn_sel
     public static final int dialog_separator
+    public static final int go_jewels_logo
     public static final int green_button_focused
     public static final int green_button_normal
-    public static final int h_info_bar
     public static final int help_hold_button
     public static final int help_swap_button_1
     public static final int help_swap_button_2
@@ -616,22 +453,25 @@ com.heyzap.sdk.R$drawable:
     public static final int icon_pause
     public static final int icon_sound_off
     public static final int icon_sound_on
-    public static final int main
-    public static final int play
+    public static final int logo
+    public static final int pg_bar
+    public static final int pg_ind
     public static final int play_button
     public static final int playbutton_focused
     public static final int playbutton_normal
     public static final int primary_button
     public static final int selector
+    public static final int spark1
+    public static final int spark2
     public static final int transparent_button
     public static final int transparent_button_focused
     public static final int transparent_button_normal
-    public static final int v_info_bar
 com.heyzap.sdk.R$id:
     public static final int TableLayout02
     public static final int TextView01
     public static final int ad_area
     public static final int back_button
+    public static final int background_image
     public static final int content_area
     public static final int heyzap_button_1
     public static final int heyzap_button_2
@@ -647,6 +487,8 @@ com.heyzap.sdk.R$id:
     public static final int options_button
     public static final int paused_screen
     public static final int paused_screen_title
+    public static final int perfect_games_logo
+    public static final int player_name
     public static final int ps_ad_area
     public static final int quit_button
     public static final int replay_button
@@ -654,8 +496,10 @@ com.heyzap.sdk.R$id:
     public static final int score_text
     public static final int ss_ad_area
     public static final int submit_button
+    public static final int submit_to_global
     public static final int succeed_screen
     public static final int success_screen_title
+    public static final int web_view
 com.heyzap.sdk.R$layout:
     public static final int about
     public static final int adframe
@@ -664,35 +508,48 @@ com.heyzap.sdk.R$layout:
     public static final int list_item
     public static final int main
     public static final int pausescreen
+    public static final int splash
+    public static final int submit_score
     public static final int succeedscreen
     public static final int whats_new
 com.heyzap.sdk.R$raw:
-    public static final int down
+    public static final int buttonclick
+    public static final int cat
+    public static final int cattle
+    public static final int chicken
+    public static final int dog
+    public static final int drop_jewel
     public static final int elimination
-    public static final int move
-    public static final int tetris
-    public static final int turn
+    public static final int finish
+    public static final int frog
+    public static final int illegal_swap
+    public static final int levelup
+    public static final int monkey
+    public static final int panda
+    public static final int regenerate
+    public static final int remove
 com.heyzap.sdk.R$string:
-    public static final int about_fancy_cube
-    public static final int about_info
     public static final int app_name
-    public static final int buy_button
     public static final int common_about
     public static final int common_back
+    public static final int common_back_game
     public static final int common_cancel
     public static final int common_cong
+    public static final int common_feedback
     public static final int common_finish
     public static final int common_game_over
     public static final int common_help
     public static final int common_high_score
     public static final int common_load
     public static final int common_more
+    public static final int common_more_games
     public static final int common_next
     public static final int common_no
     public static final int common_ok
     public static final int common_options
     public static final int common_paused
     public static final int common_quit_game
+    public static final int common_rate_me
     public static final int common_replay
     public static final int common_reset
     public static final int common_resume
@@ -700,21 +557,9 @@ com.heyzap.sdk.R$string:
     public static final int common_score
     public static final int common_steps
     public static final int common_submit
+    public static final int common_tell_friends
     public static final int common_time
     public static final int common_yes
-    public static final int cube_capture
-    public static final int cube_capture_problem_content
-    public static final int cube_capture_problem_title
-    public static final int cube_capture_step1_desc
-    public static final int cube_capture_step1_sign
-    public static final int cube_capture_step2_desc
-    public static final int cube_capture_step2_sign
-    public static final int cube_capture_step3_desc
-    public static final int cube_capture_step3_sign
-    public static final int cube_not_support_content
-    public static final int cube_not_support_title
-    public static final int cube_solve_problem_desc
-    public static final int cube_solve_problem_title
     public static final int game_init_continue
     public static final int game_init_new
     public static final int hello
@@ -733,6 +578,11 @@ com.heyzap.sdk.R$string:
     public static final int menu_help
     public static final int menu_preferences
     public static final int menu_presentation
+    public static final int mode_infinite
+    public static final int mode_normal
+    public static final int mode_quick
+    public static final int mode_timed
+    public static final int mode_title
     public static final int pref_cat_appearence
     public static final int pref_cat_basic
     public static final int pref_cat_control
@@ -741,63 +591,45 @@ com.heyzap.sdk.R$string:
     public static final int pref_cat_portrait_control
     public static final int pref_ent_background_music
     public static final int pref_ent_background_music_summary
-    public static final int pref_ent_block_shadow
-    public static final int pref_ent_block_shadow_summary
-    public static final int pref_ent_block_style
-    public static final int pref_ent_block_style_summary
-    public static final int pref_ent_center_button_action
-    public static final int pref_ent_center_button_action_summary
     public static final int pref_ent_control
     public static final int pref_ent_control_summary
     public static final int pref_ent_difficulty
     public static final int pref_ent_difficulty_summary
-    public static final int pref_ent_enable_drag_mode
-    public static final int pref_ent_enable_drag_mode_summary
+    public static final int pref_ent_hint_delay
+    public static final int pref_ent_hint_delay_summary
+    public static final int pref_ent_jewel_style
+    public static final int pref_ent_jewel_style_summary
     public static final int pref_ent_joystick_position
     public static final int pref_ent_joystick_position_summary
+    public static final int pref_ent_language
+    public static final int pref_ent_language_summary
     public static final int pref_ent_screen_orientation
     public static final int pref_ent_screen_orientation_summary
     public static final int pref_ent_sound_effects
     public static final int pref_ent_sound_effects_summary
-    public static final int pref_ent_swap_quick_direct
-    public static final int pref_ent_swap_quick_direct_summary
-    public static final int pref_ent_swap_rotate_hold
-    public static final int pref_ent_swap_rotate_hold_summary
     public static final int preferences_title
-    public static final int progress_solving_cube
-    public static final int progress_validating_cube
+    public static final int progress_message_default
     public static final int prompt_faied
     public static final int prompt_succeed
     public static final int prompt_title_failed
     public static final int prompt_title_succeed
     public static final int quit_button
-    public static final int rank_a_recruit
-    public static final int rank_b_private
-    public static final int rank_c_corporal
-    public static final int rank_d_sergeant
-    public static final int rank_e_lieutenant
-    public static final int rank_f_captain
-    public static final int rank_g_major
-    public static final int rank_h_commander
-    public static final int rank_i_lt_colonel
-    public static final int rank_j_colonel
-    public static final int rank_k_general
-    public static final int rank_l_field_marshal
+    public static final int quit_option_feedback
+    public static final int quit_option_more
+    public static final int quit_option_quit
+    public static final int quit_option_rate
     public static final int record_cube_size
     public static final int record_military_rank
     public static final int record_player
     public static final int record_rank
     public static final int record_steps
+    public static final int record_submit_global
     public static final int record_submit_input_name_title
     public static final int record_submit_submitting_record
     public static final int record_time
     public static final int success_screen_retrieving_data
     public static final int success_screen_submit_score
     public static final int success_screen_world_rank
-    public static final int toast_shuffleing_cube
-    public static final int toast_steps
-    public static final int unlicensed_dialog_body
-    public static final int unlicensed_dialog_title
     public static final int version_continue_hint
     public static final int version_desc
     public static final int version_get_pro
@@ -816,6 +648,524 @@ com.heyzap.sdk.R$styleable:
     public static final int com_admob_android_ads_AdView_secondaryTextColor
 com.heyzap.sdk.R$xml:
     public static final int preferences
+com.mobclick.android.Gender
+com.mobclick.android.MobclickAgent:
+    private static final int e
+    private static final int f
+    private static final int g
+    private static final int h
+    private static int[] l
+    public static org.json.JSONObject getUpdateInfo()
+    public static void setAutoLocation(boolean)
+    public static void setUpdateOnlyWifi(boolean)
+    public static void setUpdateListener(com.mobclick.android.UmengUpdateListener)
+    public static void setOnlineConfigureListener(com.mobclick.android.UmengOnlineConfigureListener)
+    public static void openActivityDurationTrack(boolean)
+    public static boolean isDownloadingAPK()
+    public static void setDebugMode(boolean)
+    public static void setDefaultReportPolicy(android.content.Context,int)
+    public static void onError(android.content.Context)
+    public static void reportError(android.content.Context,java.lang.String)
+    public static void flush(android.content.Context)
+    public static void update(android.content.Context,java.lang.String)
+    public static void update(android.content.Context)
+    public static void onEvent(android.content.Context,java.lang.String)
+    public static void onEvent(android.content.Context,java.lang.String,int)
+    public static void onEvent(android.content.Context,java.lang.String,java.lang.String)
+    public static void onEvent(android.content.Context,java.lang.String,java.lang.String,int)
+    public static void enterPage(android.content.Context,java.lang.String)
+    private synchronized void a(android.content.Context,java.lang.String)
+    private synchronized void d(android.content.Context)
+    private void e(android.content.Context)
+    private org.json.JSONArray a(org.json.JSONObject,org.json.JSONArray)
+    public static void setOpenGLContext(javax.microedition.khronos.opengles.GL10)
+    public static java.lang.String getConfigParams(android.content.Context,java.lang.String)
+    private static java.lang.String o(android.content.Context)
+    private static void a(android.content.Context,int)
+    public static void updateOnlineConfig(android.content.Context,java.lang.String)
+    public static void updateOnlineConfig(android.content.Context)
+    private synchronized void f(android.content.Context,java.lang.String)
+    private static void a(android.content.Context,com.mobclick.android.Gender)
+    private static void b(android.content.Context,int)
+    private static void g(android.content.Context,java.lang.String)
+    static int[] b()
+com.mobclick.android.ReportPolicy
+com.mobclick.android.UmengConstants:
+    public static final java.lang.String OS
+    public static final java.lang.String SDK_TYPE
+    public static final java.lang.String SDK_VERSION
+    public static final long kContinueSessionMillis
+    public static final int DEFAULT_TIMEZONE
+    public static final java.lang.String LOG_TAG
+    public static final java.lang.String CONFIG_URL
+    public static final java.lang.String CONFIG_URL_BACK
+    public static final java.lang.String FEEDBACK_BASE_URL
+    public static final java.lang.String FEEDBACK_UER_REPLY_URL
+    public static final java.lang.String FEEDBACK_Dev_Reply_URL
+    public static final java.lang.String FEEDBACK_NewFeedback_URL
+    public static final java.lang.String FeedbackPreName
+    public static final java.lang.String PreName_Trivial
+    public static final java.lang.String TrivialPreKey_newreplyIds
+    public static final java.lang.String TrivialPreKey_MaxReplyID
+    public static final java.lang.String TrivialPreKey_Email
+    public static final java.lang.String TrivialPreKey_AgeGroup
+    public static final java.lang.String TrivialPreKey_Sex
+    public static final java.lang.String PreName_maxReplyIdOfFb
+    public static final java.lang.String AtomKey_Content
+    public static final java.lang.String AtomKey_Thread_Title
+    public static final java.lang.String AtomKey_Date
+    public static final java.lang.String AtomKey_User_ID
+    public static final java.lang.String AtomKey_FeedbackID
+    public static final java.lang.String AtomKey_ReplyId
+    public static final java.lang.String AtomKey_AgeGroup
+    public static final java.lang.String AtomKey_Sex
+    public static final java.lang.String AtomKey_Email
+    public static final java.lang.String AtomKey_AppKey
+    public static final java.lang.String AtomKey_Index
+    public static final java.lang.String AtomKey_Lat
+    public static final java.lang.String AtomKey_Lng
+    public static final java.lang.String AtomKey_Message
+    public static final java.lang.String AtomKey_SDK_Version
+    public static final java.lang.String AtomKey_AppVersion
+    public static final java.lang.String AtomKey_OSVersion
+    public static final java.lang.String AtomKey_DeviceModel
+    public static final java.lang.String AtomKeyReplyId
+    public static final java.lang.String AtomKey_State
+    public static final java.lang.String Atom_State_Error
+    public static final java.lang.String Atom_State_OK
+    public static final java.lang.String AtomKey_Type
+    public static final java.lang.String Atom_Type_UserReply
+    public static final java.lang.String Atom_Type_NewFeedback
+    public static final java.lang.String Atom_Type_DevReply
+    public static final java.lang.String Atom_Type_Responce
+    public static final java.lang.String FailState
+    public static final java.lang.String TempState
+    public static final java.lang.String OKState
+    public static final java.lang.String PostFeedbackBroadcast
+    public static final java.lang.String PostFeedbackBroadcast_Fail
+    public static final java.lang.String PostFeedbackBroadcast_Succeed
+    public static final java.lang.String RetrieveReplyBroadcastAction
+    public static final int RetrieveReplyBroadcast_Fail
+    public static final int RetrieveReplyBroadcast_HasReply
+    public static final int RetrieveReplyBroadcast_NoReply
+    public static final java.lang.String HasNewReplyBroadcast
+    public static final int HasNewReplyBroadcast_Yes
+    public static final int HasNewReplyBroadcast_No
+    public static final java.lang.String PostFeedbackBroadcastAction
+    public static final java.lang.String NewReplyNotifyType
+    public static final int NotificationBanner
+    public static final int NotificationPopout
+    public static final java.lang.String NewReplyContent
+    public static final java.lang.String Online_Config_Local_Policy
+    public static final java.lang.String Online_Config_Net_Policy
+    public static final java.lang.String Online_Config_Last_Modify
+com.mobclick.android.a:
+    public boolean a()
+    public static boolean b()
+    public void a(java.lang.String)
+    public void b(java.lang.String)
+    public void a(int)
+    public void a(boolean)
+com.mobclick.android.j:
+    j(android.content.Context,java.lang.String,java.lang.String,java.lang.String,int,int)
+    j(android.content.Context,java.lang.String,int)
+com.mobclick.android.l:
+    public static void a(android.content.Context)
+    public static java.lang.String b(java.lang.String)
+    public static java.lang.String[] a(javax.microedition.khronos.opengles.GL10)
+    public static int a(java.util.Date,java.util.Date)
+    public static java.util.Date d(android.content.Context)
+    public static void a(android.content.Context,java.util.Date)
+    public static java.lang.String a(org.json.JSONObject)
+    public static java.lang.String b(org.json.JSONObject)
+com.scoreloop.client.android.core.PublishedFor__1_0_0
+com.scoreloop.client.android.core.PublishedFor__1_1_0
+com.scoreloop.client.android.core.PublishedFor__2_0_0
+com.scoreloop.client.android.core.PublishedFor__2_1_0
+com.scoreloop.client.android.core.PublishedFor__2_2_0
+com.scoreloop.client.android.core.PublishedFor__2_3_0
+com.scoreloop.client.android.core.UsedByScoreloopApp
+com.scoreloop.client.android.core.addon.RSSFeed
+com.scoreloop.client.android.core.addon.RSSFeed$1
+com.scoreloop.client.android.core.addon.RSSFeed$2
+com.scoreloop.client.android.core.addon.RSSFeed$3
+com.scoreloop.client.android.core.addon.RSSFeed$4
+com.scoreloop.client.android.core.addon.RSSFeed$4$1
+com.scoreloop.client.android.core.addon.RSSFeed$4$2
+com.scoreloop.client.android.core.addon.RSSFeed$ChainedPolicy
+com.scoreloop.client.android.core.addon.RSSFeed$Continuation
+com.scoreloop.client.android.core.addon.RSSFeed$Policy
+com.scoreloop.client.android.core.addon.RSSFeed$RequestNextItemCanceledException
+com.scoreloop.client.android.core.addon.RSSFeed$State
+com.scoreloop.client.android.core.addon.RSSFeed$a
+com.scoreloop.client.android.core.addon.RSSFeed$b
+com.scoreloop.client.android.core.addon.RSSFeed$c
+com.scoreloop.client.android.core.addon.RSSFeedObserver
+com.scoreloop.client.android.core.addon.RSSItem
+com.scoreloop.client.android.core.controller.AchievementController
+com.scoreloop.client.android.core.controller.AchievementController$a
+com.scoreloop.client.android.core.controller.AchievementsController
+com.scoreloop.client.android.core.controller.AchievementsController$a
+com.scoreloop.client.android.core.controller.ActivitiesController
+com.scoreloop.client.android.core.controller.ActivitiesController$1
+com.scoreloop.client.android.core.controller.ActivitiesController$a
+com.scoreloop.client.android.core.controller.ActivitiesController$b
+com.scoreloop.client.android.core.controller.AddressBook
+com.scoreloop.client.android.core.controller.AddressBook$HashAlgorithm
+com.scoreloop.client.android.core.controller.ChallengeController:
+    public ChallengeController(com.scoreloop.client.android.core.controller.ChallengeControllerObserver)
+    public void rejectChallenge()
+    public void acceptChallenge()
+    public void createChallenge(com.scoreloop.client.android.core.model.Money,com.scoreloop.client.android.core.model.User)
+    public void setChallenge(com.scoreloop.client.android.core.model.Challenge)
+    private void a(int,com.scoreloop.client.android.core.controller.RequestControllerObserver)
+com.scoreloop.client.android.core.controller.ChallengesController
+com.scoreloop.client.android.core.controller.ChallengesController$a
+com.scoreloop.client.android.core.controller.GameController
+com.scoreloop.client.android.core.controller.GameController$a
+com.scoreloop.client.android.core.controller.GameItemController
+com.scoreloop.client.android.core.controller.GameItemsController
+com.scoreloop.client.android.core.controller.GamesController
+com.scoreloop.client.android.core.controller.GamesController$a
+com.scoreloop.client.android.core.controller.MessageController
+com.scoreloop.client.android.core.controller.MessageController$1
+com.scoreloop.client.android.core.controller.MessageController$a
+com.scoreloop.client.android.core.controller.MessageController$b
+com.scoreloop.client.android.core.controller.MessageController$c
+com.scoreloop.client.android.core.controller.MessageController$d
+com.scoreloop.client.android.core.controller.MessageController$e
+com.scoreloop.client.android.core.controller.RankingController:
+    public RankingController(com.scoreloop.client.android.core.controller.RequestControllerObserver)
+    public com.scoreloop.client.android.core.model.SearchList getSearchList()
+    public void loadRankingForScore(com.scoreloop.client.android.core.model.Score)
+    public void loadRankingForScoreResult(java.lang.Double,java.util.Map)
+    public void a(java.util.Comparator)
+com.scoreloop.client.android.core.controller.RequestController:
+    public java.lang.Exception getError()
+    protected void b(java.lang.Exception)
+    public boolean isCachedResponseUsed()
+    public void setCachedResponseUsed(boolean)
+com.scoreloop.client.android.core.controller.RequestControllerException:
+    public static final int CODE_BUDDY_ADD_REQUEST_ALREADY_ADDED
+    public static final int CODE_BUDDY_REMOVE_REQUEST_ALREADY_REMOVED
+    public static final int CODE_SOCIAL_PROVIDER_DISCONNECTED
+    public static final int CODE_UNDEFINED
+    public static final int DETAIL_USER_UPDATE_REQUEST_EMAIL_TAKEN
+    public static final int DETAIL_USER_UPDATE_REQUEST_IMAGE_TOO_LARGE
+    public static final int DETAIL_USER_UPDATE_REQUEST_INVALID_EMAIL
+    public static final int DETAIL_USER_UPDATE_REQUEST_INVALID_USERNAME
+    public static final int DETAIL_USER_UPDATE_REQUEST_UNSUPPORTED_MIME_TYPE
+    public static final int DETAIL_USER_UPDATE_REQUEST_USERNAME_TAKEN
+    public static final int DETAIL_USER_UPDATE_REQUEST_USERNAME_TOO_SHORT
+    public static final java.lang.String INFO_KEY_DISCONNECTED_PROVIDER_IDENTIFIERS
+    private static final long serialVersionUID
+    public int getErrorCode()
+    public java.lang.String getErrorMessage()
+    public java.util.Map getUserInfo()
+com.scoreloop.client.android.core.controller.ScoreController:
+    public void setShouldSubmitScoreForChallenge(boolean)
+    public void setShouldSubmitScoreLocally(boolean)
+    public boolean shouldSubmitScoreForChallenge()
+    public boolean shouldSubmitScoreLocally()
+com.scoreloop.client.android.core.controller.ScoresController:
+    public java.util.Comparator getLocalScoreComparator()
+    public com.scoreloop.client.android.core.model.Score getLocalScoreToSubmit()
+    public void loadRangeForScore(com.scoreloop.client.android.core.model.Score)
+    public void loadRangeForScoreResult(java.lang.Double,java.util.Map)
+    public void setLocalScoreComparator(java.util.Comparator)
+com.scoreloop.client.android.core.controller.SearchSpec
+com.scoreloop.client.android.core.controller.SocialProviderController
+com.scoreloop.client.android.core.controller.SocialProviderController$1
+com.scoreloop.client.android.core.controller.SocialProviderController$2
+com.scoreloop.client.android.core.controller.SocialProviderController$UpdateMode
+com.scoreloop.client.android.core.controller.SocialProviderController$a
+com.scoreloop.client.android.core.controller.SocialProviderControllerObserver
+com.scoreloop.client.android.core.controller.UserController:
+    public UserController(com.scoreloop.client.android.core.model.Session,com.scoreloop.client.android.core.controller.UserControllerObserver)
+    public UserController(com.scoreloop.client.android.core.controller.UserControllerObserver)
+    public void addAsBuddy()
+    public void loadBuddies()
+    public void loadUserContext()
+    public void loadUserDetail()
+    public void removeAsBuddy()
+    public void setUser(com.scoreloop.client.android.core.model.Entity)
+    public void submitUserContext()
+com.scoreloop.client.android.core.controller.UserController$b:
+    public UserController$b(com.scoreloop.client.android.core.server.RequestCompletionCallback,com.scoreloop.client.android.core.model.User,com.scoreloop.client.android.core.model.User)
+com.scoreloop.client.android.core.controller.UserController$c:
+    public UserController$c(com.scoreloop.client.android.core.server.RequestCompletionCallback,com.scoreloop.client.android.core.model.User,com.scoreloop.client.android.core.model.User)
+com.scoreloop.client.android.core.controller.UserController$d:
+    public UserController$d(com.scoreloop.client.android.core.server.RequestCompletionCallback,com.scoreloop.client.android.core.model.User,com.scoreloop.client.android.core.model.Game)
+com.scoreloop.client.android.core.controller.UserController$e:
+    public UserController$e(com.scoreloop.client.android.core.server.RequestCompletionCallback,com.scoreloop.client.android.core.model.User,com.scoreloop.client.android.core.model.Game)
+com.scoreloop.client.android.core.controller.UserController$f:
+    public UserController$f(com.scoreloop.client.android.core.server.RequestCompletionCallback,com.scoreloop.client.android.core.model.Game,com.scoreloop.client.android.core.model.User,com.scoreloop.client.android.core.model.User)
+com.scoreloop.client.android.core.controller.UsersController
+com.scoreloop.client.android.core.controller.UsersController$1
+com.scoreloop.client.android.core.controller.UsersController$LoginSearchOperator
+com.scoreloop.client.android.core.controller.UsersController$a
+com.scoreloop.client.android.core.controller.UsersController$b
+com.scoreloop.client.android.core.controller.UsersController$c
+com.scoreloop.client.android.core.controller.UsersController$d
+com.scoreloop.client.android.core.controller.a:
+    public void j()
+com.scoreloop.client.android.core.controller.c
+com.scoreloop.client.android.core.controller.d
+com.scoreloop.client.android.core.controller.e
+com.scoreloop.client.android.core.controller.e$a
+com.scoreloop.client.android.core.model.Achievement
+com.scoreloop.client.android.core.model.AchievementsStore
+com.scoreloop.client.android.core.model.Activity:
+    private com.scoreloop.client.android.core.model.Entity j
+    private com.scoreloop.client.android.core.model.Entity k
+    public com.scoreloop.client.android.core.model.Entity getUser()
+    public com.scoreloop.client.android.core.model.Entity getGame()
+    public java.lang.String getTimeAgo()
+    public java.lang.String getImageUrl(com.scoreloop.client.android.core.model.Activity$ImageSize)
+    public java.lang.String a()
+com.scoreloop.client.android.core.model.Activity$ImageSize
+com.scoreloop.client.android.core.model.Award
+com.scoreloop.client.android.core.model.AwardList
+com.scoreloop.client.android.core.model.BaseEntity:
+    public boolean b()
+com.scoreloop.client.android.core.model.Challenge:
+    public Challenge(org.json.JSONObject)
+    public Challenge(com.scoreloop.client.android.core.model.Money)
+    public java.util.Date getCompletedAt()
+    public java.lang.Integer getContenderSkill()
+    public java.lang.Integer getContestantSkill()
+    public java.util.Map getContext()
+    public java.util.Date getCreatedAt()
+    public com.scoreloop.client.android.core.model.User getLoser()
+    public com.scoreloop.client.android.core.model.Money getPrize()
+    public com.scoreloop.client.android.core.model.User getWinner()
+    public java.lang.Integer getLevel()
+    public com.scoreloop.client.android.core.model.Money getStake()
+    public boolean isAssigned()
+    public boolean isCancelled()
+    public boolean isDone()
+    public boolean isInvalid()
+    public boolean isInvited()
+    public boolean isPlayableForUser(com.scoreloop.client.android.core.model.User)
+    public boolean isWinner(com.scoreloop.client.android.core.model.User)
+    public void setContender(com.scoreloop.client.android.core.model.User)
+    public void setContenderScore(com.scoreloop.client.android.core.model.Score)
+    public void setContestant(com.scoreloop.client.android.core.model.User)
+    public void setContestantScore(com.scoreloop.client.android.core.model.Score)
+    public void setContext(java.util.Map)
+    public void setLevel(java.lang.Integer)
+    public void setMode(java.lang.Integer)
+    public void a(com.scoreloop.client.android.core.model.User,boolean)
+    private void a(com.scoreloop.client.android.core.model.Money)
+    void a(java.lang.String)
+    public java.lang.String a()
+com.scoreloop.client.android.core.model.Client:
+    public Client(android.content.Context,java.lang.String,java.lang.String,com.scoreloop.client.android.core.model.ClientObserver)
+    private com.scoreloop.client.android.core.model.Game a()
+    public com.scoreloop.client.android.core.model.Range getGameLevels()
+    public com.scoreloop.client.android.core.model.Range getGameModes()
+    public java.lang.String getInfoString()
+    public com.scoreloop.client.android.core.model.Session getSession()
+    public void setGameLevels(com.scoreloop.client.android.core.model.Range)
+    public void setGameModes(com.scoreloop.client.android.core.model.Range)
+com.scoreloop.client.android.core.model.Device:
+    public java.lang.String a()
+com.scoreloop.client.android.core.model.Device$State:
+    public int intValue()
+com.scoreloop.client.android.core.model.Entity
+com.scoreloop.client.android.core.model.Game:
+    public static final java.lang.String CONTEXT_KEY_LEVEL
+    public static final java.lang.String CONTEXT_KEY_MINOR_RESULT
+    public static final java.lang.String CONTEXT_KEY_MODE
+    private com.scoreloop.client.android.core.model.AwardList q
+    private Game(java.lang.String)
+    public static com.scoreloop.client.android.core.model.Entity a(com.scoreloop.client.android.core.model.Session,java.lang.String)
+    public Game(org.json.JSONObject)
+    public java.lang.Integer getLevelCount()
+    public java.lang.Integer getMaxLevel()
+    public java.lang.Integer getMaxMode()
+    public java.lang.Integer getMinLevel()
+    public java.lang.Integer getMinMode()
+    public java.lang.Integer getModeCount()
+    public java.lang.String getName()
+    public boolean hasLevels()
+    public boolean hasModes()
+    void a(java.lang.Integer)
+    void c(java.lang.Integer)
+    public java.lang.String getDescription()
+    public java.lang.String getImageUrl()
+    public java.lang.String getPublisherName()
+    public java.lang.String getDownloadUrl()
+    public java.lang.String a()
+    public void a(com.scoreloop.client.android.core.model.AwardList)
+    public com.scoreloop.client.android.core.model.AwardList e()
+    public java.lang.String[] getPackageNames()
+com.scoreloop.client.android.core.model.GameItem
+com.scoreloop.client.android.core.model.Message
+com.scoreloop.client.android.core.model.Message$Type
+com.scoreloop.client.android.core.model.MessageReceiver
+com.scoreloop.client.android.core.model.MessageReceiverInterface
+com.scoreloop.client.android.core.model.MessageTargetInterface
+com.scoreloop.client.android.core.model.Money:
+    public Money(java.math.BigDecimal)
+    public static java.lang.String a()
+    public boolean hasAmount()
+    public static java.lang.String getApplicationCurrencyNameSingular()
+    public static java.lang.String getApplicationCurrencyNamePlural()
+com.scoreloop.client.android.core.model.Ranking:
+    public com.scoreloop.client.android.core.model.Score getScore()
+    public java.lang.Integer getTotal()
+com.scoreloop.client.android.core.model.Score:
+    public static boolean areModesEqual(java.lang.Integer,com.scoreloop.client.android.core.model.Score)
+    public static boolean areModesEqual(com.scoreloop.client.android.core.model.Score,com.scoreloop.client.android.core.model.Score)
+    public static boolean areModesEqual(java.lang.Integer,java.lang.Integer)
+    public void setMinorResult(java.lang.Double)
+    public void setResult(java.lang.Double)
+    public java.lang.String a()
+    public java.util.Map getContext()
+    public void setContext(java.util.Map)
+com.scoreloop.client.android.core.model.ScoreFormatter
+com.scoreloop.client.android.core.model.ScoreFormatter$ScoreFormatKey
+com.scoreloop.client.android.core.model.ScoreFormatter$a
+com.scoreloop.client.android.core.model.ScoreSubmitException:
+    private static final long serialVersionUID
+com.scoreloop.client.android.core.model.SearchList:
+    public static com.scoreloop.client.android.core.model.SearchList getTwentyFourHourScoreSearchList()
+    public static com.scoreloop.client.android.core.model.SearchList getUserCountryLocationScoreSearchList()
+    public static com.scoreloop.client.android.core.model.SearchList getUserNationalityScoreSearchList()
+    public void setName(java.lang.String)
+    public java.lang.String a()
+com.scoreloop.client.android.core.model.Session:
+    public com.scoreloop.client.android.core.model.Money getBalance()
+    public java.util.List getChallengeStakes()
+    public java.lang.String getPaymentUrl()
+    public java.lang.String getScoreloopAppDownloadUrl()
+    public boolean isAuthenticated()
+    public java.util.List getScoreSearchLists()
+com.scoreloop.client.android.core.model.SocialProvider:
+    public static final java.lang.String FACEBOOK_IDENTIFIER
+    public static final java.lang.String MYSPACE_IDENTIFIER
+    public static final java.lang.String TWITTER_IDENTIFIER
+    public static com.scoreloop.client.android.core.model.SocialProvider getSocialProviderForIdentifier(java.lang.String)
+    public abstract java.lang.Class b()
+    public java.lang.String a()
+    public final java.lang.Integer getVersion()
+    public boolean isUserConnected(com.scoreloop.client.android.core.model.User)
+    public void a(com.scoreloop.client.android.core.model.User,java.lang.String,java.lang.String,java.lang.String)
+    public void a(com.scoreloop.client.android.core.model.User)
+    public boolean a(com.scoreloop.client.android.core.model.Session)
+    public java.lang.String[] a(java.lang.Object[])
+com.scoreloop.client.android.core.model.User:
+    private User(java.lang.String)
+    public static com.scoreloop.client.android.core.model.Entity a(com.scoreloop.client.android.core.model.Session,java.lang.String)
+    public com.scoreloop.client.android.core.model.User$Details getDetail()
+    public java.util.List getBuddyUsers()
+    public java.util.Date getDateOfBirth()
+    public java.util.Date getLastActiveAt()
+    public com.scoreloop.client.android.core.model.Activity getLastActivity()
+    public java.lang.Integer getSkillValue()
+    public boolean isAuthenticated()
+    public boolean isActive()
+    public boolean isAnonymous()
+    public boolean isPassive()
+    public boolean isPending()
+    public boolean isConnectedToSocialProviderWithIdentifier(java.lang.String)
+    public boolean isChallengable()
+    public void setDateOfBirth(java.util.Date)
+    public void setPassword(java.lang.String)
+    public boolean c(java.lang.String)
+    private com.scoreloop.client.android.core.model.User$b k()
+    public boolean ownsSession(com.scoreloop.client.android.core.model.Session)
+    public void setImageSource(java.lang.String)
+    public java.lang.String getImageUrl()
+    public java.lang.String a()
+    public void setImageData(java.lang.String)
+    public void setImageMimeType(java.lang.String)
+    public java.lang.Integer getGamesCounter()
+    public java.lang.Integer getBuddiesCounter()
+    public java.lang.Integer getGlobalAchievementsCounter()
+com.scoreloop.client.android.core.model.User$Details:
+    public java.lang.Double getWinningProbability()
+    public java.lang.Integer getChallengesWon()
+    public java.lang.Integer getChallengesLost()
+com.scoreloop.client.android.core.model.a
+com.scoreloop.client.android.core.persistence.DbAchievementsStore
+com.scoreloop.client.android.core.persistence.DbAchievementsStore$1
+com.scoreloop.client.android.core.persistence.DbAchievementsStore$a
+com.scoreloop.client.android.core.persistence.a
+com.scoreloop.client.android.core.server.BayeuxConnectionObserver$SecureBayeuxConnectionObserver
+com.scoreloop.client.android.core.server.Response:
+    public boolean c()
+com.scoreloop.client.android.core.server.b:
+    private static final long serialVersionUID
+com.scoreloop.client.android.core.server.c:
+    private static final long serialVersionUID
+com.scoreloop.client.android.core.server.d:
+    private static final long serialVersionUID
+com.scoreloop.client.android.core.settings.CommonSettings
+com.scoreloop.client.android.core.settings.Settings$Facebook
+com.scoreloop.client.android.core.settings.Settings$Myspace
+com.scoreloop.client.android.core.settings.Settings$Twitter
+com.scoreloop.client.android.core.spi.AuthRequest
+com.scoreloop.client.android.core.spi.AuthRequestDelegate
+com.scoreloop.client.android.core.spi.AuthViewController
+com.scoreloop.client.android.core.spi.AuthViewController$Observer
+com.scoreloop.client.android.core.spi.myspace.MySpaceSocialProvider
+com.scoreloop.client.android.core.spi.myspace.MySpaceSocialProviderController
+com.scoreloop.client.android.core.spi.myspace.a
+com.scoreloop.client.android.core.spi.myspace.a$1
+com.scoreloop.client.android.core.spi.myspace.a$2
+com.scoreloop.client.android.core.spi.myspace.b
+com.scoreloop.client.android.core.spi.myspace.b$1
+com.scoreloop.client.android.core.spi.myspace.b$a
+com.scoreloop.client.android.core.spi.myspace.c
+com.scoreloop.client.android.core.spi.myspace.c$1
+com.scoreloop.client.android.core.spi.myspace.c$2
+com.scoreloop.client.android.core.spi.myspace.c$a
+com.scoreloop.client.android.core.spi.oauthfacebook.OAuthFacebookSocialProvider
+com.scoreloop.client.android.core.spi.oauthfacebook.OAuthFacebookSocialProviderController
+com.scoreloop.client.android.core.spi.oauthfacebook.OAuthFacebookSocialProviderController$1
+com.scoreloop.client.android.core.spi.twitter.TwitterSocialProvider
+com.scoreloop.client.android.core.spi.twitter.TwitterSocialProviderController
+com.scoreloop.client.android.core.spi.twitter.a
+com.scoreloop.client.android.core.spi.twitter.b
+com.scoreloop.client.android.core.spi.twitter.c
+com.scoreloop.client.android.core.spi.twitter.c$1
+com.scoreloop.client.android.core.spi.twitter.c$2
+com.scoreloop.client.android.core.ui.PaymentDialog
+com.scoreloop.client.android.core.ui.ScoreloopCustomDialog
+com.scoreloop.client.android.core.ui.WebViewDialog
+com.scoreloop.client.android.core.ui.WebViewDialog$1
+com.scoreloop.client.android.core.ui.WebViewDialog$a
+com.scoreloop.client.android.core.util.Cache$1:
+    private static final long serialVersionUID
+com.scoreloop.client.android.core.util.HTTPUtils
+com.scoreloop.client.android.core.util.OAuthBuilder
+com.scoreloop.client.android.core.util.PlistParser
+com.scoreloop.client.android.core.util.SetterIntent:
+    public boolean a(org.json.JSONObject,java.lang.String,com.scoreloop.client.android.core.util.SetterIntent$ValueMode)
+com.scoreloop.client.android.core.util.StringsParser
 d:
-    public final synchronized boolean l()
-    public final synchronized void t()
+    public final synchronized void b()
+    public final synchronized boolean o()
+    public final synchronized void x()
+    public final synchronized void y()
+net.youmi.android.AdManager:
+    public static void disableUpdateApp()
+    public static void setDonotClearWebViewCache()
+net.youmi.android.AdView:
+    public AdView(android.app.Activity,int,int,int)
+    void a(android.app.Activity,int,int,int)
+    public void setAdViewListener(net.youmi.android.AdViewListener)
+    public void refreshAd()
+    void e()
+    void f()
+net.youmi.android.ck
+net.youmi.android.cq
+net.youmi.android.ec
+net.youmi.android.ep:
+    static void f()
+    static void g()
+net.youmi.android.ev
+net.youmi.android.ew
+net.youmi.android.ez

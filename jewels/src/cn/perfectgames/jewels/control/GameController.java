@@ -39,7 +39,7 @@ public class GameController {
 
 	public void start() {
 		playing = true;
-
+		this.playground.play();
 	}
 
 	public void pause() {
@@ -51,8 +51,8 @@ public class GameController {
 	}
 
 	public void reset() {
-		// playground.reset();
-		// this.playgroundView.reset();
+		playground.reset();
+		playgroundView.reset();
 		// this.clearPendingCommand();
 	}
 

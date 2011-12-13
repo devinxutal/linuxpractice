@@ -25,14 +25,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 
+import com.mobclick.android.MobclickAgent;
 import com.scoreloop.client.android.core.controller.RequestCancelledException;
 
-abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
+	public static final int PREFERENCE_REQUEST_CODE = 0x100;
+
 	static final int DIALOG_ERROR_EMAIL_ALREADY_TAKEN = 8;
 	static final int DIALOG_ERROR_INSUFFICIENT_BALANCE = 9;
 	static final int DIALOG_ERROR_INVALID_EMAIL_FORMAT = 10;
@@ -45,6 +50,24 @@ abstract class BaseActivity extends Activity {
 	String infoDialogMessage;
 	private String progressDialogMessage;
 	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		net.youmi.android.AdManager.init(this, "360dd4dbce33b33a", "32ca971d565e8354", 30, false); 
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void onPause() {
+		MobclickAgent.onPause(this);
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		MobclickAgent.onResume(this);
+		super.onResume();
+	}
+
 	protected void setProgressDialogMessage(String msg){
 		progressDialogMessage = msg;
 	}
@@ -141,5 +164,18 @@ abstract class BaseActivity extends Activity {
 		}
 		return false;
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PREFERENCE_REQUEST_CODE) {
+			this.preferenceChanged();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+		
+	}
+	
+	protected abstract void preferenceChanged();
 
+	
+	
 }

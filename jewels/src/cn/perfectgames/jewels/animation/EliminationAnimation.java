@@ -8,38 +8,38 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.model.Jewel;
 
 public class EliminationAnimation extends AbstractAnimation {
 	public static final int EVENT_HALF_PASSED = 0;
-	
+
 	private int[] jewels;
 	private PointF[] pos;
 	private RectF[] rects;
 	private Rect rect;
-	
+
 	private int bitmapSize;
-	
+
 	private Paint paint;
 	private Bitmap[] jewel_bitmaps;
-	
+
 	public EliminationAnimation() {
-		super(Constants.FPS*3/4);
+		super(Constants.FPS * 3 / 4);
 
 		paint = new Paint();
 		paint.setAntiAlias(true);
 		paint.setFilterBitmap(true);
 	}
 
-	public void setJewelBitmap(Bitmap[] bitmaps){
+	public void setJewelBitmap(Bitmap[] bitmaps) {
 		this.jewel_bitmaps = bitmaps;
 		this.bitmapSize = bitmaps[0].getHeight();
 	}
 
-
-	public void setJewels(List<Jewel> jewels, List<PointF> positions){
+	public void setJewels(List<Jewel> jewels, List<PointF> positions, Usage usage){
 		this.jewels = new int[jewels.size()];
 		int i = 0;
 		for(Jewel j: jewels){
@@ -54,43 +54,61 @@ public class EliminationAnimation extends AbstractAnimation {
 		for(i = 0; i<this.jewels.length; i++){
 			rects[i] = new RectF(pos[i].x, pos[i].y, pos[i].x+rect.width(), pos[i].y+rect.height());
 		}
+		
+		//
+		this.usage = usage;
+		if(usage == Usage.Elimination){
+			this.setTotalFrame(Constants.FPS*3/4);
+			Log.v("EliminationAnimation", "normal usage");
+		}else if(usage == Usage.Levelup){
+			Log.v("EliminationAnimation", "level up usage");
+			this.setTotalFrame(Constants.FPS * 3/2);
+		}
 	}
-	
-	protected void innerDraw(Canvas canvas, int current, int total) {
 
+	public enum Usage {
+		Elimination, Levelup
+	}
+
+	private Usage usage = Usage.Elimination;
+
+	protected void innerDraw(Canvas canvas, int current, int total) {
 
 		float initSize = bitmapSize;
 		float maxSize = bitmapSize * 1.15f;
-		float maxSizeIndex = total/2;
+		float maxSizeIndex = total / 2;
 		RectF destRect = new RectF();
-		int alpha =0;
+		int alpha = 0;
 		float delta = 0;
-		if(current <maxSizeIndex){
+		if (current < maxSizeIndex) {
 			alpha = 255;
-			delta = -(maxSize -initSize)*current/maxSizeIndex;
-		}else{
-			alpha = (int)(255*(total -current)/(total- maxSizeIndex));
-			float destSize = bitmapSize* (total - current)/(total-maxSizeIndex);
-			delta = (initSize-destSize)/2;
+			delta = -(maxSize - initSize) * current / maxSizeIndex;
+		} else {
+			alpha = (int) (255 * (total - current) / (total - maxSizeIndex));
+			float destSize = bitmapSize * (total - current)
+					/ (total - maxSizeIndex);
+			delta = (initSize - destSize) / 2;
 		}
 		paint.setAlpha(alpha);
-		if(jewels!= null){
-			for(int i = 0; i<jewels.length; i++){
+		if (jewels != null) {
+			for (int i = 0; i < jewels.length; i++) {
 				RectF rect = rects[i];
-				destRect.left = rect.left+delta;
-				destRect.right = rect.right -delta;
-				destRect.top = rect.top+delta;
+				destRect.left = rect.left + delta;
+				destRect.right = rect.right - delta;
+				destRect.top = rect.top + delta;
 				destRect.bottom = rect.bottom - delta;
-				canvas.drawBitmap(jewel_bitmaps[jewels[i]], this.rect, destRect, paint);
+				canvas.drawBitmap(jewel_bitmaps[jewels[i]], this.rect,
+						destRect, paint);
 			}
 		}
 	}
 
-	
 	protected void onStep(int current, int total) {
-		if(current == total/2){
+		if (current == total / 2 && usage == Usage.Elimination) {
+			this.notifyAnimationEventHappened(EVENT_HALF_PASSED);
+		}else if (current == total *5/ 6 && usage == Usage.Levelup) {
 			this.notifyAnimationEventHappened(EVENT_HALF_PASSED);
 		}
 	}
-	
+
 }

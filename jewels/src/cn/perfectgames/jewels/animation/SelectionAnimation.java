@@ -10,6 +10,7 @@ import android.graphics.PointF;
 import android.util.Log;
 import android.view.animation.Animation;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.R;
 import cn.perfectgames.jewels.util.BitmapUtil;
 
@@ -32,7 +33,7 @@ public class SelectionAnimation extends AbstractAnimation {
 
 	public void setSize(int size) {
 		if (selector == null || this.size != size) {
-			Bitmap background = BitmapUtil.get().getBitmap(R.drawable.selector);
+			Bitmap background = GoJewelsApplication.getBitmapUtil().getBitmap(R.drawable.selector);
 
 			if (selector != null) {
 				selector.recycle();

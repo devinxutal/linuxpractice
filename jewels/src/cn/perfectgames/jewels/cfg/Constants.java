@@ -19,7 +19,6 @@ public class Constants {
 	public static final int ADMOB_WIDTH = 320;
 	public static final int ADMOB_HEIGHT = 48;
 
-	public static final String DATA_DIR = "data/com.devinxutal.tetris/files";
 	public static final String SCORE_SAVING_FILE = "scores.dat";
 	public static final String GAME_SAVING_FILE = "game.dat";
 

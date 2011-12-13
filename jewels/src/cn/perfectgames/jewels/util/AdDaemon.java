@@ -6,8 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.ScaleAnimation;
 
 public class AdDaemon {
 	public static final String TAG = "AdDaemon";
@@ -44,6 +44,7 @@ public class AdDaemon {
 		this.handler = handler;
 		this.name = name;
 		if (this.adView == null) {
+			Log.v(TAG, getName()+"adView is null");
 			return;
 		}
 		this.adView.setOnClickListener(new OnClickListener() {

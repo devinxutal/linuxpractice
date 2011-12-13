@@ -28,6 +28,7 @@ import android.util.Log;
 import cn.perfectgames.amaze.record.LocalRecordManager;
 import cn.perfectgames.jewels.model.GameMode;
 import cn.perfectgames.jewels.scoreloop.ScoreloopManager;
+import cn.perfectgames.jewels.util.BitmapUtil;
 
 import com.scoreloop.client.android.core.model.Score;
 import com.scoreloop.client.android.core.model.User;
@@ -49,6 +50,16 @@ public class GoJewelsApplication extends Application {
 	
 	public static LocalRecordManager getLocalRecordManager(){
 		return localRecordManager;
+	}
+
+	private static BitmapUtil bitmapUtil;
+	
+	public static BitmapUtil getBitmapUtil() {
+		return bitmapUtil;
+	}
+
+	public static void setBitmapUtil(BitmapUtil bitmapUtil) {
+		GoJewelsApplication.bitmapUtil = bitmapUtil;
 	}
 
 	private static Score score;

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import cn.perfectgames.jewels.GoJewelsApplication;
 import cn.perfectgames.jewels.cfg.Configuration;
 import cn.perfectgames.jewels.record.JScore;
 import cn.perfectgames.jewels.util.BitmapUtil;
@@ -233,12 +234,12 @@ public class LeaderBoardView extends View implements OnTouchListener {
 			// paint.setFilterBitmap(true);
 
 			painter = new TextPainter();
-			util = BitmapUtil.get(getContext());
+			util = GoJewelsApplication.getBitmapUtil();
 		}
 
 		public void onDraw(Canvas canvas) {
 			paint.setAlpha(255);
-			BitmapUtil.get().drawBackgroundBitmap(canvas, getWidth(),
+			GoJewelsApplication.getBitmapUtil().drawBackgroundBitmap(canvas, getWidth(),
 					getHeight(), paint);
 
 			canvas.drawColor(color_layer_mask);
@@ -348,17 +349,17 @@ public class LeaderBoardView extends View implements OnTouchListener {
 
 		public void onSizeChanged(int width, int height) {
 			int unit = height / 10;
-			int gapV = unit / 5;
+			int gapV = unit / 4;
 			int gapH = width / 40;
 			int l = gapH, t = gapV, w = width - 2 * gapH, h = unit;
 			// title
-			titleArea = new Rect(l, t, l + w, t + h);
+			// titleArea = new Rect(l, t, l + w, t + h);
 			// selection area
-			t += h + gapV;
+			//t += h + gapV;
 			selectionArea = new Rect(l, t, l + w, t + h);
 			// score area
 			t += h + gapV;
-			scoreArea = new Rect(l, t, l + w, t + unit * 6);
+			scoreArea = new Rect(l, t, l + w, t + unit * 7);
 			// button area
 			t = scoreArea.bottom + gapV;
 			buttonArea = new Rect(l, t, l + w, t + h);

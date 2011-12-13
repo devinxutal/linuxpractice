@@ -12,6 +12,7 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.util.Log;
 import cn.perfectgames.amaze.animation.AbstractAnimation;
 import cn.perfectgames.jewels.cfg.Constants;
 import cn.perfectgames.jewels.util.TextPainter;
@@ -43,9 +44,10 @@ public class ScoreAnimation extends AbstractAnimation {
 	}
 
 	public void setJewelSize(int size){
-		if(this.jewelSize == size){
+		if(this.jewelSize == size || size <=0){
 			return ;
 		}
+		Log.v("ScoreAnimation", "Set Jewel Size of :"+size);
 		this.jewelSize = size;
 		this.scoreW = (int)(2*size);
 		this.scoreH = (int)(size);
@@ -53,7 +55,7 @@ public class ScoreAnimation extends AbstractAnimation {
 			if(scores[i]!= null){
 				scores[i].recycle();
 			}
-			scores[i] = Bitmap.createBitmap(scoreW,scoreH, Config.ARGB_8888);
+			scores[i] = Bitmap.createBitmap(scoreW,scoreH, Config.ARGB_4444);
 		}
 
 		rect = new Rect(0,0,scoreW, scoreH);
@@ -63,6 +65,7 @@ public class ScoreAnimation extends AbstractAnimation {
 		painter.setTextSize(textSize);
 		
 	}
+	
 	@Override
 	protected void innerDraw(Canvas canvas, int current, int total) {
 		int i = 0;

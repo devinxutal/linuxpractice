@@ -39,6 +39,26 @@ public class AdUtil {
 		return adView;
 
 	}
+	
+	public static com.google.ads.AdView createAdmobAdView(
+			final Activity activity) {
+		final com.google.ads.AdView adView = new com.google.ads.AdView(
+				activity, AdSize.BANNER, Constants.ADMOB_PUBLISHER_ID);
+
+		adView.setId(Constants.ADVIEW_ID);
+		return adView;
+
+	}
+
+	public static net.youmi.android.AdView createYoumiAdView(
+			final Activity activity) {
+		final net.youmi.android.AdView adView = new net.youmi.android.AdView(
+				activity);
+
+		adView.setId(Constants.ADVIEW_ID);
+		return adView;
+	}
+
 
 	public static AdRequest getAdRequest() {
 		AdRequest req = new AdRequest();
@@ -46,12 +66,15 @@ public class AdUtil {
 		return req;
 	}
 
+
 	private static View createAdView(Activity activity) {
 		View adview = null;
-		boolean newsdk = true;
-		if (newsdk) {
-			adview = createAdViewNewSDK(activity);
+		boolean useAdmob = false;
+		if (useAdmob) {
+			adview = createAdmobAdView(activity);
 
+		} else {
+			adview = createYoumiAdView(activity);
 		}
 		// else {
 		// adview = createAdViewOldSDK(activity);
@@ -59,6 +82,7 @@ public class AdUtil {
 		return adview;
 
 	}
+
 
 	public static void determineAd(Activity activity) {
 		if (Constants.VERSION == Constants.VERSION_LITE) {

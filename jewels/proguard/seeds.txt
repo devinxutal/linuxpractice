@@ -1,67 +1,132 @@
-cn.perfectgames.jewels.record.SavableLocalScore
-cn.perfectgames.jewels.record.SavableLocalScores
 cn.perfectgames.jewels.model.SavablePlayground
 cn.perfectgames.jewels.model.ScoreAndLevel
-com.heyzap.sdk.R$styleable
-com.heyzap.sdk.R$xml
 com.heyzap.sdk.R$attr
 com.heyzap.sdk.R$id
-com.heyzap.sdk.R$style
 com.heyzap.sdk.R$color
 com.heyzap.sdk.R$drawable
 com.heyzap.sdk.HeyzapButton
 com.heyzap.sdk.R
-com.heyzap.sdk.R$raw
-com.heyzap.sdk.R$layout
 com.heyzap.sdk.R$array
 com.heyzap.sdk.R$string
-com.heyzap.sdk.HeyzapLib
 com.heyzap.sdk.HeyzapAnalytics
-com.google.ads.AdView
-com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
+com.heyzap.sdk.R$styleable
+com.heyzap.sdk.R$xml
+com.heyzap.sdk.R$style
+com.heyzap.sdk.R$raw
+com.heyzap.sdk.R$layout
+com.heyzap.sdk.HeyzapLib
 cn.perfectgames.jewels.ui.PlaygroundView
 cn.perfectgames.jewels.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet)
 com.heyzap.sdk.HeyzapButton
 com.heyzap.sdk.HeyzapButton: HeyzapButton(android.content.Context,android.util.AttributeSet)
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
+com.feedback.ui.ThreadView
+com.feedback.ui.ThreadView: ThreadView(android.content.Context,android.util.AttributeSet)
 cn.perfectgames.jewels.ui.CustomPreference
 cn.perfectgames.jewels.ui.CustomPreference: CustomPreference(android.content.Context,android.util.AttributeSet)
-com.google.ads.AdView
-com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
+net.youmi.android.AdView
+net.youmi.android.AdView: AdView(android.content.Context,android.util.AttributeSet)
 cn.perfectgames.jewels.ui.PlaygroundView
 cn.perfectgames.jewels.ui.PlaygroundView: PlaygroundView(android.content.Context,android.util.AttributeSet,int)
 com.heyzap.sdk.HeyzapButton
 com.heyzap.sdk.HeyzapButton: HeyzapButton(android.content.Context,android.util.AttributeSet,int)
-cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState[] values()
-cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState valueOf(java.lang.String)
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
+net.youmi.android.AdView
+net.youmi.android.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
+com.scoreloop.client.android.core.util.SetterIntent$ValueMode: com.scoreloop.client.android.core.util.SetterIntent$ValueMode[] values()
+com.scoreloop.client.android.core.util.SetterIntent$ValueMode: com.scoreloop.client.android.core.util.SetterIntent$ValueMode valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.e$a: com.scoreloop.client.android.core.controller.e$a[] values()
+com.scoreloop.client.android.core.controller.e$a: com.scoreloop.client.android.core.controller.e$a valueOf(java.lang.String)
 cn.perfectgames.jewels.activities.PlaygroundActivity$State: cn.perfectgames.jewels.activities.PlaygroundActivity$State[] values()
 cn.perfectgames.jewels.activities.PlaygroundActivity$State: cn.perfectgames.jewels.activities.PlaygroundActivity$State valueOf(java.lang.String)
-com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy[] values()
-com.google.gson.LongSerializationPolicy: com.google.gson.LongSerializationPolicy valueOf(java.lang.String)
+com.mobclick.android.Gender: com.mobclick.android.Gender[] values()
+com.mobclick.android.Gender: com.mobclick.android.Gender valueOf(java.lang.String)
+cn.perfectgames.jewels.util.TextPainter$Align: cn.perfectgames.jewels.util.TextPainter$Align[] values()
+cn.perfectgames.jewels.util.TextPainter$Align: cn.perfectgames.jewels.util.TextPainter$Align valueOf(java.lang.String)
 cn.perfectgames.jewels.util.BitmapUtil$Direction: cn.perfectgames.jewels.util.BitmapUtil$Direction[] values()
 cn.perfectgames.jewels.util.BitmapUtil$Direction: cn.perfectgames.jewels.util.BitmapUtil$Direction valueOf(java.lang.String)
-com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
-com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
-cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command[] values()
-cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command valueOf(java.lang.String)
-com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier[] values()
-com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier: com.google.gson.ModifyFirstLetterNamingPolicy$LetterModifier valueOf(java.lang.String)
-u$a: u$a[] values()
-u$a: u$a valueOf(java.lang.String)
-a$a: a$a[] values()
-a$a: a$a valueOf(java.lang.String)
-com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy[] values()
-com.google.gson.FieldNamingPolicy: com.google.gson.FieldNamingPolicy valueOf(java.lang.String)
-cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State[] values()
-cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State valueOf(java.lang.String)
+cn.perfectgames.jewels.activities.LeaderBoardActivity$CurrentOperationType: cn.perfectgames.jewels.activities.LeaderBoardActivity$CurrentOperationType[] values()
+cn.perfectgames.jewels.activities.LeaderBoardActivity$CurrentOperationType: cn.perfectgames.jewels.activities.LeaderBoardActivity$CurrentOperationType valueOf(java.lang.String)
+cn.perfectgames.jewels.animation.EliminationAnimation$Usage: cn.perfectgames.jewels.animation.EliminationAnimation$Usage[] values()
+cn.perfectgames.jewels.animation.EliminationAnimation$Usage: cn.perfectgames.jewels.animation.EliminationAnimation$Usage valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.User$b: com.scoreloop.client.android.core.model.User$b[] values()
+com.scoreloop.client.android.core.model.User$b: com.scoreloop.client.android.core.model.User$b valueOf(java.lang.String)
+cn.perfectgames.amaze.paint.TextPainter$Align: cn.perfectgames.amaze.paint.TextPainter$Align[] values()
+cn.perfectgames.amaze.paint.TextPainter$Align: cn.perfectgames.amaze.paint.TextPainter$Align valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.User$Gender: com.scoreloop.client.android.core.model.User$Gender[] values()
+com.scoreloop.client.android.core.model.User$Gender: com.scoreloop.client.android.core.model.User$Gender valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.SocialProviderController$UpdateMode: com.scoreloop.client.android.core.controller.SocialProviderController$UpdateMode[] values()
+com.scoreloop.client.android.core.controller.SocialProviderController$UpdateMode: com.scoreloop.client.android.core.controller.SocialProviderController$UpdateMode valueOf(java.lang.String)
+com.feedback.NotificationType: com.feedback.NotificationType[] values()
+com.feedback.NotificationType: com.feedback.NotificationType valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.Session$State: com.scoreloop.client.android.core.model.Session$State[] values()
+com.scoreloop.client.android.core.model.Session$State: com.scoreloop.client.android.core.model.Session$State valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.UsersController$LoginSearchOperator: com.scoreloop.client.android.core.controller.UsersController$LoginSearchOperator[] values()
+com.scoreloop.client.android.core.controller.UsersController$LoginSearchOperator: com.scoreloop.client.android.core.controller.UsersController$LoginSearchOperator valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.Device$State: com.scoreloop.client.android.core.model.Device$State[] values()
+com.scoreloop.client.android.core.model.Device$State: com.scoreloop.client.android.core.model.Device$State valueOf(java.lang.String)
+com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a[] values()
+com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a valueOf(java.lang.String)
 com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender[] values()
 com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.AddressBook$HashAlgorithm: com.scoreloop.client.android.core.controller.AddressBook$HashAlgorithm[] values()
+com.scoreloop.client.android.core.controller.AddressBook$HashAlgorithm: com.scoreloop.client.android.core.controller.AddressBook$HashAlgorithm valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.Activity$ImageSize: com.scoreloop.client.android.core.model.Activity$ImageSize[] values()
+com.scoreloop.client.android.core.model.Activity$ImageSize: com.scoreloop.client.android.core.model.Activity$ImageSize valueOf(java.lang.String)
+com.scoreloop.client.android.core.util.SetterIntent$KeyMode: com.scoreloop.client.android.core.util.SetterIntent$KeyMode[] values()
+com.scoreloop.client.android.core.util.SetterIntent$KeyMode: com.scoreloop.client.android.core.util.SetterIntent$KeyMode valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.d: com.scoreloop.client.android.core.controller.d[] values()
+com.scoreloop.client.android.core.controller.d: com.scoreloop.client.android.core.controller.d valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.Message$Type: com.scoreloop.client.android.core.model.Message$Type[] values()
+com.scoreloop.client.android.core.model.Message$Type: com.scoreloop.client.android.core.model.Message$Type valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.ScoreFormatter$ScoreFormatKey: com.scoreloop.client.android.core.model.ScoreFormatter$ScoreFormatKey[] values()
+com.scoreloop.client.android.core.model.ScoreFormatter$ScoreFormatKey: com.scoreloop.client.android.core.model.ScoreFormatter$ScoreFormatKey valueOf(java.lang.String)
+com.feedback.a.e: com.feedback.a.e[] values()
+com.feedback.a.e: com.feedback.a.e valueOf(java.lang.String)
+com.feedback.a.b: com.feedback.a.b[] values()
+com.feedback.a.b: com.feedback.a.b valueOf(java.lang.String)
+com.feedback.a.c: com.feedback.a.c[] values()
+com.feedback.a.c: com.feedback.a.c valueOf(java.lang.String)
+cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState[] values()
+cn.perfectgames.jewels.model.Playground$AnimationState: cn.perfectgames.jewels.model.Playground$AnimationState valueOf(java.lang.String)
+cn.perfectgames.jewels.activities.LeaderBoardActivity$SL: cn.perfectgames.jewels.activities.LeaderBoardActivity$SL[] values()
+cn.perfectgames.jewels.activities.LeaderBoardActivity$SL: cn.perfectgames.jewels.activities.LeaderBoardActivity$SL valueOf(java.lang.String)
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+com.scoreloop.client.android.core.server.RequestMethod: com.scoreloop.client.android.core.server.RequestMethod[] values()
+com.scoreloop.client.android.core.server.RequestMethod: com.scoreloop.client.android.core.server.RequestMethod valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.b$b: com.scoreloop.client.android.core.controller.b$b[] values()
+com.scoreloop.client.android.core.controller.b$b: com.scoreloop.client.android.core.controller.b$b valueOf(java.lang.String)
+cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command[] values()
+cn.perfectgames.jewels.control.Command: cn.perfectgames.jewels.control.Command valueOf(java.lang.String)
+com.scoreloop.client.android.core.model.ScoreFormatter$a: com.scoreloop.client.android.core.model.ScoreFormatter$a[] values()
+com.scoreloop.client.android.core.model.ScoreFormatter$a: com.scoreloop.client.android.core.model.ScoreFormatter$a valueOf(java.lang.String)
+com.scoreloop.client.android.core.controller.ActivitiesController$b: com.scoreloop.client.android.core.controller.ActivitiesController$b[] values()
+com.scoreloop.client.android.core.controller.ActivitiesController$b: com.scoreloop.client.android.core.controller.ActivitiesController$b valueOf(java.lang.String)
+cn.perfectgames.jewels.model.GameMode: cn.perfectgames.jewels.model.GameMode[] values()
+cn.perfectgames.jewels.model.GameMode: cn.perfectgames.jewels.model.GameMode valueOf(java.lang.String)
+cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State[] values()
+cn.perfectgames.jewels.model.Playground$State: cn.perfectgames.jewels.model.Playground$State valueOf(java.lang.String)
+com.scoreloop.client.android.core.server.Request$State: com.scoreloop.client.android.core.server.Request$State[] values()
+com.scoreloop.client.android.core.server.Request$State: com.scoreloop.client.android.core.server.Request$State valueOf(java.lang.String)
+com.scoreloop.client.android.core.addon.RSSFeed$State: com.scoreloop.client.android.core.addon.RSSFeed$State[] values()
+com.scoreloop.client.android.core.addon.RSSFeed$State: com.scoreloop.client.android.core.addon.RSSFeed$State valueOf(java.lang.String)
+net.youmi.android.AdActivity
 com.google.ads.AdActivity
 cn.perfectgames.jewels.activities.AnimationTestActivity
-cn.perfectgames.jewels.activities.WorldRankActivity
+cn.perfectgames.jewels.activities.BaseActivity
+cn.perfectgames.jewels.activities.LeaderBoardActivity
+cn.perfectgames.jewels.activities.SplashActivity
 cn.perfectgames.jewels.activities.MainActivity
-cn.perfectgames.jewels.activities.AboutActivity
 cn.perfectgames.jewels.activities.PlaygroundActivity
-cn.perfectgames.jewels.activities.HighScoreActivity
-cn.perfectgames.jewels.activities.LocalRankActivity
+com.scoreloop.client.android.core.spi.BaseAuthActivity
+com.feedback.ui.SendFeedback
+cn.perfectgames.jewels.activities.AboutActivity
+com.feedback.ui.FeedbackConversation
+com.feedback.ui.FeedbackConversations
 cn.perfectgames.jewels.activities.Preferences
+cn.perfectgames.jewels.GoJewelsApplication
 com.google.ads.InstallReceiver
+com.google.ads.util.AdUtil$UserActivityReceiver
